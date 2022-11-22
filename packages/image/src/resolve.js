@@ -2,9 +2,11 @@ import fs from 'fs';
 import url from 'url';
 import path from 'path';
 import fetch from 'cross-fetch';
+import sharp from 'sharp';
 
 import PNG from './png';
 import JPEG from './jpeg';
+
 import createCache from './cache';
 
 export const IMAGE_CACHE = createCache({ limit: 30 });
@@ -74,10 +76,15 @@ const guessFormat = buffer => {
 const isCompatibleBase64 = ({ uri }) =>
   /^data:image\/[a-zA-Z]*;base64,[^"]*/g.test(uri);
 
-function getImage(body, extension) {
+async function getImage(body, extension) {
   switch (extension.toLowerCase()) {
     case 'jpg':
     case 'jpeg':
+      return new JPEG(body);
+    case 'webp':
+      console.log(body)
+      body = await sharp(body).jpeg().toBuffer();
+      console.log(body)
       return new JPEG(body);
     case 'png':
       return new PNG(body);
@@ -137,7 +144,8 @@ const getImageFormat = body => {
   } else if (isJpg) {
     extension = 'jpg';
   } else {
-    throw new Error('Not valid image extension');
+    extension = 'webp';
+    // throw new Error('Not valid image extension');
   }
 
   return extension;
