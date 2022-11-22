@@ -10,16 +10,6 @@
     "packages/*"
   ],
   "scripts": {
-    "prepare": "husky install",
-    "watch": "lerna run watch --parallel",
-    "bootstrap": "lerna bootstrap",
-    "prepublish": "lerna run build --ignore @react-pdf/yoga",
-    "lint": "eslint packages",
-    "test": "jest",
-    "examples": "lerna run start --scope @react-pdf/examples",
-    "changeset": "changeset",
-    "version-packages": "changeset version",
-    "release": "changeset publish"
   },
   "devDependencies": {
     "@babel/cli": "^7.16.0",
