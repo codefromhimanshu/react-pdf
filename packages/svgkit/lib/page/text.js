@@ -1,9 +1,9 @@
-'use strict';
+"use strict";
 
 exports.__esModule = true;
 exports.default = void 0;
 
-var _element = require('./element');
+var _element = require("./element");
 
 /* eslint-disable no-useless-escape */
 var _default = {
@@ -17,7 +17,7 @@ var _default = {
     textElement.setAttribute('font-size', this.fontSizeStyle);
     textElement.setAttribute('font-family', this.fontFamilyStyle);
     parent.appendChild(textElement);
-  }, // text(glyphs, positions, x, y) {
+  } // text(glyphs, positions, x, y) {
   //   const font = this.parseFont();
   //   const parent = this.closestGroupOrSvg();
   //   const fontSize = parseInt(font.size.slice(0, -2), 10);
@@ -45,5 +45,6 @@ var _default = {
   //   this.currentElement = tspanElement;
   //   parent.appendChild(textElement);
   // },
+
 };
 exports.default = _default;

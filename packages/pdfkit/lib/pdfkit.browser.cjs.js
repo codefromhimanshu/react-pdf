@@ -14,68 +14,47 @@ var fontkit = require('fontkit');
 var PNG = require('@react-pdf/png-js');
 var _extends = require('@babel/runtime/helpers/extends');
 
-function _interopDefaultLegacy(e) {
-  return e && typeof e === 'object' && 'default' in e ? e : { default: e };
-}
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
 function _interopNamespace(e) {
   if (e && e.__esModule) return e;
   var n = Object.create(null);
   if (e) {
-    Object.keys(e).forEach(function(k) {
+    Object.keys(e).forEach(function (k) {
       if (k !== 'default') {
         var d = Object.getOwnPropertyDescriptor(e, k);
-        Object.defineProperty(
-          n,
-          k,
-          d.get
-            ? d
-            : {
-                enumerable: true,
-                get: function() {
-                  return e[k];
-                }
-              }
-        );
+        Object.defineProperty(n, k, d.get ? d : {
+          enumerable: true,
+          get: function () { return e[k]; }
+        });
       }
     });
   }
-  n['default'] = e;
+  n["default"] = e;
   return Object.freeze(n);
 }
 
-var _inheritsLoose__default = /*#__PURE__*/ _interopDefaultLegacy(
-  _inheritsLoose$1
-);
-var _assertThisInitialized__default = /*#__PURE__*/ _interopDefaultLegacy(
-  _assertThisInitialized$2
-);
-var require$$1__default = /*#__PURE__*/ _interopDefaultLegacy(require$$1);
-var require$$2__default = /*#__PURE__*/ _interopDefaultLegacy(require$$2);
-var require$$3__default = /*#__PURE__*/ _interopDefaultLegacy(require$$3);
-var require$$4__default = /*#__PURE__*/ _interopDefaultLegacy(require$$4$1);
-var _createForOfIteratorHelperLoose__default = /*#__PURE__*/ _interopDefaultLegacy(
-  _createForOfIteratorHelperLoose
-);
-var CryptoJS__default = /*#__PURE__*/ _interopDefaultLegacy(CryptoJS);
-var fontkit__namespace = /*#__PURE__*/ _interopNamespace(fontkit);
-var PNG__default = /*#__PURE__*/ _interopDefaultLegacy(PNG);
-var _extends__default = /*#__PURE__*/ _interopDefaultLegacy(_extends);
+var _inheritsLoose__default = /*#__PURE__*/_interopDefaultLegacy(_inheritsLoose$1);
+var _assertThisInitialized__default = /*#__PURE__*/_interopDefaultLegacy(_assertThisInitialized$2);
+var require$$1__default = /*#__PURE__*/_interopDefaultLegacy(require$$1);
+var require$$2__default = /*#__PURE__*/_interopDefaultLegacy(require$$2);
+var require$$3__default = /*#__PURE__*/_interopDefaultLegacy(require$$3);
+var require$$4__default = /*#__PURE__*/_interopDefaultLegacy(require$$4$1);
+var _createForOfIteratorHelperLoose__default = /*#__PURE__*/_interopDefaultLegacy(_createForOfIteratorHelperLoose);
+var CryptoJS__default = /*#__PURE__*/_interopDefaultLegacy(CryptoJS);
+var fontkit__namespace = /*#__PURE__*/_interopNamespace(fontkit);
+var PNG__default = /*#__PURE__*/_interopDefaultLegacy(PNG);
+var _extends__default = /*#__PURE__*/_interopDefaultLegacy(_extends);
 
-var global$1 =
-  typeof global !== 'undefined'
-    ? global
-    : typeof self !== 'undefined'
-    ? self
-    : typeof window !== 'undefined'
-    ? window
-    : {};
+var global$1 = (typeof global !== "undefined" ? global :
+  typeof self !== "undefined" ? self :
+  typeof window !== "undefined" ? window : {});
 
 var lookup$1 = [];
 var revLookup$1 = [];
 var Arr$1 = typeof Uint8Array !== 'undefined' ? Uint8Array : Array;
 var inited = false;
-function init() {
+function init () {
   inited = true;
   var code = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
   for (var i = 0, len = code.length; i < len; ++i) {
@@ -87,7 +66,7 @@ function init() {
   revLookup$1['_'.charCodeAt(0)] = 63;
 }
 
-function toByteArray$1(b64) {
+function toByteArray$1 (b64) {
   if (!inited) {
     init();
   }
@@ -95,7 +74,7 @@ function toByteArray$1(b64) {
   var len = b64.length;
 
   if (len % 4 > 0) {
-    throw new Error('Invalid string. Length must be a multiple of 4');
+    throw new Error('Invalid string. Length must be a multiple of 4')
   }
 
   // the number of equal signs (place holders)
@@ -106,7 +85,7 @@ function toByteArray$1(b64) {
   placeHolders = b64[len - 2] === '=' ? 2 : b64[len - 1] === '=' ? 1 : 0;
 
   // base64 is 4/3 + up to two characters of the original data
-  arr = new Arr$1((len * 3) / 4 - placeHolders);
+  arr = new Arr$1(len * 3 / 4 - placeHolders);
 
   // if there are placeholders, only get up to the last complete 4 chars
   l = placeHolders > 0 ? len - 4 : len;
@@ -114,53 +93,39 @@ function toByteArray$1(b64) {
   var L = 0;
 
   for (i = 0, j = 0; i < l; i += 4, j += 3) {
-    tmp =
-      (revLookup$1[b64.charCodeAt(i)] << 18) |
-      (revLookup$1[b64.charCodeAt(i + 1)] << 12) |
-      (revLookup$1[b64.charCodeAt(i + 2)] << 6) |
-      revLookup$1[b64.charCodeAt(i + 3)];
-    arr[L++] = (tmp >> 16) & 0xff;
-    arr[L++] = (tmp >> 8) & 0xff;
-    arr[L++] = tmp & 0xff;
+    tmp = (revLookup$1[b64.charCodeAt(i)] << 18) | (revLookup$1[b64.charCodeAt(i + 1)] << 12) | (revLookup$1[b64.charCodeAt(i + 2)] << 6) | revLookup$1[b64.charCodeAt(i + 3)];
+    arr[L++] = (tmp >> 16) & 0xFF;
+    arr[L++] = (tmp >> 8) & 0xFF;
+    arr[L++] = tmp & 0xFF;
   }
 
   if (placeHolders === 2) {
-    tmp =
-      (revLookup$1[b64.charCodeAt(i)] << 2) |
-      (revLookup$1[b64.charCodeAt(i + 1)] >> 4);
-    arr[L++] = tmp & 0xff;
+    tmp = (revLookup$1[b64.charCodeAt(i)] << 2) | (revLookup$1[b64.charCodeAt(i + 1)] >> 4);
+    arr[L++] = tmp & 0xFF;
   } else if (placeHolders === 1) {
-    tmp =
-      (revLookup$1[b64.charCodeAt(i)] << 10) |
-      (revLookup$1[b64.charCodeAt(i + 1)] << 4) |
-      (revLookup$1[b64.charCodeAt(i + 2)] >> 2);
-    arr[L++] = (tmp >> 8) & 0xff;
-    arr[L++] = tmp & 0xff;
+    tmp = (revLookup$1[b64.charCodeAt(i)] << 10) | (revLookup$1[b64.charCodeAt(i + 1)] << 4) | (revLookup$1[b64.charCodeAt(i + 2)] >> 2);
+    arr[L++] = (tmp >> 8) & 0xFF;
+    arr[L++] = tmp & 0xFF;
   }
 
-  return arr;
+  return arr
 }
 
-function tripletToBase64$1(num) {
-  return (
-    lookup$1[(num >> 18) & 0x3f] +
-    lookup$1[(num >> 12) & 0x3f] +
-    lookup$1[(num >> 6) & 0x3f] +
-    lookup$1[num & 0x3f]
-  );
+function tripletToBase64$1 (num) {
+  return lookup$1[num >> 18 & 0x3F] + lookup$1[num >> 12 & 0x3F] + lookup$1[num >> 6 & 0x3F] + lookup$1[num & 0x3F]
 }
 
-function encodeChunk$1(uint8, start, end) {
+function encodeChunk$1 (uint8, start, end) {
   var tmp;
   var output = [];
   for (var i = start; i < end; i += 3) {
-    tmp = (uint8[i] << 16) + (uint8[i + 1] << 8) + uint8[i + 2];
+    tmp = (uint8[i] << 16) + (uint8[i + 1] << 8) + (uint8[i + 2]);
     output.push(tripletToBase64$1(tmp));
   }
-  return output.join('');
+  return output.join('')
 }
 
-function fromByteArray$1(uint8) {
+function fromByteArray$1 (uint8) {
   if (!inited) {
     init();
   }
@@ -173,74 +138,68 @@ function fromByteArray$1(uint8) {
 
   // go through the array every three bytes, we'll deal with trailing stuff later
   for (var i = 0, len2 = len - extraBytes; i < len2; i += maxChunkLength) {
-    parts.push(
-      encodeChunk$1(
-        uint8,
-        i,
-        i + maxChunkLength > len2 ? len2 : i + maxChunkLength
-      )
-    );
+    parts.push(encodeChunk$1(uint8, i, (i + maxChunkLength) > len2 ? len2 : (i + maxChunkLength)));
   }
 
   // pad the end with zeros, but make sure to not forget the extra bytes
   if (extraBytes === 1) {
     tmp = uint8[len - 1];
     output += lookup$1[tmp >> 2];
-    output += lookup$1[(tmp << 4) & 0x3f];
+    output += lookup$1[(tmp << 4) & 0x3F];
     output += '==';
   } else if (extraBytes === 2) {
-    tmp = (uint8[len - 2] << 8) + uint8[len - 1];
+    tmp = (uint8[len - 2] << 8) + (uint8[len - 1]);
     output += lookup$1[tmp >> 10];
-    output += lookup$1[(tmp >> 4) & 0x3f];
-    output += lookup$1[(tmp << 2) & 0x3f];
+    output += lookup$1[(tmp >> 4) & 0x3F];
+    output += lookup$1[(tmp << 2) & 0x3F];
     output += '=';
   }
 
   parts.push(output);
 
-  return parts.join('');
+  return parts.join('')
 }
 
-function read(buffer, offset, isLE, mLen, nBytes) {
+function read (buffer, offset, isLE, mLen, nBytes) {
   var e, m;
   var eLen = nBytes * 8 - mLen - 1;
   var eMax = (1 << eLen) - 1;
   var eBias = eMax >> 1;
   var nBits = -7;
-  var i = isLE ? nBytes - 1 : 0;
+  var i = isLE ? (nBytes - 1) : 0;
   var d = isLE ? -1 : 1;
   var s = buffer[offset + i];
 
   i += d;
 
-  e = s & ((1 << -nBits) - 1);
-  s >>= -nBits;
+  e = s & ((1 << (-nBits)) - 1);
+  s >>= (-nBits);
   nBits += eLen;
   for (; nBits > 0; e = e * 256 + buffer[offset + i], i += d, nBits -= 8) {}
 
-  m = e & ((1 << -nBits) - 1);
-  e >>= -nBits;
+  m = e & ((1 << (-nBits)) - 1);
+  e >>= (-nBits);
   nBits += mLen;
   for (; nBits > 0; m = m * 256 + buffer[offset + i], i += d, nBits -= 8) {}
 
   if (e === 0) {
     e = 1 - eBias;
   } else if (e === eMax) {
-    return m ? NaN : (s ? -1 : 1) * Infinity;
+    return m ? NaN : ((s ? -1 : 1) * Infinity)
   } else {
     m = m + Math.pow(2, mLen);
     e = e - eBias;
   }
-  return (s ? -1 : 1) * m * Math.pow(2, e - mLen);
+  return (s ? -1 : 1) * m * Math.pow(2, e - mLen)
 }
 
-function write(buffer, value, offset, isLE, mLen, nBytes) {
+function write (buffer, value, offset, isLE, mLen, nBytes) {
   var e, m, c;
   var eLen = nBytes * 8 - mLen - 1;
   var eMax = (1 << eLen) - 1;
   var eBias = eMax >> 1;
-  var rt = mLen === 23 ? Math.pow(2, -24) - Math.pow(2, -77) : 0;
-  var i = isLE ? 0 : nBytes - 1;
+  var rt = (mLen === 23 ? Math.pow(2, -24) - Math.pow(2, -77) : 0);
+  var i = isLE ? 0 : (nBytes - 1);
   var d = isLE ? 1 : -1;
   var s = value < 0 || (value === 0 && 1 / value < 0) ? 1 : 0;
 
@@ -277,30 +236,20 @@ function write(buffer, value, offset, isLE, mLen, nBytes) {
     }
   }
 
-  for (
-    ;
-    mLen >= 8;
-    buffer[offset + i] = m & 0xff, i += d, m /= 256, mLen -= 8
-  ) {}
+  for (; mLen >= 8; buffer[offset + i] = m & 0xff, i += d, m /= 256, mLen -= 8) {}
 
   e = (e << mLen) | m;
   eLen += mLen;
-  for (
-    ;
-    eLen > 0;
-    buffer[offset + i] = e & 0xff, i += d, e /= 256, eLen -= 8
-  ) {}
+  for (; eLen > 0; buffer[offset + i] = e & 0xff, i += d, e /= 256, eLen -= 8) {}
 
   buffer[offset + i - d] |= s * 128;
 }
 
 var toString$1 = {}.toString;
 
-var isArray =
-  Array.isArray ||
-  function(arr) {
-    return toString$1.call(arr) == '[object Array]';
-  };
+var isArray = Array.isArray || function (arr) {
+  return toString$1.call(arr) == '[object Array]';
+};
 
 /*!
  * The buffer module from node.js, for the browser.
@@ -335,18 +284,19 @@ var INSPECT_MAX_BYTES = 50;
  * We detect these buggy browsers and set `Buffer.TYPED_ARRAY_SUPPORT` to `false` so they
  * get the Object implementation, which is slower but behaves correctly.
  */
-Buffer$4.TYPED_ARRAY_SUPPORT =
-  global$1.TYPED_ARRAY_SUPPORT !== undefined
-    ? global$1.TYPED_ARRAY_SUPPORT
-    : true;
+Buffer$4.TYPED_ARRAY_SUPPORT = global$1.TYPED_ARRAY_SUPPORT !== undefined
+  ? global$1.TYPED_ARRAY_SUPPORT
+  : true;
 
-function kMaxLength() {
-  return Buffer$4.TYPED_ARRAY_SUPPORT ? 0x7fffffff : 0x3fffffff;
+function kMaxLength () {
+  return Buffer$4.TYPED_ARRAY_SUPPORT
+    ? 0x7fffffff
+    : 0x3fffffff
 }
 
-function createBuffer(that, length) {
+function createBuffer (that, length) {
   if (kMaxLength() < length) {
-    throw new RangeError('Invalid typed array length');
+    throw new RangeError('Invalid typed array length')
   }
   if (Buffer$4.TYPED_ARRAY_SUPPORT) {
     // Return an augmented `Uint8Array` instance, for best performance
@@ -360,7 +310,7 @@ function createBuffer(that, length) {
     that.length = length;
   }
 
-  return that;
+  return that
 }
 
 /**
@@ -373,9 +323,9 @@ function createBuffer(that, length) {
  * The `Uint8Array` prototype remains unmodified.
  */
 
-function Buffer$4(arg, encodingOrOffset, length) {
+function Buffer$4 (arg, encodingOrOffset, length) {
   if (!Buffer$4.TYPED_ARRAY_SUPPORT && !(this instanceof Buffer$4)) {
-    return new Buffer$4(arg, encodingOrOffset, length);
+    return new Buffer$4(arg, encodingOrOffset, length)
   }
 
   // Common case.
@@ -383,35 +333,35 @@ function Buffer$4(arg, encodingOrOffset, length) {
     if (typeof encodingOrOffset === 'string') {
       throw new Error(
         'If encoding is specified then the first argument must be a string'
-      );
+      )
     }
-    return allocUnsafe(this, arg);
+    return allocUnsafe(this, arg)
   }
-  return from$1(this, arg, encodingOrOffset, length);
+  return from$1(this, arg, encodingOrOffset, length)
 }
 
 Buffer$4.poolSize = 8192; // not used by this implementation
 
 // TODO: Legacy, not needed anymore. Remove in next major version.
-Buffer$4._augment = function(arr) {
+Buffer$4._augment = function (arr) {
   arr.__proto__ = Buffer$4.prototype;
-  return arr;
+  return arr
 };
 
-function from$1(that, value, encodingOrOffset, length) {
+function from$1 (that, value, encodingOrOffset, length) {
   if (typeof value === 'number') {
-    throw new TypeError('"value" argument must not be a number');
+    throw new TypeError('"value" argument must not be a number')
   }
 
   if (typeof ArrayBuffer !== 'undefined' && value instanceof ArrayBuffer) {
-    return fromArrayBuffer(that, value, encodingOrOffset, length);
+    return fromArrayBuffer(that, value, encodingOrOffset, length)
   }
 
   if (typeof value === 'string') {
-    return fromString(that, value, encodingOrOffset);
+    return fromString(that, value, encodingOrOffset)
   }
 
-  return fromObject(that, value);
+  return fromObject(that, value)
 }
 
 /**
@@ -422,8 +372,8 @@ function from$1(that, value, encodingOrOffset, length) {
  * Buffer.from(buffer)
  * Buffer.from(arrayBuffer[, byteOffset[, length]])
  **/
-Buffer$4.from = function(value, encodingOrOffset, length) {
-  return from$1(null, value, encodingOrOffset, length);
+Buffer$4.from = function (value, encodingOrOffset, length) {
+  return from$1(null, value, encodingOrOffset, length)
 };
 
 if (Buffer$4.TYPED_ARRAY_SUPPORT) {
@@ -431,18 +381,18 @@ if (Buffer$4.TYPED_ARRAY_SUPPORT) {
   Buffer$4.__proto__ = Uint8Array;
 }
 
-function assertSize(size) {
+function assertSize (size) {
   if (typeof size !== 'number') {
-    throw new TypeError('"size" argument must be a number');
+    throw new TypeError('"size" argument must be a number')
   } else if (size < 0) {
-    throw new RangeError('"size" argument must not be negative');
+    throw new RangeError('"size" argument must not be negative')
   }
 }
 
-function alloc(that, size, fill, encoding) {
+function alloc (that, size, fill, encoding) {
   assertSize(size);
   if (size <= 0) {
-    return createBuffer(that, size);
+    return createBuffer(that, size)
   }
   if (fill !== undefined) {
     // Only pay attention to encoding if it's a string. This
@@ -450,20 +400,20 @@ function alloc(that, size, fill, encoding) {
     // be interpretted as a start offset.
     return typeof encoding === 'string'
       ? createBuffer(that, size).fill(fill, encoding)
-      : createBuffer(that, size).fill(fill);
+      : createBuffer(that, size).fill(fill)
   }
-  return createBuffer(that, size);
+  return createBuffer(that, size)
 }
 
 /**
  * Creates a new filled Buffer instance.
  * alloc(size[, fill[, encoding]])
  **/
-Buffer$4.alloc = function(size, fill, encoding) {
-  return alloc(null, size, fill, encoding);
+Buffer$4.alloc = function (size, fill, encoding) {
+  return alloc(null, size, fill, encoding)
 };
 
-function allocUnsafe(that, size) {
+function allocUnsafe (that, size) {
   assertSize(size);
   that = createBuffer(that, size < 0 ? 0 : checked(size) | 0);
   if (!Buffer$4.TYPED_ARRAY_SUPPORT) {
@@ -471,29 +421,29 @@ function allocUnsafe(that, size) {
       that[i] = 0;
     }
   }
-  return that;
+  return that
 }
 
 /**
  * Equivalent to Buffer(num), by default creates a non-zero-filled Buffer instance.
  * */
-Buffer$4.allocUnsafe = function(size) {
-  return allocUnsafe(null, size);
+Buffer$4.allocUnsafe = function (size) {
+  return allocUnsafe(null, size)
 };
 /**
  * Equivalent to SlowBuffer(num), by default creates a non-zero-filled Buffer instance.
  */
-Buffer$4.allocUnsafeSlow = function(size) {
-  return allocUnsafe(null, size);
+Buffer$4.allocUnsafeSlow = function (size) {
+  return allocUnsafe(null, size)
 };
 
-function fromString(that, string, encoding) {
+function fromString (that, string, encoding) {
   if (typeof encoding !== 'string' || encoding === '') {
     encoding = 'utf8';
   }
 
   if (!Buffer$4.isEncoding(encoding)) {
-    throw new TypeError('"encoding" must be a valid string encoding');
+    throw new TypeError('"encoding" must be a valid string encoding')
   }
 
   var length = byteLength$1(string, encoding) | 0;
@@ -508,27 +458,27 @@ function fromString(that, string, encoding) {
     that = that.slice(0, actual);
   }
 
-  return that;
+  return that
 }
 
-function fromArrayLike(that, array) {
+function fromArrayLike (that, array) {
   var length = array.length < 0 ? 0 : checked(array.length) | 0;
   that = createBuffer(that, length);
   for (var i = 0; i < length; i += 1) {
     that[i] = array[i] & 255;
   }
-  return that;
+  return that
 }
 
-function fromArrayBuffer(that, array, byteOffset, length) {
+function fromArrayBuffer (that, array, byteOffset, length) {
   array.byteLength; // this throws if `array` is not a valid ArrayBuffer
 
   if (byteOffset < 0 || array.byteLength < byteOffset) {
-    throw new RangeError("'offset' is out of bounds");
+    throw new RangeError('\'offset\' is out of bounds')
   }
 
   if (array.byteLength < byteOffset + (length || 0)) {
-    throw new RangeError("'length' is out of bounds");
+    throw new RangeError('\'length\' is out of bounds')
   }
 
   if (byteOffset === undefined && length === undefined) {
@@ -547,68 +497,59 @@ function fromArrayBuffer(that, array, byteOffset, length) {
     // Fallback: Return an object instance of the Buffer class
     that = fromArrayLike(that, array);
   }
-  return that;
+  return that
 }
 
-function fromObject(that, obj) {
+function fromObject (that, obj) {
   if (internalIsBuffer(obj)) {
     var len = checked(obj.length) | 0;
     that = createBuffer(that, len);
 
     if (that.length === 0) {
-      return that;
+      return that
     }
 
     obj.copy(that, 0, 0, len);
-    return that;
+    return that
   }
 
   if (obj) {
-    if (
-      (typeof ArrayBuffer !== 'undefined' &&
-        obj.buffer instanceof ArrayBuffer) ||
-      'length' in obj
-    ) {
+    if ((typeof ArrayBuffer !== 'undefined' &&
+        obj.buffer instanceof ArrayBuffer) || 'length' in obj) {
       if (typeof obj.length !== 'number' || isnan(obj.length)) {
-        return createBuffer(that, 0);
+        return createBuffer(that, 0)
       }
-      return fromArrayLike(that, obj);
+      return fromArrayLike(that, obj)
     }
 
     if (obj.type === 'Buffer' && isArray(obj.data)) {
-      return fromArrayLike(that, obj.data);
+      return fromArrayLike(that, obj.data)
     }
   }
 
-  throw new TypeError(
-    'First argument must be a string, Buffer, ArrayBuffer, Array, or array-like object.'
-  );
+  throw new TypeError('First argument must be a string, Buffer, ArrayBuffer, Array, or array-like object.')
 }
 
-function checked(length) {
+function checked (length) {
   // Note: cannot use `length < kMaxLength()` here because that fails when
   // length is NaN (which is otherwise coerced to zero.)
   if (length >= kMaxLength()) {
-    throw new RangeError(
-      'Attempt to allocate Buffer larger than maximum ' +
-        'size: 0x' +
-        kMaxLength().toString(16) +
-        ' bytes'
-    );
+    throw new RangeError('Attempt to allocate Buffer larger than maximum ' +
+                         'size: 0x' + kMaxLength().toString(16) + ' bytes')
   }
-  return length | 0;
+  return length | 0
 }
 Buffer$4.isBuffer = isBuffer;
-function internalIsBuffer(b) {
-  return !!(b != null && b._isBuffer);
+function internalIsBuffer (b) {
+  return !!(b != null && b._isBuffer)
 }
 
-Buffer$4.compare = function compare(a, b) {
+Buffer$4.compare = function compare (a, b) {
   if (!internalIsBuffer(a) || !internalIsBuffer(b)) {
-    throw new TypeError('Arguments must be Buffers');
+    throw new TypeError('Arguments must be Buffers')
   }
 
-  if (a === b) return 0;
+  if (a === b) return 0
 
   var x = a.length;
   var y = b.length;
@@ -617,16 +558,16 @@ Buffer$4.compare = function compare(a, b) {
     if (a[i] !== b[i]) {
       x = a[i];
       y = b[i];
-      break;
+      break
     }
   }
 
-  if (x < y) return -1;
-  if (y < x) return 1;
-  return 0;
+  if (x < y) return -1
+  if (y < x) return 1
+  return 0
 };
 
-Buffer$4.isEncoding = function isEncoding(encoding) {
+Buffer$4.isEncoding = function isEncoding (encoding) {
   switch (String(encoding).toLowerCase()) {
     case 'hex':
     case 'utf8':
@@ -639,19 +580,19 @@ Buffer$4.isEncoding = function isEncoding(encoding) {
     case 'ucs-2':
     case 'utf16le':
     case 'utf-16le':
-      return true;
+      return true
     default:
-      return false;
+      return false
   }
 };
 
-Buffer$4.concat = function concat(list, length) {
+Buffer$4.concat = function concat (list, length) {
   if (!isArray(list)) {
-    throw new TypeError('"list" argument must be an Array of Buffers');
+    throw new TypeError('"list" argument must be an Array of Buffers')
   }
 
   if (list.length === 0) {
-    return Buffer$4.alloc(0);
+    return Buffer$4.alloc(0)
   }
 
   var i;
@@ -667,31 +608,28 @@ Buffer$4.concat = function concat(list, length) {
   for (i = 0; i < list.length; ++i) {
     var buf = list[i];
     if (!internalIsBuffer(buf)) {
-      throw new TypeError('"list" argument must be an Array of Buffers');
+      throw new TypeError('"list" argument must be an Array of Buffers')
     }
     buf.copy(buffer, pos);
     pos += buf.length;
   }
-  return buffer;
+  return buffer
 };
 
-function byteLength$1(string, encoding) {
+function byteLength$1 (string, encoding) {
   if (internalIsBuffer(string)) {
-    return string.length;
+    return string.length
   }
-  if (
-    typeof ArrayBuffer !== 'undefined' &&
-    typeof ArrayBuffer.isView === 'function' &&
-    (ArrayBuffer.isView(string) || string instanceof ArrayBuffer)
-  ) {
-    return string.byteLength;
+  if (typeof ArrayBuffer !== 'undefined' && typeof ArrayBuffer.isView === 'function' &&
+      (ArrayBuffer.isView(string) || string instanceof ArrayBuffer)) {
+    return string.byteLength
   }
   if (typeof string !== 'string') {
     string = '' + string;
   }
 
   var len = string.length;
-  if (len === 0) return 0;
+  if (len === 0) return 0
 
   // Use a for loop to avoid recursion
   var loweredCase = false;
@@ -700,22 +638,22 @@ function byteLength$1(string, encoding) {
       case 'ascii':
       case 'latin1':
       case 'binary':
-        return len;
+        return len
       case 'utf8':
       case 'utf-8':
       case undefined:
-        return utf8ToBytes(string).length;
+        return utf8ToBytes(string).length
       case 'ucs2':
       case 'ucs-2':
       case 'utf16le':
       case 'utf-16le':
-        return len * 2;
+        return len * 2
       case 'hex':
-        return len >>> 1;
+        return len >>> 1
       case 'base64':
-        return base64ToBytes(string).length;
+        return base64ToBytes(string).length
       default:
-        if (loweredCase) return utf8ToBytes(string).length; // assume utf8
+        if (loweredCase) return utf8ToBytes(string).length // assume utf8
         encoding = ('' + encoding).toLowerCase();
         loweredCase = true;
     }
@@ -723,7 +661,7 @@ function byteLength$1(string, encoding) {
 }
 Buffer$4.byteLength = byteLength$1;
 
-function slowToString(encoding, start, end) {
+function slowToString (encoding, start, end) {
   var loweredCase = false;
 
   // No need to verify that "this.length <= MAX_UINT32" since it's a read-only
@@ -739,7 +677,7 @@ function slowToString(encoding, start, end) {
   // Return early if start > this.length. Done here to prevent potential uint32
   // coercion fail below.
   if (start > this.length) {
-    return '';
+    return ''
   }
 
   if (end === undefined || end > this.length) {
@@ -747,7 +685,7 @@ function slowToString(encoding, start, end) {
   }
 
   if (end <= 0) {
-    return '';
+    return ''
   }
 
   // Force coersion to uint32. This will also coerce falsey/NaN values to 0.
@@ -755,7 +693,7 @@ function slowToString(encoding, start, end) {
   start >>>= 0;
 
   if (end <= start) {
-    return '';
+    return ''
   }
 
   if (!encoding) encoding = 'utf8';
@@ -763,30 +701,30 @@ function slowToString(encoding, start, end) {
   while (true) {
     switch (encoding) {
       case 'hex':
-        return hexSlice(this, start, end);
+        return hexSlice(this, start, end)
 
       case 'utf8':
       case 'utf-8':
-        return utf8Slice(this, start, end);
+        return utf8Slice(this, start, end)
 
       case 'ascii':
-        return asciiSlice(this, start, end);
+        return asciiSlice(this, start, end)
 
       case 'latin1':
       case 'binary':
-        return latin1Slice(this, start, end);
+        return latin1Slice(this, start, end)
 
       case 'base64':
-        return base64Slice(this, start, end);
+        return base64Slice(this, start, end)
 
       case 'ucs2':
       case 'ucs-2':
       case 'utf16le':
       case 'utf-16le':
-        return utf16leSlice(this, start, end);
+        return utf16leSlice(this, start, end)
 
       default:
-        if (loweredCase) throw new TypeError('Unknown encoding: ' + encoding);
+        if (loweredCase) throw new TypeError('Unknown encoding: ' + encoding)
         encoding = (encoding + '').toLowerCase();
         loweredCase = true;
     }
@@ -797,39 +735,39 @@ function slowToString(encoding, start, end) {
 // Buffer instances.
 Buffer$4.prototype._isBuffer = true;
 
-function swap(b, n, m) {
+function swap (b, n, m) {
   var i = b[n];
   b[n] = b[m];
   b[m] = i;
 }
 
-Buffer$4.prototype.swap16 = function swap16() {
+Buffer$4.prototype.swap16 = function swap16 () {
   var len = this.length;
   if (len % 2 !== 0) {
-    throw new RangeError('Buffer size must be a multiple of 16-bits');
+    throw new RangeError('Buffer size must be a multiple of 16-bits')
   }
   for (var i = 0; i < len; i += 2) {
     swap(this, i, i + 1);
   }
-  return this;
+  return this
 };
 
-Buffer$4.prototype.swap32 = function swap32() {
+Buffer$4.prototype.swap32 = function swap32 () {
   var len = this.length;
   if (len % 4 !== 0) {
-    throw new RangeError('Buffer size must be a multiple of 32-bits');
+    throw new RangeError('Buffer size must be a multiple of 32-bits')
   }
   for (var i = 0; i < len; i += 4) {
     swap(this, i, i + 3);
     swap(this, i + 1, i + 2);
   }
-  return this;
+  return this
 };
 
-Buffer$4.prototype.swap64 = function swap64() {
+Buffer$4.prototype.swap64 = function swap64 () {
   var len = this.length;
   if (len % 8 !== 0) {
-    throw new RangeError('Buffer size must be a multiple of 64-bits');
+    throw new RangeError('Buffer size must be a multiple of 64-bits')
   }
   for (var i = 0; i < len; i += 8) {
     swap(this, i, i + 7);
@@ -837,43 +775,35 @@ Buffer$4.prototype.swap64 = function swap64() {
     swap(this, i + 2, i + 5);
     swap(this, i + 3, i + 4);
   }
-  return this;
+  return this
 };
 
-Buffer$4.prototype.toString = function toString() {
+Buffer$4.prototype.toString = function toString () {
   var length = this.length | 0;
-  if (length === 0) return '';
-  if (arguments.length === 0) return utf8Slice(this, 0, length);
-  return slowToString.apply(this, arguments);
+  if (length === 0) return ''
+  if (arguments.length === 0) return utf8Slice(this, 0, length)
+  return slowToString.apply(this, arguments)
 };
 
-Buffer$4.prototype.equals = function equals(b) {
-  if (!internalIsBuffer(b)) throw new TypeError('Argument must be a Buffer');
-  if (this === b) return true;
-  return Buffer$4.compare(this, b) === 0;
+Buffer$4.prototype.equals = function equals (b) {
+  if (!internalIsBuffer(b)) throw new TypeError('Argument must be a Buffer')
+  if (this === b) return true
+  return Buffer$4.compare(this, b) === 0
 };
 
-Buffer$4.prototype.inspect = function inspect() {
+Buffer$4.prototype.inspect = function inspect () {
   var str = '';
   var max = INSPECT_MAX_BYTES;
   if (this.length > 0) {
-    str = this.toString('hex', 0, max)
-      .match(/.{2}/g)
-      .join(' ');
+    str = this.toString('hex', 0, max).match(/.{2}/g).join(' ');
     if (this.length > max) str += ' ... ';
   }
-  return '<Buffer ' + str + '>';
+  return '<Buffer ' + str + '>'
 };
 
-Buffer$4.prototype.compare = function compare(
-  target,
-  start,
-  end,
-  thisStart,
-  thisEnd
-) {
+Buffer$4.prototype.compare = function compare (target, start, end, thisStart, thisEnd) {
   if (!internalIsBuffer(target)) {
-    throw new TypeError('Argument must be a Buffer');
+    throw new TypeError('Argument must be a Buffer')
   }
 
   if (start === undefined) {
@@ -889,23 +819,18 @@ Buffer$4.prototype.compare = function compare(
     thisEnd = this.length;
   }
 
-  if (
-    start < 0 ||
-    end > target.length ||
-    thisStart < 0 ||
-    thisEnd > this.length
-  ) {
-    throw new RangeError('out of range index');
+  if (start < 0 || end > target.length || thisStart < 0 || thisEnd > this.length) {
+    throw new RangeError('out of range index')
   }
 
   if (thisStart >= thisEnd && start >= end) {
-    return 0;
+    return 0
   }
   if (thisStart >= thisEnd) {
-    return -1;
+    return -1
   }
   if (start >= end) {
-    return 1;
+    return 1
   }
 
   start >>>= 0;
@@ -913,7 +838,7 @@ Buffer$4.prototype.compare = function compare(
   thisStart >>>= 0;
   thisEnd >>>= 0;
 
-  if (this === target) return 0;
+  if (this === target) return 0
 
   var x = thisEnd - thisStart;
   var y = end - start;
@@ -926,13 +851,13 @@ Buffer$4.prototype.compare = function compare(
     if (thisCopy[i] !== targetCopy[i]) {
       x = thisCopy[i];
       y = targetCopy[i];
-      break;
+      break
     }
   }
 
-  if (x < y) return -1;
-  if (y < x) return 1;
-  return 0;
+  if (x < y) return -1
+  if (y < x) return 1
+  return 0
 };
 
 // Finds either the first index of `val` in `buffer` at offset >= `byteOffset`,
@@ -944,9 +869,9 @@ Buffer$4.prototype.compare = function compare(
 // - byteOffset - an index into `buffer`; will be clamped to an int32
 // - encoding - an optional encoding, relevant is val is a string
 // - dir - true for indexOf, false for lastIndexOf
-function bidirectionalIndexOf(buffer, val, byteOffset, encoding, dir) {
+function bidirectionalIndexOf (buffer, val, byteOffset, encoding, dir) {
   // Empty buffer means no match
-  if (buffer.length === 0) return -1;
+  if (buffer.length === 0) return -1
 
   // Normalize byteOffset
   if (typeof byteOffset === 'string') {
@@ -957,20 +882,20 @@ function bidirectionalIndexOf(buffer, val, byteOffset, encoding, dir) {
   } else if (byteOffset < -0x80000000) {
     byteOffset = -0x80000000;
   }
-  byteOffset = +byteOffset; // Coerce to Number.
+  byteOffset = +byteOffset;  // Coerce to Number.
   if (isNaN(byteOffset)) {
     // byteOffset: it it's undefined, null, NaN, "foo", etc, search whole buffer
-    byteOffset = dir ? 0 : buffer.length - 1;
+    byteOffset = dir ? 0 : (buffer.length - 1);
   }
 
   // Normalize byteOffset: negative offsets start from the end of the buffer
   if (byteOffset < 0) byteOffset = buffer.length + byteOffset;
   if (byteOffset >= buffer.length) {
-    if (dir) return -1;
+    if (dir) return -1
     else byteOffset = buffer.length - 1;
   } else if (byteOffset < 0) {
     if (dir) byteOffset = 0;
-    else return -1;
+    else return -1
   }
 
   // Normalize val
@@ -982,42 +907,36 @@ function bidirectionalIndexOf(buffer, val, byteOffset, encoding, dir) {
   if (internalIsBuffer(val)) {
     // Special case: looking for empty string/buffer always fails
     if (val.length === 0) {
-      return -1;
+      return -1
     }
-    return arrayIndexOf(buffer, val, byteOffset, encoding, dir);
+    return arrayIndexOf(buffer, val, byteOffset, encoding, dir)
   } else if (typeof val === 'number') {
-    val = val & 0xff; // Search for a byte value [0-255]
-    if (
-      Buffer$4.TYPED_ARRAY_SUPPORT &&
-      typeof Uint8Array.prototype.indexOf === 'function'
-    ) {
+    val = val & 0xFF; // Search for a byte value [0-255]
+    if (Buffer$4.TYPED_ARRAY_SUPPORT &&
+        typeof Uint8Array.prototype.indexOf === 'function') {
       if (dir) {
-        return Uint8Array.prototype.indexOf.call(buffer, val, byteOffset);
+        return Uint8Array.prototype.indexOf.call(buffer, val, byteOffset)
       } else {
-        return Uint8Array.prototype.lastIndexOf.call(buffer, val, byteOffset);
+        return Uint8Array.prototype.lastIndexOf.call(buffer, val, byteOffset)
       }
     }
-    return arrayIndexOf(buffer, [val], byteOffset, encoding, dir);
+    return arrayIndexOf(buffer, [ val ], byteOffset, encoding, dir)
   }
 
-  throw new TypeError('val must be string, number or Buffer');
+  throw new TypeError('val must be string, number or Buffer')
 }
 
-function arrayIndexOf(arr, val, byteOffset, encoding, dir) {
+function arrayIndexOf (arr, val, byteOffset, encoding, dir) {
   var indexSize = 1;
   var arrLength = arr.length;
   var valLength = val.length;
 
   if (encoding !== undefined) {
     encoding = String(encoding).toLowerCase();
-    if (
-      encoding === 'ucs2' ||
-      encoding === 'ucs-2' ||
-      encoding === 'utf16le' ||
-      encoding === 'utf-16le'
-    ) {
+    if (encoding === 'ucs2' || encoding === 'ucs-2' ||
+        encoding === 'utf16le' || encoding === 'utf-16le') {
       if (arr.length < 2 || val.length < 2) {
-        return -1;
+        return -1
       }
       indexSize = 2;
       arrLength /= 2;
@@ -1026,11 +945,11 @@ function arrayIndexOf(arr, val, byteOffset, encoding, dir) {
     }
   }
 
-  function read(buf, i) {
+  function read (buf, i) {
     if (indexSize === 1) {
-      return buf[i];
+      return buf[i]
     } else {
-      return buf.readUInt16BE(i * indexSize);
+      return buf.readUInt16BE(i * indexSize)
     }
   }
 
@@ -1040,7 +959,7 @@ function arrayIndexOf(arr, val, byteOffset, encoding, dir) {
     for (i = byteOffset; i < arrLength; i++) {
       if (read(arr, i) === read(val, foundIndex === -1 ? 0 : i - foundIndex)) {
         if (foundIndex === -1) foundIndex = i;
-        if (i - foundIndex + 1 === valLength) return foundIndex * indexSize;
+        if (i - foundIndex + 1 === valLength) return foundIndex * indexSize
       } else {
         if (foundIndex !== -1) i -= i - foundIndex;
         foundIndex = -1;
@@ -1053,33 +972,29 @@ function arrayIndexOf(arr, val, byteOffset, encoding, dir) {
       for (var j = 0; j < valLength; j++) {
         if (read(arr, i + j) !== read(val, j)) {
           found = false;
-          break;
+          break
         }
       }
-      if (found) return i;
+      if (found) return i
     }
   }
 
-  return -1;
+  return -1
 }
 
-Buffer$4.prototype.includes = function includes(val, byteOffset, encoding) {
-  return this.indexOf(val, byteOffset, encoding) !== -1;
+Buffer$4.prototype.includes = function includes (val, byteOffset, encoding) {
+  return this.indexOf(val, byteOffset, encoding) !== -1
 };
 
-Buffer$4.prototype.indexOf = function indexOf(val, byteOffset, encoding) {
-  return bidirectionalIndexOf(this, val, byteOffset, encoding, true);
+Buffer$4.prototype.indexOf = function indexOf (val, byteOffset, encoding) {
+  return bidirectionalIndexOf(this, val, byteOffset, encoding, true)
 };
 
-Buffer$4.prototype.lastIndexOf = function lastIndexOf(
-  val,
-  byteOffset,
-  encoding
-) {
-  return bidirectionalIndexOf(this, val, byteOffset, encoding, false);
+Buffer$4.prototype.lastIndexOf = function lastIndexOf (val, byteOffset, encoding) {
+  return bidirectionalIndexOf(this, val, byteOffset, encoding, false)
 };
 
-function hexWrite(buf, string, offset, length) {
+function hexWrite (buf, string, offset, length) {
   offset = Number(offset) || 0;
   var remaining = buf.length - offset;
   if (!length) {
@@ -1093,61 +1008,51 @@ function hexWrite(buf, string, offset, length) {
 
   // must be an even number of digits
   var strLen = string.length;
-  if (strLen % 2 !== 0) throw new TypeError('Invalid hex string');
+  if (strLen % 2 !== 0) throw new TypeError('Invalid hex string')
 
   if (length > strLen / 2) {
     length = strLen / 2;
   }
   for (var i = 0; i < length; ++i) {
     var parsed = parseInt(string.substr(i * 2, 2), 16);
-    if (isNaN(parsed)) return i;
+    if (isNaN(parsed)) return i
     buf[offset + i] = parsed;
   }
-  return i;
+  return i
 }
 
-function utf8Write(buf, string, offset, length) {
-  return blitBuffer(
-    utf8ToBytes(string, buf.length - offset),
-    buf,
-    offset,
-    length
-  );
+function utf8Write (buf, string, offset, length) {
+  return blitBuffer(utf8ToBytes(string, buf.length - offset), buf, offset, length)
 }
 
-function asciiWrite(buf, string, offset, length) {
-  return blitBuffer(asciiToBytes(string), buf, offset, length);
+function asciiWrite (buf, string, offset, length) {
+  return blitBuffer(asciiToBytes(string), buf, offset, length)
 }
 
-function latin1Write(buf, string, offset, length) {
-  return asciiWrite(buf, string, offset, length);
+function latin1Write (buf, string, offset, length) {
+  return asciiWrite(buf, string, offset, length)
 }
 
-function base64Write(buf, string, offset, length) {
-  return blitBuffer(base64ToBytes(string), buf, offset, length);
+function base64Write (buf, string, offset, length) {
+  return blitBuffer(base64ToBytes(string), buf, offset, length)
 }
 
-function ucs2Write(buf, string, offset, length) {
-  return blitBuffer(
-    utf16leToBytes(string, buf.length - offset),
-    buf,
-    offset,
-    length
-  );
+function ucs2Write (buf, string, offset, length) {
+  return blitBuffer(utf16leToBytes(string, buf.length - offset), buf, offset, length)
 }
 
-Buffer$4.prototype.write = function write(string, offset, length, encoding) {
+Buffer$4.prototype.write = function write (string, offset, length, encoding) {
   // Buffer#write(string)
   if (offset === undefined) {
     encoding = 'utf8';
     length = this.length;
     offset = 0;
-    // Buffer#write(string, encoding)
+  // Buffer#write(string, encoding)
   } else if (length === undefined && typeof offset === 'string') {
     encoding = offset;
     length = this.length;
     offset = 0;
-    // Buffer#write(string, offset[, length][, encoding])
+  // Buffer#write(string, offset[, length][, encoding])
   } else if (isFinite(offset)) {
     offset = offset | 0;
     if (isFinite(length)) {
@@ -1157,21 +1062,18 @@ Buffer$4.prototype.write = function write(string, offset, length, encoding) {
       encoding = length;
       length = undefined;
     }
-    // legacy write(string, encoding, offset, length) - remove in v0.13
+  // legacy write(string, encoding, offset, length) - remove in v0.13
   } else {
     throw new Error(
       'Buffer.write(string, encoding, offset[, length]) is no longer supported'
-    );
+    )
   }
 
   var remaining = this.length - offset;
   if (length === undefined || length > remaining) length = remaining;
 
-  if (
-    (string.length > 0 && (length < 0 || offset < 0)) ||
-    offset > this.length
-  ) {
-    throw new RangeError('Attempt to write outside buffer bounds');
+  if ((string.length > 0 && (length < 0 || offset < 0)) || offset > this.length) {
+    throw new RangeError('Attempt to write outside buffer bounds')
   }
 
   if (!encoding) encoding = 'utf8';
@@ -1180,53 +1082,53 @@ Buffer$4.prototype.write = function write(string, offset, length, encoding) {
   for (;;) {
     switch (encoding) {
       case 'hex':
-        return hexWrite(this, string, offset, length);
+        return hexWrite(this, string, offset, length)
 
       case 'utf8':
       case 'utf-8':
-        return utf8Write(this, string, offset, length);
+        return utf8Write(this, string, offset, length)
 
       case 'ascii':
-        return asciiWrite(this, string, offset, length);
+        return asciiWrite(this, string, offset, length)
 
       case 'latin1':
       case 'binary':
-        return latin1Write(this, string, offset, length);
+        return latin1Write(this, string, offset, length)
 
       case 'base64':
         // Warning: maxLength not taken into account in base64Write
-        return base64Write(this, string, offset, length);
+        return base64Write(this, string, offset, length)
 
       case 'ucs2':
       case 'ucs-2':
       case 'utf16le':
       case 'utf-16le':
-        return ucs2Write(this, string, offset, length);
+        return ucs2Write(this, string, offset, length)
 
       default:
-        if (loweredCase) throw new TypeError('Unknown encoding: ' + encoding);
+        if (loweredCase) throw new TypeError('Unknown encoding: ' + encoding)
         encoding = ('' + encoding).toLowerCase();
         loweredCase = true;
     }
   }
 };
 
-Buffer$4.prototype.toJSON = function toJSON() {
+Buffer$4.prototype.toJSON = function toJSON () {
   return {
     type: 'Buffer',
     data: Array.prototype.slice.call(this._arr || this, 0)
-  };
+  }
 };
 
-function base64Slice(buf, start, end) {
+function base64Slice (buf, start, end) {
   if (start === 0 && end === buf.length) {
-    return fromByteArray$1(buf);
+    return fromByteArray$1(buf)
   } else {
-    return fromByteArray$1(buf.slice(start, end));
+    return fromByteArray$1(buf.slice(start, end))
   }
 }
 
-function utf8Slice(buf, start, end) {
+function utf8Slice (buf, start, end) {
   end = Math.min(buf.length, end);
   var res = [];
 
@@ -1234,8 +1136,10 @@ function utf8Slice(buf, start, end) {
   while (i < end) {
     var firstByte = buf[i];
     var codePoint = null;
-    var bytesPerSequence =
-      firstByte > 0xef ? 4 : firstByte > 0xdf ? 3 : firstByte > 0xbf ? 2 : 1;
+    var bytesPerSequence = (firstByte > 0xEF) ? 4
+      : (firstByte > 0xDF) ? 3
+      : (firstByte > 0xBF) ? 2
+      : 1;
 
     if (i + bytesPerSequence <= end) {
       var secondByte, thirdByte, fourthByte, tempCodePoint;
@@ -1245,47 +1149,33 @@ function utf8Slice(buf, start, end) {
           if (firstByte < 0x80) {
             codePoint = firstByte;
           }
-          break;
+          break
         case 2:
           secondByte = buf[i + 1];
-          if ((secondByte & 0xc0) === 0x80) {
-            tempCodePoint = ((firstByte & 0x1f) << 0x6) | (secondByte & 0x3f);
-            if (tempCodePoint > 0x7f) {
+          if ((secondByte & 0xC0) === 0x80) {
+            tempCodePoint = (firstByte & 0x1F) << 0x6 | (secondByte & 0x3F);
+            if (tempCodePoint > 0x7F) {
               codePoint = tempCodePoint;
             }
           }
-          break;
+          break
         case 3:
           secondByte = buf[i + 1];
           thirdByte = buf[i + 2];
-          if ((secondByte & 0xc0) === 0x80 && (thirdByte & 0xc0) === 0x80) {
-            tempCodePoint =
-              ((firstByte & 0xf) << 0xc) |
-              ((secondByte & 0x3f) << 0x6) |
-              (thirdByte & 0x3f);
-            if (
-              tempCodePoint > 0x7ff &&
-              (tempCodePoint < 0xd800 || tempCodePoint > 0xdfff)
-            ) {
+          if ((secondByte & 0xC0) === 0x80 && (thirdByte & 0xC0) === 0x80) {
+            tempCodePoint = (firstByte & 0xF) << 0xC | (secondByte & 0x3F) << 0x6 | (thirdByte & 0x3F);
+            if (tempCodePoint > 0x7FF && (tempCodePoint < 0xD800 || tempCodePoint > 0xDFFF)) {
               codePoint = tempCodePoint;
             }
           }
-          break;
+          break
         case 4:
           secondByte = buf[i + 1];
           thirdByte = buf[i + 2];
           fourthByte = buf[i + 3];
-          if (
-            (secondByte & 0xc0) === 0x80 &&
-            (thirdByte & 0xc0) === 0x80 &&
-            (fourthByte & 0xc0) === 0x80
-          ) {
-            tempCodePoint =
-              ((firstByte & 0xf) << 0x12) |
-              ((secondByte & 0x3f) << 0xc) |
-              ((thirdByte & 0x3f) << 0x6) |
-              (fourthByte & 0x3f);
-            if (tempCodePoint > 0xffff && tempCodePoint < 0x110000) {
+          if ((secondByte & 0xC0) === 0x80 && (thirdByte & 0xC0) === 0x80 && (fourthByte & 0xC0) === 0x80) {
+            tempCodePoint = (firstByte & 0xF) << 0x12 | (secondByte & 0x3F) << 0xC | (thirdByte & 0x3F) << 0x6 | (fourthByte & 0x3F);
+            if (tempCodePoint > 0xFFFF && tempCodePoint < 0x110000) {
               codePoint = tempCodePoint;
             }
           }
@@ -1295,20 +1185,20 @@ function utf8Slice(buf, start, end) {
     if (codePoint === null) {
       // we did not generate a valid codePoint so insert a
       // replacement char (U+FFFD) and advance only 1 byte
-      codePoint = 0xfffd;
+      codePoint = 0xFFFD;
       bytesPerSequence = 1;
-    } else if (codePoint > 0xffff) {
+    } else if (codePoint > 0xFFFF) {
       // encode to utf16 (surrogate pair dance)
       codePoint -= 0x10000;
-      res.push(((codePoint >>> 10) & 0x3ff) | 0xd800);
-      codePoint = 0xdc00 | (codePoint & 0x3ff);
+      res.push(codePoint >>> 10 & 0x3FF | 0xD800);
+      codePoint = 0xDC00 | codePoint & 0x3FF;
     }
 
     res.push(codePoint);
     i += bytesPerSequence;
   }
 
-  return decodeCodePointsArray(res);
+  return decodeCodePointsArray(res)
 }
 
 // Based on http://stackoverflow.com/a/22747272/680742, the browser with
@@ -1316,10 +1206,10 @@ function utf8Slice(buf, start, end) {
 // We go 1 magnitude less, for safety
 var MAX_ARGUMENTS_LENGTH = 0x1000;
 
-function decodeCodePointsArray(codePoints) {
+function decodeCodePointsArray (codePoints) {
   var len = codePoints.length;
   if (len <= MAX_ARGUMENTS_LENGTH) {
-    return String.fromCharCode.apply(String, codePoints); // avoid extra slice()
+    return String.fromCharCode.apply(String, codePoints) // avoid extra slice()
   }
 
   // Decode in chunks to avoid "call stack size exceeded".
@@ -1328,33 +1218,33 @@ function decodeCodePointsArray(codePoints) {
   while (i < len) {
     res += String.fromCharCode.apply(
       String,
-      codePoints.slice(i, (i += MAX_ARGUMENTS_LENGTH))
+      codePoints.slice(i, i += MAX_ARGUMENTS_LENGTH)
     );
   }
-  return res;
+  return res
 }
 
-function asciiSlice(buf, start, end) {
+function asciiSlice (buf, start, end) {
   var ret = '';
   end = Math.min(buf.length, end);
 
   for (var i = start; i < end; ++i) {
-    ret += String.fromCharCode(buf[i] & 0x7f);
+    ret += String.fromCharCode(buf[i] & 0x7F);
   }
-  return ret;
+  return ret
 }
 
-function latin1Slice(buf, start, end) {
+function latin1Slice (buf, start, end) {
   var ret = '';
   end = Math.min(buf.length, end);
 
   for (var i = start; i < end; ++i) {
     ret += String.fromCharCode(buf[i]);
   }
-  return ret;
+  return ret
 }
 
-function hexSlice(buf, start, end) {
+function hexSlice (buf, start, end) {
   var len = buf.length;
 
   if (!start || start < 0) start = 0;
@@ -1364,19 +1254,19 @@ function hexSlice(buf, start, end) {
   for (var i = start; i < end; ++i) {
     out += toHex$1(buf[i]);
   }
-  return out;
+  return out
 }
 
-function utf16leSlice(buf, start, end) {
+function utf16leSlice (buf, start, end) {
   var bytes = buf.slice(start, end);
   var res = '';
   for (var i = 0; i < bytes.length; i += 2) {
     res += String.fromCharCode(bytes[i] + bytes[i + 1] * 256);
   }
-  return res;
+  return res
 }
 
-Buffer$4.prototype.slice = function slice(start, end) {
+Buffer$4.prototype.slice = function slice (start, end) {
   var len = this.length;
   start = ~~start;
   end = end === undefined ? len : ~~end;
@@ -1409,24 +1299,18 @@ Buffer$4.prototype.slice = function slice(start, end) {
     }
   }
 
-  return newBuf;
+  return newBuf
 };
 
 /*
  * Need to make sure that buffer isn't trying to write out of bounds.
  */
-function checkOffset(offset, ext, length) {
-  if (offset % 1 !== 0 || offset < 0)
-    throw new RangeError('offset is not uint');
-  if (offset + ext > length)
-    throw new RangeError('Trying to access beyond buffer length');
+function checkOffset (offset, ext, length) {
+  if ((offset % 1) !== 0 || offset < 0) throw new RangeError('offset is not uint')
+  if (offset + ext > length) throw new RangeError('Trying to access beyond buffer length')
 }
 
-Buffer$4.prototype.readUIntLE = function readUIntLE(
-  offset,
-  byteLength,
-  noAssert
-) {
+Buffer$4.prototype.readUIntLE = function readUIntLE (offset, byteLength, noAssert) {
   offset = offset | 0;
   byteLength = byteLength | 0;
   if (!noAssert) checkOffset(offset, byteLength, this.length);
@@ -1438,14 +1322,10 @@ Buffer$4.prototype.readUIntLE = function readUIntLE(
     val += this[offset + i] * mul;
   }
 
-  return val;
+  return val
 };
 
-Buffer$4.prototype.readUIntBE = function readUIntBE(
-  offset,
-  byteLength,
-  noAssert
-) {
+Buffer$4.prototype.readUIntBE = function readUIntBE (offset, byteLength, noAssert) {
   offset = offset | 0;
   byteLength = byteLength | 0;
   if (!noAssert) {
@@ -1458,47 +1338,43 @@ Buffer$4.prototype.readUIntBE = function readUIntBE(
     val += this[offset + --byteLength] * mul;
   }
 
-  return val;
+  return val
 };
 
-Buffer$4.prototype.readUInt8 = function readUInt8(offset, noAssert) {
+Buffer$4.prototype.readUInt8 = function readUInt8 (offset, noAssert) {
   if (!noAssert) checkOffset(offset, 1, this.length);
-  return this[offset];
+  return this[offset]
 };
 
-Buffer$4.prototype.readUInt16LE = function readUInt16LE(offset, noAssert) {
+Buffer$4.prototype.readUInt16LE = function readUInt16LE (offset, noAssert) {
   if (!noAssert) checkOffset(offset, 2, this.length);
-  return this[offset] | (this[offset + 1] << 8);
+  return this[offset] | (this[offset + 1] << 8)
 };
 
-Buffer$4.prototype.readUInt16BE = function readUInt16BE(offset, noAssert) {
+Buffer$4.prototype.readUInt16BE = function readUInt16BE (offset, noAssert) {
   if (!noAssert) checkOffset(offset, 2, this.length);
-  return (this[offset] << 8) | this[offset + 1];
+  return (this[offset] << 8) | this[offset + 1]
 };
 
-Buffer$4.prototype.readUInt32LE = function readUInt32LE(offset, noAssert) {
+Buffer$4.prototype.readUInt32LE = function readUInt32LE (offset, noAssert) {
   if (!noAssert) checkOffset(offset, 4, this.length);
 
-  return (
-    (this[offset] | (this[offset + 1] << 8) | (this[offset + 2] << 16)) +
-    this[offset + 3] * 0x1000000
-  );
+  return ((this[offset]) |
+      (this[offset + 1] << 8) |
+      (this[offset + 2] << 16)) +
+      (this[offset + 3] * 0x1000000)
 };
 
-Buffer$4.prototype.readUInt32BE = function readUInt32BE(offset, noAssert) {
+Buffer$4.prototype.readUInt32BE = function readUInt32BE (offset, noAssert) {
   if (!noAssert) checkOffset(offset, 4, this.length);
 
-  return (
-    this[offset] * 0x1000000 +
-    ((this[offset + 1] << 16) | (this[offset + 2] << 8) | this[offset + 3])
-  );
+  return (this[offset] * 0x1000000) +
+    ((this[offset + 1] << 16) |
+    (this[offset + 2] << 8) |
+    this[offset + 3])
 };
 
-Buffer$4.prototype.readIntLE = function readIntLE(
-  offset,
-  byteLength,
-  noAssert
-) {
+Buffer$4.prototype.readIntLE = function readIntLE (offset, byteLength, noAssert) {
   offset = offset | 0;
   byteLength = byteLength | 0;
   if (!noAssert) checkOffset(offset, byteLength, this.length);
@@ -1513,14 +1389,10 @@ Buffer$4.prototype.readIntLE = function readIntLE(
 
   if (val >= mul) val -= Math.pow(2, 8 * byteLength);
 
-  return val;
+  return val
 };
 
-Buffer$4.prototype.readIntBE = function readIntBE(
-  offset,
-  byteLength,
-  noAssert
-) {
+Buffer$4.prototype.readIntBE = function readIntBE (offset, byteLength, noAssert) {
   offset = offset | 0;
   byteLength = byteLength | 0;
   if (!noAssert) checkOffset(offset, byteLength, this.length);
@@ -1535,83 +1407,72 @@ Buffer$4.prototype.readIntBE = function readIntBE(
 
   if (val >= mul) val -= Math.pow(2, 8 * byteLength);
 
-  return val;
+  return val
 };
 
-Buffer$4.prototype.readInt8 = function readInt8(offset, noAssert) {
+Buffer$4.prototype.readInt8 = function readInt8 (offset, noAssert) {
   if (!noAssert) checkOffset(offset, 1, this.length);
-  if (!(this[offset] & 0x80)) return this[offset];
-  return (0xff - this[offset] + 1) * -1;
+  if (!(this[offset] & 0x80)) return (this[offset])
+  return ((0xff - this[offset] + 1) * -1)
 };
 
-Buffer$4.prototype.readInt16LE = function readInt16LE(offset, noAssert) {
+Buffer$4.prototype.readInt16LE = function readInt16LE (offset, noAssert) {
   if (!noAssert) checkOffset(offset, 2, this.length);
   var val = this[offset] | (this[offset + 1] << 8);
-  return val & 0x8000 ? val | 0xffff0000 : val;
+  return (val & 0x8000) ? val | 0xFFFF0000 : val
 };
 
-Buffer$4.prototype.readInt16BE = function readInt16BE(offset, noAssert) {
+Buffer$4.prototype.readInt16BE = function readInt16BE (offset, noAssert) {
   if (!noAssert) checkOffset(offset, 2, this.length);
   var val = this[offset + 1] | (this[offset] << 8);
-  return val & 0x8000 ? val | 0xffff0000 : val;
+  return (val & 0x8000) ? val | 0xFFFF0000 : val
 };
 
-Buffer$4.prototype.readInt32LE = function readInt32LE(offset, noAssert) {
+Buffer$4.prototype.readInt32LE = function readInt32LE (offset, noAssert) {
   if (!noAssert) checkOffset(offset, 4, this.length);
 
-  return (
-    this[offset] |
+  return (this[offset]) |
     (this[offset + 1] << 8) |
     (this[offset + 2] << 16) |
     (this[offset + 3] << 24)
-  );
 };
 
-Buffer$4.prototype.readInt32BE = function readInt32BE(offset, noAssert) {
+Buffer$4.prototype.readInt32BE = function readInt32BE (offset, noAssert) {
   if (!noAssert) checkOffset(offset, 4, this.length);
 
-  return (
-    (this[offset] << 24) |
+  return (this[offset] << 24) |
     (this[offset + 1] << 16) |
     (this[offset + 2] << 8) |
-    this[offset + 3]
-  );
+    (this[offset + 3])
 };
 
-Buffer$4.prototype.readFloatLE = function readFloatLE(offset, noAssert) {
+Buffer$4.prototype.readFloatLE = function readFloatLE (offset, noAssert) {
   if (!noAssert) checkOffset(offset, 4, this.length);
-  return read(this, offset, true, 23, 4);
+  return read(this, offset, true, 23, 4)
 };
 
-Buffer$4.prototype.readFloatBE = function readFloatBE(offset, noAssert) {
+Buffer$4.prototype.readFloatBE = function readFloatBE (offset, noAssert) {
   if (!noAssert) checkOffset(offset, 4, this.length);
-  return read(this, offset, false, 23, 4);
+  return read(this, offset, false, 23, 4)
 };
 
-Buffer$4.prototype.readDoubleLE = function readDoubleLE(offset, noAssert) {
+Buffer$4.prototype.readDoubleLE = function readDoubleLE (offset, noAssert) {
   if (!noAssert) checkOffset(offset, 8, this.length);
-  return read(this, offset, true, 52, 8);
+  return read(this, offset, true, 52, 8)
 };
 
-Buffer$4.prototype.readDoubleBE = function readDoubleBE(offset, noAssert) {
+Buffer$4.prototype.readDoubleBE = function readDoubleBE (offset, noAssert) {
   if (!noAssert) checkOffset(offset, 8, this.length);
-  return read(this, offset, false, 52, 8);
+  return read(this, offset, false, 52, 8)
 };
 
-function checkInt(buf, value, offset, ext, max, min) {
-  if (!internalIsBuffer(buf))
-    throw new TypeError('"buffer" argument must be a Buffer instance');
-  if (value > max || value < min)
-    throw new RangeError('"value" argument is out of bounds');
-  if (offset + ext > buf.length) throw new RangeError('Index out of range');
+function checkInt (buf, value, offset, ext, max, min) {
+  if (!internalIsBuffer(buf)) throw new TypeError('"buffer" argument must be a Buffer instance')
+  if (value > max || value < min) throw new RangeError('"value" argument is out of bounds')
+  if (offset + ext > buf.length) throw new RangeError('Index out of range')
 }
 
-Buffer$4.prototype.writeUIntLE = function writeUIntLE(
-  value,
-  offset,
-  byteLength,
-  noAssert
-) {
+Buffer$4.prototype.writeUIntLE = function writeUIntLE (value, offset, byteLength, noAssert) {
   value = +value;
   offset = offset | 0;
   byteLength = byteLength | 0;
@@ -1622,20 +1483,15 @@ Buffer$4.prototype.writeUIntLE = function writeUIntLE(
 
   var mul = 1;
   var i = 0;
-  this[offset] = value & 0xff;
+  this[offset] = value & 0xFF;
   while (++i < byteLength && (mul *= 0x100)) {
-    this[offset + i] = (value / mul) & 0xff;
+    this[offset + i] = (value / mul) & 0xFF;
   }
 
-  return offset + byteLength;
+  return offset + byteLength
 };
 
-Buffer$4.prototype.writeUIntBE = function writeUIntBE(
-  value,
-  offset,
-  byteLength,
-  noAssert
-) {
+Buffer$4.prototype.writeUIntBE = function writeUIntBE (value, offset, byteLength, noAssert) {
   value = +value;
   offset = offset | 0;
   byteLength = byteLength | 0;
@@ -1646,117 +1502,95 @@ Buffer$4.prototype.writeUIntBE = function writeUIntBE(
 
   var i = byteLength - 1;
   var mul = 1;
-  this[offset + i] = value & 0xff;
+  this[offset + i] = value & 0xFF;
   while (--i >= 0 && (mul *= 0x100)) {
-    this[offset + i] = (value / mul) & 0xff;
+    this[offset + i] = (value / mul) & 0xFF;
   }
 
-  return offset + byteLength;
+  return offset + byteLength
 };
 
-Buffer$4.prototype.writeUInt8 = function writeUInt8(value, offset, noAssert) {
+Buffer$4.prototype.writeUInt8 = function writeUInt8 (value, offset, noAssert) {
   value = +value;
   offset = offset | 0;
   if (!noAssert) checkInt(this, value, offset, 1, 0xff, 0);
   if (!Buffer$4.TYPED_ARRAY_SUPPORT) value = Math.floor(value);
-  this[offset] = value & 0xff;
-  return offset + 1;
+  this[offset] = (value & 0xff);
+  return offset + 1
 };
 
-function objectWriteUInt16(buf, value, offset, littleEndian) {
+function objectWriteUInt16 (buf, value, offset, littleEndian) {
   if (value < 0) value = 0xffff + value + 1;
   for (var i = 0, j = Math.min(buf.length - offset, 2); i < j; ++i) {
-    buf[offset + i] =
-      (value & (0xff << (8 * (littleEndian ? i : 1 - i)))) >>>
-      ((littleEndian ? i : 1 - i) * 8);
+    buf[offset + i] = (value & (0xff << (8 * (littleEndian ? i : 1 - i)))) >>>
+      (littleEndian ? i : 1 - i) * 8;
   }
 }
 
-Buffer$4.prototype.writeUInt16LE = function writeUInt16LE(
-  value,
-  offset,
-  noAssert
-) {
+Buffer$4.prototype.writeUInt16LE = function writeUInt16LE (value, offset, noAssert) {
   value = +value;
   offset = offset | 0;
   if (!noAssert) checkInt(this, value, offset, 2, 0xffff, 0);
   if (Buffer$4.TYPED_ARRAY_SUPPORT) {
-    this[offset] = value & 0xff;
-    this[offset + 1] = value >>> 8;
+    this[offset] = (value & 0xff);
+    this[offset + 1] = (value >>> 8);
   } else {
     objectWriteUInt16(this, value, offset, true);
   }
-  return offset + 2;
+  return offset + 2
 };
 
-Buffer$4.prototype.writeUInt16BE = function writeUInt16BE(
-  value,
-  offset,
-  noAssert
-) {
+Buffer$4.prototype.writeUInt16BE = function writeUInt16BE (value, offset, noAssert) {
   value = +value;
   offset = offset | 0;
   if (!noAssert) checkInt(this, value, offset, 2, 0xffff, 0);
   if (Buffer$4.TYPED_ARRAY_SUPPORT) {
-    this[offset] = value >>> 8;
-    this[offset + 1] = value & 0xff;
+    this[offset] = (value >>> 8);
+    this[offset + 1] = (value & 0xff);
   } else {
     objectWriteUInt16(this, value, offset, false);
   }
-  return offset + 2;
+  return offset + 2
 };
 
-function objectWriteUInt32(buf, value, offset, littleEndian) {
+function objectWriteUInt32 (buf, value, offset, littleEndian) {
   if (value < 0) value = 0xffffffff + value + 1;
   for (var i = 0, j = Math.min(buf.length - offset, 4); i < j; ++i) {
-    buf[offset + i] = (value >>> ((littleEndian ? i : 3 - i) * 8)) & 0xff;
+    buf[offset + i] = (value >>> (littleEndian ? i : 3 - i) * 8) & 0xff;
   }
 }
 
-Buffer$4.prototype.writeUInt32LE = function writeUInt32LE(
-  value,
-  offset,
-  noAssert
-) {
+Buffer$4.prototype.writeUInt32LE = function writeUInt32LE (value, offset, noAssert) {
   value = +value;
   offset = offset | 0;
   if (!noAssert) checkInt(this, value, offset, 4, 0xffffffff, 0);
   if (Buffer$4.TYPED_ARRAY_SUPPORT) {
-    this[offset + 3] = value >>> 24;
-    this[offset + 2] = value >>> 16;
-    this[offset + 1] = value >>> 8;
-    this[offset] = value & 0xff;
+    this[offset + 3] = (value >>> 24);
+    this[offset + 2] = (value >>> 16);
+    this[offset + 1] = (value >>> 8);
+    this[offset] = (value & 0xff);
   } else {
     objectWriteUInt32(this, value, offset, true);
   }
-  return offset + 4;
+  return offset + 4
 };
 
-Buffer$4.prototype.writeUInt32BE = function writeUInt32BE(
-  value,
-  offset,
-  noAssert
-) {
+Buffer$4.prototype.writeUInt32BE = function writeUInt32BE (value, offset, noAssert) {
   value = +value;
   offset = offset | 0;
   if (!noAssert) checkInt(this, value, offset, 4, 0xffffffff, 0);
   if (Buffer$4.TYPED_ARRAY_SUPPORT) {
-    this[offset] = value >>> 24;
-    this[offset + 1] = value >>> 16;
-    this[offset + 2] = value >>> 8;
-    this[offset + 3] = value & 0xff;
+    this[offset] = (value >>> 24);
+    this[offset + 1] = (value >>> 16);
+    this[offset + 2] = (value >>> 8);
+    this[offset + 3] = (value & 0xff);
   } else {
     objectWriteUInt32(this, value, offset, false);
   }
-  return offset + 4;
+  return offset + 4
 };
 
-Buffer$4.prototype.writeIntLE = function writeIntLE(
-  value,
-  offset,
-  byteLength,
-  noAssert
-) {
+Buffer$4.prototype.writeIntLE = function writeIntLE (value, offset, byteLength, noAssert) {
   value = +value;
   offset = offset | 0;
   if (!noAssert) {
@@ -1768,23 +1602,18 @@ Buffer$4.prototype.writeIntLE = function writeIntLE(
   var i = 0;
   var mul = 1;
   var sub = 0;
-  this[offset] = value & 0xff;
+  this[offset] = value & 0xFF;
   while (++i < byteLength && (mul *= 0x100)) {
     if (value < 0 && sub === 0 && this[offset + i - 1] !== 0) {
       sub = 1;
     }
-    this[offset + i] = (((value / mul) >> 0) - sub) & 0xff;
+    this[offset + i] = ((value / mul) >> 0) - sub & 0xFF;
   }
 
-  return offset + byteLength;
+  return offset + byteLength
 };
 
-Buffer$4.prototype.writeIntBE = function writeIntBE(
-  value,
-  offset,
-  byteLength,
-  noAssert
-) {
+Buffer$4.prototype.writeIntBE = function writeIntBE (value, offset, byteLength, noAssert) {
   value = +value;
   offset = offset | 0;
   if (!noAssert) {
@@ -1796,155 +1625,123 @@ Buffer$4.prototype.writeIntBE = function writeIntBE(
   var i = byteLength - 1;
   var mul = 1;
   var sub = 0;
-  this[offset + i] = value & 0xff;
+  this[offset + i] = value & 0xFF;
   while (--i >= 0 && (mul *= 0x100)) {
     if (value < 0 && sub === 0 && this[offset + i + 1] !== 0) {
       sub = 1;
     }
-    this[offset + i] = (((value / mul) >> 0) - sub) & 0xff;
+    this[offset + i] = ((value / mul) >> 0) - sub & 0xFF;
   }
 
-  return offset + byteLength;
+  return offset + byteLength
 };
 
-Buffer$4.prototype.writeInt8 = function writeInt8(value, offset, noAssert) {
+Buffer$4.prototype.writeInt8 = function writeInt8 (value, offset, noAssert) {
   value = +value;
   offset = offset | 0;
   if (!noAssert) checkInt(this, value, offset, 1, 0x7f, -0x80);
   if (!Buffer$4.TYPED_ARRAY_SUPPORT) value = Math.floor(value);
   if (value < 0) value = 0xff + value + 1;
-  this[offset] = value & 0xff;
-  return offset + 1;
+  this[offset] = (value & 0xff);
+  return offset + 1
 };
 
-Buffer$4.prototype.writeInt16LE = function writeInt16LE(
-  value,
-  offset,
-  noAssert
-) {
+Buffer$4.prototype.writeInt16LE = function writeInt16LE (value, offset, noAssert) {
   value = +value;
   offset = offset | 0;
   if (!noAssert) checkInt(this, value, offset, 2, 0x7fff, -0x8000);
   if (Buffer$4.TYPED_ARRAY_SUPPORT) {
-    this[offset] = value & 0xff;
-    this[offset + 1] = value >>> 8;
+    this[offset] = (value & 0xff);
+    this[offset + 1] = (value >>> 8);
   } else {
     objectWriteUInt16(this, value, offset, true);
   }
-  return offset + 2;
+  return offset + 2
 };
 
-Buffer$4.prototype.writeInt16BE = function writeInt16BE(
-  value,
-  offset,
-  noAssert
-) {
+Buffer$4.prototype.writeInt16BE = function writeInt16BE (value, offset, noAssert) {
   value = +value;
   offset = offset | 0;
   if (!noAssert) checkInt(this, value, offset, 2, 0x7fff, -0x8000);
   if (Buffer$4.TYPED_ARRAY_SUPPORT) {
-    this[offset] = value >>> 8;
-    this[offset + 1] = value & 0xff;
+    this[offset] = (value >>> 8);
+    this[offset + 1] = (value & 0xff);
   } else {
     objectWriteUInt16(this, value, offset, false);
   }
-  return offset + 2;
+  return offset + 2
 };
 
-Buffer$4.prototype.writeInt32LE = function writeInt32LE(
-  value,
-  offset,
-  noAssert
-) {
+Buffer$4.prototype.writeInt32LE = function writeInt32LE (value, offset, noAssert) {
   value = +value;
   offset = offset | 0;
   if (!noAssert) checkInt(this, value, offset, 4, 0x7fffffff, -0x80000000);
   if (Buffer$4.TYPED_ARRAY_SUPPORT) {
-    this[offset] = value & 0xff;
-    this[offset + 1] = value >>> 8;
-    this[offset + 2] = value >>> 16;
-    this[offset + 3] = value >>> 24;
+    this[offset] = (value & 0xff);
+    this[offset + 1] = (value >>> 8);
+    this[offset + 2] = (value >>> 16);
+    this[offset + 3] = (value >>> 24);
   } else {
     objectWriteUInt32(this, value, offset, true);
   }
-  return offset + 4;
+  return offset + 4
 };
 
-Buffer$4.prototype.writeInt32BE = function writeInt32BE(
-  value,
-  offset,
-  noAssert
-) {
+Buffer$4.prototype.writeInt32BE = function writeInt32BE (value, offset, noAssert) {
   value = +value;
   offset = offset | 0;
   if (!noAssert) checkInt(this, value, offset, 4, 0x7fffffff, -0x80000000);
   if (value < 0) value = 0xffffffff + value + 1;
   if (Buffer$4.TYPED_ARRAY_SUPPORT) {
-    this[offset] = value >>> 24;
-    this[offset + 1] = value >>> 16;
-    this[offset + 2] = value >>> 8;
-    this[offset + 3] = value & 0xff;
+    this[offset] = (value >>> 24);
+    this[offset + 1] = (value >>> 16);
+    this[offset + 2] = (value >>> 8);
+    this[offset + 3] = (value & 0xff);
   } else {
     objectWriteUInt32(this, value, offset, false);
   }
-  return offset + 4;
+  return offset + 4
 };
 
-function checkIEEE754(buf, value, offset, ext, max, min) {
-  if (offset + ext > buf.length) throw new RangeError('Index out of range');
-  if (offset < 0) throw new RangeError('Index out of range');
+function checkIEEE754 (buf, value, offset, ext, max, min) {
+  if (offset + ext > buf.length) throw new RangeError('Index out of range')
+  if (offset < 0) throw new RangeError('Index out of range')
 }
 
-function writeFloat(buf, value, offset, littleEndian, noAssert) {
+function writeFloat (buf, value, offset, littleEndian, noAssert) {
   if (!noAssert) {
     checkIEEE754(buf, value, offset, 4);
   }
   write(buf, value, offset, littleEndian, 23, 4);
-  return offset + 4;
+  return offset + 4
 }
 
-Buffer$4.prototype.writeFloatLE = function writeFloatLE(
-  value,
-  offset,
-  noAssert
-) {
-  return writeFloat(this, value, offset, true, noAssert);
+Buffer$4.prototype.writeFloatLE = function writeFloatLE (value, offset, noAssert) {
+  return writeFloat(this, value, offset, true, noAssert)
 };
 
-Buffer$4.prototype.writeFloatBE = function writeFloatBE(
-  value,
-  offset,
-  noAssert
-) {
-  return writeFloat(this, value, offset, false, noAssert);
+Buffer$4.prototype.writeFloatBE = function writeFloatBE (value, offset, noAssert) {
+  return writeFloat(this, value, offset, false, noAssert)
 };
 
-function writeDouble(buf, value, offset, littleEndian, noAssert) {
+function writeDouble (buf, value, offset, littleEndian, noAssert) {
   if (!noAssert) {
     checkIEEE754(buf, value, offset, 8);
   }
   write(buf, value, offset, littleEndian, 52, 8);
-  return offset + 8;
+  return offset + 8
 }
 
-Buffer$4.prototype.writeDoubleLE = function writeDoubleLE(
-  value,
-  offset,
-  noAssert
-) {
-  return writeDouble(this, value, offset, true, noAssert);
+Buffer$4.prototype.writeDoubleLE = function writeDoubleLE (value, offset, noAssert) {
+  return writeDouble(this, value, offset, true, noAssert)
 };
 
-Buffer$4.prototype.writeDoubleBE = function writeDoubleBE(
-  value,
-  offset,
-  noAssert
-) {
-  return writeDouble(this, value, offset, false, noAssert);
+Buffer$4.prototype.writeDoubleBE = function writeDoubleBE (value, offset, noAssert) {
+  return writeDouble(this, value, offset, false, noAssert)
 };
 
 // copy(targetBuffer, targetStart=0, sourceStart=0, sourceEnd=buffer.length)
-Buffer$4.prototype.copy = function copy(target, targetStart, start, end) {
+Buffer$4.prototype.copy = function copy (target, targetStart, start, end) {
   if (!start) start = 0;
   if (!end && end !== 0) end = this.length;
   if (targetStart >= target.length) targetStart = target.length;
@@ -1952,16 +1749,15 @@ Buffer$4.prototype.copy = function copy(target, targetStart, start, end) {
   if (end > 0 && end < start) end = start;
 
   // Copy 0 bytes; we're done
-  if (end === start) return 0;
-  if (target.length === 0 || this.length === 0) return 0;
+  if (end === start) return 0
+  if (target.length === 0 || this.length === 0) return 0
 
   // Fatal error conditions
   if (targetStart < 0) {
-    throw new RangeError('targetStart out of bounds');
+    throw new RangeError('targetStart out of bounds')
   }
-  if (start < 0 || start >= this.length)
-    throw new RangeError('sourceStart out of bounds');
-  if (end < 0) throw new RangeError('sourceEnd out of bounds');
+  if (start < 0 || start >= this.length) throw new RangeError('sourceStart out of bounds')
+  if (end < 0) throw new RangeError('sourceEnd out of bounds')
 
   // Are we oob?
   if (end > this.length) end = this.length;
@@ -1990,14 +1786,14 @@ Buffer$4.prototype.copy = function copy(target, targetStart, start, end) {
     );
   }
 
-  return len;
+  return len
 };
 
 // Usage:
 //    buffer.fill(number[, offset[, end]])
 //    buffer.fill(buffer[, offset[, end]])
 //    buffer.fill(string[, offset[, end]][, encoding])
-Buffer$4.prototype.fill = function fill(val, start, end, encoding) {
+Buffer$4.prototype.fill = function fill (val, start, end, encoding) {
   // Handle string cases:
   if (typeof val === 'string') {
     if (typeof start === 'string') {
@@ -2015,10 +1811,10 @@ Buffer$4.prototype.fill = function fill(val, start, end, encoding) {
       }
     }
     if (encoding !== undefined && typeof encoding !== 'string') {
-      throw new TypeError('encoding must be a string');
+      throw new TypeError('encoding must be a string')
     }
     if (typeof encoding === 'string' && !Buffer$4.isEncoding(encoding)) {
-      throw new TypeError('Unknown encoding: ' + encoding);
+      throw new TypeError('Unknown encoding: ' + encoding)
     }
   } else if (typeof val === 'number') {
     val = val & 255;
@@ -2026,11 +1822,11 @@ Buffer$4.prototype.fill = function fill(val, start, end, encoding) {
 
   // Invalid ranges are not set to a default, so can range check early.
   if (start < 0 || this.length < start || this.length < end) {
-    throw new RangeError('Out of range index');
+    throw new RangeError('Out of range index')
   }
 
   if (end <= start) {
-    return this;
+    return this
   }
 
   start = start >>> 0;
@@ -2053,7 +1849,7 @@ Buffer$4.prototype.fill = function fill(val, start, end, encoding) {
     }
   }
 
-  return this;
+  return this
 };
 
 // HELPER FUNCTIONS
@@ -2061,29 +1857,29 @@ Buffer$4.prototype.fill = function fill(val, start, end, encoding) {
 
 var INVALID_BASE64_RE = /[^+\/0-9A-Za-z-_]/g;
 
-function base64clean(str) {
+function base64clean (str) {
   // Node strips out invalid characters like \n and \t from the string, base64-js does not
   str = stringtrim(str).replace(INVALID_BASE64_RE, '');
   // Node converts strings with length < 2 to ''
-  if (str.length < 2) return '';
+  if (str.length < 2) return ''
   // Node allows for non-padded base64 strings (missing trailing ===), base64-js does not
   while (str.length % 4 !== 0) {
     str = str + '=';
   }
-  return str;
+  return str
 }
 
-function stringtrim(str) {
-  if (str.trim) return str.trim();
-  return str.replace(/^\s+|\s+$/g, '');
+function stringtrim (str) {
+  if (str.trim) return str.trim()
+  return str.replace(/^\s+|\s+$/g, '')
 }
 
-function toHex$1(n) {
-  if (n < 16) return '0' + n.toString(16);
-  return n.toString(16);
+function toHex$1 (n) {
+  if (n < 16) return '0' + n.toString(16)
+  return n.toString(16)
 }
 
-function utf8ToBytes(string, units) {
+function utf8ToBytes (string, units) {
   units = units || Infinity;
   var codePoint;
   var length = string.length;
@@ -2094,87 +1890,89 @@ function utf8ToBytes(string, units) {
     codePoint = string.charCodeAt(i);
 
     // is surrogate component
-    if (codePoint > 0xd7ff && codePoint < 0xe000) {
+    if (codePoint > 0xD7FF && codePoint < 0xE000) {
       // last char was a lead
       if (!leadSurrogate) {
         // no lead yet
-        if (codePoint > 0xdbff) {
+        if (codePoint > 0xDBFF) {
           // unexpected trail
-          if ((units -= 3) > -1) bytes.push(0xef, 0xbf, 0xbd);
-          continue;
+          if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD);
+          continue
         } else if (i + 1 === length) {
           // unpaired lead
-          if ((units -= 3) > -1) bytes.push(0xef, 0xbf, 0xbd);
-          continue;
+          if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD);
+          continue
         }
 
         // valid lead
         leadSurrogate = codePoint;
 
-        continue;
+        continue
       }
 
       // 2 leads in a row
-      if (codePoint < 0xdc00) {
-        if ((units -= 3) > -1) bytes.push(0xef, 0xbf, 0xbd);
+      if (codePoint < 0xDC00) {
+        if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD);
         leadSurrogate = codePoint;
-        continue;
+        continue
       }
 
       // valid surrogate pair
-      codePoint =
-        (((leadSurrogate - 0xd800) << 10) | (codePoint - 0xdc00)) + 0x10000;
+      codePoint = (leadSurrogate - 0xD800 << 10 | codePoint - 0xDC00) + 0x10000;
     } else if (leadSurrogate) {
       // valid bmp char, but last char was a lead
-      if ((units -= 3) > -1) bytes.push(0xef, 0xbf, 0xbd);
+      if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD);
     }
 
     leadSurrogate = null;
 
     // encode utf8
     if (codePoint < 0x80) {
-      if ((units -= 1) < 0) break;
+      if ((units -= 1) < 0) break
       bytes.push(codePoint);
     } else if (codePoint < 0x800) {
-      if ((units -= 2) < 0) break;
-      bytes.push((codePoint >> 0x6) | 0xc0, (codePoint & 0x3f) | 0x80);
-    } else if (codePoint < 0x10000) {
-      if ((units -= 3) < 0) break;
+      if ((units -= 2) < 0) break
       bytes.push(
-        (codePoint >> 0xc) | 0xe0,
-        ((codePoint >> 0x6) & 0x3f) | 0x80,
-        (codePoint & 0x3f) | 0x80
+        codePoint >> 0x6 | 0xC0,
+        codePoint & 0x3F | 0x80
+      );
+    } else if (codePoint < 0x10000) {
+      if ((units -= 3) < 0) break
+      bytes.push(
+        codePoint >> 0xC | 0xE0,
+        codePoint >> 0x6 & 0x3F | 0x80,
+        codePoint & 0x3F | 0x80
       );
     } else if (codePoint < 0x110000) {
-      if ((units -= 4) < 0) break;
+      if ((units -= 4) < 0) break
       bytes.push(
-        (codePoint >> 0x12) | 0xf0,
-        ((codePoint >> 0xc) & 0x3f) | 0x80,
-        ((codePoint >> 0x6) & 0x3f) | 0x80,
-        (codePoint & 0x3f) | 0x80
+        codePoint >> 0x12 | 0xF0,
+        codePoint >> 0xC & 0x3F | 0x80,
+        codePoint >> 0x6 & 0x3F | 0x80,
+        codePoint & 0x3F | 0x80
       );
     } else {
-      throw new Error('Invalid code point');
+      throw new Error('Invalid code point')
     }
   }
 
-  return bytes;
+  return bytes
 }
 
-function asciiToBytes(str) {
+function asciiToBytes (str) {
   var byteArray = [];
   for (var i = 0; i < str.length; ++i) {
     // Node's code seems to be doing this and not & 0x7F..
-    byteArray.push(str.charCodeAt(i) & 0xff);
+    byteArray.push(str.charCodeAt(i) & 0xFF);
   }
-  return byteArray;
+  return byteArray
 }
 
-function utf16leToBytes(str, units) {
+function utf16leToBytes (str, units) {
   var c, hi, lo;
   var byteArray = [];
   for (var i = 0; i < str.length; ++i) {
-    if ((units -= 2) < 0) break;
+    if ((units -= 2) < 0) break
 
     c = str.charCodeAt(i);
     hi = c >> 8;
@@ -2183,84 +1981,61 @@ function utf16leToBytes(str, units) {
     byteArray.push(hi);
   }
 
-  return byteArray;
+  return byteArray
 }
 
-function base64ToBytes(str) {
-  return toByteArray$1(base64clean(str));
+
+function base64ToBytes (str) {
+  return toByteArray$1(base64clean(str))
 }
 
-function blitBuffer(src, dst, offset, length) {
+function blitBuffer (src, dst, offset, length) {
   for (var i = 0; i < length; ++i) {
-    if (i + offset >= dst.length || i >= src.length) break;
+    if ((i + offset >= dst.length) || (i >= src.length)) break
     dst[i + offset] = src[i];
   }
-  return i;
+  return i
 }
 
-function isnan(val) {
-  return val !== val; // eslint-disable-line no-self-compare
+function isnan (val) {
+  return val !== val // eslint-disable-line no-self-compare
 }
+
 
 // the following is from is-buffer, also by Feross Aboukhadijeh and with same lisence
 // The _isBuffer check is for Safari 5-7 support, because it's missing
 // Object.prototype.constructor. Remove this eventually
 function isBuffer(obj) {
-  return (
-    obj != null && (!!obj._isBuffer || isFastBuffer(obj) || isSlowBuffer(obj))
-  );
+  return obj != null && (!!obj._isBuffer || isFastBuffer(obj) || isSlowBuffer(obj))
 }
 
-function isFastBuffer(obj) {
-  return (
-    !!obj.constructor &&
-    typeof obj.constructor.isBuffer === 'function' &&
-    obj.constructor.isBuffer(obj)
-  );
+function isFastBuffer (obj) {
+  return !!obj.constructor && typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj)
 }
 
 // For Node v0.10 support. Remove this eventually.
-function isSlowBuffer(obj) {
-  return (
-    typeof obj.readFloatLE === 'function' &&
-    typeof obj.slice === 'function' &&
-    isFastBuffer(obj.slice(0, 0))
-  );
+function isSlowBuffer (obj) {
+  return typeof obj.readFloatLE === 'function' && typeof obj.slice === 'function' && isFastBuffer(obj.slice(0, 0))
 }
 
-var commonjsGlobal =
-  typeof globalThis !== 'undefined'
-    ? globalThis
-    : typeof window !== 'undefined'
-    ? window
-    : typeof global !== 'undefined'
-    ? global
-    : typeof self !== 'undefined'
-    ? self
-    : {};
+var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
 function getAugmentedNamespace(n) {
-  if (n.__esModule) return n;
-  var a = Object.defineProperty({}, '__esModule', { value: true });
-  Object.keys(n).forEach(function(k) {
-    var d = Object.getOwnPropertyDescriptor(n, k);
-    Object.defineProperty(
-      a,
-      k,
-      d.get
-        ? d
-        : {
-            enumerable: true,
-            get: function() {
-              return n[k];
-            }
-          }
-    );
-  });
-  return a;
+	if (n.__esModule) return n;
+	var a = Object.defineProperty({}, '__esModule', {value: true});
+	Object.keys(n).forEach(function (k) {
+		var d = Object.getOwnPropertyDescriptor(n, k);
+		Object.defineProperty(a, k, d.get ? d : {
+			enumerable: true,
+			get: function () {
+				return n[k];
+			}
+		});
+	});
+	return a;
 }
 
-var readableBrowser = { exports: {} };
+var readableBrowser = {exports: {}};
 
 var _registry = {};
 
@@ -2268,72 +2043,71 @@ var _registry = {};
 // based off https://github.com/defunctzombie/node-process/blob/master/browser.js
 
 function defaultSetTimout() {
-  throw new Error('setTimeout has not been defined');
+    throw new Error('setTimeout has not been defined');
 }
-function defaultClearTimeout() {
-  throw new Error('clearTimeout has not been defined');
+function defaultClearTimeout () {
+    throw new Error('clearTimeout has not been defined');
 }
 var cachedSetTimeout = defaultSetTimout;
 var cachedClearTimeout = defaultClearTimeout;
 if (typeof global$1.setTimeout === 'function') {
-  cachedSetTimeout = setTimeout;
+    cachedSetTimeout = setTimeout;
 }
 if (typeof global$1.clearTimeout === 'function') {
-  cachedClearTimeout = clearTimeout;
+    cachedClearTimeout = clearTimeout;
 }
 
 function runTimeout(fun) {
-  if (cachedSetTimeout === setTimeout) {
-    //normal enviroments in sane situations
-    return setTimeout(fun, 0);
-  }
-  // if setTimeout wasn't available but was latter defined
-  if (
-    (cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) &&
-    setTimeout
-  ) {
-    cachedSetTimeout = setTimeout;
-    return setTimeout(fun, 0);
-  }
-  try {
-    // when when somebody has screwed with setTimeout but no I.E. maddness
-    return cachedSetTimeout(fun, 0);
-  } catch (e) {
-    try {
-      // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
-      return cachedSetTimeout.call(null, fun, 0);
-    } catch (e) {
-      // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
-      return cachedSetTimeout.call(this, fun, 0);
+    if (cachedSetTimeout === setTimeout) {
+        //normal enviroments in sane situations
+        return setTimeout(fun, 0);
     }
-  }
+    // if setTimeout wasn't available but was latter defined
+    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
+        cachedSetTimeout = setTimeout;
+        return setTimeout(fun, 0);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedSetTimeout(fun, 0);
+    } catch(e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
+            return cachedSetTimeout.call(null, fun, 0);
+        } catch(e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
+            return cachedSetTimeout.call(this, fun, 0);
+        }
+    }
+
+
 }
 function runClearTimeout(marker) {
-  if (cachedClearTimeout === clearTimeout) {
-    //normal enviroments in sane situations
-    return clearTimeout(marker);
-  }
-  // if clearTimeout wasn't available but was latter defined
-  if (
-    (cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) &&
-    clearTimeout
-  ) {
-    cachedClearTimeout = clearTimeout;
-    return clearTimeout(marker);
-  }
-  try {
-    // when when somebody has screwed with setTimeout but no I.E. maddness
-    return cachedClearTimeout(marker);
-  } catch (e) {
-    try {
-      // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
-      return cachedClearTimeout.call(null, marker);
-    } catch (e) {
-      // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
-      // Some versions of I.E. have different rules for clearTimeout vs setTimeout
-      return cachedClearTimeout.call(this, marker);
+    if (cachedClearTimeout === clearTimeout) {
+        //normal enviroments in sane situations
+        return clearTimeout(marker);
     }
-  }
+    // if clearTimeout wasn't available but was latter defined
+    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
+        cachedClearTimeout = clearTimeout;
+        return clearTimeout(marker);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedClearTimeout(marker);
+    } catch (e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
+            return cachedClearTimeout.call(null, marker);
+        } catch (e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
+            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
+            return cachedClearTimeout.call(this, marker);
+        }
+    }
+
+
+
 }
 var queue = [];
 var draining = false;
@@ -2341,62 +2115,62 @@ var currentQueue;
 var queueIndex = -1;
 
 function cleanUpNextTick() {
-  if (!draining || !currentQueue) {
-    return;
-  }
-  draining = false;
-  if (currentQueue.length) {
-    queue = currentQueue.concat(queue);
-  } else {
-    queueIndex = -1;
-  }
-  if (queue.length) {
-    drainQueue();
-  }
+    if (!draining || !currentQueue) {
+        return;
+    }
+    draining = false;
+    if (currentQueue.length) {
+        queue = currentQueue.concat(queue);
+    } else {
+        queueIndex = -1;
+    }
+    if (queue.length) {
+        drainQueue();
+    }
 }
 
 function drainQueue() {
-  if (draining) {
-    return;
-  }
-  var timeout = runTimeout(cleanUpNextTick);
-  draining = true;
-
-  var len = queue.length;
-  while (len) {
-    currentQueue = queue;
-    queue = [];
-    while (++queueIndex < len) {
-      if (currentQueue) {
-        currentQueue[queueIndex].run();
-      }
+    if (draining) {
+        return;
     }
-    queueIndex = -1;
-    len = queue.length;
-  }
-  currentQueue = null;
-  draining = false;
-  runClearTimeout(timeout);
+    var timeout = runTimeout(cleanUpNextTick);
+    draining = true;
+
+    var len = queue.length;
+    while(len) {
+        currentQueue = queue;
+        queue = [];
+        while (++queueIndex < len) {
+            if (currentQueue) {
+                currentQueue[queueIndex].run();
+            }
+        }
+        queueIndex = -1;
+        len = queue.length;
+    }
+    currentQueue = null;
+    draining = false;
+    runClearTimeout(timeout);
 }
 function nextTick(fun) {
-  var args = new Array(arguments.length - 1);
-  if (arguments.length > 1) {
-    for (var i = 1; i < arguments.length; i++) {
-      args[i - 1] = arguments[i];
+    var args = new Array(arguments.length - 1);
+    if (arguments.length > 1) {
+        for (var i = 1; i < arguments.length; i++) {
+            args[i - 1] = arguments[i];
+        }
     }
-  }
-  queue.push(new Item(fun, args));
-  if (queue.length === 1 && !draining) {
-    runTimeout(drainQueue);
-  }
+    queue.push(new Item(fun, args));
+    if (queue.length === 1 && !draining) {
+        runTimeout(drainQueue);
+    }
 }
 // v8 likes predictible objects
 function Item(fun, array) {
-  this.fun = fun;
-  this.array = array;
+    this.fun = fun;
+    this.array = array;
 }
-Item.prototype.run = function() {
-  this.fun.apply(null, this.array);
+Item.prototype.run = function () {
+    this.fun.apply(null, this.array);
 };
 var title = 'browser';
 var platform = 'browser';
@@ -2419,46 +2193,39 @@ var removeAllListeners = noop$2;
 var emit = noop$2;
 
 function binding$1(name) {
-  throw new Error('process.binding is not supported');
+    throw new Error('process.binding is not supported');
 }
 
-function cwd() {
-  return '/';
-}
-function chdir(dir) {
-  throw new Error('process.chdir is not supported');
-}
-function umask() {
-  return 0;
-}
+function cwd () { return '/' }
+function chdir (dir) {
+    throw new Error('process.chdir is not supported');
+}function umask() { return 0; }
 
 // from https://github.com/kumavis/browser-process-hrtime/blob/master/index.js
 var performance = global$1.performance || {};
 var performanceNow =
-  performance.now ||
-  performance.mozNow ||
-  performance.msNow ||
-  performance.oNow ||
-  performance.webkitNow ||
-  function() {
-    return new Date().getTime();
-  };
+  performance.now        ||
+  performance.mozNow     ||
+  performance.msNow      ||
+  performance.oNow       ||
+  performance.webkitNow  ||
+  function(){ return (new Date()).getTime() };
 
 // generate timestamp or delta
 // see http://nodejs.org/api/process.html#process_process_hrtime
-function hrtime(previousTimestamp) {
-  var clocktime = performanceNow.call(performance) * 1e-3;
+function hrtime(previousTimestamp){
+  var clocktime = performanceNow.call(performance)*1e-3;
   var seconds = Math.floor(clocktime);
-  var nanoseconds = Math.floor((clocktime % 1) * 1e9);
+  var nanoseconds = Math.floor((clocktime%1)*1e9);
   if (previousTimestamp) {
     seconds = seconds - previousTimestamp[0];
     nanoseconds = nanoseconds - previousTimestamp[1];
-    if (nanoseconds < 0) {
+    if (nanoseconds<0) {
       seconds--;
       nanoseconds += 1e9;
     }
   }
-  return [seconds, nanoseconds];
+  return [seconds,nanoseconds]
 }
 
 var startTime = new Date();
@@ -2494,24 +2261,19 @@ var browser$1$1 = {
   uptime: uptime
 };
 
-var events = { exports: {} };
+var events = {exports: {}};
 
 var R = typeof Reflect === 'object' ? Reflect : null;
-var ReflectApply =
-  R && typeof R.apply === 'function'
-    ? R.apply
-    : function ReflectApply(target, receiver, args) {
-        return Function.prototype.apply.call(target, receiver, args);
-      };
+var ReflectApply = R && typeof R.apply === 'function' ? R.apply : function ReflectApply(target, receiver, args) {
+  return Function.prototype.apply.call(target, receiver, args);
+};
 var ReflectOwnKeys;
 
 if (R && typeof R.ownKeys === 'function') {
   ReflectOwnKeys = R.ownKeys;
 } else if (Object.getOwnPropertySymbols) {
   ReflectOwnKeys = function ReflectOwnKeys(target) {
-    return Object.getOwnPropertyNames(target).concat(
-      Object.getOwnPropertySymbols(target)
-    );
+    return Object.getOwnPropertyNames(target).concat(Object.getOwnPropertySymbols(target));
   };
 } else {
   ReflectOwnKeys = function ReflectOwnKeys(target) {
@@ -2523,11 +2285,9 @@ function ProcessEmitWarning(warning) {
   if (console && console.warn) console.warn(warning);
 }
 
-var NumberIsNaN =
-  Number.isNaN ||
-  function NumberIsNaN(value) {
-    return value !== value;
-  };
+var NumberIsNaN = Number.isNaN || function NumberIsNaN(value) {
+  return value !== value;
+};
 
 function EventEmitter() {
   EventEmitter.init.call(this);
@@ -2546,10 +2306,7 @@ var defaultMaxListeners = 10;
 
 function checkListener(listener) {
   if (typeof listener !== 'function') {
-    throw new TypeError(
-      'The "listener" argument must be of type Function. Received type ' +
-        typeof listener
-    );
+    throw new TypeError('The "listener" argument must be of type Function. Received type ' + typeof listener);
   }
 }
 
@@ -2560,22 +2317,15 @@ Object.defineProperty(EventEmitter, 'defaultMaxListeners', {
   },
   set: function set(arg) {
     if (typeof arg !== 'number' || arg < 0 || NumberIsNaN(arg)) {
-      throw new RangeError(
-        'The value of "defaultMaxListeners" is out of range. It must be a non-negative number. Received ' +
-          arg +
-          '.'
-      );
+      throw new RangeError('The value of "defaultMaxListeners" is out of range. It must be a non-negative number. Received ' + arg + '.');
     }
 
     defaultMaxListeners = arg;
   }
 });
 
-EventEmitter.init = function() {
-  if (
-    this._events === undefined ||
-    this._events === Object.getPrototypeOf(this)._events
-  ) {
+EventEmitter.init = function () {
+  if (this._events === undefined || this._events === Object.getPrototypeOf(this)._events) {
     this._events = Object.create(null);
     this._eventsCount = 0;
   }
@@ -2584,13 +2334,10 @@ EventEmitter.init = function() {
 }; // Obviously not all Emitters should be limited to 10. This function allows
 // that to be increased. Set to zero for unlimited.
 
+
 EventEmitter.prototype.setMaxListeners = function setMaxListeners(n) {
   if (typeof n !== 'number' || n < 0 || NumberIsNaN(n)) {
-    throw new RangeError(
-      'The value of "n" is out of range. It must be a non-negative number. Received ' +
-        n +
-        '.'
-    );
+    throw new RangeError('The value of "n" is out of range. It must be a non-negative number. Received ' + n + '.');
   }
 
   this._maxListeners = n;
@@ -2615,8 +2362,7 @@ EventEmitter.prototype.emit = function emit(type) {
 
   var doError = type === 'error';
   var events = this._events;
-  if (events !== undefined) doError = doError && events.error === undefined;
-  else if (!doError) return false; // If there is no 'error' event listener then throw.
+  if (events !== undefined) doError = doError && events.error === undefined;else if (!doError) return false; // If there is no 'error' event listener then throw.
 
   if (doError) {
     var er;
@@ -2628,9 +2374,8 @@ EventEmitter.prototype.emit = function emit(type) {
       throw er; // Unhandled 'error' event
     } // At least give some kind of context to the user
 
-    var err = new Error(
-      'Unhandled error.' + (er ? ' (' + er.message + ')' : '')
-    );
+
+    var err = new Error('Unhandled error.' + (er ? ' (' + er.message + ')' : ''));
     err.context = er;
     throw err; // Unhandled 'error' event
   }
@@ -2666,11 +2411,7 @@ function _addListener(target, type, listener, prepend) {
     // To avoid recursion in the case that type === "newListener"! Before
     // adding it to the listeners, first emit "newListener".
     if (events.newListener !== undefined) {
-      target.emit(
-        'newListener',
-        type,
-        listener.listener ? listener.listener : listener
-      ); // Re-assign `events` because a newListener handler could have caused the
+      target.emit('newListener', type, listener.listener ? listener.listener : listener); // Re-assign `events` because a newListener handler could have caused the
       // this._events to be assigned to a new object
 
       events = target._events;
@@ -2686,14 +2427,13 @@ function _addListener(target, type, listener, prepend) {
   } else {
     if (typeof existing === 'function') {
       // Adding the second element, need to change to array.
-      existing = events[type] = prepend
-        ? [listener, existing]
-        : [existing, listener]; // If we've already got an array, just append.
+      existing = events[type] = prepend ? [listener, existing] : [existing, listener]; // If we've already got an array, just append.
     } else if (prepend) {
       existing.unshift(listener);
     } else {
       existing.push(listener);
     } // Check for listener leak
+
 
     m = _getMaxListeners(target);
 
@@ -2701,15 +2441,7 @@ function _addListener(target, type, listener, prepend) {
       existing.warned = true; // No error code for this since it is a Warning
       // eslint-disable-next-line no-restricted-syntax
 
-      var w = new Error(
-        'Possible EventEmitter memory leak detected. ' +
-          existing.length +
-          ' ' +
-          String(type) +
-          ' listeners ' +
-          'added. Use emitter.setMaxListeners() to ' +
-          'increase limit'
-      );
+      var w = new Error('Possible EventEmitter memory leak detected. ' + existing.length + ' ' + String(type) + ' listeners ' + 'added. Use emitter.setMaxListeners() to ' + 'increase limit');
       w.name = 'MaxListenersExceededWarning';
       w.emitter = target;
       w.type = type;
@@ -2727,10 +2459,7 @@ EventEmitter.prototype.addListener = function addListener(type, listener) {
 
 EventEmitter.prototype.on = EventEmitter.prototype.addListener;
 
-EventEmitter.prototype.prependListener = function prependListener(
-  type,
-  listener
-) {
+EventEmitter.prototype.prependListener = function prependListener(type, listener) {
   return _addListener(this, type, listener, true);
 };
 
@@ -2763,19 +2492,14 @@ EventEmitter.prototype.once = function once(type, listener) {
   return this;
 };
 
-EventEmitter.prototype.prependOnceListener = function prependOnceListener(
-  type,
-  listener
-) {
+EventEmitter.prototype.prependOnceListener = function prependOnceListener(type, listener) {
   checkListener(listener);
   this.prependListener(type, _onceWrap(this, type, listener));
   return this;
 }; // Emits a 'removeListener' event if and only if the listener was removed.
 
-EventEmitter.prototype.removeListener = function removeListener(
-  type,
-  listener
-) {
+
+EventEmitter.prototype.removeListener = function removeListener(type, listener) {
   var list, events, position, i, originalListener;
   checkListener(listener);
   events = this._events;
@@ -2784,11 +2508,9 @@ EventEmitter.prototype.removeListener = function removeListener(
   if (list === undefined) return this;
 
   if (list === listener || list.listener === listener) {
-    if (--this._eventsCount === 0) this._events = Object.create(null);
-    else {
+    if (--this._eventsCount === 0) this._events = Object.create(null);else {
       delete events[type];
-      if (events.removeListener)
-        this.emit('removeListener', type, list.listener || listener);
+      if (events.removeListener) this.emit('removeListener', type, list.listener || listener);
     }
   } else if (typeof list !== 'function') {
     position = -1;
@@ -2802,13 +2524,11 @@ EventEmitter.prototype.removeListener = function removeListener(
     }
 
     if (position < 0) return this;
-    if (position === 0) list.shift();
-    else {
+    if (position === 0) list.shift();else {
       spliceOne(list, position);
     }
     if (list.length === 1) events[type] = list[0];
-    if (events.removeListener !== undefined)
-      this.emit('removeListener', type, originalListener || listener);
+    if (events.removeListener !== undefined) this.emit('removeListener', type, originalListener || listener);
   }
 
   return this;
@@ -2826,12 +2546,12 @@ EventEmitter.prototype.removeAllListeners = function removeAllListeners(type) {
       this._events = Object.create(null);
       this._eventsCount = 0;
     } else if (events[type] !== undefined) {
-      if (--this._eventsCount === 0) this._events = Object.create(null);
-      else delete events[type];
+      if (--this._eventsCount === 0) this._events = Object.create(null);else delete events[type];
     }
 
     return this;
   } // emit removeListener for all listeners on all events
+
 
   if (arguments.length === 0) {
     var keys = Object.keys(events);
@@ -2868,11 +2588,8 @@ function _listeners(target, type, unwrap) {
   if (events === undefined) return [];
   var evlistener = events[type];
   if (evlistener === undefined) return [];
-  if (typeof evlistener === 'function')
-    return unwrap ? [evlistener.listener || evlistener] : [evlistener];
-  return unwrap
-    ? unwrapListeners(evlistener)
-    : arrayClone(evlistener, evlistener.length);
+  if (typeof evlistener === 'function') return unwrap ? [evlistener.listener || evlistener] : [evlistener];
+  return unwrap ? unwrapListeners(evlistener) : arrayClone(evlistener, evlistener.length);
 }
 
 EventEmitter.prototype.listeners = function listeners(type) {
@@ -2883,7 +2600,7 @@ EventEmitter.prototype.rawListeners = function rawListeners(type) {
   return _listeners(this, type, false);
 };
 
-EventEmitter.listenerCount = function(emitter, type) {
+EventEmitter.listenerCount = function (emitter, type) {
   if (typeof emitter.listenerCount === 'function') {
     return emitter.listenerCount(type);
   } else {
@@ -2942,7 +2659,7 @@ function unwrapListeners(arr) {
 }
 
 function once$2(emitter, name) {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function (resolve, reject) {
     function errorListener(err) {
       emitter.removeListener(name, resolver);
       reject(err);
@@ -2993,10 +2710,7 @@ function eventTargetAgnosticAddListener(emitter, name, listener, flags) {
       listener(arg);
     });
   } else {
-    throw new TypeError(
-      'The "emitter" argument must be of type EventEmitter. Received type ' +
-        typeof emitter
-    );
+    throw new TypeError('The "emitter" argument must be of type EventEmitter. Received type ' + typeof emitter);
   }
 }
 
@@ -3020,6 +2734,7 @@ for (var i = 0, len = code.length; i < len; ++i) {
 } // Support decoding URL-safe base64 strings, as Node.js does.
 // See: https://en.wikipedia.org/wiki/Base64#URL_applications
 
+
 revLookup['-'.charCodeAt(0)] = 62;
 revLookup['_'.charCodeAt(0)] = 63;
 
@@ -3031,21 +2746,23 @@ function getLens(b64) {
   } // Trim off extra bytes after placeholder bytes are found
   // See: https://github.com/beatgammit/base64-js/issues/42
 
+
   var validLen = b64.indexOf('=');
   if (validLen === -1) validLen = len;
-  var placeHoldersLen = validLen === len ? 0 : 4 - (validLen % 4);
+  var placeHoldersLen = validLen === len ? 0 : 4 - validLen % 4;
   return [validLen, placeHoldersLen];
 } // base64 is 4/3 + up to two characters of the original data
+
 
 function byteLength(b64) {
   var lens = getLens(b64);
   var validLen = lens[0];
   var placeHoldersLen = lens[1];
-  return ((validLen + placeHoldersLen) * 3) / 4 - placeHoldersLen;
+  return (validLen + placeHoldersLen) * 3 / 4 - placeHoldersLen;
 }
 
 function _byteLength(b64, validLen, placeHoldersLen) {
-  return ((validLen + placeHoldersLen) * 3) / 4 - placeHoldersLen;
+  return (validLen + placeHoldersLen) * 3 / 4 - placeHoldersLen;
 }
 
 function toByteArray(b64) {
@@ -3060,42 +2777,28 @@ function toByteArray(b64) {
   var i;
 
   for (i = 0; i < len; i += 4) {
-    tmp =
-      (revLookup[b64.charCodeAt(i)] << 18) |
-      (revLookup[b64.charCodeAt(i + 1)] << 12) |
-      (revLookup[b64.charCodeAt(i + 2)] << 6) |
-      revLookup[b64.charCodeAt(i + 3)];
-    arr[curByte++] = (tmp >> 16) & 0xff;
-    arr[curByte++] = (tmp >> 8) & 0xff;
-    arr[curByte++] = tmp & 0xff;
+    tmp = revLookup[b64.charCodeAt(i)] << 18 | revLookup[b64.charCodeAt(i + 1)] << 12 | revLookup[b64.charCodeAt(i + 2)] << 6 | revLookup[b64.charCodeAt(i + 3)];
+    arr[curByte++] = tmp >> 16 & 0xFF;
+    arr[curByte++] = tmp >> 8 & 0xFF;
+    arr[curByte++] = tmp & 0xFF;
   }
 
   if (placeHoldersLen === 2) {
-    tmp =
-      (revLookup[b64.charCodeAt(i)] << 2) |
-      (revLookup[b64.charCodeAt(i + 1)] >> 4);
-    arr[curByte++] = tmp & 0xff;
+    tmp = revLookup[b64.charCodeAt(i)] << 2 | revLookup[b64.charCodeAt(i + 1)] >> 4;
+    arr[curByte++] = tmp & 0xFF;
   }
 
   if (placeHoldersLen === 1) {
-    tmp =
-      (revLookup[b64.charCodeAt(i)] << 10) |
-      (revLookup[b64.charCodeAt(i + 1)] << 4) |
-      (revLookup[b64.charCodeAt(i + 2)] >> 2);
-    arr[curByte++] = (tmp >> 8) & 0xff;
-    arr[curByte++] = tmp & 0xff;
+    tmp = revLookup[b64.charCodeAt(i)] << 10 | revLookup[b64.charCodeAt(i + 1)] << 4 | revLookup[b64.charCodeAt(i + 2)] >> 2;
+    arr[curByte++] = tmp >> 8 & 0xFF;
+    arr[curByte++] = tmp & 0xFF;
   }
 
   return arr;
 }
 
 function tripletToBase64(num) {
-  return (
-    lookup[(num >> 18) & 0x3f] +
-    lookup[(num >> 12) & 0x3f] +
-    lookup[(num >> 6) & 0x3f] +
-    lookup[num & 0x3f]
-  );
+  return lookup[num >> 18 & 0x3F] + lookup[num >> 12 & 0x3F] + lookup[num >> 6 & 0x3F] + lookup[num & 0x3F];
 }
 
 function encodeChunk(uint8, start, end) {
@@ -3103,10 +2806,7 @@ function encodeChunk(uint8, start, end) {
   var output = [];
 
   for (var i = start; i < end; i += 3) {
-    tmp =
-      ((uint8[i] << 16) & 0xff0000) +
-      ((uint8[i + 1] << 8) & 0xff00) +
-      (uint8[i + 2] & 0xff);
+    tmp = (uint8[i] << 16 & 0xFF0000) + (uint8[i + 1] << 8 & 0xFF00) + (uint8[i + 2] & 0xFF);
     output.push(tripletToBase64(tmp));
   }
 
@@ -3123,26 +2823,16 @@ function fromByteArray(uint8) {
   // go through the array every three bytes, we'll deal with trailing stuff later
 
   for (var i = 0, len2 = len - extraBytes; i < len2; i += maxChunkLength) {
-    parts.push(
-      encodeChunk(
-        uint8,
-        i,
-        i + maxChunkLength > len2 ? len2 : i + maxChunkLength
-      )
-    );
+    parts.push(encodeChunk(uint8, i, i + maxChunkLength > len2 ? len2 : i + maxChunkLength));
   } // pad the end with zeros, but make sure to not forget the extra bytes
+
 
   if (extraBytes === 1) {
     tmp = uint8[len - 1];
-    parts.push(lookup[tmp >> 2] + lookup[(tmp << 4) & 0x3f] + '==');
+    parts.push(lookup[tmp >> 2] + lookup[tmp << 4 & 0x3F] + '==');
   } else if (extraBytes === 2) {
     tmp = (uint8[len - 2] << 8) + uint8[len - 1];
-    parts.push(
-      lookup[tmp >> 10] +
-        lookup[(tmp >> 4) & 0x3f] +
-        lookup[(tmp << 2) & 0x3f] +
-        '='
-    );
+    parts.push(lookup[tmp >> 10] + lookup[tmp >> 4 & 0x3F] + lookup[tmp << 2 & 0x3F] + '=');
   }
 
   return parts.join('');
@@ -3152,7 +2842,7 @@ var ieee754 = {};
 
 /*! ieee754. BSD-3-Clause License. Feross Aboukhadijeh <https://feross.org/opensource> */
 
-ieee754.read = function(buffer, offset, isLE, mLen, nBytes) {
+ieee754.read = function (buffer, offset, isLE, mLen, nBytes) {
   var e, m;
   var eLen = nBytes * 8 - mLen - 1;
   var eMax = (1 << eLen) - 1;
@@ -3162,13 +2852,13 @@ ieee754.read = function(buffer, offset, isLE, mLen, nBytes) {
   var d = isLE ? -1 : 1;
   var s = buffer[offset + i];
   i += d;
-  e = s & ((1 << -nBits) - 1);
+  e = s & (1 << -nBits) - 1;
   s >>= -nBits;
   nBits += eLen;
 
   for (; nBits > 0; e = e * 256 + buffer[offset + i], i += d, nBits -= 8) {}
 
-  m = e & ((1 << -nBits) - 1);
+  m = e & (1 << -nBits) - 1;
   e >>= -nBits;
   nBits += mLen;
 
@@ -3186,7 +2876,7 @@ ieee754.read = function(buffer, offset, isLE, mLen, nBytes) {
   return (s ? -1 : 1) * m * Math.pow(2, e - mLen);
 };
 
-ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
+ieee754.write = function (buffer, value, offset, isLE, mLen, nBytes) {
   var e, m, c;
   var eLen = nBytes * 8 - mLen - 1;
   var eMax = (1 << eLen) - 1;
@@ -3194,7 +2884,7 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
   var rt = mLen === 23 ? Math.pow(2, -24) - Math.pow(2, -77) : 0;
   var i = isLE ? 0 : nBytes - 1;
   var d = isLE ? 1 : -1;
-  var s = value < 0 || (value === 0 && 1 / value < 0) ? 1 : 0;
+  var s = value < 0 || value === 0 && 1 / value < 0 ? 1 : 0;
   value = Math.abs(value);
 
   if (isNaN(value) || value === Infinity) {
@@ -3231,20 +2921,12 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
     }
   }
 
-  for (
-    ;
-    mLen >= 8;
-    buffer[offset + i] = m & 0xff, i += d, m /= 256, mLen -= 8
-  ) {}
+  for (; mLen >= 8; buffer[offset + i] = m & 0xff, i += d, m /= 256, mLen -= 8) {}
 
-  e = (e << mLen) | m;
+  e = e << mLen | m;
   eLen += mLen;
 
-  for (
-    ;
-    eLen > 0;
-    buffer[offset + i] = e & 0xff, i += d, e /= 256, eLen -= 8
-  ) {}
+  for (; eLen > 0; buffer[offset + i] = e & 0xff, i += d, e /= 256, eLen -= 8) {}
 
   buffer[offset + i - d] |= s * 128;
 };
@@ -3256,13 +2938,13 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
  * @license  MIT
  */
 
-(function(exports) {
+(function (exports) {
+
   var base64 = base64Js;
   var ieee754$1 = ieee754;
-  var customInspectSymbol =
-    typeof Symbol === 'function' && typeof Symbol['for'] === 'function' // eslint-disable-line dot-notation
-      ? Symbol['for']('nodejs.util.inspect.custom') // eslint-disable-line dot-notation
-      : null;
+  var customInspectSymbol = typeof Symbol === 'function' && typeof Symbol['for'] === 'function' // eslint-disable-line dot-notation
+  ? Symbol['for']('nodejs.util.inspect.custom') // eslint-disable-line dot-notation
+  : null;
   exports.Buffer = Buffer;
   exports.SlowBuffer = SlowBuffer;
   exports.INSPECT_MAX_BYTES = 50;
@@ -3285,15 +2967,8 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
 
   Buffer.TYPED_ARRAY_SUPPORT = typedArraySupport();
 
-  if (
-    !Buffer.TYPED_ARRAY_SUPPORT &&
-    typeof console !== 'undefined' &&
-    typeof console.error === 'function'
-  ) {
-    console.error(
-      'This browser lacks typed array (Uint8Array) support which is required by ' +
-        '`buffer` v5.x. Use `buffer` v4.x if you require old browser support.'
-    );
+  if (!Buffer.TYPED_ARRAY_SUPPORT && typeof console !== 'undefined' && typeof console.error === 'function') {
+    console.error('This browser lacks typed array (Uint8Array) support which is required by ' + '`buffer` v5.x. Use `buffer` v4.x if you require old browser support.');
   }
 
   function typedArraySupport() {
@@ -3330,10 +3005,9 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
 
   function createBuffer(length) {
     if (length > K_MAX_LENGTH) {
-      throw new RangeError(
-        'The value "' + length + '" is invalid for option "size"'
-      );
+      throw new RangeError('The value "' + length + '" is invalid for option "size"');
     } // Return an augmented `Uint8Array` instance
+
 
     var buf = new Uint8Array(length);
     Object.setPrototypeOf(buf, Buffer.prototype);
@@ -3349,13 +3023,12 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
    * The `Uint8Array` prototype remains unmodified.
    */
 
+
   function Buffer(arg, encodingOrOffset, length) {
     // Common case.
     if (typeof arg === 'number') {
       if (typeof encodingOrOffset === 'string') {
-        throw new TypeError(
-          'The "string" argument must be of type string. Received type number'
-        );
+        throw new TypeError('The "string" argument must be of type string. Received type number');
       }
 
       return allocUnsafe(arg);
@@ -3376,32 +3049,19 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
     }
 
     if (value == null) {
-      throw new TypeError(
-        'The first argument must be one of type string, Buffer, ArrayBuffer, Array, ' +
-          'or Array-like Object. Received type ' +
-          typeof value
-      );
+      throw new TypeError('The first argument must be one of type string, Buffer, ArrayBuffer, Array, ' + 'or Array-like Object. Received type ' + typeof value);
     }
 
-    if (
-      isInstance(value, ArrayBuffer) ||
-      (value && isInstance(value.buffer, ArrayBuffer))
-    ) {
+    if (isInstance(value, ArrayBuffer) || value && isInstance(value.buffer, ArrayBuffer)) {
       return fromArrayBuffer(value, encodingOrOffset, length);
     }
 
-    if (
-      typeof SharedArrayBuffer !== 'undefined' &&
-      (isInstance(value, SharedArrayBuffer) ||
-        (value && isInstance(value.buffer, SharedArrayBuffer)))
-    ) {
+    if (typeof SharedArrayBuffer !== 'undefined' && (isInstance(value, SharedArrayBuffer) || value && isInstance(value.buffer, SharedArrayBuffer))) {
       return fromArrayBuffer(value, encodingOrOffset, length);
     }
 
     if (typeof value === 'number') {
-      throw new TypeError(
-        'The "value" argument must not be of type number. Received type number'
-      );
+      throw new TypeError('The "value" argument must not be of type number. Received type number');
     }
 
     var valueOf = value.valueOf && value.valueOf();
@@ -3413,23 +3073,11 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
     var b = fromObject(value);
     if (b) return b;
 
-    if (
-      typeof Symbol !== 'undefined' &&
-      Symbol.toPrimitive != null &&
-      typeof value[Symbol.toPrimitive] === 'function'
-    ) {
-      return Buffer.from(
-        value[Symbol.toPrimitive]('string'),
-        encodingOrOffset,
-        length
-      );
+    if (typeof Symbol !== 'undefined' && Symbol.toPrimitive != null && typeof value[Symbol.toPrimitive] === 'function') {
+      return Buffer.from(value[Symbol.toPrimitive]('string'), encodingOrOffset, length);
     }
 
-    throw new TypeError(
-      'The first argument must be one of type string, Buffer, ArrayBuffer, Array, ' +
-        'or Array-like Object. Received type ' +
-        typeof value
-    );
+    throw new TypeError('The first argument must be one of type string, Buffer, ArrayBuffer, Array, ' + 'or Array-like Object. Received type ' + typeof value);
   }
   /**
    * Functionally equivalent to Buffer(arg, encoding) but throws a TypeError
@@ -3440,10 +3088,12 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
    * Buffer.from(arrayBuffer[, byteOffset[, length]])
    **/
 
-  Buffer.from = function(value, encodingOrOffset, length) {
+
+  Buffer.from = function (value, encodingOrOffset, length) {
     return from(value, encodingOrOffset, length);
   }; // Note: Change prototype *after* Buffer.from is defined to workaround Chrome bug:
   // https://github.com/feross/buffer/pull/148
+
 
   Object.setPrototypeOf(Buffer.prototype, Uint8Array.prototype);
   Object.setPrototypeOf(Buffer, Uint8Array);
@@ -3452,9 +3102,7 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
     if (typeof size !== 'number') {
       throw new TypeError('"size" argument must be of type number');
     } else if (size < 0) {
-      throw new RangeError(
-        'The value "' + size + '" is invalid for option "size"'
-      );
+      throw new RangeError('The value "' + size + '" is invalid for option "size"');
     }
   }
 
@@ -3469,9 +3117,7 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
       // Only pay attention to encoding if it's a string. This
       // prevents accidentally sending in a number that would
       // be interpreted as a start offset.
-      return typeof encoding === 'string'
-        ? createBuffer(size).fill(fill, encoding)
-        : createBuffer(size).fill(fill);
+      return typeof encoding === 'string' ? createBuffer(size).fill(fill, encoding) : createBuffer(size).fill(fill);
     }
 
     return createBuffer(size);
@@ -3481,7 +3127,8 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
    * alloc(size[, fill[, encoding]])
    **/
 
-  Buffer.alloc = function(size, fill, encoding) {
+
+  Buffer.alloc = function (size, fill, encoding) {
     return alloc(size, fill, encoding);
   };
 
@@ -3493,14 +3140,16 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
    * Equivalent to Buffer(num), by default creates a non-zero-filled Buffer instance.
    * */
 
-  Buffer.allocUnsafe = function(size) {
+
+  Buffer.allocUnsafe = function (size) {
     return allocUnsafe(size);
   };
   /**
    * Equivalent to SlowBuffer(num), by default creates a non-zero-filled Buffer instance.
    */
 
-  Buffer.allocUnsafeSlow = function(size) {
+
+  Buffer.allocUnsafeSlow = function (size) {
     return allocUnsafe(size);
   };
 
@@ -3566,6 +3215,7 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
       buf = new Uint8Array(array, byteOffset, length);
     } // Return an augmented `Uint8Array` instance
 
+
     Object.setPrototypeOf(buf, Buffer.prototype);
     return buf;
   }
@@ -3600,12 +3250,7 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
     // Note: cannot use `length < K_MAX_LENGTH` here because that fails when
     // length is NaN (which is otherwise coerced to zero.)
     if (length >= K_MAX_LENGTH) {
-      throw new RangeError(
-        'Attempt to allocate Buffer larger than maximum ' +
-          'size: 0x' +
-          K_MAX_LENGTH.toString(16) +
-          ' bytes'
-      );
+      throw new RangeError('Attempt to allocate Buffer larger than maximum ' + 'size: 0x' + K_MAX_LENGTH.toString(16) + ' bytes');
     }
 
     return length | 0;
@@ -3629,9 +3274,7 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
     if (isInstance(b, Uint8Array)) b = Buffer.from(b, b.offset, b.byteLength);
 
     if (!Buffer.isBuffer(a) || !Buffer.isBuffer(b)) {
-      throw new TypeError(
-        'The "buf1", "buf2" arguments must be one of type Buffer or Uint8Array'
-      );
+      throw new TypeError('The "buf1", "buf2" arguments must be one of type Buffer or Uint8Array');
     }
 
     if (a === b) return 0;
@@ -3724,11 +3367,7 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
     }
 
     if (typeof string !== 'string') {
-      throw new TypeError(
-        'The "string" argument must be one of type string, Buffer, or ArrayBuffer. ' +
-          'Received type ' +
-          typeof string
-      );
+      throw new TypeError('The "string" argument must be one of type string, Buffer, or ArrayBuffer. ' + 'Received type ' + typeof string);
     }
 
     var len = string.length;
@@ -3786,6 +3425,7 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
     } // Return early if start > this.length. Done here to prevent potential uint32
     // coercion fail below.
 
+
     if (start > this.length) {
       return '';
     }
@@ -3797,6 +3437,7 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
     if (end <= 0) {
       return '';
     } // Force coercion to uint32. This will also coerce falsey/NaN values to 0.
+
 
     end >>>= 0;
     start >>>= 0;
@@ -3844,6 +3485,7 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
   // copies of the 'buffer' package in use. This method works even for Buffer
   // instances that were created from another copy of the `buffer` package.
   // See: https://github.com/feross/buffer/issues/154
+
 
   Buffer.prototype._isBuffer = true;
 
@@ -3917,9 +3559,7 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
   Buffer.prototype.inspect = function inspect() {
     var str = '';
     var max = exports.INSPECT_MAX_BYTES;
-    str = this.toString('hex', 0, max)
-      .replace(/(.{2})/g, '$1 ')
-      .trim();
+    str = this.toString('hex', 0, max).replace(/(.{2})/g, '$1 ').trim();
     if (this.length > max) str += ' ... ';
     return '<Buffer ' + str + '>';
   };
@@ -3928,23 +3568,13 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
     Buffer.prototype[customInspectSymbol] = Buffer.prototype.inspect;
   }
 
-  Buffer.prototype.compare = function compare(
-    target,
-    start,
-    end,
-    thisStart,
-    thisEnd
-  ) {
+  Buffer.prototype.compare = function compare(target, start, end, thisStart, thisEnd) {
     if (isInstance(target, Uint8Array)) {
       target = Buffer.from(target, target.offset, target.byteLength);
     }
 
     if (!Buffer.isBuffer(target)) {
-      throw new TypeError(
-        'The "target" argument must be one of type Buffer or Uint8Array. ' +
-          'Received type ' +
-          typeof target
-      );
+      throw new TypeError('The "target" argument must be one of type Buffer or Uint8Array. ' + 'Received type ' + typeof target);
     }
 
     if (start === undefined) {
@@ -3963,12 +3593,7 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
       thisEnd = this.length;
     }
 
-    if (
-      start < 0 ||
-      end > target.length ||
-      thisStart < 0 ||
-      thisEnd > this.length
-    ) {
+    if (start < 0 || end > target.length || thisStart < 0 || thisEnd > this.length) {
       throw new RangeError('out of range index');
     }
 
@@ -4016,6 +3641,7 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
   // - encoding - an optional encoding, relevant is val is a string
   // - dir - true for indexOf, false for lastIndexOf
 
+
   function bidirectionalIndexOf(buffer, val, byteOffset, encoding, dir) {
     // Empty buffer means no match
     if (buffer.length === 0) return -1; // Normalize byteOffset
@@ -4036,19 +3662,20 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
       byteOffset = dir ? 0 : buffer.length - 1;
     } // Normalize byteOffset: negative offsets start from the end of the buffer
 
+
     if (byteOffset < 0) byteOffset = buffer.length + byteOffset;
 
     if (byteOffset >= buffer.length) {
-      if (dir) return -1;
-      else byteOffset = buffer.length - 1;
+      if (dir) return -1;else byteOffset = buffer.length - 1;
     } else if (byteOffset < 0) {
-      if (dir) byteOffset = 0;
-      else return -1;
+      if (dir) byteOffset = 0;else return -1;
     } // Normalize val
+
 
     if (typeof val === 'string') {
       val = Buffer.from(val, encoding);
     } // Finally, search either indexOf (if dir is true) or lastIndexOf
+
 
     if (Buffer.isBuffer(val)) {
       // Special case: looking for empty string/buffer always fails
@@ -4058,7 +3685,7 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
 
       return arrayIndexOf(buffer, val, byteOffset, encoding, dir);
     } else if (typeof val === 'number') {
-      val = val & 0xff; // Search for a byte value [0-255]
+      val = val & 0xFF; // Search for a byte value [0-255]
 
       if (typeof Uint8Array.prototype.indexOf === 'function') {
         if (dir) {
@@ -4082,12 +3709,7 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
     if (encoding !== undefined) {
       encoding = String(encoding).toLowerCase();
 
-      if (
-        encoding === 'ucs2' ||
-        encoding === 'ucs-2' ||
-        encoding === 'utf16le' ||
-        encoding === 'utf-16le'
-      ) {
+      if (encoding === 'ucs2' || encoding === 'ucs-2' || encoding === 'utf16le' || encoding === 'utf-16le') {
         if (arr.length < 2 || val.length < 2) {
           return -1;
         }
@@ -4113,9 +3735,7 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
       var foundIndex = -1;
 
       for (i = byteOffset; i < arrLength; i++) {
-        if (
-          read(arr, i) === read(val, foundIndex === -1 ? 0 : i - foundIndex)
-        ) {
+        if (read(arr, i) === read(val, foundIndex === -1 ? 0 : i - foundIndex)) {
           if (foundIndex === -1) foundIndex = i;
           if (i - foundIndex + 1 === valLength) return foundIndex * indexSize;
         } else {
@@ -4124,8 +3744,7 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
         }
       }
     } else {
-      if (byteOffset + valLength > arrLength)
-        byteOffset = arrLength - valLength;
+      if (byteOffset + valLength > arrLength) byteOffset = arrLength - valLength;
 
       for (i = byteOffset; i >= 0; i--) {
         var found = true;
@@ -4152,11 +3771,7 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
     return bidirectionalIndexOf(this, val, byteOffset, encoding, true);
   };
 
-  Buffer.prototype.lastIndexOf = function lastIndexOf(
-    val,
-    byteOffset,
-    encoding
-  ) {
+  Buffer.prototype.lastIndexOf = function lastIndexOf(val, byteOffset, encoding) {
     return bidirectionalIndexOf(this, val, byteOffset, encoding, false);
   };
 
@@ -4190,12 +3805,7 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
   }
 
   function utf8Write(buf, string, offset, length) {
-    return blitBuffer(
-      utf8ToBytes(string, buf.length - offset),
-      buf,
-      offset,
-      length
-    );
+    return blitBuffer(utf8ToBytes(string, buf.length - offset), buf, offset, length);
   }
 
   function asciiWrite(buf, string, offset, length) {
@@ -4207,12 +3817,7 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
   }
 
   function ucs2Write(buf, string, offset, length) {
-    return blitBuffer(
-      utf16leToBytes(string, buf.length - offset),
-      buf,
-      offset,
-      length
-    );
+    return blitBuffer(utf16leToBytes(string, buf.length - offset), buf, offset, length);
   }
 
   Buffer.prototype.write = function write(string, offset, length, encoding) {
@@ -4236,18 +3841,13 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
         length = undefined;
       }
     } else {
-      throw new Error(
-        'Buffer.write(string, encoding, offset[, length]) is no longer supported'
-      );
+      throw new Error('Buffer.write(string, encoding, offset[, length]) is no longer supported');
     }
 
     var remaining = this.length - offset;
     if (length === undefined || length > remaining) length = remaining;
 
-    if (
-      (string.length > 0 && (length < 0 || offset < 0)) ||
-      offset > this.length
-    ) {
+    if (string.length > 0 && (length < 0 || offset < 0) || offset > this.length) {
       throw new RangeError('Attempt to write outside buffer bounds');
     }
 
@@ -4309,8 +3909,7 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
     while (i < end) {
       var firstByte = buf[i];
       var codePoint = null;
-      var bytesPerSequence =
-        firstByte > 0xef ? 4 : firstByte > 0xdf ? 3 : firstByte > 0xbf ? 2 : 1;
+      var bytesPerSequence = firstByte > 0xEF ? 4 : firstByte > 0xDF ? 3 : firstByte > 0xBF ? 2 : 1;
 
       if (i + bytesPerSequence <= end) {
         var secondByte, thirdByte, fourthByte, tempCodePoint;
@@ -4326,10 +3925,10 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
           case 2:
             secondByte = buf[i + 1];
 
-            if ((secondByte & 0xc0) === 0x80) {
-              tempCodePoint = ((firstByte & 0x1f) << 0x6) | (secondByte & 0x3f);
+            if ((secondByte & 0xC0) === 0x80) {
+              tempCodePoint = (firstByte & 0x1F) << 0x6 | secondByte & 0x3F;
 
-              if (tempCodePoint > 0x7f) {
+              if (tempCodePoint > 0x7F) {
                 codePoint = tempCodePoint;
               }
             }
@@ -4340,16 +3939,10 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
             secondByte = buf[i + 1];
             thirdByte = buf[i + 2];
 
-            if ((secondByte & 0xc0) === 0x80 && (thirdByte & 0xc0) === 0x80) {
-              tempCodePoint =
-                ((firstByte & 0xf) << 0xc) |
-                ((secondByte & 0x3f) << 0x6) |
-                (thirdByte & 0x3f);
+            if ((secondByte & 0xC0) === 0x80 && (thirdByte & 0xC0) === 0x80) {
+              tempCodePoint = (firstByte & 0xF) << 0xC | (secondByte & 0x3F) << 0x6 | thirdByte & 0x3F;
 
-              if (
-                tempCodePoint > 0x7ff &&
-                (tempCodePoint < 0xd800 || tempCodePoint > 0xdfff)
-              ) {
+              if (tempCodePoint > 0x7FF && (tempCodePoint < 0xD800 || tempCodePoint > 0xDFFF)) {
                 codePoint = tempCodePoint;
               }
             }
@@ -4361,34 +3954,27 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
             thirdByte = buf[i + 2];
             fourthByte = buf[i + 3];
 
-            if (
-              (secondByte & 0xc0) === 0x80 &&
-              (thirdByte & 0xc0) === 0x80 &&
-              (fourthByte & 0xc0) === 0x80
-            ) {
-              tempCodePoint =
-                ((firstByte & 0xf) << 0x12) |
-                ((secondByte & 0x3f) << 0xc) |
-                ((thirdByte & 0x3f) << 0x6) |
-                (fourthByte & 0x3f);
+            if ((secondByte & 0xC0) === 0x80 && (thirdByte & 0xC0) === 0x80 && (fourthByte & 0xC0) === 0x80) {
+              tempCodePoint = (firstByte & 0xF) << 0x12 | (secondByte & 0x3F) << 0xC | (thirdByte & 0x3F) << 0x6 | fourthByte & 0x3F;
 
-              if (tempCodePoint > 0xffff && tempCodePoint < 0x110000) {
+              if (tempCodePoint > 0xFFFF && tempCodePoint < 0x110000) {
                 codePoint = tempCodePoint;
               }
             }
+
         }
       }
 
       if (codePoint === null) {
         // we did not generate a valid codePoint so insert a
         // replacement char (U+FFFD) and advance only 1 byte
-        codePoint = 0xfffd;
+        codePoint = 0xFFFD;
         bytesPerSequence = 1;
-      } else if (codePoint > 0xffff) {
+      } else if (codePoint > 0xFFFF) {
         // encode to utf16 (surrogate pair dance)
         codePoint -= 0x10000;
-        res.push(((codePoint >>> 10) & 0x3ff) | 0xd800);
-        codePoint = 0xdc00 | (codePoint & 0x3ff);
+        res.push(codePoint >>> 10 & 0x3FF | 0xD800);
+        codePoint = 0xDC00 | codePoint & 0x3FF;
       }
 
       res.push(codePoint);
@@ -4400,6 +3986,7 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
   // the lowest limit is Chrome, with 0x10000 args.
   // We go 1 magnitude less, for safety
 
+
   var MAX_ARGUMENTS_LENGTH = 0x1000;
 
   function decodeCodePointsArray(codePoints) {
@@ -4409,14 +3996,12 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
       return String.fromCharCode.apply(String, codePoints); // avoid extra slice()
     } // Decode in chunks to avoid "call stack size exceeded".
 
+
     var res = '';
     var i = 0;
 
     while (i < len) {
-      res += String.fromCharCode.apply(
-        String,
-        codePoints.slice(i, (i += MAX_ARGUMENTS_LENGTH))
-      );
+      res += String.fromCharCode.apply(String, codePoints.slice(i, i += MAX_ARGUMENTS_LENGTH));
     }
 
     return res;
@@ -4427,7 +4012,7 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
     end = Math.min(buf.length, end);
 
     for (var i = start; i < end; ++i) {
-      ret += String.fromCharCode(buf[i] & 0x7f);
+      ret += String.fromCharCode(buf[i] & 0x7F);
     }
 
     return ret;
@@ -4497,18 +4082,13 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
    * Need to make sure that buffer isn't trying to write out of bounds.
    */
 
+
   function checkOffset(offset, ext, length) {
-    if (offset % 1 !== 0 || offset < 0)
-      throw new RangeError('offset is not uint');
-    if (offset + ext > length)
-      throw new RangeError('Trying to access beyond buffer length');
+    if (offset % 1 !== 0 || offset < 0) throw new RangeError('offset is not uint');
+    if (offset + ext > length) throw new RangeError('Trying to access beyond buffer length');
   }
 
-  Buffer.prototype.readUintLE = Buffer.prototype.readUIntLE = function readUIntLE(
-    offset,
-    byteLength,
-    noAssert
-  ) {
+  Buffer.prototype.readUintLE = Buffer.prototype.readUIntLE = function readUIntLE(offset, byteLength, noAssert) {
     offset = offset >>> 0;
     byteLength = byteLength >>> 0;
     if (!noAssert) checkOffset(offset, byteLength, this.length);
@@ -4523,11 +4103,7 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
     return val;
   };
 
-  Buffer.prototype.readUintBE = Buffer.prototype.readUIntBE = function readUIntBE(
-    offset,
-    byteLength,
-    noAssert
-  ) {
+  Buffer.prototype.readUintBE = Buffer.prototype.readUIntBE = function readUIntBE(offset, byteLength, noAssert) {
     offset = offset >>> 0;
     byteLength = byteLength >>> 0;
 
@@ -4545,62 +4121,37 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
     return val;
   };
 
-  Buffer.prototype.readUint8 = Buffer.prototype.readUInt8 = function readUInt8(
-    offset,
-    noAssert
-  ) {
+  Buffer.prototype.readUint8 = Buffer.prototype.readUInt8 = function readUInt8(offset, noAssert) {
     offset = offset >>> 0;
     if (!noAssert) checkOffset(offset, 1, this.length);
     return this[offset];
   };
 
-  Buffer.prototype.readUint16LE = Buffer.prototype.readUInt16LE = function readUInt16LE(
-    offset,
-    noAssert
-  ) {
+  Buffer.prototype.readUint16LE = Buffer.prototype.readUInt16LE = function readUInt16LE(offset, noAssert) {
     offset = offset >>> 0;
     if (!noAssert) checkOffset(offset, 2, this.length);
-    return this[offset] | (this[offset + 1] << 8);
+    return this[offset] | this[offset + 1] << 8;
   };
 
-  Buffer.prototype.readUint16BE = Buffer.prototype.readUInt16BE = function readUInt16BE(
-    offset,
-    noAssert
-  ) {
+  Buffer.prototype.readUint16BE = Buffer.prototype.readUInt16BE = function readUInt16BE(offset, noAssert) {
     offset = offset >>> 0;
     if (!noAssert) checkOffset(offset, 2, this.length);
-    return (this[offset] << 8) | this[offset + 1];
+    return this[offset] << 8 | this[offset + 1];
   };
 
-  Buffer.prototype.readUint32LE = Buffer.prototype.readUInt32LE = function readUInt32LE(
-    offset,
-    noAssert
-  ) {
+  Buffer.prototype.readUint32LE = Buffer.prototype.readUInt32LE = function readUInt32LE(offset, noAssert) {
     offset = offset >>> 0;
     if (!noAssert) checkOffset(offset, 4, this.length);
-    return (
-      (this[offset] | (this[offset + 1] << 8) | (this[offset + 2] << 16)) +
-      this[offset + 3] * 0x1000000
-    );
+    return (this[offset] | this[offset + 1] << 8 | this[offset + 2] << 16) + this[offset + 3] * 0x1000000;
   };
 
-  Buffer.prototype.readUint32BE = Buffer.prototype.readUInt32BE = function readUInt32BE(
-    offset,
-    noAssert
-  ) {
+  Buffer.prototype.readUint32BE = Buffer.prototype.readUInt32BE = function readUInt32BE(offset, noAssert) {
     offset = offset >>> 0;
     if (!noAssert) checkOffset(offset, 4, this.length);
-    return (
-      this[offset] * 0x1000000 +
-      ((this[offset + 1] << 16) | (this[offset + 2] << 8) | this[offset + 3])
-    );
+    return this[offset] * 0x1000000 + (this[offset + 1] << 16 | this[offset + 2] << 8 | this[offset + 3]);
   };
 
-  Buffer.prototype.readIntLE = function readIntLE(
-    offset,
-    byteLength,
-    noAssert
-  ) {
+  Buffer.prototype.readIntLE = function readIntLE(offset, byteLength, noAssert) {
     offset = offset >>> 0;
     byteLength = byteLength >>> 0;
     if (!noAssert) checkOffset(offset, byteLength, this.length);
@@ -4617,11 +4168,7 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
     return val;
   };
 
-  Buffer.prototype.readIntBE = function readIntBE(
-    offset,
-    byteLength,
-    noAssert
-  ) {
+  Buffer.prototype.readIntBE = function readIntBE(offset, byteLength, noAssert) {
     offset = offset >>> 0;
     byteLength = byteLength >>> 0;
     if (!noAssert) checkOffset(offset, byteLength, this.length);
@@ -4648,37 +4195,27 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
   Buffer.prototype.readInt16LE = function readInt16LE(offset, noAssert) {
     offset = offset >>> 0;
     if (!noAssert) checkOffset(offset, 2, this.length);
-    var val = this[offset] | (this[offset + 1] << 8);
-    return val & 0x8000 ? val | 0xffff0000 : val;
+    var val = this[offset] | this[offset + 1] << 8;
+    return val & 0x8000 ? val | 0xFFFF0000 : val;
   };
 
   Buffer.prototype.readInt16BE = function readInt16BE(offset, noAssert) {
     offset = offset >>> 0;
     if (!noAssert) checkOffset(offset, 2, this.length);
-    var val = this[offset + 1] | (this[offset] << 8);
-    return val & 0x8000 ? val | 0xffff0000 : val;
+    var val = this[offset + 1] | this[offset] << 8;
+    return val & 0x8000 ? val | 0xFFFF0000 : val;
   };
 
   Buffer.prototype.readInt32LE = function readInt32LE(offset, noAssert) {
     offset = offset >>> 0;
     if (!noAssert) checkOffset(offset, 4, this.length);
-    return (
-      this[offset] |
-      (this[offset + 1] << 8) |
-      (this[offset + 2] << 16) |
-      (this[offset + 3] << 24)
-    );
+    return this[offset] | this[offset + 1] << 8 | this[offset + 2] << 16 | this[offset + 3] << 24;
   };
 
   Buffer.prototype.readInt32BE = function readInt32BE(offset, noAssert) {
     offset = offset >>> 0;
     if (!noAssert) checkOffset(offset, 4, this.length);
-    return (
-      (this[offset] << 24) |
-      (this[offset + 1] << 16) |
-      (this[offset + 2] << 8) |
-      this[offset + 3]
-    );
+    return this[offset] << 24 | this[offset + 1] << 16 | this[offset + 2] << 8 | this[offset + 3];
   };
 
   Buffer.prototype.readFloatLE = function readFloatLE(offset, noAssert) {
@@ -4706,19 +4243,12 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
   };
 
   function checkInt(buf, value, offset, ext, max, min) {
-    if (!Buffer.isBuffer(buf))
-      throw new TypeError('"buffer" argument must be a Buffer instance');
-    if (value > max || value < min)
-      throw new RangeError('"value" argument is out of bounds');
+    if (!Buffer.isBuffer(buf)) throw new TypeError('"buffer" argument must be a Buffer instance');
+    if (value > max || value < min) throw new RangeError('"value" argument is out of bounds');
     if (offset + ext > buf.length) throw new RangeError('Index out of range');
   }
 
-  Buffer.prototype.writeUintLE = Buffer.prototype.writeUIntLE = function writeUIntLE(
-    value,
-    offset,
-    byteLength,
-    noAssert
-  ) {
+  Buffer.prototype.writeUintLE = Buffer.prototype.writeUIntLE = function writeUIntLE(value, offset, byteLength, noAssert) {
     value = +value;
     offset = offset >>> 0;
     byteLength = byteLength >>> 0;
@@ -4730,21 +4260,16 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
 
     var mul = 1;
     var i = 0;
-    this[offset] = value & 0xff;
+    this[offset] = value & 0xFF;
 
     while (++i < byteLength && (mul *= 0x100)) {
-      this[offset + i] = (value / mul) & 0xff;
+      this[offset + i] = value / mul & 0xFF;
     }
 
     return offset + byteLength;
   };
 
-  Buffer.prototype.writeUintBE = Buffer.prototype.writeUIntBE = function writeUIntBE(
-    value,
-    offset,
-    byteLength,
-    noAssert
-  ) {
+  Buffer.prototype.writeUintBE = Buffer.prototype.writeUIntBE = function writeUIntBE(value, offset, byteLength, noAssert) {
     value = +value;
     offset = offset >>> 0;
     byteLength = byteLength >>> 0;
@@ -4756,20 +4281,16 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
 
     var i = byteLength - 1;
     var mul = 1;
-    this[offset + i] = value & 0xff;
+    this[offset + i] = value & 0xFF;
 
     while (--i >= 0 && (mul *= 0x100)) {
-      this[offset + i] = (value / mul) & 0xff;
+      this[offset + i] = value / mul & 0xFF;
     }
 
     return offset + byteLength;
   };
 
-  Buffer.prototype.writeUint8 = Buffer.prototype.writeUInt8 = function writeUInt8(
-    value,
-    offset,
-    noAssert
-  ) {
+  Buffer.prototype.writeUint8 = Buffer.prototype.writeUInt8 = function writeUInt8(value, offset, noAssert) {
     value = +value;
     offset = offset >>> 0;
     if (!noAssert) checkInt(this, value, offset, 1, 0xff, 0);
@@ -4777,11 +4298,7 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
     return offset + 1;
   };
 
-  Buffer.prototype.writeUint16LE = Buffer.prototype.writeUInt16LE = function writeUInt16LE(
-    value,
-    offset,
-    noAssert
-  ) {
+  Buffer.prototype.writeUint16LE = Buffer.prototype.writeUInt16LE = function writeUInt16LE(value, offset, noAssert) {
     value = +value;
     offset = offset >>> 0;
     if (!noAssert) checkInt(this, value, offset, 2, 0xffff, 0);
@@ -4790,11 +4307,7 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
     return offset + 2;
   };
 
-  Buffer.prototype.writeUint16BE = Buffer.prototype.writeUInt16BE = function writeUInt16BE(
-    value,
-    offset,
-    noAssert
-  ) {
+  Buffer.prototype.writeUint16BE = Buffer.prototype.writeUInt16BE = function writeUInt16BE(value, offset, noAssert) {
     value = +value;
     offset = offset >>> 0;
     if (!noAssert) checkInt(this, value, offset, 2, 0xffff, 0);
@@ -4803,11 +4316,7 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
     return offset + 2;
   };
 
-  Buffer.prototype.writeUint32LE = Buffer.prototype.writeUInt32LE = function writeUInt32LE(
-    value,
-    offset,
-    noAssert
-  ) {
+  Buffer.prototype.writeUint32LE = Buffer.prototype.writeUInt32LE = function writeUInt32LE(value, offset, noAssert) {
     value = +value;
     offset = offset >>> 0;
     if (!noAssert) checkInt(this, value, offset, 4, 0xffffffff, 0);
@@ -4818,11 +4327,7 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
     return offset + 4;
   };
 
-  Buffer.prototype.writeUint32BE = Buffer.prototype.writeUInt32BE = function writeUInt32BE(
-    value,
-    offset,
-    noAssert
-  ) {
+  Buffer.prototype.writeUint32BE = Buffer.prototype.writeUInt32BE = function writeUInt32BE(value, offset, noAssert) {
     value = +value;
     offset = offset >>> 0;
     if (!noAssert) checkInt(this, value, offset, 4, 0xffffffff, 0);
@@ -4833,12 +4338,7 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
     return offset + 4;
   };
 
-  Buffer.prototype.writeIntLE = function writeIntLE(
-    value,
-    offset,
-    byteLength,
-    noAssert
-  ) {
+  Buffer.prototype.writeIntLE = function writeIntLE(value, offset, byteLength, noAssert) {
     value = +value;
     offset = offset >>> 0;
 
@@ -4850,25 +4350,20 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
     var i = 0;
     var mul = 1;
     var sub = 0;
-    this[offset] = value & 0xff;
+    this[offset] = value & 0xFF;
 
     while (++i < byteLength && (mul *= 0x100)) {
       if (value < 0 && sub === 0 && this[offset + i - 1] !== 0) {
         sub = 1;
       }
 
-      this[offset + i] = (((value / mul) >> 0) - sub) & 0xff;
+      this[offset + i] = (value / mul >> 0) - sub & 0xFF;
     }
 
     return offset + byteLength;
   };
 
-  Buffer.prototype.writeIntBE = function writeIntBE(
-    value,
-    offset,
-    byteLength,
-    noAssert
-  ) {
+  Buffer.prototype.writeIntBE = function writeIntBE(value, offset, byteLength, noAssert) {
     value = +value;
     offset = offset >>> 0;
 
@@ -4880,14 +4375,14 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
     var i = byteLength - 1;
     var mul = 1;
     var sub = 0;
-    this[offset + i] = value & 0xff;
+    this[offset + i] = value & 0xFF;
 
     while (--i >= 0 && (mul *= 0x100)) {
       if (value < 0 && sub === 0 && this[offset + i + 1] !== 0) {
         sub = 1;
       }
 
-      this[offset + i] = (((value / mul) >> 0) - sub) & 0xff;
+      this[offset + i] = (value / mul >> 0) - sub & 0xFF;
     }
 
     return offset + byteLength;
@@ -4902,11 +4397,7 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
     return offset + 1;
   };
 
-  Buffer.prototype.writeInt16LE = function writeInt16LE(
-    value,
-    offset,
-    noAssert
-  ) {
+  Buffer.prototype.writeInt16LE = function writeInt16LE(value, offset, noAssert) {
     value = +value;
     offset = offset >>> 0;
     if (!noAssert) checkInt(this, value, offset, 2, 0x7fff, -0x8000);
@@ -4915,11 +4406,7 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
     return offset + 2;
   };
 
-  Buffer.prototype.writeInt16BE = function writeInt16BE(
-    value,
-    offset,
-    noAssert
-  ) {
+  Buffer.prototype.writeInt16BE = function writeInt16BE(value, offset, noAssert) {
     value = +value;
     offset = offset >>> 0;
     if (!noAssert) checkInt(this, value, offset, 2, 0x7fff, -0x8000);
@@ -4928,11 +4415,7 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
     return offset + 2;
   };
 
-  Buffer.prototype.writeInt32LE = function writeInt32LE(
-    value,
-    offset,
-    noAssert
-  ) {
+  Buffer.prototype.writeInt32LE = function writeInt32LE(value, offset, noAssert) {
     value = +value;
     offset = offset >>> 0;
     if (!noAssert) checkInt(this, value, offset, 4, 0x7fffffff, -0x80000000);
@@ -4943,11 +4426,7 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
     return offset + 4;
   };
 
-  Buffer.prototype.writeInt32BE = function writeInt32BE(
-    value,
-    offset,
-    noAssert
-  ) {
+  Buffer.prototype.writeInt32BE = function writeInt32BE(value, offset, noAssert) {
     value = +value;
     offset = offset >>> 0;
     if (!noAssert) checkInt(this, value, offset, 4, 0x7fffffff, -0x80000000);
@@ -4976,19 +4455,11 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
     return offset + 4;
   }
 
-  Buffer.prototype.writeFloatLE = function writeFloatLE(
-    value,
-    offset,
-    noAssert
-  ) {
+  Buffer.prototype.writeFloatLE = function writeFloatLE(value, offset, noAssert) {
     return writeFloat(this, value, offset, true, noAssert);
   };
 
-  Buffer.prototype.writeFloatBE = function writeFloatBE(
-    value,
-    offset,
-    noAssert
-  ) {
+  Buffer.prototype.writeFloatBE = function writeFloatBE(value, offset, noAssert) {
     return writeFloat(this, value, offset, false, noAssert);
   };
 
@@ -5004,25 +4475,17 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
     return offset + 8;
   }
 
-  Buffer.prototype.writeDoubleLE = function writeDoubleLE(
-    value,
-    offset,
-    noAssert
-  ) {
+  Buffer.prototype.writeDoubleLE = function writeDoubleLE(value, offset, noAssert) {
     return writeDouble(this, value, offset, true, noAssert);
   };
 
-  Buffer.prototype.writeDoubleBE = function writeDoubleBE(
-    value,
-    offset,
-    noAssert
-  ) {
+  Buffer.prototype.writeDoubleBE = function writeDoubleBE(value, offset, noAssert) {
     return writeDouble(this, value, offset, false, noAssert);
   }; // copy(targetBuffer, targetStart=0, sourceStart=0, sourceEnd=buffer.length)
 
+
   Buffer.prototype.copy = function copy(target, targetStart, start, end) {
-    if (!Buffer.isBuffer(target))
-      throw new TypeError('argument should be a Buffer');
+    if (!Buffer.isBuffer(target)) throw new TypeError('argument should be a Buffer');
     if (!start) start = 0;
     if (!end && end !== 0) end = this.length;
     if (targetStart >= target.length) targetStart = target.length;
@@ -5036,8 +4499,7 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
       throw new RangeError('targetStart out of bounds');
     }
 
-    if (start < 0 || start >= this.length)
-      throw new RangeError('Index out of range');
+    if (start < 0 || start >= this.length) throw new RangeError('Index out of range');
     if (end < 0) throw new RangeError('sourceEnd out of bounds'); // Are we oob?
 
     if (end > this.length) end = this.length;
@@ -5048,18 +4510,11 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
 
     var len = end - start;
 
-    if (
-      this === target &&
-      typeof Uint8Array.prototype.copyWithin === 'function'
-    ) {
+    if (this === target && typeof Uint8Array.prototype.copyWithin === 'function') {
       // Use built-in when available, missing from IE11
       this.copyWithin(targetStart, start, end);
     } else {
-      Uint8Array.prototype.set.call(
-        target,
-        this.subarray(start, end),
-        targetStart
-      );
+      Uint8Array.prototype.set.call(target, this.subarray(start, end), targetStart);
     }
 
     return len;
@@ -5067,6 +4522,7 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
   //    buffer.fill(number[, offset[, end]])
   //    buffer.fill(buffer[, offset[, end]])
   //    buffer.fill(string[, offset[, end]][, encoding])
+
 
   Buffer.prototype.fill = function fill(val, start, end, encoding) {
     // Handle string cases:
@@ -5091,7 +4547,7 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
       if (val.length === 1) {
         var code = val.charCodeAt(0);
 
-        if ((encoding === 'utf8' && code < 128) || encoding === 'latin1') {
+        if (encoding === 'utf8' && code < 128 || encoding === 'latin1') {
           // Fast path: If `val` fits into a single byte, use that numeric value.
           val = code;
         }
@@ -5101,6 +4557,7 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
     } else if (typeof val === 'boolean') {
       val = Number(val);
     } // Invalid ranges are not set to a default, so can range check early.
+
 
     if (start < 0 || this.length < start || this.length < end) {
       throw new RangeError('Out of range index');
@@ -5124,9 +4581,7 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
       var len = bytes.length;
 
       if (len === 0) {
-        throw new TypeError(
-          'The value "' + val + '" is invalid for argument "value"'
-        );
+        throw new TypeError('The value "' + val + '" is invalid for argument "value"');
       }
 
       for (i = 0; i < end - start; ++i) {
@@ -5137,6 +4592,7 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
     return this;
   }; // HELPER FUNCTIONS
   // ================
+
 
   var INVALID_BASE64_RE = /[^+/0-9A-Za-z-_]/g;
 
@@ -5165,35 +4621,37 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
     for (var i = 0; i < length; ++i) {
       codePoint = string.charCodeAt(i); // is surrogate component
 
-      if (codePoint > 0xd7ff && codePoint < 0xe000) {
+      if (codePoint > 0xD7FF && codePoint < 0xE000) {
         // last char was a lead
         if (!leadSurrogate) {
           // no lead yet
-          if (codePoint > 0xdbff) {
+          if (codePoint > 0xDBFF) {
             // unexpected trail
-            if ((units -= 3) > -1) bytes.push(0xef, 0xbf, 0xbd);
+            if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD);
             continue;
           } else if (i + 1 === length) {
             // unpaired lead
-            if ((units -= 3) > -1) bytes.push(0xef, 0xbf, 0xbd);
+            if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD);
             continue;
           } // valid lead
+
 
           leadSurrogate = codePoint;
           continue;
         } // 2 leads in a row
 
-        if (codePoint < 0xdc00) {
-          if ((units -= 3) > -1) bytes.push(0xef, 0xbf, 0xbd);
+
+        if (codePoint < 0xDC00) {
+          if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD);
           leadSurrogate = codePoint;
           continue;
         } // valid surrogate pair
 
-        codePoint =
-          (((leadSurrogate - 0xd800) << 10) | (codePoint - 0xdc00)) + 0x10000;
+
+        codePoint = (leadSurrogate - 0xD800 << 10 | codePoint - 0xDC00) + 0x10000;
       } else if (leadSurrogate) {
         // valid bmp char, but last char was a lead
-        if ((units -= 3) > -1) bytes.push(0xef, 0xbf, 0xbd);
+        if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD);
       }
 
       leadSurrogate = null; // encode utf8
@@ -5203,22 +4661,13 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
         bytes.push(codePoint);
       } else if (codePoint < 0x800) {
         if ((units -= 2) < 0) break;
-        bytes.push((codePoint >> 0x6) | 0xc0, (codePoint & 0x3f) | 0x80);
+        bytes.push(codePoint >> 0x6 | 0xC0, codePoint & 0x3F | 0x80);
       } else if (codePoint < 0x10000) {
         if ((units -= 3) < 0) break;
-        bytes.push(
-          (codePoint >> 0xc) | 0xe0,
-          ((codePoint >> 0x6) & 0x3f) | 0x80,
-          (codePoint & 0x3f) | 0x80
-        );
+        bytes.push(codePoint >> 0xC | 0xE0, codePoint >> 0x6 & 0x3F | 0x80, codePoint & 0x3F | 0x80);
       } else if (codePoint < 0x110000) {
         if ((units -= 4) < 0) break;
-        bytes.push(
-          (codePoint >> 0x12) | 0xf0,
-          ((codePoint >> 0xc) & 0x3f) | 0x80,
-          ((codePoint >> 0x6) & 0x3f) | 0x80,
-          (codePoint & 0x3f) | 0x80
-        );
+        bytes.push(codePoint >> 0x12 | 0xF0, codePoint >> 0xC & 0x3F | 0x80, codePoint >> 0x6 & 0x3F | 0x80, codePoint & 0x3F | 0x80);
       } else {
         throw new Error('Invalid code point');
       }
@@ -5232,7 +4681,7 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
 
     for (var i = 0; i < str.length; ++i) {
       // Node's code seems to be doing this and not & 0x7F..
-      byteArray.push(str.charCodeAt(i) & 0xff);
+      byteArray.push(str.charCodeAt(i) & 0xFF);
     }
 
     return byteArray;
@@ -5269,14 +4718,9 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
   // the `instanceof` check but they should be treated as of that type.
   // See: https://github.com/feross/buffer/issues/166
 
+
   function isInstance(obj, type) {
-    return (
-      obj instanceof type ||
-      (obj != null &&
-        obj.constructor != null &&
-        obj.constructor.name != null &&
-        obj.constructor.name === type.name)
-    );
+    return obj instanceof type || obj != null && obj.constructor != null && obj.constructor.name != null && obj.constructor.name === type.name;
   }
 
   function numberIsNaN(obj) {
@@ -5285,7 +4729,8 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
   } // Create lookup table for `toString('hex')`
   // See: https://github.com/feross/buffer/issues/219
 
-  var hexSliceLookupTable = (function() {
+
+  var hexSliceLookupTable = function () {
     var alphabet = '0123456789abcdef';
     var table = new Array(256);
 
@@ -5298,27 +4743,26 @@ ieee754.write = function(buffer, value, offset, isLE, mLen, nBytes) {
     }
 
     return table;
-  })();
+  }();
 })(buffer);
 
 var _nodeResolve_empty = {};
 
-var _nodeResolve_empty$1 = /*#__PURE__*/ Object.freeze({
+var _nodeResolve_empty$1 = /*#__PURE__*/Object.freeze({
   __proto__: null,
-  default: _nodeResolve_empty
+  'default': _nodeResolve_empty
 });
 
-var require$$4 = /*@__PURE__*/ getAugmentedNamespace(_nodeResolve_empty$1);
+var require$$4 = /*@__PURE__*/getAugmentedNamespace(_nodeResolve_empty$1);
 
 function ownKeys(object, enumerableOnly) {
   var keys = Object.keys(object);
 
   if (Object.getOwnPropertySymbols) {
     var symbols = Object.getOwnPropertySymbols(object);
-    if (enumerableOnly)
-      symbols = symbols.filter(function(sym) {
-        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-      });
+    if (enumerableOnly) symbols = symbols.filter(function (sym) {
+      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+    });
     keys.push.apply(keys, symbols);
   }
 
@@ -5330,18 +4774,14 @@ function _objectSpread$1(target) {
     var source = arguments[i] != null ? arguments[i] : {};
 
     if (i % 2) {
-      ownKeys(Object(source), true).forEach(function(key) {
+      ownKeys(Object(source), true).forEach(function (key) {
         _defineProperty$2(target, key, source[key]);
       });
     } else if (Object.getOwnPropertyDescriptors) {
       Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
     } else {
-      ownKeys(Object(source)).forEach(function(key) {
-        Object.defineProperty(
-          target,
-          key,
-          Object.getOwnPropertyDescriptor(source, key)
-        );
+      ownKeys(Object(source)).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
       });
     }
   }
@@ -5366,7 +4806,7 @@ function _defineProperty$2(obj, key, value) {
 
 function _classCallCheck$3(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
-    throw new TypeError('Cannot call a class as a function');
+    throw new TypeError("Cannot call a class as a function");
   }
 }
 
@@ -5375,7 +4815,7 @@ function _defineProperties$2(target, props) {
     var descriptor = props[i];
     descriptor.enumerable = descriptor.enumerable || false;
     descriptor.configurable = true;
-    if ('value' in descriptor) descriptor.writable = true;
+    if ("value" in descriptor) descriptor.writable = true;
     Object.defineProperty(target, descriptor.key, descriptor);
   }
 }
@@ -5387,16 +4827,16 @@ function _createClass$2(Constructor, protoProps, staticProps) {
 }
 
 var _require$4 = buffer,
-  Buffer$3 = _require$4.Buffer;
+    Buffer$3 = _require$4.Buffer;
 var _require2$2 = require$$4,
-  inspect$2 = _require2$2.inspect;
-var custom = (inspect$2 && inspect$2.custom) || 'inspect';
+    inspect$2 = _require2$2.inspect;
+var custom = inspect$2 && inspect$2.custom || 'inspect';
 
 function copyBuffer(src, target, offset) {
   Buffer$3.prototype.copy.call(src, target, offset);
 }
 
-var buffer_list = /*#__PURE__*/ (function() {
+var buffer_list = /*#__PURE__*/function () {
   function BufferList() {
     _classCallCheck$3(this, BufferList);
 
@@ -5405,195 +4845,179 @@ var buffer_list = /*#__PURE__*/ (function() {
     this.length = 0;
   }
 
-  _createClass$2(BufferList, [
-    {
-      key: 'push',
-      value: function push(v) {
-        var entry = {
-          data: v,
-          next: null
-        };
-        if (this.length > 0) this.tail.next = entry;
-        else this.head = entry;
-        this.tail = entry;
-        ++this.length;
-      }
-    },
-    {
-      key: 'unshift',
-      value: function unshift(v) {
-        var entry = {
-          data: v,
-          next: this.head
-        };
-        if (this.length === 0) this.tail = entry;
-        this.head = entry;
-        ++this.length;
-      }
-    },
-    {
-      key: 'shift',
-      value: function shift() {
-        if (this.length === 0) return;
-        var ret = this.head.data;
-        if (this.length === 1) this.head = this.tail = null;
-        else this.head = this.head.next;
-        --this.length;
-        return ret;
-      }
-    },
-    {
-      key: 'clear',
-      value: function clear() {
-        this.head = this.tail = null;
-        this.length = 0;
-      }
-    },
-    {
-      key: 'join',
-      value: function join(s) {
-        if (this.length === 0) return '';
-        var p = this.head;
-        var ret = '' + p.data;
-
-        while ((p = p.next)) {
-          ret += s + p.data;
-        }
-
-        return ret;
-      }
-    },
-    {
-      key: 'concat',
-      value: function concat(n) {
-        if (this.length === 0) return Buffer$3.alloc(0);
-        var ret = Buffer$3.allocUnsafe(n >>> 0);
-        var p = this.head;
-        var i = 0;
-
-        while (p) {
-          copyBuffer(p.data, ret, i);
-          i += p.data.length;
-          p = p.next;
-        }
-
-        return ret;
-      } // Consumes a specified amount of bytes or characters from the buffered data.
-    },
-    {
-      key: 'consume',
-      value: function consume(n, hasStrings) {
-        var ret;
-
-        if (n < this.head.data.length) {
-          // `slice` is the same for buffers and strings.
-          ret = this.head.data.slice(0, n);
-          this.head.data = this.head.data.slice(n);
-        } else if (n === this.head.data.length) {
-          // First chunk is a perfect match.
-          ret = this.shift();
-        } else {
-          // Result spans more than one buffer.
-          ret = hasStrings ? this._getString(n) : this._getBuffer(n);
-        }
-
-        return ret;
-      }
-    },
-    {
-      key: 'first',
-      value: function first() {
-        return this.head.data;
-      } // Consumes a specified amount of characters from the buffered data.
-    },
-    {
-      key: '_getString',
-      value: function _getString(n) {
-        var p = this.head;
-        var c = 1;
-        var ret = p.data;
-        n -= ret.length;
-
-        while ((p = p.next)) {
-          var str = p.data;
-          var nb = n > str.length ? str.length : n;
-          if (nb === str.length) ret += str;
-          else ret += str.slice(0, n);
-          n -= nb;
-
-          if (n === 0) {
-            if (nb === str.length) {
-              ++c;
-              if (p.next) this.head = p.next;
-              else this.head = this.tail = null;
-            } else {
-              this.head = p;
-              p.data = str.slice(nb);
-            }
-
-            break;
-          }
-
-          ++c;
-        }
-
-        this.length -= c;
-        return ret;
-      } // Consumes a specified amount of bytes from the buffered data.
-    },
-    {
-      key: '_getBuffer',
-      value: function _getBuffer(n) {
-        var ret = Buffer$3.allocUnsafe(n);
-        var p = this.head;
-        var c = 1;
-        p.data.copy(ret);
-        n -= p.data.length;
-
-        while ((p = p.next)) {
-          var buf = p.data;
-          var nb = n > buf.length ? buf.length : n;
-          buf.copy(ret, ret.length - n, 0, nb);
-          n -= nb;
-
-          if (n === 0) {
-            if (nb === buf.length) {
-              ++c;
-              if (p.next) this.head = p.next;
-              else this.head = this.tail = null;
-            } else {
-              this.head = p;
-              p.data = buf.slice(nb);
-            }
-
-            break;
-          }
-
-          ++c;
-        }
-
-        this.length -= c;
-        return ret;
-      } // Make sure the linked list only shows the minimal necessary information.
-    },
-    {
-      key: custom,
-      value: function value(_, options) {
-        return inspect$2(
-          this,
-          _objectSpread$1({}, options, {
-            // Only inspect one level.
-            depth: 0,
-            // It should not recurse.
-            customInspect: false
-          })
-        );
-      }
+  _createClass$2(BufferList, [{
+    key: "push",
+    value: function push(v) {
+      var entry = {
+        data: v,
+        next: null
+      };
+      if (this.length > 0) this.tail.next = entry;else this.head = entry;
+      this.tail = entry;
+      ++this.length;
     }
-  ]);
+  }, {
+    key: "unshift",
+    value: function unshift(v) {
+      var entry = {
+        data: v,
+        next: this.head
+      };
+      if (this.length === 0) this.tail = entry;
+      this.head = entry;
+      ++this.length;
+    }
+  }, {
+    key: "shift",
+    value: function shift() {
+      if (this.length === 0) return;
+      var ret = this.head.data;
+      if (this.length === 1) this.head = this.tail = null;else this.head = this.head.next;
+      --this.length;
+      return ret;
+    }
+  }, {
+    key: "clear",
+    value: function clear() {
+      this.head = this.tail = null;
+      this.length = 0;
+    }
+  }, {
+    key: "join",
+    value: function join(s) {
+      if (this.length === 0) return '';
+      var p = this.head;
+      var ret = '' + p.data;
+
+      while (p = p.next) {
+        ret += s + p.data;
+      }
+
+      return ret;
+    }
+  }, {
+    key: "concat",
+    value: function concat(n) {
+      if (this.length === 0) return Buffer$3.alloc(0);
+      var ret = Buffer$3.allocUnsafe(n >>> 0);
+      var p = this.head;
+      var i = 0;
+
+      while (p) {
+        copyBuffer(p.data, ret, i);
+        i += p.data.length;
+        p = p.next;
+      }
+
+      return ret;
+    } // Consumes a specified amount of bytes or characters from the buffered data.
+
+  }, {
+    key: "consume",
+    value: function consume(n, hasStrings) {
+      var ret;
+
+      if (n < this.head.data.length) {
+        // `slice` is the same for buffers and strings.
+        ret = this.head.data.slice(0, n);
+        this.head.data = this.head.data.slice(n);
+      } else if (n === this.head.data.length) {
+        // First chunk is a perfect match.
+        ret = this.shift();
+      } else {
+        // Result spans more than one buffer.
+        ret = hasStrings ? this._getString(n) : this._getBuffer(n);
+      }
+
+      return ret;
+    }
+  }, {
+    key: "first",
+    value: function first() {
+      return this.head.data;
+    } // Consumes a specified amount of characters from the buffered data.
+
+  }, {
+    key: "_getString",
+    value: function _getString(n) {
+      var p = this.head;
+      var c = 1;
+      var ret = p.data;
+      n -= ret.length;
+
+      while (p = p.next) {
+        var str = p.data;
+        var nb = n > str.length ? str.length : n;
+        if (nb === str.length) ret += str;else ret += str.slice(0, n);
+        n -= nb;
+
+        if (n === 0) {
+          if (nb === str.length) {
+            ++c;
+            if (p.next) this.head = p.next;else this.head = this.tail = null;
+          } else {
+            this.head = p;
+            p.data = str.slice(nb);
+          }
+
+          break;
+        }
+
+        ++c;
+      }
+
+      this.length -= c;
+      return ret;
+    } // Consumes a specified amount of bytes from the buffered data.
+
+  }, {
+    key: "_getBuffer",
+    value: function _getBuffer(n) {
+      var ret = Buffer$3.allocUnsafe(n);
+      var p = this.head;
+      var c = 1;
+      p.data.copy(ret);
+      n -= p.data.length;
+
+      while (p = p.next) {
+        var buf = p.data;
+        var nb = n > buf.length ? buf.length : n;
+        buf.copy(ret, ret.length - n, 0, nb);
+        n -= nb;
+
+        if (n === 0) {
+          if (nb === buf.length) {
+            ++c;
+            if (p.next) this.head = p.next;else this.head = this.tail = null;
+          } else {
+            this.head = p;
+            p.data = buf.slice(nb);
+          }
+
+          break;
+        }
+
+        ++c;
+      }
+
+      this.length -= c;
+      return ret;
+    } // Make sure the linked list only shows the minimal necessary information.
+
+  }, {
+    key: custom,
+    value: function value(_, options) {
+      return inspect$2(this, _objectSpread$1({}, options, {
+        // Only inspect one level.
+        depth: 0,
+        // It should not recurse.
+        customInspect: false
+      }));
+    }
+  }]);
 
   return BufferList;
-})();
+}();
 
 function destroy(err, cb) {
   var _this = this;
@@ -5617,15 +5041,17 @@ function destroy(err, cb) {
   } // we set destroyed to true before firing error callbacks in order
   // to make it re-entrance safe in case destroy() is called within callbacks
 
+
   if (this._readableState) {
     this._readableState.destroyed = true;
   } // if this is a duplex stream mark the writable part as destroyed as well
+
 
   if (this._writableState) {
     this._writableState.destroyed = true;
   }
 
-  this._destroy(err || null, function(err) {
+  this._destroy(err || null, function (err) {
     if (!cb && err) {
       if (!_this._writableState) {
         browser$1$1.nextTick(emitErrorAndCloseNT, _this, err);
@@ -5688,9 +5114,7 @@ function errorOrDestroy$2(stream, err) {
   // semver major update we should change the default to this.
   var rState = stream._readableState;
   var wState = stream._writableState;
-  if ((rState && rState.autoDestroy) || (wState && wState.autoDestroy))
-    stream.destroy(err);
-  else stream.emit('error', err);
+  if (rState && rState.autoDestroy || wState && wState.autoDestroy) stream.destroy(err);else stream.emit('error', err);
 }
 
 var destroy_1 = {
@@ -5722,7 +5146,7 @@ function createErrorType$1(code, message, Base) {
     }
   }
 
-  var NodeError = /*#__PURE__*/ (function(_Base) {
+  var NodeError = /*#__PURE__*/function (_Base) {
     _inheritsLoose(NodeError, _Base);
 
     function NodeError(arg1, arg2, arg3) {
@@ -5730,43 +5154,38 @@ function createErrorType$1(code, message, Base) {
     }
 
     return NodeError;
-  })(Base);
+  }(Base);
 
   NodeError.prototype.name = Base.name;
   NodeError.prototype.code = code;
   codes$1[code] = NodeError;
 } // https://github.com/nodejs/node/blob/v10.8.0/lib/internal/errors.js
 
+
 function oneOf$1(expected, thing) {
   if (Array.isArray(expected)) {
     var len = expected.length;
-    expected = expected.map(function(i) {
+    expected = expected.map(function (i) {
       return String(i);
     });
 
     if (len > 2) {
-      return (
-        'one of '
-          .concat(thing, ' ')
-          .concat(expected.slice(0, len - 1).join(', '), ', or ') +
-        expected[len - 1]
-      );
+      return "one of ".concat(thing, " ").concat(expected.slice(0, len - 1).join(', '), ", or ") + expected[len - 1];
     } else if (len === 2) {
-      return 'one of '
-        .concat(thing, ' ')
-        .concat(expected[0], ' or ')
-        .concat(expected[1]);
+      return "one of ".concat(thing, " ").concat(expected[0], " or ").concat(expected[1]);
     } else {
-      return 'of '.concat(thing, ' ').concat(expected[0]);
+      return "of ".concat(thing, " ").concat(expected[0]);
     }
   } else {
-    return 'of '.concat(thing, ' ').concat(String(expected));
+    return "of ".concat(thing, " ").concat(String(expected));
   }
 } // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/startsWith
+
 
 function startsWith$1(str, search, pos) {
   return str.substr(!pos || pos < 0 ? 0 : +pos, search.length) === search;
 } // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/endsWith
+
 
 function endsWith$2(str, search, this_len) {
   if (this_len === undefined || this_len > str.length) {
@@ -5775,6 +5194,7 @@ function endsWith$2(str, search, this_len) {
 
   return str.substring(this_len - search.length, this_len) === search;
 } // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/includes
+
 
 function includes$1(str, search, start) {
   if (typeof start !== 'number') {
@@ -5788,85 +5208,55 @@ function includes$1(str, search, start) {
   }
 }
 
-createErrorType$1(
-  'ERR_INVALID_OPT_VALUE',
-  function(name, value) {
-    return 'The value "' + value + '" is invalid for option "' + name + '"';
-  },
-  TypeError
-);
-createErrorType$1(
-  'ERR_INVALID_ARG_TYPE',
-  function(name, expected, actual) {
-    // determiner: 'must be' or 'must not be'
-    var determiner;
+createErrorType$1('ERR_INVALID_OPT_VALUE', function (name, value) {
+  return 'The value "' + value + '" is invalid for option "' + name + '"';
+}, TypeError);
+createErrorType$1('ERR_INVALID_ARG_TYPE', function (name, expected, actual) {
+  // determiner: 'must be' or 'must not be'
+  var determiner;
 
-    if (typeof expected === 'string' && startsWith$1(expected, 'not ')) {
-      determiner = 'must not be';
-      expected = expected.replace(/^not /, '');
-    } else {
-      determiner = 'must be';
-    }
+  if (typeof expected === 'string' && startsWith$1(expected, 'not ')) {
+    determiner = 'must not be';
+    expected = expected.replace(/^not /, '');
+  } else {
+    determiner = 'must be';
+  }
 
-    var msg;
+  var msg;
 
-    if (endsWith$2(name, ' argument')) {
-      // For cases like 'first argument'
-      msg = 'The '
-        .concat(name, ' ')
-        .concat(determiner, ' ')
-        .concat(oneOf$1(expected, 'type'));
-    } else {
-      var type = includes$1(name, '.') ? 'property' : 'argument';
-      msg = 'The "'
-        .concat(name, '" ')
-        .concat(type, ' ')
-        .concat(determiner, ' ')
-        .concat(oneOf$1(expected, 'type'));
-    }
+  if (endsWith$2(name, ' argument')) {
+    // For cases like 'first argument'
+    msg = "The ".concat(name, " ").concat(determiner, " ").concat(oneOf$1(expected, 'type'));
+  } else {
+    var type = includes$1(name, '.') ? 'property' : 'argument';
+    msg = "The \"".concat(name, "\" ").concat(type, " ").concat(determiner, " ").concat(oneOf$1(expected, 'type'));
+  }
 
-    msg += '. Received type '.concat(typeof actual);
-    return msg;
-  },
-  TypeError
-);
+  msg += ". Received type ".concat(typeof actual);
+  return msg;
+}, TypeError);
 createErrorType$1('ERR_STREAM_PUSH_AFTER_EOF', 'stream.push() after EOF');
-createErrorType$1('ERR_METHOD_NOT_IMPLEMENTED', function(name) {
+createErrorType$1('ERR_METHOD_NOT_IMPLEMENTED', function (name) {
   return 'The ' + name + ' method is not implemented';
 });
 createErrorType$1('ERR_STREAM_PREMATURE_CLOSE', 'Premature close');
-createErrorType$1('ERR_STREAM_DESTROYED', function(name) {
+createErrorType$1('ERR_STREAM_DESTROYED', function (name) {
   return 'Cannot call ' + name + ' after a stream was destroyed';
 });
 createErrorType$1('ERR_MULTIPLE_CALLBACK', 'Callback called multiple times');
 createErrorType$1('ERR_STREAM_CANNOT_PIPE', 'Cannot pipe, not readable');
 createErrorType$1('ERR_STREAM_WRITE_AFTER_END', 'write after end');
-createErrorType$1(
-  'ERR_STREAM_NULL_VALUES',
-  'May not write null values to stream',
-  TypeError
-);
-createErrorType$1(
-  'ERR_UNKNOWN_ENCODING',
-  function(arg) {
-    return 'Unknown encoding: ' + arg;
-  },
-  TypeError
-);
-createErrorType$1(
-  'ERR_STREAM_UNSHIFT_AFTER_END_EVENT',
-  'stream.unshift() after end event'
-);
+createErrorType$1('ERR_STREAM_NULL_VALUES', 'May not write null values to stream', TypeError);
+createErrorType$1('ERR_UNKNOWN_ENCODING', function (arg) {
+  return 'Unknown encoding: ' + arg;
+}, TypeError);
+createErrorType$1('ERR_STREAM_UNSHIFT_AFTER_END_EVENT', 'stream.unshift() after end event');
 errorsBrowser.codes = codes$1;
 
 var ERR_INVALID_OPT_VALUE = errorsBrowser.codes.ERR_INVALID_OPT_VALUE;
 
 function highWaterMarkFrom(options, isDuplex, duplexKey) {
-  return options.highWaterMark != null
-    ? options.highWaterMark
-    : isDuplex
-    ? options[duplexKey]
-    : null;
+  return options.highWaterMark != null ? options.highWaterMark : isDuplex ? options[duplexKey] : null;
 }
 
 function getHighWaterMark$2(state, options, duplexKey, isDuplex) {
@@ -5881,6 +5271,7 @@ function getHighWaterMark$2(state, options, duplexKey, isDuplex) {
     return Math.floor(hwm);
   } // Default value
 
+
   return state.objectMode ? 16 : 16 * 1024;
 }
 
@@ -5888,7 +5279,7 @@ var state = {
   getHighWaterMark: getHighWaterMark$2
 };
 
-var inherits_browser = { exports: {} };
+var inherits_browser = {exports: {}};
 
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
@@ -5922,11 +5313,11 @@ if (typeof Object.create === 'function') {
 
 var string_decoder = {};
 
-var safeBuffer = { exports: {} };
+var safeBuffer = {exports: {}};
 
 /*! safe-buffer. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */
 
-(function(module, exports) {
+(function (module, exports) {
   /* eslint-disable node/no-deprecated-api */
   var buffer$1 = buffer;
   var Buffer = buffer$1.Buffer; // alternative to using Object.keys for old browsers
@@ -5937,12 +5328,7 @@ var safeBuffer = { exports: {} };
     }
   }
 
-  if (
-    Buffer.from &&
-    Buffer.alloc &&
-    Buffer.allocUnsafe &&
-    Buffer.allocUnsafeSlow
-  ) {
+  if (Buffer.from && Buffer.alloc && Buffer.allocUnsafe && Buffer.allocUnsafeSlow) {
     module.exports = buffer$1;
   } else {
     // Copy properties from require('buffer')
@@ -5958,7 +5344,7 @@ var safeBuffer = { exports: {} };
 
   copyProps(Buffer, SafeBuffer);
 
-  SafeBuffer.from = function(arg, encodingOrOffset, length) {
+  SafeBuffer.from = function (arg, encodingOrOffset, length) {
     if (typeof arg === 'number') {
       throw new TypeError('Argument must not be a number');
     }
@@ -5966,7 +5352,7 @@ var safeBuffer = { exports: {} };
     return Buffer(arg, encodingOrOffset, length);
   };
 
-  SafeBuffer.alloc = function(size, fill, encoding) {
+  SafeBuffer.alloc = function (size, fill, encoding) {
     if (typeof size !== 'number') {
       throw new TypeError('Argument must be a number');
     }
@@ -5986,7 +5372,7 @@ var safeBuffer = { exports: {} };
     return buf;
   };
 
-  SafeBuffer.allocUnsafe = function(size) {
+  SafeBuffer.allocUnsafe = function (size) {
     if (typeof size !== 'number') {
       throw new TypeError('Argument must be a number');
     }
@@ -5994,7 +5380,7 @@ var safeBuffer = { exports: {} };
     return Buffer(size);
   };
 
-  SafeBuffer.allocUnsafeSlow = function(size) {
+  SafeBuffer.allocUnsafeSlow = function (size) {
     if (typeof size !== 'number') {
       throw new TypeError('Argument must be a number');
     }
@@ -6005,32 +5391,31 @@ var safeBuffer = { exports: {} };
 
 /*<replacement>*/
 
+
 var Buffer$2 = safeBuffer.exports.Buffer;
 /*</replacement>*/
 
-var isEncoding =
-  Buffer$2.isEncoding ||
-  function(encoding) {
-    encoding = '' + encoding;
+var isEncoding = Buffer$2.isEncoding || function (encoding) {
+  encoding = '' + encoding;
 
-    switch (encoding && encoding.toLowerCase()) {
-      case 'hex':
-      case 'utf8':
-      case 'utf-8':
-      case 'ascii':
-      case 'binary':
-      case 'base64':
-      case 'ucs2':
-      case 'ucs-2':
-      case 'utf16le':
-      case 'utf-16le':
-      case 'raw':
-        return true;
+  switch (encoding && encoding.toLowerCase()) {
+    case 'hex':
+    case 'utf8':
+    case 'utf-8':
+    case 'ascii':
+    case 'binary':
+    case 'base64':
+    case 'ucs2':
+    case 'ucs-2':
+    case 'utf16le':
+    case 'utf-16le':
+    case 'raw':
+      return true;
 
-      default:
-        return false;
-    }
-  };
+    default:
+      return false;
+  }
+};
 
 function _normalizeEncoding(enc) {
   if (!enc) return 'utf8';
@@ -6070,15 +5455,12 @@ function _normalizeEncoding(enc) {
 function normalizeEncoding(enc) {
   var nenc = _normalizeEncoding(enc);
 
-  if (
-    typeof nenc !== 'string' &&
-    (Buffer$2.isEncoding === isEncoding || !isEncoding(enc))
-  )
-    throw new Error('Unknown encoding: ' + enc);
+  if (typeof nenc !== 'string' && (Buffer$2.isEncoding === isEncoding || !isEncoding(enc))) throw new Error('Unknown encoding: ' + enc);
   return nenc || enc;
 } // StringDecoder provides an interface for efficiently splitting a series of
 // buffers into a series of JS strings without breaking apart multi-byte
 // characters.
+
 
 string_decoder.StringDecoder = StringDecoder$1;
 
@@ -6115,7 +5497,7 @@ function StringDecoder$1(encoding) {
   this.lastChar = Buffer$2.allocUnsafe(nb);
 }
 
-StringDecoder$1.prototype.write = function(buf) {
+StringDecoder$1.prototype.write = function (buf) {
   if (buf.length === 0) return '';
   var r;
   var i;
@@ -6137,7 +5519,7 @@ StringDecoder$1.prototype.end = utf8End; // Returns only complete characters in 
 
 StringDecoder$1.prototype.text = utf8Text; // Attempts to complete a partial non-UTF-8 character using bytes from a Buffer
 
-StringDecoder$1.prototype.fillLast = function(buf) {
+StringDecoder$1.prototype.fillLast = function (buf) {
   if (this.lastNeed <= buf.length) {
     buf.copy(this.lastChar, this.lastTotal - this.lastNeed, 0, this.lastNeed);
     return this.lastChar.toString(this.encoding, 0, this.lastTotal);
@@ -6148,15 +5530,14 @@ StringDecoder$1.prototype.fillLast = function(buf) {
 }; // Checks the type of a UTF-8 byte, whether it's ASCII, a leading byte, or a
 // continuation byte. If an invalid byte is detected, -2 is returned.
 
+
 function utf8CheckByte(byte) {
-  if (byte <= 0x7f) return 0;
-  else if (byte >> 5 === 0x06) return 2;
-  else if (byte >> 4 === 0x0e) return 3;
-  else if (byte >> 3 === 0x1e) return 4;
+  if (byte <= 0x7F) return 0;else if (byte >> 5 === 0x06) return 2;else if (byte >> 4 === 0x0E) return 3;else if (byte >> 3 === 0x1E) return 4;
   return byte >> 6 === 0x02 ? -1 : -2;
 } // Checks at most 3 bytes at the end of a Buffer in order to detect an
 // incomplete multi-byte UTF-8 character. The total number of bytes (2, 3, or 4)
 // needed to complete the UTF-8 character (if applicable) are returned.
+
 
 function utf8CheckIncomplete(self, buf, i) {
   var j = buf.length - 1;
@@ -6181,8 +5562,7 @@ function utf8CheckIncomplete(self, buf, i) {
 
   if (nb >= 0) {
     if (nb > 0) {
-      if (nb === 2) nb = 0;
-      else self.lastNeed = nb - 3;
+      if (nb === 2) nb = 0;else self.lastNeed = nb - 3;
     }
 
     return nb;
@@ -6198,26 +5578,28 @@ function utf8CheckIncomplete(self, buf, i) {
 // It is also done this way as a slight performance increase instead of using a
 // loop.
 
+
 function utf8CheckExtraBytes(self, buf, p) {
-  if ((buf[0] & 0xc0) !== 0x80) {
+  if ((buf[0] & 0xC0) !== 0x80) {
     self.lastNeed = 0;
-    return '\uFFFD';
+    return "\uFFFD";
   }
 
   if (self.lastNeed > 1 && buf.length > 1) {
-    if ((buf[1] & 0xc0) !== 0x80) {
+    if ((buf[1] & 0xC0) !== 0x80) {
       self.lastNeed = 1;
-      return '\uFFFD';
+      return "\uFFFD";
     }
 
     if (self.lastNeed > 2 && buf.length > 2) {
-      if ((buf[2] & 0xc0) !== 0x80) {
+      if ((buf[2] & 0xC0) !== 0x80) {
         self.lastNeed = 2;
-        return '\uFFFD';
+        return "\uFFFD";
       }
     }
   }
 } // Attempts to complete a multi-byte UTF-8 character using bytes from a Buffer.
+
 
 function utf8FillLast(buf) {
   var p = this.lastTotal - this.lastNeed;
@@ -6235,6 +5617,7 @@ function utf8FillLast(buf) {
 // partial character, the character's bytes are buffered until the required
 // number of bytes are available.
 
+
 function utf8Text(buf, i) {
   var total = utf8CheckIncomplete(this, buf, i);
   if (!this.lastNeed) return buf.toString('utf8', i);
@@ -6245,14 +5628,16 @@ function utf8Text(buf, i) {
 } // For UTF-8, a replacement character is added when ending on a partial
 // character.
 
+
 function utf8End(buf) {
   var r = buf && buf.length ? this.write(buf) : '';
-  if (this.lastNeed) return r + '\uFFFD';
+  if (this.lastNeed) return r + "\uFFFD";
   return r;
 } // UTF-16LE typically needs two bytes per character, but even if we have an even
 // number of bytes available, we need to check if we end on a leading/high
 // surrogate. In that case, we need to wait for the next two bytes in order to
 // decode the last character properly.
+
 
 function utf16Text(buf, i) {
   if ((buf.length - i) % 2 === 0) {
@@ -6261,7 +5646,7 @@ function utf16Text(buf, i) {
     if (r) {
       var c = r.charCodeAt(r.length - 1);
 
-      if (c >= 0xd800 && c <= 0xdbff) {
+      if (c >= 0xD800 && c <= 0xDBFF) {
         this.lastNeed = 2;
         this.lastTotal = 4;
         this.lastChar[0] = buf[buf.length - 2];
@@ -6279,6 +5664,7 @@ function utf16Text(buf, i) {
   return buf.toString('utf16le', i, buf.length - 1);
 } // For UTF-16LE we do not explicitly append special replacement characters if we
 // end on a partial character, we simply let v8 handle that.
+
 
 function utf16End(buf) {
   var r = buf && buf.length ? this.write(buf) : '';
@@ -6309,10 +5695,10 @@ function base64Text(buf, i) {
 
 function base64End(buf) {
   var r = buf && buf.length ? this.write(buf) : '';
-  if (this.lastNeed)
-    return r + this.lastChar.toString('base64', 0, 3 - this.lastNeed);
+  if (this.lastNeed) return r + this.lastChar.toString('base64', 0, 3 - this.lastNeed);
   return r;
 } // Pass bytes on through for single-byte encodings (e.g. ascii, latin1, hex)
+
 
 function simpleWrite(buf) {
   return buf.toString(this.encoding);
@@ -6326,15 +5712,11 @@ var ERR_STREAM_PREMATURE_CLOSE = errorsBrowser.codes.ERR_STREAM_PREMATURE_CLOSE;
 
 function once$1(callback) {
   var called = false;
-  return function() {
+  return function () {
     if (called) return;
     called = true;
 
-    for (
-      var _len = arguments.length, args = new Array(_len), _key = 0;
-      _key < _len;
-      _key++
-    ) {
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
     }
 
@@ -6352,8 +5734,8 @@ function eos$1(stream, opts, callback) {
   if (typeof opts === 'function') return eos$1(stream, null, opts);
   if (!opts) opts = {};
   callback = once$1(callback || noop$1);
-  var readable = opts.readable || (opts.readable !== false && stream.readable);
-  var writable = opts.writable || (opts.writable !== false && stream.writable);
+  var readable = opts.readable || opts.readable !== false && stream.readable;
+  var writable = opts.writable || opts.writable !== false && stream.writable;
 
   var onlegacyfinish = function onlegacyfinish() {
     if (!stream.writable) onfinish();
@@ -6383,14 +5765,12 @@ function eos$1(stream, opts, callback) {
     var err;
 
     if (readable && !readableEnded) {
-      if (!stream._readableState || !stream._readableState.ended)
-        err = new ERR_STREAM_PREMATURE_CLOSE();
+      if (!stream._readableState || !stream._readableState.ended) err = new ERR_STREAM_PREMATURE_CLOSE();
       return callback.call(stream, err);
     }
 
     if (writable && !writableEnded) {
-      if (!stream._writableState || !stream._writableState.ended)
-        err = new ERR_STREAM_PREMATURE_CLOSE();
+      if (!stream._writableState || !stream._writableState.ended) err = new ERR_STREAM_PREMATURE_CLOSE();
       return callback.call(stream, err);
     }
   };
@@ -6402,8 +5782,7 @@ function eos$1(stream, opts, callback) {
   if (isRequest$1(stream)) {
     stream.on('complete', onfinish);
     stream.on('abort', onclose);
-    if (stream.req) onrequest();
-    else stream.on('request', onrequest);
+    if (stream.req) onrequest();else stream.on('request', onrequest);
   } else if (writable && !stream._writableState) {
     // legacy streams
     stream.on('end', onlegacyfinish);
@@ -6414,7 +5793,7 @@ function eos$1(stream, opts, callback) {
   stream.on('finish', onfinish);
   if (opts.error !== false) stream.on('error', onerror);
   stream.on('close', onclose);
-  return function() {
+  return function () {
     stream.removeListener('complete', onfinish);
     stream.removeListener('abort', onclose);
     stream.removeListener('request', onrequest);
@@ -6487,8 +5866,8 @@ function onReadable(iter) {
 }
 
 function wrapForNext(lastPromise, iter) {
-  return function(resolve, reject) {
-    lastPromise.then(function() {
+  return function (resolve, reject) {
+    lastPromise.then(function () {
       if (iter[kEnded]) {
         resolve(createIterResult(undefined, true));
         return;
@@ -6499,138 +5878,123 @@ function wrapForNext(lastPromise, iter) {
   };
 }
 
-var AsyncIteratorPrototype = Object.getPrototypeOf(function() {});
-var ReadableStreamAsyncIteratorPrototype = Object.setPrototypeOf(
-  ((_Object$setPrototypeO = {
-    get stream() {
-      return this[kStream];
-    },
+var AsyncIteratorPrototype = Object.getPrototypeOf(function () {});
+var ReadableStreamAsyncIteratorPrototype = Object.setPrototypeOf((_Object$setPrototypeO = {
+  get stream() {
+    return this[kStream];
+  },
 
-    next: function next() {
-      var _this = this; // if we have detected an error in the meanwhile
-      // reject straight away
+  next: function next() {
+    var _this = this; // if we have detected an error in the meanwhile
+    // reject straight away
 
-      var error = this[kError];
 
-      if (error !== null) {
-        return Promise.reject(error);
-      }
+    var error = this[kError];
 
-      if (this[kEnded]) {
-        return Promise.resolve(createIterResult(undefined, true));
-      }
-
-      if (this[kStream].destroyed) {
-        // We need to defer via nextTick because if .destroy(err) is
-        // called, the error will be emitted via nextTick, and
-        // we cannot guarantee that there is no error lingering around
-        // waiting to be emitted.
-        return new Promise(function(resolve, reject) {
-          browser$1$1.nextTick(function() {
-            if (_this[kError]) {
-              reject(_this[kError]);
-            } else {
-              resolve(createIterResult(undefined, true));
-            }
-          });
-        });
-      } // if we have multiple next() calls
-      // we will wait for the previous Promise to finish
-      // this logic is optimized to support for await loops,
-      // where next() is only called once at a time
-
-      var lastPromise = this[kLastPromise];
-      var promise;
-
-      if (lastPromise) {
-        promise = new Promise(wrapForNext(lastPromise, this));
-      } else {
-        // fast path needed to support multiple this.push()
-        // without triggering the next() queue
-        var data = this[kStream].read();
-
-        if (data !== null) {
-          return Promise.resolve(createIterResult(data, false));
-        }
-
-        promise = new Promise(this[kHandlePromise]);
-      }
-
-      this[kLastPromise] = promise;
-      return promise;
+    if (error !== null) {
+      return Promise.reject(error);
     }
-  }),
-  _defineProperty$1(_Object$setPrototypeO, Symbol.asyncIterator, function() {
-    return this;
-  }),
-  _defineProperty$1(_Object$setPrototypeO, 'return', function _return() {
-    var _this2 = this; // destroy(err, cb) is a private API
-    // we can guarantee we have that here, because we control the
-    // Readable class this is attached to
 
-    return new Promise(function(resolve, reject) {
-      _this2[kStream].destroy(null, function(err) {
-        if (err) {
-          reject(err);
-          return;
-        }
+    if (this[kEnded]) {
+      return Promise.resolve(createIterResult(undefined, true));
+    }
 
-        resolve(createIterResult(undefined, true));
+    if (this[kStream].destroyed) {
+      // We need to defer via nextTick because if .destroy(err) is
+      // called, the error will be emitted via nextTick, and
+      // we cannot guarantee that there is no error lingering around
+      // waiting to be emitted.
+      return new Promise(function (resolve, reject) {
+        browser$1$1.nextTick(function () {
+          if (_this[kError]) {
+            reject(_this[kError]);
+          } else {
+            resolve(createIterResult(undefined, true));
+          }
+        });
       });
-    });
-  }),
-  _Object$setPrototypeO),
-  AsyncIteratorPrototype
-);
+    } // if we have multiple next() calls
+    // we will wait for the previous Promise to finish
+    // this logic is optimized to support for await loops,
+    // where next() is only called once at a time
 
-var createReadableStreamAsyncIterator$1 = function createReadableStreamAsyncIterator(
-  stream
-) {
+
+    var lastPromise = this[kLastPromise];
+    var promise;
+
+    if (lastPromise) {
+      promise = new Promise(wrapForNext(lastPromise, this));
+    } else {
+      // fast path needed to support multiple this.push()
+      // without triggering the next() queue
+      var data = this[kStream].read();
+
+      if (data !== null) {
+        return Promise.resolve(createIterResult(data, false));
+      }
+
+      promise = new Promise(this[kHandlePromise]);
+    }
+
+    this[kLastPromise] = promise;
+    return promise;
+  }
+}, _defineProperty$1(_Object$setPrototypeO, Symbol.asyncIterator, function () {
+  return this;
+}), _defineProperty$1(_Object$setPrototypeO, "return", function _return() {
+  var _this2 = this; // destroy(err, cb) is a private API
+  // we can guarantee we have that here, because we control the
+  // Readable class this is attached to
+
+
+  return new Promise(function (resolve, reject) {
+    _this2[kStream].destroy(null, function (err) {
+      if (err) {
+        reject(err);
+        return;
+      }
+
+      resolve(createIterResult(undefined, true));
+    });
+  });
+}), _Object$setPrototypeO), AsyncIteratorPrototype);
+
+var createReadableStreamAsyncIterator$1 = function createReadableStreamAsyncIterator(stream) {
   var _Object$create;
 
-  var iterator = Object.create(
-    ReadableStreamAsyncIteratorPrototype,
-    ((_Object$create = {}),
-    _defineProperty$1(_Object$create, kStream, {
-      value: stream,
-      writable: true
-    }),
-    _defineProperty$1(_Object$create, kLastResolve, {
-      value: null,
-      writable: true
-    }),
-    _defineProperty$1(_Object$create, kLastReject, {
-      value: null,
-      writable: true
-    }),
-    _defineProperty$1(_Object$create, kError, {
-      value: null,
-      writable: true
-    }),
-    _defineProperty$1(_Object$create, kEnded, {
-      value: stream._readableState.endEmitted,
-      writable: true
-    }),
-    _defineProperty$1(_Object$create, kHandlePromise, {
-      value: function value(resolve, reject) {
-        var data = iterator[kStream].read();
+  var iterator = Object.create(ReadableStreamAsyncIteratorPrototype, (_Object$create = {}, _defineProperty$1(_Object$create, kStream, {
+    value: stream,
+    writable: true
+  }), _defineProperty$1(_Object$create, kLastResolve, {
+    value: null,
+    writable: true
+  }), _defineProperty$1(_Object$create, kLastReject, {
+    value: null,
+    writable: true
+  }), _defineProperty$1(_Object$create, kError, {
+    value: null,
+    writable: true
+  }), _defineProperty$1(_Object$create, kEnded, {
+    value: stream._readableState.endEmitted,
+    writable: true
+  }), _defineProperty$1(_Object$create, kHandlePromise, {
+    value: function value(resolve, reject) {
+      var data = iterator[kStream].read();
 
-        if (data) {
-          iterator[kLastPromise] = null;
-          iterator[kLastResolve] = null;
-          iterator[kLastReject] = null;
-          resolve(createIterResult(data, false));
-        } else {
-          iterator[kLastResolve] = resolve;
-          iterator[kLastReject] = reject;
-        }
-      },
-      writable: true
-    }),
-    _Object$create)
-  );
+      if (data) {
+        iterator[kLastPromise] = null;
+        iterator[kLastResolve] = null;
+        iterator[kLastReject] = null;
+        resolve(createIterResult(data, false));
+      } else {
+        iterator[kLastResolve] = resolve;
+        iterator[kLastReject] = reject;
+      }
+    },
+    writable: true
+  }), _Object$create));
   iterator[kLastPromise] = null;
-  finished(stream, function(err) {
+  finished(stream, function (err) {
     if (err && err.code !== 'ERR_STREAM_PREMATURE_CLOSE') {
       var reject = iterator[kLastReject]; // reject if we are waiting for data in the Promise
       // returned by next() and store the error
@@ -6681,12 +6045,13 @@ var EElistenerCount = function EElistenerCount(emitter, type) {
 
 /*<replacement>*/
 
+
 var Stream$1 = streamBrowser;
 /*</replacement>*/
 
 var Buffer$1 = buffer.Buffer;
 
-var OurUint8Array$1 = commonjsGlobal.Uint8Array || function() {};
+var OurUint8Array$1 = commonjsGlobal.Uint8Array || function () {};
 
 function _uint8ArrayToBuffer$1(chunk) {
   return Buffer$1.from(chunk);
@@ -6696,6 +6061,7 @@ function _isUint8Array$1(obj) {
   return Buffer$1.isBuffer(obj) || obj instanceof OurUint8Array$1;
 }
 /*<replacement>*/
+
 
 var debugUtil = require$$4;
 var debug;
@@ -6707,16 +6073,16 @@ if (debugUtil && debugUtil.debuglog) {
 }
 /*</replacement>*/
 
+
 var BufferList = buffer_list;
 var destroyImpl$1 = destroy_1;
 var _require$3 = state,
-  getHighWaterMark$1 = _require$3.getHighWaterMark;
+    getHighWaterMark$1 = _require$3.getHighWaterMark;
 var _require$codes$4 = errorsBrowser.codes,
-  ERR_INVALID_ARG_TYPE$3 = _require$codes$4.ERR_INVALID_ARG_TYPE,
-  ERR_STREAM_PUSH_AFTER_EOF = _require$codes$4.ERR_STREAM_PUSH_AFTER_EOF,
-  ERR_METHOD_NOT_IMPLEMENTED$2 = _require$codes$4.ERR_METHOD_NOT_IMPLEMENTED,
-  ERR_STREAM_UNSHIFT_AFTER_END_EVENT =
-    _require$codes$4.ERR_STREAM_UNSHIFT_AFTER_END_EVENT; // Lazy loaded to improve the startup performance.
+    ERR_INVALID_ARG_TYPE$3 = _require$codes$4.ERR_INVALID_ARG_TYPE,
+    ERR_STREAM_PUSH_AFTER_EOF = _require$codes$4.ERR_STREAM_PUSH_AFTER_EOF,
+    ERR_METHOD_NOT_IMPLEMENTED$2 = _require$codes$4.ERR_METHOD_NOT_IMPLEMENTED,
+    ERR_STREAM_UNSHIFT_AFTER_END_EVENT = _require$codes$4.ERR_STREAM_UNSHIFT_AFTER_END_EVENT; // Lazy loaded to improve the startup performance.
 
 var StringDecoder;
 var createReadableStreamAsyncIterator;
@@ -6728,16 +6094,12 @@ var kProxyEvents = ['error', 'close', 'destroy', 'pause', 'resume'];
 function prependListener(emitter, event, fn) {
   // Sadly this is not cacheable as some libraries bundle their own
   // event emitter implementation with them.
-  if (typeof emitter.prependListener === 'function')
-    return emitter.prependListener(event, fn); // This is a hack to make sure that our error handler is attached before any
+  if (typeof emitter.prependListener === 'function') return emitter.prependListener(event, fn); // This is a hack to make sure that our error handler is attached before any
   // userland ones.  NEVER DO THIS. This is here only because this code needs
   // to continue to work with older versions of Node.js that do not include
   // the prependListener() method. The goal is to eventually remove this hack.
 
-  if (!emitter._events || !emitter._events[event]) emitter.on(event, fn);
-  else if (Array.isArray(emitter._events[event]))
-    emitter._events[event].unshift(fn);
-  else emitter._events[event] = [fn, emitter._events[event]];
+  if (!emitter._events || !emitter._events[event]) emitter.on(event, fn);else if (Array.isArray(emitter._events[event])) emitter._events[event].unshift(fn);else emitter._events[event] = [fn, emitter._events[event]];
 }
 
 function ReadableState(options, stream, isDuplex) {
@@ -6747,21 +6109,14 @@ function ReadableState(options, stream, isDuplex) {
   // values for the readable and the writable sides of the duplex stream.
   // These options can be provided separately as readableXXX and writableXXX.
 
-  if (typeof isDuplex !== 'boolean')
-    isDuplex = stream instanceof Registry$4.Duplex; // object stream flag. Used to make read(n) ignore n and to
+  if (typeof isDuplex !== 'boolean') isDuplex = stream instanceof Registry$4.Duplex; // object stream flag. Used to make read(n) ignore n and to
   // make all the buffer merging and length checks go away
 
   this.objectMode = !!options.objectMode;
-  if (isDuplex)
-    this.objectMode = this.objectMode || !!options.readableObjectMode; // the point at which it stops calling _read() to fill the buffer
+  if (isDuplex) this.objectMode = this.objectMode || !!options.readableObjectMode; // the point at which it stops calling _read() to fill the buffer
   // Note: 0 is a valid value, means "don't call _read preemptively ever"
 
-  this.highWaterMark = getHighWaterMark$1(
-    this,
-    options,
-    'readableHighWaterMark',
-    isDuplex
-  ); // A linked list is used to store data chunks instead of an array because the
+  this.highWaterMark = getHighWaterMark$1(this, options, 'readableHighWaterMark', isDuplex); // A linked list is used to store data chunks instead of an array because the
   // linked list can remove elements from the beginning faster than
   // array.shift()
 
@@ -6846,20 +6201,22 @@ Object.defineProperty(Readable.prototype, 'destroyed', {
     } // backward compatibility, the user is explicitly
     // managing destroyed
 
+
     this._readableState.destroyed = value;
   }
 });
 Readable.prototype.destroy = destroyImpl$1.destroy;
 Readable.prototype._undestroy = destroyImpl$1.undestroy;
 
-Readable.prototype._destroy = function(err, cb) {
+Readable.prototype._destroy = function (err, cb) {
   cb(err);
 }; // Manually shove something into the read() buffer.
 // This returns true if the highWaterMark has not been hit yet,
 // similar to how Writable.write() returns true if you should
 // write() some more.
 
-Readable.prototype.push = function(chunk, encoding) {
+
+Readable.prototype.push = function (chunk, encoding) {
   var state = this._readableState;
   var skipChunkCheck;
 
@@ -6881,7 +6238,8 @@ Readable.prototype.push = function(chunk, encoding) {
   return readableAddChunk(this, chunk, encoding, false, skipChunkCheck);
 }; // Unshift should *always* be something directly out of read()
 
-Readable.prototype.unshift = function(chunk) {
+
+Readable.prototype.unshift = function (chunk) {
   return readableAddChunk(this, chunk, null, true, false);
 };
 
@@ -6898,19 +6256,13 @@ function readableAddChunk(stream, chunk, encoding, addToFront, skipChunkCheck) {
 
     if (er) {
       errorOrDestroy$1(stream, er);
-    } else if (state.objectMode || (chunk && chunk.length > 0)) {
-      if (
-        typeof chunk !== 'string' &&
-        !state.objectMode &&
-        Object.getPrototypeOf(chunk) !== Buffer$1.prototype
-      ) {
+    } else if (state.objectMode || chunk && chunk.length > 0) {
+      if (typeof chunk !== 'string' && !state.objectMode && Object.getPrototypeOf(chunk) !== Buffer$1.prototype) {
         chunk = _uint8ArrayToBuffer$1(chunk);
       }
 
       if (addToFront) {
-        if (state.endEmitted)
-          errorOrDestroy$1(stream, new ERR_STREAM_UNSHIFT_AFTER_END_EVENT());
-        else addChunk(stream, state, chunk, true);
+        if (state.endEmitted) errorOrDestroy$1(stream, new ERR_STREAM_UNSHIFT_AFTER_END_EVENT());else addChunk(stream, state, chunk, true);
       } else if (state.ended) {
         errorOrDestroy$1(stream, new ERR_STREAM_PUSH_AFTER_EOF());
       } else if (state.destroyed) {
@@ -6920,9 +6272,7 @@ function readableAddChunk(stream, chunk, encoding, addToFront, skipChunkCheck) {
 
         if (state.decoder && !encoding) {
           chunk = state.decoder.write(chunk);
-          if (state.objectMode || chunk.length !== 0)
-            addChunk(stream, state, chunk, false);
-          else maybeReadMore(stream, state);
+          if (state.objectMode || chunk.length !== 0) addChunk(stream, state, chunk, false);else maybeReadMore(stream, state);
         } else {
           addChunk(stream, state, chunk, false);
         }
@@ -6935,9 +6285,8 @@ function readableAddChunk(stream, chunk, encoding, addToFront, skipChunkCheck) {
   // Also, if we have no data yet, we can stand some more bytes.
   // This is to work around cases where hwm=0, such as the repl.
 
-  return (
-    !state.ended && (state.length < state.highWaterMark || state.length === 0)
-  );
+
+  return !state.ended && (state.length < state.highWaterMark || state.length === 0);
 }
 
 function addChunk(stream, state, chunk, addToFront) {
@@ -6947,8 +6296,7 @@ function addChunk(stream, state, chunk, addToFront) {
   } else {
     // update the buffer info.
     state.length += state.objectMode ? 1 : chunk.length;
-    if (addToFront) state.buffer.unshift(chunk);
-    else state.buffer.push(chunk);
+    if (addToFront) state.buffer.unshift(chunk);else state.buffer.push(chunk);
     if (state.needReadable) emitReadable(stream);
   }
 
@@ -6958,27 +6306,19 @@ function addChunk(stream, state, chunk, addToFront) {
 function chunkInvalid(state, chunk) {
   var er;
 
-  if (
-    !_isUint8Array$1(chunk) &&
-    typeof chunk !== 'string' &&
-    chunk !== undefined &&
-    !state.objectMode
-  ) {
-    er = new ERR_INVALID_ARG_TYPE$3(
-      'chunk',
-      ['string', 'Buffer', 'Uint8Array'],
-      chunk
-    );
+  if (!_isUint8Array$1(chunk) && typeof chunk !== 'string' && chunk !== undefined && !state.objectMode) {
+    er = new ERR_INVALID_ARG_TYPE$3('chunk', ['string', 'Buffer', 'Uint8Array'], chunk);
   }
 
   return er;
 }
 
-Readable.prototype.isPaused = function() {
+Readable.prototype.isPaused = function () {
   return this._readableState.flowing === false;
 }; // backwards compatibility.
 
-Readable.prototype.setEncoding = function(enc) {
+
+Readable.prototype.setEncoding = function (enc) {
   if (!StringDecoder) StringDecoder = string_decoder.StringDecoder;
   var decoder = new StringDecoder(enc);
   this._readableState.decoder = decoder; // If setEncoding(null), decoder.encoding equals utf8
@@ -6999,6 +6339,7 @@ Readable.prototype.setEncoding = function(enc) {
   this._readableState.length = content.length;
   return this;
 }; // Don't raise the hwm > 1GB
+
 
 var MAX_HWM = 0x40000000;
 
@@ -7022,15 +6363,16 @@ function computeNewHighWaterMark(n) {
 } // This function is designed to be inlinable, so please take care when making
 // changes to the function body.
 
+
 function howMuchToRead(n, state) {
-  if (n <= 0 || (state.length === 0 && state.ended)) return 0;
+  if (n <= 0 || state.length === 0 && state.ended) return 0;
   if (state.objectMode) return 1;
 
   if (n !== n) {
     // Only flow one buffer at a time
-    if (state.flowing && state.length) return state.buffer.head.data.length;
-    else return state.length;
+    if (state.flowing && state.length) return state.buffer.head.data.length;else return state.length;
   } // If we're asking for more than the current hwm, then raise the hwm.
+
 
   if (n > state.highWaterMark) state.highWaterMark = computeNewHighWaterMark(n);
   if (n <= state.length) return n; // Don't have enough
@@ -7043,7 +6385,8 @@ function howMuchToRead(n, state) {
   return state.length;
 } // you can override either this method, or the async _read(n) below.
 
-Readable.prototype.read = function(n) {
+
+Readable.prototype.read = function (n) {
   debug('read', n);
   n = parseInt(n, 10);
   var state = this._readableState;
@@ -7052,17 +6395,9 @@ Readable.prototype.read = function(n) {
   // already have a bunch of data in the buffer, then just trigger
   // the 'readable' event and move on.
 
-  if (
-    n === 0 &&
-    state.needReadable &&
-    ((state.highWaterMark !== 0
-      ? state.length >= state.highWaterMark
-      : state.length > 0) ||
-      state.ended)
-  ) {
+  if (n === 0 && state.needReadable && ((state.highWaterMark !== 0 ? state.length >= state.highWaterMark : state.length > 0) || state.ended)) {
     debug('read: emitReadable', state.length, state.ended);
-    if (state.length === 0 && state.ended) endReadable(this);
-    else emitReadable(this);
+    if (state.length === 0 && state.ended) endReadable(this);else emitReadable(this);
     return null;
   }
 
@@ -7094,6 +6429,7 @@ Readable.prototype.read = function(n) {
   // 3. Actually pull the requested chunks out of the buffer and return.
   // if we need a readable event, then we need to do some reading.
 
+
   var doRead = state.needReadable;
   debug('need readable', doRead); // if we currently have less than the highWaterMark, then also read some
 
@@ -7102,6 +6438,7 @@ Readable.prototype.read = function(n) {
     debug('length less than watermark', doRead);
   } // however, if we've ended, then there's no point, and if we're already
   // reading, then it's unnecessary.
+
 
   if (state.ended || state.reading) {
     doRead = false;
@@ -7122,8 +6459,7 @@ Readable.prototype.read = function(n) {
   }
 
   var ret;
-  if (n > 0) ret = fromList(n, state);
-  else ret = null;
+  if (n > 0) ret = fromList(n, state);else ret = null;
 
   if (ret === null) {
     state.needReadable = state.length <= state.highWaterMark;
@@ -7178,6 +6514,7 @@ function onEofChunk(stream, state) {
 // another read() call => stack overflow.  This way, it might trigger
 // a nextTick recursion warning, but that's not so bad.
 
+
 function emitReadable(stream) {
   var state = stream._readableState;
   debug('emitReadable', state.needReadable, state.emittedReadable);
@@ -7204,8 +6541,8 @@ function emitReadable_(stream) {
   // 3. It is below the highWaterMark, so we can schedule
   //    another readable later.
 
-  state.needReadable =
-    !state.flowing && !state.ended && state.length <= state.highWaterMark;
+
+  state.needReadable = !state.flowing && !state.ended && state.length <= state.highWaterMark;
   flow(stream);
 } // at this point, the user has presumably seen the 'readable' event,
 // and called read() to consume some data.  that may have triggered
@@ -7213,6 +6550,7 @@ function emitReadable_(stream) {
 // it's in progress.
 // However, if we're not ended, or reading, and the length < hwm,
 // then go ahead and try to read some more preemptively.
+
 
 function maybeReadMore(stream, state) {
   if (!state.readingMore) {
@@ -7245,17 +6583,11 @@ function maybeReadMore_(stream, state) {
   //   called push() with new data. In this case we skip performing more
   //   read()s. The execution ends in this method again after the _read() ends
   //   up calling push() with more data.
-  while (
-    !state.reading &&
-    !state.ended &&
-    (state.length < state.highWaterMark ||
-      (state.flowing && state.length === 0))
-  ) {
+  while (!state.reading && !state.ended && (state.length < state.highWaterMark || state.flowing && state.length === 0)) {
     var len = state.length;
     debug('maybeReadMore read 0');
     stream.read(0);
-    if (len === state.length)
-      // didn't get any data, stop spinning.
+    if (len === state.length) // didn't get any data, stop spinning.
       break;
   }
 
@@ -7265,11 +6597,12 @@ function maybeReadMore_(stream, state) {
 // for virtual (non-string, non-buffer) streams, "length" is somewhat
 // arbitrary, and perhaps not very meaningful.
 
-Readable.prototype._read = function(n) {
+
+Readable.prototype._read = function (n) {
   errorOrDestroy$1(this, new ERR_METHOD_NOT_IMPLEMENTED$2('_read()'));
 };
 
-Readable.prototype.pipe = function(dest, pipeOpts) {
+Readable.prototype.pipe = function (dest, pipeOpts) {
   var src = this;
   var state = this._readableState;
 
@@ -7289,13 +6622,9 @@ Readable.prototype.pipe = function(dest, pipeOpts) {
 
   state.pipesCount += 1;
   debug('pipe count=%d opts=%j', state.pipesCount, pipeOpts);
-  var doEnd =
-    (!pipeOpts || pipeOpts.end !== false) &&
-    dest !== browser$1$1.stdout &&
-    dest !== browser$1$1.stderr;
+  var doEnd = (!pipeOpts || pipeOpts.end !== false) && dest !== browser$1$1.stdout && dest !== browser$1$1.stderr;
   var endFn = doEnd ? onend : unpipe;
-  if (state.endEmitted) browser$1$1.nextTick(endFn);
-  else src.once('end', endFn);
+  if (state.endEmitted) browser$1$1.nextTick(endFn);else src.once('end', endFn);
   dest.on('unpipe', onunpipe);
 
   function onunpipe(readable, unpipeInfo) {
@@ -7316,6 +6645,7 @@ Readable.prototype.pipe = function(dest, pipeOpts) {
   // on the source.  This would be more elegant with a .once()
   // handler in flow(), but adding and removing repeatedly is
   // too slow.
+
 
   var ondrain = pipeOnDrain(src);
   dest.on('drain', ondrain);
@@ -7338,11 +6668,7 @@ Readable.prototype.pipe = function(dest, pipeOpts) {
     // So, if this is awaiting a drain, then we just call it now.
     // If we don't know, then assume that we are waiting for one.
 
-    if (
-      state.awaitDrain &&
-      (!dest._writableState || dest._writableState.needDrain)
-    )
-      ondrain();
+    if (state.awaitDrain && (!dest._writableState || dest._writableState.needDrain)) ondrain();
   }
 
   src.on('data', ondata);
@@ -7357,11 +6683,7 @@ Readable.prototype.pipe = function(dest, pipeOpts) {
       // to get stuck in a permanently paused state if that write
       // also returned false.
       // => Check whether `dest` is still a piping destination.
-      if (
-        ((state.pipesCount === 1 && state.pipes === dest) ||
-          (state.pipesCount > 1 && indexOf(state.pipes, dest) !== -1)) &&
-        !cleanedUp
-      ) {
+      if ((state.pipesCount === 1 && state.pipes === dest || state.pipesCount > 1 && indexOf(state.pipes, dest) !== -1) && !cleanedUp) {
         debug('false write response, pause', state.awaitDrain);
         state.awaitDrain++;
       }
@@ -7371,12 +6693,14 @@ Readable.prototype.pipe = function(dest, pipeOpts) {
   } // if the dest has an error, then stop piping into it.
   // however, don't suppress the throwing behavior for this.
 
+
   function onerror(er) {
     debug('onerror', er);
     unpipe();
     dest.removeListener('error', onerror);
     if (EElistenerCount(dest, 'error') === 0) errorOrDestroy$1(dest, er);
   } // Make sure our error handler is attached before userland ones.
+
 
   prependListener(dest, 'error', onerror); // Both close and finish should trigger unpipe, but only once.
 
@@ -7399,6 +6723,7 @@ Readable.prototype.pipe = function(dest, pipeOpts) {
     debug('unpipe');
     src.unpipe(dest);
   } // tell the dest that it's being piped to
+
 
   dest.emit('pipe', src); // start the flow if it hasn't been started already.
 
@@ -7423,7 +6748,7 @@ function pipeOnDrain(src) {
   };
 }
 
-Readable.prototype.unpipe = function(dest) {
+Readable.prototype.unpipe = function (dest) {
   var state = this._readableState;
   var unpipeInfo = {
     hasUnpiped: false
@@ -7443,6 +6768,7 @@ Readable.prototype.unpipe = function(dest) {
     return this;
   } // slow case. multiple pipe destinations.
 
+
   if (!dest) {
     // remove all.
     var dests = state.pipes;
@@ -7460,6 +6786,7 @@ Readable.prototype.unpipe = function(dest) {
     return this;
   } // try to find the right one.
 
+
   var index = indexOf(state.pipes, dest);
   if (index === -1) return this;
   state.pipes.splice(index, 1);
@@ -7470,7 +6797,8 @@ Readable.prototype.unpipe = function(dest) {
 }; // set up data events if they are asked for
 // Ensure readable listeners eventually get something
 
-Readable.prototype.on = function(ev, fn) {
+
+Readable.prototype.on = function (ev, fn) {
   var res = Stream$1.prototype.on.call(this, ev, fn);
   var state = this._readableState;
 
@@ -7500,7 +6828,7 @@ Readable.prototype.on = function(ev, fn) {
 
 Readable.prototype.addListener = Readable.prototype.on;
 
-Readable.prototype.removeListener = function(ev, fn) {
+Readable.prototype.removeListener = function (ev, fn) {
   var res = Stream$1.prototype.removeListener.call(this, ev, fn);
 
   if (ev === 'readable') {
@@ -7516,7 +6844,7 @@ Readable.prototype.removeListener = function(ev, fn) {
   return res;
 };
 
-Readable.prototype.removeAllListeners = function(ev) {
+Readable.prototype.removeAllListeners = function (ev) {
   var res = Stream$1.prototype.removeAllListeners.apply(this, arguments);
 
   if (ev === 'readable' || ev === undefined) {
@@ -7551,7 +6879,8 @@ function nReadingNextTick(self) {
 } // pause() and resume() are remnants of the legacy readable stream API
 // If the user uses them, then switch into old mode.
 
-Readable.prototype.resume = function() {
+
+Readable.prototype.resume = function () {
   var state = this._readableState;
 
   if (!state.flowing) {
@@ -7587,7 +6916,7 @@ function resume_(stream, state) {
   if (state.flowing && !state.reading) stream.read(0);
 }
 
-Readable.prototype.pause = function() {
+Readable.prototype.pause = function () {
   debug('call pause flowing=%j', this._readableState.flowing);
 
   if (this._readableState.flowing !== false) {
@@ -7604,17 +6933,19 @@ function flow(stream) {
   var state = stream._readableState;
   debug('flow', state.flowing);
 
-  while (state.flowing && stream.read() !== null) {}
+  while (state.flowing && stream.read() !== null) {
+  }
 } // wrap an old-style stream as the async data source.
 // This is *not* part of the readable stream interface.
 // It is an ugly unfortunate mess of history.
 
-Readable.prototype.wrap = function(stream) {
+
+Readable.prototype.wrap = function (stream) {
   var _this = this;
 
   var state = this._readableState;
   var paused = false;
-  stream.on('end', function() {
+  stream.on('end', function () {
     debug('wrapped end');
 
     if (state.decoder && !state.ended) {
@@ -7624,12 +6955,11 @@ Readable.prototype.wrap = function(stream) {
 
     _this.push(null);
   });
-  stream.on('data', function(chunk) {
+  stream.on('data', function (chunk) {
     debug('wrapped data');
     if (state.decoder) chunk = state.decoder.write(chunk); // don't skip over falsy values in objectMode
 
-    if (state.objectMode && (chunk === null || chunk === undefined)) return;
-    else if (!state.objectMode && (!chunk || !chunk.length)) return;
+    if (state.objectMode && (chunk === null || chunk === undefined)) return;else if (!state.objectMode && (!chunk || !chunk.length)) return;
 
     var ret = _this.push(chunk);
 
@@ -7642,20 +6972,22 @@ Readable.prototype.wrap = function(stream) {
 
   for (var i in stream) {
     if (this[i] === undefined && typeof stream[i] === 'function') {
-      this[i] = (function methodWrap(method) {
+      this[i] = function methodWrap(method) {
         return function methodWrapReturnFunction() {
           return stream[method].apply(stream, arguments);
         };
-      })(i);
+      }(i);
     }
   } // proxy certain important events.
+
 
   for (var n = 0; n < kProxyEvents.length; n++) {
     stream.on(kProxyEvents[n], this.emit.bind(this, kProxyEvents[n]));
   } // when we try to consume some more bytes, simply unpause the
   // underlying stream.
 
-  this._read = function(n) {
+
+  this._read = function (n) {
     debug('wrapped _read', n);
 
     if (paused) {
@@ -7668,7 +7000,7 @@ Readable.prototype.wrap = function(stream) {
 };
 
 if (typeof Symbol === 'function') {
-  Readable.prototype[Symbol.asyncIterator] = function() {
+  Readable.prototype[Symbol.asyncIterator] = function () {
     if (createReadableStreamAsyncIterator === undefined) {
       createReadableStreamAsyncIterator = async_iterator;
     }
@@ -7728,12 +7060,9 @@ function fromList(n, state) {
   // nothing buffered
   if (state.length === 0) return null;
   var ret;
-  if (state.objectMode) ret = state.buffer.shift();
-  else if (!n || n >= state.length) {
+  if (state.objectMode) ret = state.buffer.shift();else if (!n || n >= state.length) {
     // read it all, truncate the list
-    if (state.decoder) ret = state.buffer.join('');
-    else if (state.buffer.length === 1) ret = state.buffer.first();
-    else ret = state.buffer.concat(state.length);
+    if (state.decoder) ret = state.buffer.join('');else if (state.buffer.length === 1) ret = state.buffer.first();else ret = state.buffer.concat(state.length);
     state.buffer.clear();
   } else {
     // read part of list
@@ -7765,7 +7094,7 @@ function endReadableNT(state, stream) {
       // if the writable side is ready for autoDestroy as well
       var wState = stream._writableState;
 
-      if (!wState || (wState.autoDestroy && wState.finished)) {
+      if (!wState || wState.autoDestroy && wState.finished) {
         stream.destroy();
       }
     }
@@ -7773,7 +7102,7 @@ function endReadableNT(state, stream) {
 }
 
 if (typeof Symbol === 'function') {
-  Readable.from = function(iterable, opts) {
+  Readable.from = function (iterable, opts) {
     if (from === undefined) {
       from = fromBrowser;
     }
@@ -7846,6 +7175,7 @@ function deprecate(fn, msg) {
  * @api private
  */
 
+
 function config(name) {
   // accessing global.localStorage can trigger a DOMException in sandboxed iframes
   try {
@@ -7863,13 +7193,14 @@ var Registry$3 = _registry;
 Registry$3.Writable = Writable;
 // there will be only 2 of these for each stream
 
+
 function CorkedRequest(state) {
   var _this = this;
 
   this.next = null;
   this.entry = null;
 
-  this.finish = function() {
+  this.finish = function () {
     onCorkedFinish(_this, state);
   };
 }
@@ -7878,6 +7209,7 @@ function CorkedRequest(state) {
 /*<replacement>*/
 
 /*</replacement>*/
+
 
 Writable.WritableState = WritableState;
 /*<replacement>*/
@@ -7894,7 +7226,7 @@ var Stream = streamBrowser;
 
 var Buffer = buffer.Buffer;
 
-var OurUint8Array = commonjsGlobal.Uint8Array || function() {};
+var OurUint8Array = commonjsGlobal.Uint8Array || function () {};
 
 function _uint8ArrayToBuffer(chunk) {
   return Buffer.from(chunk);
@@ -7906,16 +7238,16 @@ function _isUint8Array(obj) {
 
 var destroyImpl = destroy_1;
 var _require$2 = state,
-  getHighWaterMark = _require$2.getHighWaterMark;
+    getHighWaterMark = _require$2.getHighWaterMark;
 var _require$codes$3 = errorsBrowser.codes,
-  ERR_INVALID_ARG_TYPE$2 = _require$codes$3.ERR_INVALID_ARG_TYPE,
-  ERR_METHOD_NOT_IMPLEMENTED$1 = _require$codes$3.ERR_METHOD_NOT_IMPLEMENTED,
-  ERR_MULTIPLE_CALLBACK$1 = _require$codes$3.ERR_MULTIPLE_CALLBACK,
-  ERR_STREAM_CANNOT_PIPE = _require$codes$3.ERR_STREAM_CANNOT_PIPE,
-  ERR_STREAM_DESTROYED$1 = _require$codes$3.ERR_STREAM_DESTROYED,
-  ERR_STREAM_NULL_VALUES = _require$codes$3.ERR_STREAM_NULL_VALUES,
-  ERR_STREAM_WRITE_AFTER_END = _require$codes$3.ERR_STREAM_WRITE_AFTER_END,
-  ERR_UNKNOWN_ENCODING = _require$codes$3.ERR_UNKNOWN_ENCODING;
+    ERR_INVALID_ARG_TYPE$2 = _require$codes$3.ERR_INVALID_ARG_TYPE,
+    ERR_METHOD_NOT_IMPLEMENTED$1 = _require$codes$3.ERR_METHOD_NOT_IMPLEMENTED,
+    ERR_MULTIPLE_CALLBACK$1 = _require$codes$3.ERR_MULTIPLE_CALLBACK,
+    ERR_STREAM_CANNOT_PIPE = _require$codes$3.ERR_STREAM_CANNOT_PIPE,
+    ERR_STREAM_DESTROYED$1 = _require$codes$3.ERR_STREAM_DESTROYED,
+    ERR_STREAM_NULL_VALUES = _require$codes$3.ERR_STREAM_NULL_VALUES,
+    ERR_STREAM_WRITE_AFTER_END = _require$codes$3.ERR_STREAM_WRITE_AFTER_END,
+    ERR_UNKNOWN_ENCODING = _require$codes$3.ERR_UNKNOWN_ENCODING;
 var errorOrDestroy = destroyImpl.errorOrDestroy;
 inherits_browser.exports(Writable, Stream);
 
@@ -7928,22 +7260,15 @@ function WritableState(options, stream, isDuplex) {
   // values for the readable and the writable sides of the duplex stream,
   // e.g. options.readableObjectMode vs. options.writableObjectMode, etc.
 
-  if (typeof isDuplex !== 'boolean')
-    isDuplex = stream instanceof Registry$3.Duplex; // object stream flag to indicate whether or not this stream
+  if (typeof isDuplex !== 'boolean') isDuplex = stream instanceof Registry$3.Duplex; // object stream flag to indicate whether or not this stream
   // contains buffers or objects.
 
   this.objectMode = !!options.objectMode;
-  if (isDuplex)
-    this.objectMode = this.objectMode || !!options.writableObjectMode; // the point at which write() starts returning false
+  if (isDuplex) this.objectMode = this.objectMode || !!options.writableObjectMode; // the point at which write() starts returning false
   // Note: 0 is a valid value, means that we always return false if
   // the entire buffer is not flushed immediately on write()
 
-  this.highWaterMark = getHighWaterMark(
-    this,
-    options,
-    'writableHighWaterMark',
-    isDuplex
-  ); // if _final has been called
+  this.highWaterMark = getHighWaterMark(this, options, 'writableHighWaterMark', isDuplex); // if _final has been called
 
   this.finalCalled = false; // drain event flag.
 
@@ -7983,9 +7308,10 @@ function WritableState(options, stream, isDuplex) {
 
   this.bufferProcessing = false; // the callback that's passed to _write(chunk,cb)
 
-  this.onwrite = function(er) {
+  this.onwrite = function (er) {
     onwrite(stream, er);
   }; // the callback that the user supplies to write(chunk,encoding,cb)
+
 
   this.writecb = null; // the amount that is being written when _write is called.
 
@@ -8023,29 +7349,21 @@ WritableState.prototype.getBuffer = function getBuffer() {
   return out;
 };
 
-(function() {
+(function () {
   try {
     Object.defineProperty(WritableState.prototype, 'buffer', {
-      get: internalUtil.deprecate(
-        function writableStateBufferGetter() {
-          return this.getBuffer();
-        },
-        '_writableState.buffer is deprecated. Use _writableState.getBuffer ' +
-          'instead.',
-        'DEP0003'
-      )
+      get: internalUtil.deprecate(function writableStateBufferGetter() {
+        return this.getBuffer();
+      }, '_writableState.buffer is deprecated. Use _writableState.getBuffer ' + 'instead.', 'DEP0003')
     });
   } catch (_) {}
 })(); // Test _writableState for inheritance to account for Duplex streams,
 // whose prototype chain only points to Readable.
 
+
 var realHasInstance;
 
-if (
-  typeof Symbol === 'function' &&
-  Symbol.hasInstance &&
-  typeof Function.prototype[Symbol.hasInstance] === 'function'
-) {
+if (typeof Symbol === 'function' && Symbol.hasInstance && typeof Function.prototype[Symbol.hasInstance] === 'function') {
   realHasInstance = Function.prototype[Symbol.hasInstance];
   Object.defineProperty(Writable, Symbol.hasInstance, {
     value: function value(object) {
@@ -8070,8 +7388,7 @@ function Writable(options) {
   // Checking for a Stream.Duplex instance is faster here instead of inside
   // the WritableState constructor, at least with V8 6.5
   var isDuplex = this instanceof Registry$3.Duplex;
-  if (!isDuplex && !realHasInstance.call(Writable, this))
-    return new Writable(options);
+  if (!isDuplex && !realHasInstance.call(Writable, this)) return new Writable(options);
   this._writableState = new WritableState(options, this, isDuplex); // legacy.
 
   this.writable = true;
@@ -8086,7 +7403,8 @@ function Writable(options) {
   Stream.call(this);
 } // Otherwise people can pipe Writable streams, which is just wrong.
 
-Writable.prototype.pipe = function() {
+
+Writable.prototype.pipe = function () {
   errorOrDestroy(this, new ERR_STREAM_CANNOT_PIPE());
 };
 
@@ -8098,6 +7416,7 @@ function writeAfterEnd(stream, cb) {
 } // Checks that a user-supplied chunk is valid, especially for the particular
 // mode the stream is in. Currently this means that `null` is never accepted
 // and undefined/non-string values are only allowed in object mode.
+
 
 function validChunk(stream, state, chunk, cb) {
   var er;
@@ -8117,7 +7436,7 @@ function validChunk(stream, state, chunk, cb) {
   return true;
 }
 
-Writable.prototype.write = function(chunk, encoding, cb) {
+Writable.prototype.write = function (chunk, encoding, cb) {
   var state = this._writableState;
   var ret = false;
 
@@ -8132,57 +7451,32 @@ Writable.prototype.write = function(chunk, encoding, cb) {
     encoding = null;
   }
 
-  if (isBuf) encoding = 'buffer';
-  else if (!encoding) encoding = state.defaultEncoding;
+  if (isBuf) encoding = 'buffer';else if (!encoding) encoding = state.defaultEncoding;
   if (typeof cb !== 'function') cb = nop;
-  if (state.ending) writeAfterEnd(this, cb);
-  else if (isBuf || validChunk(this, state, chunk, cb)) {
+  if (state.ending) writeAfterEnd(this, cb);else if (isBuf || validChunk(this, state, chunk, cb)) {
     state.pendingcb++;
     ret = writeOrBuffer(this, state, isBuf, chunk, encoding, cb);
   }
   return ret;
 };
 
-Writable.prototype.cork = function() {
+Writable.prototype.cork = function () {
   this._writableState.corked++;
 };
 
-Writable.prototype.uncork = function() {
+Writable.prototype.uncork = function () {
   var state = this._writableState;
 
   if (state.corked) {
     state.corked--;
-    if (
-      !state.writing &&
-      !state.corked &&
-      !state.bufferProcessing &&
-      state.bufferedRequest
-    )
-      clearBuffer(this, state);
+    if (!state.writing && !state.corked && !state.bufferProcessing && state.bufferedRequest) clearBuffer(this, state);
   }
 };
 
 Writable.prototype.setDefaultEncoding = function setDefaultEncoding(encoding) {
   // node::ParseEncoding() requires lower case.
   if (typeof encoding === 'string') encoding = encoding.toLowerCase();
-  if (
-    !(
-      [
-        'hex',
-        'utf8',
-        'utf-8',
-        'ascii',
-        'binary',
-        'base64',
-        'ucs2',
-        'ucs-2',
-        'utf16le',
-        'utf-16le',
-        'raw'
-      ].indexOf((encoding + '').toLowerCase()) > -1
-    )
-  )
-    throw new ERR_UNKNOWN_ENCODING(encoding);
+  if (!(['hex', 'utf8', 'utf-8', 'ascii', 'binary', 'base64', 'ucs2', 'ucs-2', 'utf16le', 'utf-16le', 'raw'].indexOf((encoding + '').toLowerCase()) > -1)) throw new ERR_UNKNOWN_ENCODING(encoding);
   this._writableState.defaultEncoding = encoding;
   return this;
 };
@@ -8198,11 +7492,7 @@ Object.defineProperty(Writable.prototype, 'writableBuffer', {
 });
 
 function decodeChunk(state, chunk, encoding) {
-  if (
-    !state.objectMode &&
-    state.decodeStrings !== false &&
-    typeof chunk === 'string'
-  ) {
+  if (!state.objectMode && state.decodeStrings !== false && typeof chunk === 'string') {
     chunk = Buffer.from(chunk, encoding);
   }
 
@@ -8267,9 +7557,7 @@ function doWrite(stream, state, writev, len, chunk, encoding, cb) {
   state.writecb = cb;
   state.writing = true;
   state.sync = true;
-  if (state.destroyed) state.onwrite(new ERR_STREAM_DESTROYED$1('write'));
-  else if (writev) stream._writev(chunk, state.onwrite);
-  else stream._write(chunk, encoding, state.onwrite);
+  if (state.destroyed) state.onwrite(new ERR_STREAM_DESTROYED$1('write'));else if (writev) stream._writev(chunk, state.onwrite);else stream._write(chunk, encoding, state.onwrite);
   state.sync = false;
 }
 
@@ -8310,17 +7598,11 @@ function onwrite(stream, er) {
   var cb = state.writecb;
   if (typeof cb !== 'function') throw new ERR_MULTIPLE_CALLBACK$1();
   onwriteStateUpdate(state);
-  if (er) onwriteError(stream, state, sync, er, cb);
-  else {
+  if (er) onwriteError(stream, state, sync, er, cb);else {
     // Check if we're actually ready to finish, but don't emit yet
     var finished = needFinish(state) || stream.destroyed;
 
-    if (
-      !finished &&
-      !state.corked &&
-      !state.bufferProcessing &&
-      state.bufferedRequest
-    ) {
+    if (!finished && !state.corked && !state.bufferProcessing && state.bufferedRequest) {
       clearBuffer(stream, state);
     }
 
@@ -8341,12 +7623,14 @@ function afterWrite(stream, state, finished, cb) {
 // emit 'drain' before the write() consumer gets the 'false' return
 // value, and has a chance to attach a 'drain' listener.
 
+
 function onwriteDrain(stream, state) {
   if (state.length === 0 && state.needDrain) {
     state.needDrain = false;
     stream.emit('drain');
   }
 } // if there's something in the buffer waiting, then process it
+
 
 function clearBuffer(stream, state) {
   state.bufferProcessing = true;
@@ -8409,13 +7693,13 @@ function clearBuffer(stream, state) {
   state.bufferProcessing = false;
 }
 
-Writable.prototype._write = function(chunk, encoding, cb) {
+Writable.prototype._write = function (chunk, encoding, cb) {
   cb(new ERR_METHOD_NOT_IMPLEMENTED$1('_write()'));
 };
 
 Writable.prototype._writev = null;
 
-Writable.prototype.end = function(chunk, encoding, cb) {
+Writable.prototype.end = function (chunk, encoding, cb) {
   var state = this._writableState;
 
   if (typeof chunk === 'function') {
@@ -8434,6 +7718,7 @@ Writable.prototype.end = function(chunk, encoding, cb) {
     this.uncork();
   } // ignore unnecessary end() calls.
 
+
   if (!state.ending) endWritable(this, state, cb);
   return this;
 };
@@ -8449,17 +7734,11 @@ Object.defineProperty(Writable.prototype, 'writableLength', {
 });
 
 function needFinish(state) {
-  return (
-    state.ending &&
-    state.length === 0 &&
-    state.bufferedRequest === null &&
-    !state.finished &&
-    !state.writing
-  );
+  return state.ending && state.length === 0 && state.bufferedRequest === null && !state.finished && !state.writing;
 }
 
 function callFinal(stream, state) {
-  stream._final(function(err) {
+  stream._final(function (err) {
     state.pendingcb--;
 
     if (err) {
@@ -8500,7 +7779,7 @@ function finishMaybe(stream, state) {
         // if the readable side is ready for autoDestroy as well
         var rState = stream._readableState;
 
-        if (!rState || (rState.autoDestroy && rState.endEmitted)) {
+        if (!rState || rState.autoDestroy && rState.endEmitted) {
           stream.destroy();
         }
       }
@@ -8515,8 +7794,7 @@ function endWritable(stream, state, cb) {
   finishMaybe(stream, state);
 
   if (cb) {
-    if (state.finished) browser$1$1.nextTick(cb);
-    else stream.once('finish', cb);
+    if (state.finished) browser$1$1.nextTick(cb);else stream.once('finish', cb);
   }
 
   state.ended = true;
@@ -8533,6 +7811,7 @@ function onCorkedFinish(corkReq, state, err) {
     cb(err);
     entry = entry.next;
   } // reuse the free corkReq.
+
 
   state.corkedRequestsFree.next = corkReq;
 }
@@ -8557,30 +7836,31 @@ Object.defineProperty(Writable.prototype, 'destroyed', {
     } // backward compatibility, the user is explicitly
     // managing destroyed
 
+
     this._writableState.destroyed = value;
   }
 });
 Writable.prototype.destroy = destroyImpl.destroy;
 Writable.prototype._undestroy = destroyImpl.undestroy;
 
-Writable.prototype._destroy = function(err, cb) {
+Writable.prototype._destroy = function (err, cb) {
   cb(err);
 };
 
 /*<replacement>*/
 
-var objectKeys$1 =
-  Object.keys ||
-  function(obj) {
-    var keys = [];
 
-    for (var key in obj) {
-      keys.push(key);
-    }
+var objectKeys$1 = Object.keys || function (obj) {
+  var keys = [];
 
-    return keys;
-  };
+  for (var key in obj) {
+    keys.push(key);
+  }
+
+  return keys;
+};
 /*</replacement>*/
+
 
 var Registry$2 = _registry;
 Registry$2.Duplex = Duplex;
@@ -8591,8 +7871,7 @@ inherits_browser.exports(Duplex, Registry$2.Readable);
 
   for (var v = 0; v < keys$1.length; v++) {
     var method = keys$1[v];
-    if (!Duplex.prototype[method])
-      Duplex.prototype[method] = Registry$2.Writable.prototype[method];
+    if (!Duplex.prototype[method]) Duplex.prototype[method] = Registry$2.Writable.prototype[method];
   }
 }
 
@@ -8659,10 +7938,7 @@ Object.defineProperty(Duplex.prototype, 'destroyed', {
   // userland will fail
   enumerable: false,
   get: function get() {
-    if (
-      this._readableState === undefined ||
-      this._writableState === undefined
-    ) {
+    if (this._readableState === undefined || this._writableState === undefined) {
       return false;
     }
 
@@ -8671,13 +7947,11 @@ Object.defineProperty(Duplex.prototype, 'destroyed', {
   set: function set(value) {
     // we ignore the value if the stream
     // has not been initialized yet
-    if (
-      this._readableState === undefined ||
-      this._writableState === undefined
-    ) {
+    if (this._readableState === undefined || this._writableState === undefined) {
       return;
     } // backward compatibility, the user is explicitly
     // managing destroyed
+
 
     this._readableState.destroyed = value;
     this._writableState.destroyed = value;
@@ -8687,11 +7961,10 @@ Object.defineProperty(Duplex.prototype, 'destroyed', {
 var Registry$1 = _registry;
 Registry$1.Transform = Transform$1;
 var _require$codes$2 = errorsBrowser.codes,
-  ERR_METHOD_NOT_IMPLEMENTED = _require$codes$2.ERR_METHOD_NOT_IMPLEMENTED,
-  ERR_MULTIPLE_CALLBACK = _require$codes$2.ERR_MULTIPLE_CALLBACK,
-  ERR_TRANSFORM_ALREADY_TRANSFORMING =
-    _require$codes$2.ERR_TRANSFORM_ALREADY_TRANSFORMING,
-  ERR_TRANSFORM_WITH_LENGTH_0 = _require$codes$2.ERR_TRANSFORM_WITH_LENGTH_0;
+    ERR_METHOD_NOT_IMPLEMENTED = _require$codes$2.ERR_METHOD_NOT_IMPLEMENTED,
+    ERR_MULTIPLE_CALLBACK = _require$codes$2.ERR_MULTIPLE_CALLBACK,
+    ERR_TRANSFORM_ALREADY_TRANSFORMING = _require$codes$2.ERR_TRANSFORM_ALREADY_TRANSFORMING,
+    ERR_TRANSFORM_WITH_LENGTH_0 = _require$codes$2.ERR_TRANSFORM_WITH_LENGTH_0;
 inherits_browser.exports(Transform$1, Registry$1.Duplex);
 
 function afterTransform(er, data) {
@@ -8705,8 +7978,7 @@ function afterTransform(er, data) {
 
   ts.writechunk = null;
   ts.writecb = null;
-  if (data != null)
-    // single equals check for both `null` and `undefined`
+  if (data != null) // single equals check for both `null` and `undefined`
     this.push(data);
   cb(er);
   var rs = this._readableState;
@@ -8736,10 +8008,10 @@ function Transform$1(options) {
   this._readableState.sync = false;
 
   if (options) {
-    if (typeof options.transform === 'function')
-      this._transform = options.transform;
+    if (typeof options.transform === 'function') this._transform = options.transform;
     if (typeof options.flush === 'function') this._flush = options.flush;
   } // When the writable side finishes, then flush out anything remaining.
+
 
   this.on('prefinish', prefinish);
 }
@@ -8748,7 +8020,7 @@ function prefinish() {
   var _this = this;
 
   if (typeof this._flush === 'function' && !this._readableState.destroyed) {
-    this._flush(function(er, data) {
+    this._flush(function (er, data) {
       done(_this, er, data);
     });
   } else {
@@ -8756,7 +8028,7 @@ function prefinish() {
   }
 }
 
-Transform$1.prototype.push = function(chunk, encoding) {
+Transform$1.prototype.push = function (chunk, encoding) {
   this._transformState.needTransform = false;
   return Registry$1.Duplex.prototype.push.call(this, chunk, encoding);
 }; // This is the part where you do stuff!
@@ -8770,11 +8042,12 @@ Transform$1.prototype.push = function(chunk, encoding) {
 // an error, then that'll put the hurt on the whole operation.  If you
 // never call cb(), then you'll never get another chunk.
 
-Transform$1.prototype._transform = function(chunk, encoding, cb) {
+
+Transform$1.prototype._transform = function (chunk, encoding, cb) {
   cb(new ERR_METHOD_NOT_IMPLEMENTED('_transform()'));
 };
 
-Transform$1.prototype._write = function(chunk, encoding, cb) {
+Transform$1.prototype._write = function (chunk, encoding, cb) {
   var ts = this._transformState;
   ts.writecb = cb;
   ts.writechunk = chunk;
@@ -8782,14 +8055,14 @@ Transform$1.prototype._write = function(chunk, encoding, cb) {
 
   if (!ts.transforming) {
     var rs = this._readableState;
-    if (ts.needTransform || rs.needReadable || rs.length < rs.highWaterMark)
-      this._read(rs.highWaterMark);
+    if (ts.needTransform || rs.needReadable || rs.length < rs.highWaterMark) this._read(rs.highWaterMark);
   }
 }; // Doesn't matter what the args are here.
 // _transform does all the work.
 // That we got here means that the readable side wants more data.
 
-Transform$1.prototype._read = function(n) {
+
+Transform$1.prototype._read = function (n) {
   var ts = this._transformState;
 
   if (ts.writechunk !== null && !ts.transforming) {
@@ -8803,23 +8076,21 @@ Transform$1.prototype._read = function(n) {
   }
 };
 
-Transform$1.prototype._destroy = function(err, cb) {
-  Registry$1.Duplex.prototype._destroy.call(this, err, function(err2) {
+Transform$1.prototype._destroy = function (err, cb) {
+  Registry$1.Duplex.prototype._destroy.call(this, err, function (err2) {
     cb(err2);
   });
 };
 
 function done(stream, er, data) {
   if (er) return stream.emit('error', er);
-  if (data != null)
-    // single equals check for both `null` and `undefined`
+  if (data != null) // single equals check for both `null` and `undefined`
     stream.push(data); // TODO(BridgeAR): Write a test for these two error cases
   // if there's nothing in the write buffer, then that means
   // that nothing more will ever be provided
 
   if (stream._writableState.length) throw new ERR_TRANSFORM_WITH_LENGTH_0();
-  if (stream._transformState.transforming)
-    throw new ERR_TRANSFORM_ALREADY_TRANSFORMING();
+  if (stream._transformState.transforming) throw new ERR_TRANSFORM_ALREADY_TRANSFORMING();
   return stream.push(null);
 }
 
@@ -8832,7 +8103,7 @@ function PassThrough(options) {
   Transform.call(this, options);
 }
 
-PassThrough.prototype._transform = function(chunk, encoding, cb) {
+PassThrough.prototype._transform = function (chunk, encoding, cb) {
   cb(null, chunk);
 };
 
@@ -8840,7 +8111,7 @@ var eos;
 
 function once(callback) {
   var called = false;
-  return function() {
+  return function () {
     if (called) return;
     called = true;
     callback.apply(void 0, arguments);
@@ -8848,8 +8119,8 @@ function once(callback) {
 }
 
 var _require$codes$1 = errorsBrowser.codes,
-  ERR_MISSING_ARGS$1 = _require$codes$1.ERR_MISSING_ARGS,
-  ERR_STREAM_DESTROYED = _require$codes$1.ERR_STREAM_DESTROYED;
+    ERR_MISSING_ARGS$1 = _require$codes$1.ERR_MISSING_ARGS,
+    ERR_STREAM_DESTROYED = _require$codes$1.ERR_STREAM_DESTROYED;
 
 function noop(err) {
   // Rethrow the error if it exists to avoid swallowing it
@@ -8863,24 +8134,20 @@ function isRequest(stream) {
 function destroyer(stream, reading, writing, callback) {
   callback = once(callback);
   var closed = false;
-  stream.on('close', function() {
+  stream.on('close', function () {
     closed = true;
   });
   if (eos === undefined) eos = endOfStream;
-  eos(
-    stream,
-    {
-      readable: reading,
-      writable: writing
-    },
-    function(err) {
-      if (err) return callback(err);
-      closed = true;
-      callback();
-    }
-  );
+  eos(stream, {
+    readable: reading,
+    writable: writing
+  }, function (err) {
+    if (err) return callback(err);
+    closed = true;
+    callback();
+  });
   var destroyed = false;
-  return function(err) {
+  return function (err) {
     if (closed) return;
     if (destroyed) return;
     destroyed = true; // request.destroy just do .end - .abort is what we want
@@ -8906,11 +8173,7 @@ function popCallback(streams) {
 }
 
 function pipeline() {
-  for (
-    var _len = arguments.length, streams = new Array(_len), _key = 0;
-    _key < _len;
-    _key++
-  ) {
+  for (var _len = arguments.length, streams = new Array(_len), _key = 0; _key < _len; _key++) {
     streams[_key] = arguments[_key];
   }
 
@@ -8922,10 +8185,10 @@ function pipeline() {
   }
 
   var error;
-  var destroys = streams.map(function(stream, i) {
+  var destroys = streams.map(function (stream, i) {
     var reading = i < streams.length - 1;
     var writing = i > 0;
-    return destroyer(stream, reading, writing, function(err) {
+    return destroyer(stream, reading, writing, function (err) {
       if (!error) error = err;
       if (err) destroys.forEach(call);
       if (reading) return;
@@ -8938,7 +8201,7 @@ function pipeline() {
 
 var pipeline_1 = pipeline;
 
-(function(module, exports) {
+(function (module, exports) {
   var Registry = _registry;
   exports = module.exports = Registry.Readable;
   exports.Stream = Registry.Readable;
@@ -8957,7 +8220,7 @@ var lib = {};
 
 var binding = {};
 
-var assert$2 = { exports: {} };
+var assert$2 = {exports: {}};
 
 var errors = {};
 
@@ -8967,11 +8230,9 @@ var types = {};
 
 /* eslint complexity: [2, 18], max-statements: [2, 33] */
 
+
 var shams$1 = function hasSymbols() {
-  if (
-    typeof Symbol !== 'function' ||
-    typeof Object.getOwnPropertySymbols !== 'function'
-  ) {
+  if (typeof Symbol !== 'function' || typeof Object.getOwnPropertySymbols !== 'function') {
     return false;
   }
 
@@ -9000,6 +8261,7 @@ var shams$1 = function hasSymbols() {
   // if (typeof Symbol.prototype.toString !== 'function') { return false; }
   // if (String(sym) !== Symbol.prototype.toString.call(sym)) { return false; }
 
+
   var symVal = 42;
   obj[sym] = symVal;
 
@@ -9007,14 +8269,12 @@ var shams$1 = function hasSymbols() {
     return false;
   } // eslint-disable-line no-restricted-syntax, no-unreachable-loop
 
+
   if (typeof Object.keys === 'function' && Object.keys(obj).length !== 0) {
     return false;
   }
 
-  if (
-    typeof Object.getOwnPropertyNames === 'function' &&
-    Object.getOwnPropertyNames(obj).length !== 0
-  ) {
+  if (typeof Object.getOwnPropertyNames === 'function' && Object.getOwnPropertyNames(obj).length !== 0) {
     return false;
   }
 
@@ -9064,6 +8324,7 @@ var hasSymbols$3 = function hasNativeSymbols() {
 
 /* eslint no-invalid-this: 1 */
 
+
 var ERROR_MESSAGE = 'Function.prototype.bind called on incompatible ';
 var slice$1 = Array.prototype.slice;
 var toStr$4 = Object.prototype.toString;
@@ -9100,12 +8361,7 @@ var implementation$8 = function bind(that) {
     boundArgs.push('$' + i);
   }
 
-  bound = Function(
-    'binder',
-    'return function (' +
-      boundArgs.join(',') +
-      '){ return binder.apply(this,arguments); }'
-  )(binder);
+  bound = Function('binder', 'return function (' + boundArgs.join(',') + '){ return binder.apply(this,arguments); }')(binder);
 
   if (target.prototype) {
     var Empty = function Empty() {};
@@ -9131,9 +8387,7 @@ var $TypeError = TypeError; // eslint-disable-next-line consistent-return
 
 var getEvalledConstructor = function getEvalledConstructor(expressionSyntax) {
   try {
-    return $Function(
-      '"use strict"; return (' + expressionSyntax + ').constructor;'
-    )();
+    return $Function('"use strict"; return (' + expressionSyntax + ').constructor;')();
   } catch (e) {}
 };
 
@@ -9151,43 +8405,35 @@ var throwTypeError = function throwTypeError() {
   throw new $TypeError();
 };
 
-var ThrowTypeError = $gOPD$1
-  ? (function() {
-      try {
-        // eslint-disable-next-line no-unused-expressions, no-caller, no-restricted-properties
-        arguments.callee; // IE 8 does not throw here
+var ThrowTypeError = $gOPD$1 ? function () {
+  try {
+    // eslint-disable-next-line no-unused-expressions, no-caller, no-restricted-properties
+    arguments.callee; // IE 8 does not throw here
 
-        return throwTypeError;
-      } catch (calleeThrows) {
-        try {
-          // IE 8 throws on Object.getOwnPropertyDescriptor(arguments, '')
-          return $gOPD$1(arguments, 'callee').get;
-        } catch (gOPDthrows) {
-          return throwTypeError;
-        }
-      }
-    })()
-  : throwTypeError;
+    return throwTypeError;
+  } catch (calleeThrows) {
+    try {
+      // IE 8 throws on Object.getOwnPropertyDescriptor(arguments, '')
+      return $gOPD$1(arguments, 'callee').get;
+    } catch (gOPDthrows) {
+      return throwTypeError;
+    }
+  }
+}() : throwTypeError;
 var hasSymbols$2 = hasSymbols$3();
 
-var getProto$1 =
-  Object.getPrototypeOf ||
-  function(x) {
-    return x.__proto__;
-  }; // eslint-disable-line no-proto
+var getProto$1 = Object.getPrototypeOf || function (x) {
+  return x.__proto__;
+}; // eslint-disable-line no-proto
+
 
 var needsEval = {};
-var TypedArray =
-  typeof Uint8Array === 'undefined' ? undefined$1 : getProto$1(Uint8Array);
+var TypedArray = typeof Uint8Array === 'undefined' ? undefined$1 : getProto$1(Uint8Array);
 var INTRINSICS = {
-  '%AggregateError%':
-    typeof AggregateError === 'undefined' ? undefined$1 : AggregateError,
+  '%AggregateError%': typeof AggregateError === 'undefined' ? undefined$1 : AggregateError,
   '%Array%': Array,
-  '%ArrayBuffer%':
-    typeof ArrayBuffer === 'undefined' ? undefined$1 : ArrayBuffer,
-  '%ArrayIteratorPrototype%': hasSymbols$2
-    ? getProto$1([][Symbol.iterator]())
-    : undefined$1,
+  '%ArrayBuffer%': typeof ArrayBuffer === 'undefined' ? undefined$1 : ArrayBuffer,
+  '%ArrayIteratorPrototype%': hasSymbols$2 ? getProto$1([][Symbol.iterator]()) : undefined$1,
   '%AsyncFromSyncIteratorPrototype%': undefined$1,
   '%AsyncFunction%': needsEval,
   '%AsyncGenerator%': needsEval,
@@ -9206,14 +8452,9 @@ var INTRINSICS = {
   '%eval%': eval,
   // eslint-disable-line no-eval
   '%EvalError%': EvalError,
-  '%Float32Array%':
-    typeof Float32Array === 'undefined' ? undefined$1 : Float32Array,
-  '%Float64Array%':
-    typeof Float64Array === 'undefined' ? undefined$1 : Float64Array,
-  '%FinalizationRegistry%':
-    typeof FinalizationRegistry === 'undefined'
-      ? undefined$1
-      : FinalizationRegistry,
+  '%Float32Array%': typeof Float32Array === 'undefined' ? undefined$1 : Float32Array,
+  '%Float64Array%': typeof Float64Array === 'undefined' ? undefined$1 : Float64Array,
+  '%FinalizationRegistry%': typeof FinalizationRegistry === 'undefined' ? undefined$1 : FinalizationRegistry,
   '%Function%': $Function,
   '%GeneratorFunction%': needsEval,
   '%Int8Array%': typeof Int8Array === 'undefined' ? undefined$1 : Int8Array,
@@ -9221,15 +8462,10 @@ var INTRINSICS = {
   '%Int32Array%': typeof Int32Array === 'undefined' ? undefined$1 : Int32Array,
   '%isFinite%': isFinite,
   '%isNaN%': isNaN,
-  '%IteratorPrototype%': hasSymbols$2
-    ? getProto$1(getProto$1([][Symbol.iterator]()))
-    : undefined$1,
+  '%IteratorPrototype%': hasSymbols$2 ? getProto$1(getProto$1([][Symbol.iterator]())) : undefined$1,
   '%JSON%': typeof JSON === 'object' ? JSON : undefined$1,
   '%Map%': typeof Map === 'undefined' ? undefined$1 : Map,
-  '%MapIteratorPrototype%':
-    typeof Map === 'undefined' || !hasSymbols$2
-      ? undefined$1
-      : getProto$1(new Map()[Symbol.iterator]()),
+  '%MapIteratorPrototype%': typeof Map === 'undefined' || !hasSymbols$2 ? undefined$1 : getProto$1(new Map()[Symbol.iterator]()),
   '%Math%': Math,
   '%Number%': Number,
   '%Object%': Object,
@@ -9242,28 +8478,19 @@ var INTRINSICS = {
   '%Reflect%': typeof Reflect === 'undefined' ? undefined$1 : Reflect,
   '%RegExp%': RegExp,
   '%Set%': typeof Set === 'undefined' ? undefined$1 : Set,
-  '%SetIteratorPrototype%':
-    typeof Set === 'undefined' || !hasSymbols$2
-      ? undefined$1
-      : getProto$1(new Set()[Symbol.iterator]()),
-  '%SharedArrayBuffer%':
-    typeof SharedArrayBuffer === 'undefined' ? undefined$1 : SharedArrayBuffer,
+  '%SetIteratorPrototype%': typeof Set === 'undefined' || !hasSymbols$2 ? undefined$1 : getProto$1(new Set()[Symbol.iterator]()),
+  '%SharedArrayBuffer%': typeof SharedArrayBuffer === 'undefined' ? undefined$1 : SharedArrayBuffer,
   '%String%': String,
-  '%StringIteratorPrototype%': hasSymbols$2
-    ? getProto$1(''[Symbol.iterator]())
-    : undefined$1,
+  '%StringIteratorPrototype%': hasSymbols$2 ? getProto$1(''[Symbol.iterator]()) : undefined$1,
   '%Symbol%': hasSymbols$2 ? Symbol : undefined$1,
   '%SyntaxError%': $SyntaxError,
   '%ThrowTypeError%': ThrowTypeError,
   '%TypedArray%': TypedArray,
   '%TypeError%': $TypeError,
   '%Uint8Array%': typeof Uint8Array === 'undefined' ? undefined$1 : Uint8Array,
-  '%Uint8ClampedArray%':
-    typeof Uint8ClampedArray === 'undefined' ? undefined$1 : Uint8ClampedArray,
-  '%Uint16Array%':
-    typeof Uint16Array === 'undefined' ? undefined$1 : Uint16Array,
-  '%Uint32Array%':
-    typeof Uint32Array === 'undefined' ? undefined$1 : Uint32Array,
+  '%Uint8ClampedArray%': typeof Uint8ClampedArray === 'undefined' ? undefined$1 : Uint8ClampedArray,
+  '%Uint16Array%': typeof Uint16Array === 'undefined' ? undefined$1 : Uint16Array,
+  '%Uint32Array%': typeof Uint32Array === 'undefined' ? undefined$1 : Uint32Array,
   '%URIError%': URIError,
   '%WeakMap%': typeof WeakMap === 'undefined' ? undefined$1 : WeakMap,
   '%WeakRef%': typeof WeakRef === 'undefined' ? undefined$1 : WeakRef,
@@ -9306,11 +8533,7 @@ var LEGACY_ALIASES = {
   '%ArrayProto_values%': ['Array', 'prototype', 'values'],
   '%AsyncFunctionPrototype%': ['AsyncFunction', 'prototype'],
   '%AsyncGenerator%': ['AsyncGeneratorFunction', 'prototype'],
-  '%AsyncGeneratorPrototype%': [
-    'AsyncGeneratorFunction',
-    'prototype',
-    'prototype'
-  ],
+  '%AsyncGeneratorPrototype%': ['AsyncGeneratorFunction', 'prototype', 'prototype'],
   '%BooleanPrototype%': ['Boolean', 'prototype'],
   '%DataViewPrototype%': ['DataView', 'prototype'],
   '%DatePrototype%': ['Date', 'prototype'],
@@ -9377,14 +8600,13 @@ var stringToPath = function stringToPath(string) {
   }
 
   var result = [];
-  $replace(string, rePropName, function(match, number, quote, subString) {
-    result[result.length] = quote
-      ? $replace(subString, reEscapeChar, '$1')
-      : number || match;
+  $replace(string, rePropName, function (match, number, quote, subString) {
+    result[result.length] = quote ? $replace(subString, reEscapeChar, '$1') : number || match;
   });
   return result;
 };
 /* end adaptation */
+
 
 var getBaseIntrinsic = function getBaseIntrinsic(name, allowMissing) {
   var intrinsicName = name;
@@ -9403,11 +8625,7 @@ var getBaseIntrinsic = function getBaseIntrinsic(name, allowMissing) {
     }
 
     if (typeof value === 'undefined' && !allowMissing) {
-      throw new $TypeError(
-        'intrinsic ' +
-          name +
-          ' exists, but is not available. Please file an issue!'
-      );
+      throw new $TypeError('intrinsic ' + name + ' exists, but is not available. Please file an issue!');
     }
 
     return {
@@ -9447,18 +8665,8 @@ var getIntrinsic = function GetIntrinsic(name, allowMissing) {
     var first = $strSlice(part, 0, 1);
     var last = $strSlice(part, -1);
 
-    if (
-      (first === '"' ||
-        first === "'" ||
-        first === '`' ||
-        last === '"' ||
-        last === "'" ||
-        last === '`') &&
-      first !== last
-    ) {
-      throw new $SyntaxError(
-        'property names with quotes must have matching quotes'
-      );
+    if ((first === '"' || first === "'" || first === '`' || last === '"' || last === "'" || last === '`') && first !== last) {
+      throw new $SyntaxError('property names with quotes must have matching quotes');
     }
 
     if (part === 'constructor' || !isOwn) {
@@ -9473,11 +8681,7 @@ var getIntrinsic = function GetIntrinsic(name, allowMissing) {
     } else if (value != null) {
       if (!(part in value)) {
         if (!allowMissing) {
-          throw new $TypeError(
-            'base intrinsic for ' +
-              name +
-              ' exists, but the property is not available.'
-          );
+          throw new $TypeError('base intrinsic for ' + name + ' exists, but the property is not available.');
         }
 
         return void undefined$1;
@@ -9512,15 +8716,15 @@ var getIntrinsic = function GetIntrinsic(name, allowMissing) {
   return value;
 };
 
-var callBind$3 = { exports: {} };
+var callBind$3 = {exports: {}};
 
-(function(module) {
+(function (module) {
+
   var bind = functionBind;
   var GetIntrinsic = getIntrinsic;
   var $apply = GetIntrinsic('%Function.prototype.apply%');
   var $call = GetIntrinsic('%Function.prototype.call%');
-  var $reflectApply =
-    GetIntrinsic('%Reflect.apply%', true) || bind.call($call, $apply);
+  var $reflectApply = GetIntrinsic('%Reflect.apply%', true) || bind.call($call, $apply);
   var $gOPD = GetIntrinsic('%Object.getOwnPropertyDescriptor%', true);
   var $defineProperty = GetIntrinsic('%Object.defineProperty%', true);
   var $max = GetIntrinsic('%Math.max%');
@@ -9580,18 +8784,12 @@ var callBound$3 = function callBoundIntrinsic(name, allowMissing) {
   return intrinsic;
 };
 
-var hasToStringTag$3 =
-  typeof Symbol === 'function' && typeof Symbol.toStringTag === 'symbol';
+var hasToStringTag$3 = typeof Symbol === 'function' && typeof Symbol.toStringTag === 'symbol';
 var callBound$2 = callBound$3;
 var $toString$2 = callBound$2('Object.prototype.toString');
 
 var isStandardArguments = function isArguments(value) {
-  if (
-    hasToStringTag$3 &&
-    value &&
-    typeof value === 'object' &&
-    Symbol.toStringTag in value
-  ) {
+  if (hasToStringTag$3 && value && typeof value === 'object' && Symbol.toStringTag in value) {
     return false;
   }
 
@@ -9603,25 +8801,16 @@ var isLegacyArguments = function isArguments(value) {
     return true;
   }
 
-  return (
-    value !== null &&
-    typeof value === 'object' &&
-    typeof value.length === 'number' &&
-    value.length >= 0 &&
-    $toString$2(value) !== '[object Array]' &&
-    $toString$2(value.callee) === '[object Function]'
-  );
+  return value !== null && typeof value === 'object' && typeof value.length === 'number' && value.length >= 0 && $toString$2(value) !== '[object Array]' && $toString$2(value.callee) === '[object Function]';
 };
 
-var supportsStandardArguments = (function() {
+var supportsStandardArguments = function () {
   return isStandardArguments(arguments);
-})();
+}();
 
 isStandardArguments.isLegacyArguments = isLegacyArguments; // for tests
 
-var isArguments$1 = supportsStandardArguments
-  ? isStandardArguments
-  : isLegacyArguments;
+var isArguments$1 = supportsStandardArguments ? isStandardArguments : isLegacyArguments;
 
 var hasSymbols$1 = shams$1;
 
@@ -9697,19 +8886,7 @@ var foreach = function forEach(obj, fn, ctx) {
   }
 };
 
-var possibleNames = [
-  'BigInt64Array',
-  'BigUint64Array',
-  'Float32Array',
-  'Float64Array',
-  'Int16Array',
-  'Int32Array',
-  'Int8Array',
-  'Uint16Array',
-  'Uint32Array',
-  'Uint8Array',
-  'Uint8ClampedArray'
-];
+var possibleNames = ['BigInt64Array', 'BigUint64Array', 'Float32Array', 'Float64Array', 'Int16Array', 'Int32Array', 'Int8Array', 'Uint16Array', 'Uint32Array', 'Uint8Array', 'Uint8ClampedArray'];
 var g$2 = typeof globalThis === 'undefined' ? commonjsGlobal : globalThis;
 
 var availableTypedArrays$2 = function availableTypedArrays() {
@@ -9746,17 +8923,15 @@ var hasToStringTag$1 = shams();
 var g$1 = typeof globalThis === 'undefined' ? commonjsGlobal : globalThis;
 var typedArrays$1 = availableTypedArrays$1();
 
-var $indexOf =
-  callBound$1('Array.prototype.indexOf', true) ||
-  function indexOf(array, value) {
-    for (var i = 0; i < array.length; i += 1) {
-      if (array[i] === value) {
-        return i;
-      }
+var $indexOf = callBound$1('Array.prototype.indexOf', true) || function indexOf(array, value) {
+  for (var i = 0; i < array.length; i += 1) {
+    if (array[i] === value) {
+      return i;
     }
+  }
 
-    return -1;
-  };
+  return -1;
+};
 
 var $slice$1 = callBound$1('String.prototype.slice');
 var toStrTags$1 = {};
@@ -9764,7 +8939,7 @@ var gOPD$1 = getOwnPropertyDescriptor;
 var getPrototypeOf$1 = Object.getPrototypeOf; // require('getprototypeof');
 
 if (hasToStringTag$1 && gOPD$1 && getPrototypeOf$1) {
-  forEach$1(typedArrays$1, function(typedArray) {
+  forEach$1(typedArrays$1, function (typedArray) {
     var arr = new g$1[typedArray]();
 
     if (Symbol.toStringTag in arr) {
@@ -9783,7 +8958,7 @@ if (hasToStringTag$1 && gOPD$1 && getPrototypeOf$1) {
 
 var tryTypedArrays$1 = function tryAllTypedArrays(value) {
   var anyTrue = false;
-  forEach$1(toStrTags$1, function(getter, typedArray) {
+  forEach$1(toStrTags$1, function (getter, typedArray) {
     if (!anyTrue) {
       try {
         anyTrue = getter.call(value) === typedArray;
@@ -9825,7 +9000,7 @@ var gOPD = getOwnPropertyDescriptor;
 var getPrototypeOf = Object.getPrototypeOf; // require('getprototypeof');
 
 if (hasToStringTag && gOPD && getPrototypeOf) {
-  forEach(typedArrays, function(typedArray) {
+  forEach(typedArrays, function (typedArray) {
     if (typeof g[typedArray] === 'function') {
       var arr = new g[typedArray]();
 
@@ -9846,7 +9021,7 @@ if (hasToStringTag && gOPD && getPrototypeOf) {
 
 var tryTypedArrays = function tryAllTypedArrays(value) {
   var foundName = false;
-  forEach(toStrTags, function(getter, typedArray) {
+  forEach(toStrTags, function (getter, typedArray) {
     if (!foundName) {
       try {
         var name = getter.call(value);
@@ -9874,7 +9049,8 @@ var whichTypedArray = function whichTypedArray(value) {
   return tryTypedArrays(value);
 };
 
-(function(exports) {
+(function (exports) {
+
   var isArgumentsObject = isArguments$1;
   var isGeneratorFunction$1 = isGeneratorFunction;
   var whichTypedArray$1 = whichTypedArray;
@@ -9918,13 +9094,7 @@ var whichTypedArray = function whichTypedArray(value) {
   // https://github.com/sindresorhus/p-is-promise/blob/cda35a513bda03f977ad5cde3a079d237e82d7ef/index.js
 
   function isPromise(input) {
-    return (
-      (typeof Promise !== 'undefined' && input instanceof Promise) ||
-      (input !== null &&
-        typeof input === 'object' &&
-        typeof input.then === 'function' &&
-        typeof input.catch === 'function')
-    );
+    return typeof Promise !== 'undefined' && input instanceof Promise || input !== null && typeof input === 'object' && typeof input.then === 'function' && typeof input.catch === 'function';
   }
 
   exports.isPromise = isPromise;
@@ -10009,8 +9179,7 @@ var whichTypedArray = function whichTypedArray(value) {
     return ObjectToString(value) === '[object Map]';
   }
 
-  isMapToString.working =
-    typeof Map !== 'undefined' && isMapToString(new Map());
+  isMapToString.working = typeof Map !== 'undefined' && isMapToString(new Map());
 
   function isMap(value) {
     if (typeof Map === 'undefined') {
@@ -10026,8 +9195,7 @@ var whichTypedArray = function whichTypedArray(value) {
     return ObjectToString(value) === '[object Set]';
   }
 
-  isSetToString.working =
-    typeof Set !== 'undefined' && isSetToString(new Set());
+  isSetToString.working = typeof Set !== 'undefined' && isSetToString(new Set());
 
   function isSet(value) {
     if (typeof Set === 'undefined') {
@@ -10043,17 +9211,14 @@ var whichTypedArray = function whichTypedArray(value) {
     return ObjectToString(value) === '[object WeakMap]';
   }
 
-  isWeakMapToString.working =
-    typeof WeakMap !== 'undefined' && isWeakMapToString(new WeakMap());
+  isWeakMapToString.working = typeof WeakMap !== 'undefined' && isWeakMapToString(new WeakMap());
 
   function isWeakMap(value) {
     if (typeof WeakMap === 'undefined') {
       return false;
     }
 
-    return isWeakMapToString.working
-      ? isWeakMapToString(value)
-      : value instanceof WeakMap;
+    return isWeakMapToString.working ? isWeakMapToString(value) : value instanceof WeakMap;
   }
 
   exports.isWeakMap = isWeakMap;
@@ -10062,8 +9227,7 @@ var whichTypedArray = function whichTypedArray(value) {
     return ObjectToString(value) === '[object WeakSet]';
   }
 
-  isWeakSetToString.working =
-    typeof WeakSet !== 'undefined' && isWeakSetToString(new WeakSet());
+  isWeakSetToString.working = typeof WeakSet !== 'undefined' && isWeakSetToString(new WeakSet());
 
   function isWeakSet(value) {
     return isWeakSetToString(value);
@@ -10075,18 +9239,14 @@ var whichTypedArray = function whichTypedArray(value) {
     return ObjectToString(value) === '[object ArrayBuffer]';
   }
 
-  isArrayBufferToString.working =
-    typeof ArrayBuffer !== 'undefined' &&
-    isArrayBufferToString(new ArrayBuffer());
+  isArrayBufferToString.working = typeof ArrayBuffer !== 'undefined' && isArrayBufferToString(new ArrayBuffer());
 
   function isArrayBuffer(value) {
     if (typeof ArrayBuffer === 'undefined') {
       return false;
     }
 
-    return isArrayBufferToString.working
-      ? isArrayBufferToString(value)
-      : value instanceof ArrayBuffer;
+    return isArrayBufferToString.working ? isArrayBufferToString(value) : value instanceof ArrayBuffer;
   }
 
   exports.isArrayBuffer = isArrayBuffer;
@@ -10095,25 +9255,19 @@ var whichTypedArray = function whichTypedArray(value) {
     return ObjectToString(value) === '[object DataView]';
   }
 
-  isDataViewToString.working =
-    typeof ArrayBuffer !== 'undefined' &&
-    typeof DataView !== 'undefined' &&
-    isDataViewToString(new DataView(new ArrayBuffer(1), 0, 1));
+  isDataViewToString.working = typeof ArrayBuffer !== 'undefined' && typeof DataView !== 'undefined' && isDataViewToString(new DataView(new ArrayBuffer(1), 0, 1));
 
   function isDataView(value) {
     if (typeof DataView === 'undefined') {
       return false;
     }
 
-    return isDataViewToString.working
-      ? isDataViewToString(value)
-      : value instanceof DataView;
+    return isDataViewToString.working ? isDataViewToString(value) : value instanceof DataView;
   }
 
   exports.isDataView = isDataView; // Store a copy of SharedArrayBuffer in case it's deleted elsewhere
 
-  var SharedArrayBufferCopy =
-    typeof SharedArrayBuffer !== 'undefined' ? SharedArrayBuffer : undefined;
+  var SharedArrayBufferCopy = typeof SharedArrayBuffer !== 'undefined' ? SharedArrayBuffer : undefined;
 
   function isSharedArrayBufferToString(value) {
     return ObjectToString(value) === '[object SharedArrayBuffer]';
@@ -10125,14 +9279,10 @@ var whichTypedArray = function whichTypedArray(value) {
     }
 
     if (typeof isSharedArrayBufferToString.working === 'undefined') {
-      isSharedArrayBufferToString.working = isSharedArrayBufferToString(
-        new SharedArrayBufferCopy()
-      );
+      isSharedArrayBufferToString.working = isSharedArrayBufferToString(new SharedArrayBufferCopy());
     }
 
-    return isSharedArrayBufferToString.working
-      ? isSharedArrayBufferToString(value)
-      : value instanceof SharedArrayBufferCopy;
+    return isSharedArrayBufferToString.working ? isSharedArrayBufferToString(value) : value instanceof SharedArrayBufferCopy;
   }
 
   exports.isSharedArrayBuffer = isSharedArrayBuffer;
@@ -10198,28 +9348,17 @@ var whichTypedArray = function whichTypedArray(value) {
   exports.isSymbolObject = isSymbolObject;
 
   function isBoxedPrimitive(value) {
-    return (
-      isNumberObject(value) ||
-      isStringObject(value) ||
-      isBooleanObject(value) ||
-      isBigIntObject(value) ||
-      isSymbolObject(value)
-    );
+    return isNumberObject(value) || isStringObject(value) || isBooleanObject(value) || isBigIntObject(value) || isSymbolObject(value);
   }
 
   exports.isBoxedPrimitive = isBoxedPrimitive;
 
   function isAnyArrayBuffer(value) {
-    return (
-      typeof Uint8Array !== 'undefined' &&
-      (isArrayBuffer(value) || isSharedArrayBuffer(value))
-    );
+    return typeof Uint8Array !== 'undefined' && (isArrayBuffer(value) || isSharedArrayBuffer(value));
   }
 
   exports.isAnyArrayBuffer = isAnyArrayBuffer;
-  ['isProxy', 'isExternal', 'isModuleNamespaceObject'].forEach(function(
-    method
-  ) {
+  ['isProxy', 'isExternal', 'isModuleNamespaceObject'].forEach(function (method) {
     Object.defineProperty(exports, method, {
       enumerable: false,
       value: function value() {
@@ -10230,16 +9369,10 @@ var whichTypedArray = function whichTypedArray(value) {
 })(types);
 
 var isBufferBrowser = function isBuffer(arg) {
-  return (
-    arg &&
-    typeof arg === 'object' &&
-    typeof arg.copy === 'function' &&
-    typeof arg.fill === 'function' &&
-    typeof arg.readUInt8 === 'function'
-  );
+  return arg && typeof arg === 'object' && typeof arg.copy === 'function' && typeof arg.fill === 'function' && typeof arg.readUInt8 === 'function';
 };
 
-(function(exports) {
+(function (exports) {
   // Copyright Joyent, Inc. and other Node contributors.
   //
   // Permission is hereby granted, free of charge, to any person obtaining a
@@ -10260,22 +9393,20 @@ var isBufferBrowser = function isBuffer(arg) {
   // DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
   // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
   // USE OR OTHER DEALINGS IN THE SOFTWARE.
-  var getOwnPropertyDescriptors =
-    Object.getOwnPropertyDescriptors ||
-    function getOwnPropertyDescriptors(obj) {
-      var keys = Object.keys(obj);
-      var descriptors = {};
+  var getOwnPropertyDescriptors = Object.getOwnPropertyDescriptors || function getOwnPropertyDescriptors(obj) {
+    var keys = Object.keys(obj);
+    var descriptors = {};
 
-      for (var i = 0; i < keys.length; i++) {
-        descriptors[keys[i]] = Object.getOwnPropertyDescriptor(obj, keys[i]);
-      }
+    for (var i = 0; i < keys.length; i++) {
+      descriptors[keys[i]] = Object.getOwnPropertyDescriptor(obj, keys[i]);
+    }
 
-      return descriptors;
-    };
+    return descriptors;
+  };
 
   var formatRegExp = /%[sdj%]/g;
 
-  exports.format = function(f) {
+  exports.format = function (f) {
     if (!isString(f)) {
       var objects = [];
 
@@ -10289,7 +9420,7 @@ var isBufferBrowser = function isBuffer(arg) {
     var i = 1;
     var args = arguments;
     var len = args.length;
-    var str = String(f).replace(formatRegExp, function(x) {
+    var str = String(f).replace(formatRegExp, function (x) {
       if (x === '%%') return '%';
       if (i >= len) return x;
 
@@ -10325,16 +9456,15 @@ var isBufferBrowser = function isBuffer(arg) {
   // Returns a modified function which warns once by default.
   // If --no-deprecation is set, then it is a no-op.
 
-  exports.deprecate = function(fn, msg) {
-    if (
-      typeof browser$1$1 !== 'undefined' &&
-      browser$1$1.noDeprecation === true
-    ) {
+
+  exports.deprecate = function (fn, msg) {
+    if (typeof browser$1$1 !== 'undefined' && browser$1$1.noDeprecation === true) {
       return fn;
     } // Allow for deprecating things in the process of starting up.
 
+
     if (typeof browser$1$1 === 'undefined') {
-      return function() {
+      return function () {
         return exports.deprecate(fn, msg).apply(this, arguments);
       };
     }
@@ -10361,27 +9491,23 @@ var isBufferBrowser = function isBuffer(arg) {
 
   if (browser$1$1.env.NODE_DEBUG) {
     var debugEnv = browser$1$1.env.NODE_DEBUG;
-    debugEnv = debugEnv
-      .replace(/[|\\{}()[\]^$+?.]/g, '\\$&')
-      .replace(/\*/g, '.*')
-      .replace(/,/g, '$|^')
-      .toUpperCase();
+    debugEnv = debugEnv.replace(/[|\\{}()[\]^$+?.]/g, '\\$&').replace(/\*/g, '.*').replace(/,/g, '$|^').toUpperCase();
     debugEnvRegex = new RegExp('^' + debugEnv + '$', 'i');
   }
 
-  exports.debuglog = function(set) {
+  exports.debuglog = function (set) {
     set = set.toUpperCase();
 
     if (!debugs[set]) {
       if (debugEnvRegex.test(set)) {
         var pid = browser$1$1.pid;
 
-        debugs[set] = function() {
+        debugs[set] = function () {
           var msg = exports.format.apply(exports, arguments);
           console.error('%s %d: %s', set, pid, msg);
         };
       } else {
-        debugs[set] = function() {};
+        debugs[set] = function () {};
       }
     }
 
@@ -10396,6 +9522,7 @@ var isBufferBrowser = function isBuffer(arg) {
    */
 
   /* legacy: obj, showHidden, depth, colors*/
+
 
   function inspect(obj, opts) {
     // default options
@@ -10415,6 +9542,7 @@ var isBufferBrowser = function isBuffer(arg) {
       exports._extend(ctx, opts);
     } // set default options
 
+
     if (isUndefined(ctx.showHidden)) ctx.showHidden = false;
     if (isUndefined(ctx.depth)) ctx.depth = 2;
     if (isUndefined(ctx.colors)) ctx.colors = false;
@@ -10426,46 +9554,38 @@ var isBufferBrowser = function isBuffer(arg) {
   exports.inspect = inspect; // http://en.wikipedia.org/wiki/ANSI_escape_code#graphics
 
   inspect.colors = {
-    bold: [1, 22],
-    italic: [3, 23],
-    underline: [4, 24],
-    inverse: [7, 27],
-    white: [37, 39],
-    grey: [90, 39],
-    black: [30, 39],
-    blue: [34, 39],
-    cyan: [36, 39],
-    green: [32, 39],
-    magenta: [35, 39],
-    red: [31, 39],
-    yellow: [33, 39]
+    'bold': [1, 22],
+    'italic': [3, 23],
+    'underline': [4, 24],
+    'inverse': [7, 27],
+    'white': [37, 39],
+    'grey': [90, 39],
+    'black': [30, 39],
+    'blue': [34, 39],
+    'cyan': [36, 39],
+    'green': [32, 39],
+    'magenta': [35, 39],
+    'red': [31, 39],
+    'yellow': [33, 39]
   }; // Don't use 'blue' not visible on cmd.exe
 
   inspect.styles = {
-    special: 'cyan',
-    number: 'yellow',
-    boolean: 'yellow',
-    undefined: 'grey',
-    null: 'bold',
-    string: 'green',
-    date: 'magenta',
+    'special': 'cyan',
+    'number': 'yellow',
+    'boolean': 'yellow',
+    'undefined': 'grey',
+    'null': 'bold',
+    'string': 'green',
+    'date': 'magenta',
     // "name": intentionally not styling
-    regexp: 'red'
+    'regexp': 'red'
   };
 
   function stylizeWithColor(str, styleType) {
     var style = inspect.styles[styleType];
 
     if (style) {
-      return (
-        '\x1B[' +
-        inspect.colors[style][0] +
-        'm' +
-        str +
-        '\x1B[' +
-        inspect.colors[style][1] +
-        'm'
-      );
+      return "\x1B[" + inspect.colors[style][0] + 'm' + str + "\x1B[" + inspect.colors[style][1] + 'm';
     } else {
       return str;
     }
@@ -10477,7 +9597,7 @@ var isBufferBrowser = function isBuffer(arg) {
 
   function arrayToHash(array) {
     var hash = {};
-    array.forEach(function(val, idx) {
+    array.forEach(function (val, idx) {
       hash[val] = true;
     });
     return hash;
@@ -10486,13 +9606,9 @@ var isBufferBrowser = function isBuffer(arg) {
   function formatValue(ctx, value, recurseTimes) {
     // Provide a hook for user-specified inspect functions.
     // Check that value is an object with an inspect function on it
-    if (
-      ctx.customInspect &&
-      value &&
-      isFunction(value.inspect) && // Filter out the util module, it's inspect function is special
-      value.inspect !== exports.inspect && // Also filter out any prototype objects using the circular check.
-      !(value.constructor && value.constructor.prototype === value)
-    ) {
+    if (ctx.customInspect && value && isFunction(value.inspect) && // Filter out the util module, it's inspect function is special
+    value.inspect !== exports.inspect && // Also filter out any prototype objects using the circular check.
+    !(value.constructor && value.constructor.prototype === value)) {
       var ret = value.inspect(recurseTimes, ctx);
 
       if (!isString(ret)) {
@@ -10502,11 +9618,13 @@ var isBufferBrowser = function isBuffer(arg) {
       return ret;
     } // Primitive types cannot have properties
 
+
     var primitive = formatPrimitive(ctx, value);
 
     if (primitive) {
       return primitive;
     } // Look up the keys of the object.
+
 
     var keys = Object.keys(value);
     var visibleKeys = arrayToHash(keys);
@@ -10516,12 +9634,11 @@ var isBufferBrowser = function isBuffer(arg) {
     } // IE doesn't make error fields non-enumerable
     // http://msdn.microsoft.com/en-us/library/ie/dww52sbt(v=vs.94).aspx
 
-    if (
-      isError(value) &&
-      (keys.indexOf('message') >= 0 || keys.indexOf('description') >= 0)
-    ) {
+
+    if (isError(value) && (keys.indexOf('message') >= 0 || keys.indexOf('description') >= 0)) {
       return formatError(value);
     } // Some type of object without properties can be shortcutted.
+
 
     if (keys.length === 0) {
       if (isFunction(value)) {
@@ -10543,26 +9660,30 @@ var isBufferBrowser = function isBuffer(arg) {
     }
 
     var base = '',
-      array = false,
-      braces = ['{', '}']; // Make Array say that they are Array
+        array = false,
+        braces = ['{', '}']; // Make Array say that they are Array
 
     if (isArray(value)) {
       array = true;
       braces = ['[', ']'];
     } // Make functions say that they are functions
 
+
     if (isFunction(value)) {
       var n = value.name ? ': ' + value.name : '';
       base = ' [Function' + n + ']';
     } // Make RegExps say that they are RegExps
 
+
     if (isRegExp(value)) {
       base = ' ' + RegExp.prototype.toString.call(value);
     } // Make dates with properties first say the date
 
+
     if (isDate(value)) {
       base = ' ' + Date.prototype.toUTCString.call(value);
     } // Make error with message first say the error
+
 
     if (isError(value)) {
       base = ' ' + formatError(value);
@@ -10586,15 +9707,8 @@ var isBufferBrowser = function isBuffer(arg) {
     if (array) {
       output = formatArray(ctx, value, recurseTimes, visibleKeys, keys);
     } else {
-      output = keys.map(function(key) {
-        return formatProperty(
-          ctx,
-          value,
-          recurseTimes,
-          visibleKeys,
-          key,
-          array
-        );
+      output = keys.map(function (key) {
+        return formatProperty(ctx, value, recurseTimes, visibleKeys, key, array);
       });
     }
 
@@ -10606,13 +9720,7 @@ var isBufferBrowser = function isBuffer(arg) {
     if (isUndefined(value)) return ctx.stylize('undefined', 'undefined');
 
     if (isString(value)) {
-      var simple =
-        "'" +
-        JSON.stringify(value)
-          .replace(/^"|"$/g, '')
-          .replace(/'/g, "\\'")
-          .replace(/\\"/g, '"') +
-        "'";
+      var simple = '\'' + JSON.stringify(value).replace(/^"|"$/g, '').replace(/'/g, "\\'").replace(/\\"/g, '"') + '\'';
       return ctx.stylize(simple, 'string');
     }
 
@@ -10631,19 +9739,15 @@ var isBufferBrowser = function isBuffer(arg) {
 
     for (var i = 0, l = value.length; i < l; ++i) {
       if (hasOwnProperty(value, String(i))) {
-        output.push(
-          formatProperty(ctx, value, recurseTimes, visibleKeys, String(i), true)
-        );
+        output.push(formatProperty(ctx, value, recurseTimes, visibleKeys, String(i), true));
       } else {
         output.push('');
       }
     }
 
-    keys.forEach(function(key) {
+    keys.forEach(function (key) {
       if (!key.match(/^\d+$/)) {
-        output.push(
-          formatProperty(ctx, value, recurseTimes, visibleKeys, key, true)
-        );
+        output.push(formatProperty(ctx, value, recurseTimes, visibleKeys, key, true));
       }
     });
     return output;
@@ -10681,22 +9785,13 @@ var isBufferBrowser = function isBuffer(arg) {
 
         if (str.indexOf('\n') > -1) {
           if (array) {
-            str = str
-              .split('\n')
-              .map(function(line) {
-                return '  ' + line;
-              })
-              .join('\n')
-              .substr(2);
+            str = str.split('\n').map(function (line) {
+              return '  ' + line;
+            }).join('\n').substr(2);
           } else {
-            str =
-              '\n' +
-              str
-                .split('\n')
-                .map(function(line) {
-                  return '   ' + line;
-                })
-                .join('\n');
+            str = '\n' + str.split('\n').map(function (line) {
+              return '   ' + line;
+            }).join('\n');
           }
         }
       } else {
@@ -10715,10 +9810,7 @@ var isBufferBrowser = function isBuffer(arg) {
         name = name.substr(1, name.length - 2);
         name = ctx.stylize(name, 'name');
       } else {
-        name = name
-          .replace(/'/g, "\\'")
-          .replace(/\\"/g, '"')
-          .replace(/(^"|"$)/g, "'");
+        name = name.replace(/'/g, "\\'").replace(/\\"/g, '"').replace(/(^"|"$)/g, "'");
         name = ctx.stylize(name, 'string');
       }
     }
@@ -10727,25 +9819,19 @@ var isBufferBrowser = function isBuffer(arg) {
   }
 
   function reduceToSingleString(output, base, braces) {
-    var length = output.reduce(function(prev, cur) {
-      if (cur.indexOf('\n') >= 0);
+    var length = output.reduce(function (prev, cur) {
+      if (cur.indexOf('\n') >= 0) ;
       return prev + cur.replace(/\u001b\[\d\d?m/g, '').length + 1;
     }, 0);
 
     if (length > 60) {
-      return (
-        braces[0] +
-        (base === '' ? '' : base + '\n ') +
-        ' ' +
-        output.join(',\n  ') +
-        ' ' +
-        braces[1]
-      );
+      return braces[0] + (base === '' ? '' : base + '\n ') + ' ' + output.join(',\n  ') + ' ' + braces[1];
     }
 
     return braces[0] + base + ' ' + output.join(', ') + ' ' + braces[1];
   } // NOTE: These type checking functions intentionally don't use `instanceof`
   // because it is fragile and can be easily faked with `Object.create()`.
+
 
   exports.types = types;
 
@@ -10818,10 +9904,7 @@ var isBufferBrowser = function isBuffer(arg) {
   exports.types.isDate = isDate;
 
   function isError(e) {
-    return (
-      isObject(e) &&
-      (objectToString(e) === '[object Error]' || e instanceof Error)
-    );
+    return isObject(e) && (objectToString(e) === '[object Error]' || e instanceof Error);
   }
 
   exports.isError = isError;
@@ -10834,14 +9917,8 @@ var isBufferBrowser = function isBuffer(arg) {
   exports.isFunction = isFunction;
 
   function isPrimitive(arg) {
-    return (
-      arg === null ||
-      typeof arg === 'boolean' ||
-      typeof arg === 'number' ||
-      typeof arg === 'string' ||
-      typeof arg === 'symbol' || // ES6 symbol
-      typeof arg === 'undefined'
-    );
+    return arg === null || typeof arg === 'boolean' || typeof arg === 'number' || typeof arg === 'string' || typeof arg === 'symbol' || // ES6 symbol
+    typeof arg === 'undefined';
   }
 
   exports.isPrimitive = isPrimitive;
@@ -10855,37 +9932,17 @@ var isBufferBrowser = function isBuffer(arg) {
     return n < 10 ? '0' + n.toString(10) : n.toString(10);
   }
 
-  var months = [
-    'Jan',
-    'Feb',
-    'Mar',
-    'Apr',
-    'May',
-    'Jun',
-    'Jul',
-    'Aug',
-    'Sep',
-    'Oct',
-    'Nov',
-    'Dec'
-  ]; // 26 Feb 16:19:34
+  var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']; // 26 Feb 16:19:34
 
   function timestamp() {
     var d = new Date();
-    var time = [
-      pad(d.getHours()),
-      pad(d.getMinutes()),
-      pad(d.getSeconds())
-    ].join(':');
+    var time = [pad(d.getHours()), pad(d.getMinutes()), pad(d.getSeconds())].join(':');
     return [d.getDate(), months[d.getMonth()], time].join(' ');
   } // log is just a thin wrapper to console.log that prepends a timestamp
 
-  exports.log = function() {
-    console.log(
-      '%s - %s',
-      timestamp(),
-      exports.format.apply(exports, arguments)
-    );
+
+  exports.log = function () {
+    console.log('%s - %s', timestamp(), exports.format.apply(exports, arguments));
   };
   /**
    * Inherit the prototype methods from one constructor into another.
@@ -10901,9 +9958,10 @@ var isBufferBrowser = function isBuffer(arg) {
    * @param {function} superCtor Constructor function to inherit prototype from.
    */
 
+
   exports.inherits = inherits_browser.exports;
 
-  exports._extend = function(origin, add) {
+  exports._extend = function (origin, add) {
     // Don't do anything if add isn't an object
     if (!add || !isObject(add)) return origin;
     var keys = Object.keys(add);
@@ -10920,20 +9978,16 @@ var isBufferBrowser = function isBuffer(arg) {
     return Object.prototype.hasOwnProperty.call(obj, prop);
   }
 
-  var kCustomPromisifiedSymbol =
-    typeof Symbol !== 'undefined' ? Symbol('util.promisify.custom') : undefined;
+  var kCustomPromisifiedSymbol = typeof Symbol !== 'undefined' ? Symbol('util.promisify.custom') : undefined;
 
   exports.promisify = function promisify(original) {
-    if (typeof original !== 'function')
-      throw new TypeError('The "original" argument must be of type Function');
+    if (typeof original !== 'function') throw new TypeError('The "original" argument must be of type Function');
 
     if (kCustomPromisifiedSymbol && original[kCustomPromisifiedSymbol]) {
       var fn = original[kCustomPromisifiedSymbol];
 
       if (typeof fn !== 'function') {
-        throw new TypeError(
-          'The "util.promisify.custom" argument must be of type Function'
-        );
+        throw new TypeError('The "util.promisify.custom" argument must be of type Function');
       }
 
       Object.defineProperty(fn, kCustomPromisifiedSymbol, {
@@ -10947,7 +10001,7 @@ var isBufferBrowser = function isBuffer(arg) {
 
     function fn() {
       var promiseResolve, promiseReject;
-      var promise = new Promise(function(resolve, reject) {
+      var promise = new Promise(function (resolve, reject) {
         promiseResolve = resolve;
         promiseReject = reject;
       });
@@ -10957,7 +10011,7 @@ var isBufferBrowser = function isBuffer(arg) {
         args.push(arguments[i]);
       }
 
-      args.push(function(err, value) {
+      args.push(function (err, value) {
         if (err) {
           promiseReject(err);
         } else {
@@ -10975,13 +10029,12 @@ var isBufferBrowser = function isBuffer(arg) {
     }
 
     Object.setPrototypeOf(fn, Object.getPrototypeOf(original));
-    if (kCustomPromisifiedSymbol)
-      Object.defineProperty(fn, kCustomPromisifiedSymbol, {
-        value: fn,
-        enumerable: false,
-        writable: false,
-        configurable: true
-      });
+    if (kCustomPromisifiedSymbol) Object.defineProperty(fn, kCustomPromisifiedSymbol, {
+      value: fn,
+      enumerable: false,
+      writable: false,
+      configurable: true
+    });
     return Object.defineProperties(fn, getOwnPropertyDescriptors(original));
   };
 
@@ -11008,6 +10061,7 @@ var isBufferBrowser = function isBuffer(arg) {
     // the promise is actually somehow related to the callback's execution
     // and that the callback throwing will reject the promise.
 
+
     function callbackified() {
       var args = [];
 
@@ -11028,14 +10082,12 @@ var isBufferBrowser = function isBuffer(arg) {
       }; // In true node style we process the callback on `nextTick` with all the
       // implications (stack, `uncaughtException`, `async_hooks`)
 
-      original.apply(this, args).then(
-        function(ret) {
-          browser$1$1.nextTick(cb.bind(null, null, ret));
-        },
-        function(rej) {
-          browser$1$1.nextTick(callbackifyOnRejected.bind(null, rej, cb));
-        }
-      );
+
+      original.apply(this, args).then(function (ret) {
+        browser$1$1.nextTick(cb.bind(null, null, ret));
+      }, function (rej) {
+        browser$1$1.nextTick(callbackifyOnRejected.bind(null, rej, cb));
+      });
     }
 
     Object.setPrototypeOf(callbackified, Object.getPrototypeOf(original));
@@ -11051,19 +10103,15 @@ var isBufferBrowser = function isBuffer(arg) {
 // value statically and permanently identifies the error. While the error
 // message may change, the code should not.
 
+
 function _typeof$3(obj) {
-  if (typeof Symbol === 'function' && typeof Symbol.iterator === 'symbol') {
+  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
     _typeof$3 = function _typeof(obj) {
       return typeof obj;
     };
   } else {
     _typeof$3 = function _typeof(obj) {
-      return obj &&
-        typeof Symbol === 'function' &&
-        obj.constructor === Symbol &&
-        obj !== Symbol.prototype
-        ? 'symbol'
-        : typeof obj;
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
     };
   }
 
@@ -11072,12 +10120,12 @@ function _typeof$3(obj) {
 
 function _classCallCheck$2(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
-    throw new TypeError('Cannot call a class as a function');
+    throw new TypeError("Cannot call a class as a function");
   }
 }
 
 function _possibleConstructorReturn$1(self, call) {
-  if (call && (_typeof$3(call) === 'object' || typeof call === 'function')) {
+  if (call && (_typeof$3(call) === "object" || typeof call === "function")) {
     return call;
   }
 
@@ -11086,26 +10134,22 @@ function _possibleConstructorReturn$1(self, call) {
 
 function _assertThisInitialized$1(self) {
   if (self === void 0) {
-    throw new ReferenceError(
-      "this hasn't been initialised - super() hasn't been called"
-    );
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
   }
 
   return self;
 }
 
 function _getPrototypeOf$1(o) {
-  _getPrototypeOf$1 = Object.setPrototypeOf
-    ? Object.getPrototypeOf
-    : function _getPrototypeOf(o) {
-        return o.__proto__ || Object.getPrototypeOf(o);
-      };
+  _getPrototypeOf$1 = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
+    return o.__proto__ || Object.getPrototypeOf(o);
+  };
   return _getPrototypeOf$1(o);
 }
 
 function _inherits$1(subClass, superClass) {
-  if (typeof superClass !== 'function' && superClass !== null) {
-    throw new TypeError('Super expression must either be null or a function');
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError("Super expression must either be null or a function");
   }
 
   subClass.prototype = Object.create(superClass && superClass.prototype, {
@@ -11119,12 +10163,10 @@ function _inherits$1(subClass, superClass) {
 }
 
 function _setPrototypeOf$1(o, p) {
-  _setPrototypeOf$1 =
-    Object.setPrototypeOf ||
-    function _setPrototypeOf(o, p) {
-      o.__proto__ = p;
-      return o;
-    };
+  _setPrototypeOf$1 = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
+    o.__proto__ = p;
+    return o;
+  };
 
   return _setPrototypeOf$1(o, p);
 }
@@ -11147,7 +10189,7 @@ function createErrorType(code, message, Base) {
     }
   }
 
-  var NodeError = /*#__PURE__*/ (function(_Base) {
+  var NodeError = /*#__PURE__*/function (_Base) {
     _inherits$1(NodeError, _Base);
 
     function NodeError(arg1, arg2, arg3) {
@@ -11155,50 +10197,42 @@ function createErrorType(code, message, Base) {
 
       _classCallCheck$2(this, NodeError);
 
-      _this = _possibleConstructorReturn$1(
-        this,
-        _getPrototypeOf$1(NodeError).call(this, getMessage(arg1, arg2, arg3))
-      );
+      _this = _possibleConstructorReturn$1(this, _getPrototypeOf$1(NodeError).call(this, getMessage(arg1, arg2, arg3)));
       _this.code = code;
       return _this;
     }
 
     return NodeError;
-  })(Base);
+  }(Base);
 
   codes[code] = NodeError;
 } // https://github.com/nodejs/node/blob/v10.8.0/lib/internal/errors.js
 
+
 function oneOf(expected, thing) {
   if (Array.isArray(expected)) {
     var len = expected.length;
-    expected = expected.map(function(i) {
+    expected = expected.map(function (i) {
       return String(i);
     });
 
     if (len > 2) {
-      return (
-        'one of '
-          .concat(thing, ' ')
-          .concat(expected.slice(0, len - 1).join(', '), ', or ') +
-        expected[len - 1]
-      );
+      return "one of ".concat(thing, " ").concat(expected.slice(0, len - 1).join(', '), ", or ") + expected[len - 1];
     } else if (len === 2) {
-      return 'one of '
-        .concat(thing, ' ')
-        .concat(expected[0], ' or ')
-        .concat(expected[1]);
+      return "one of ".concat(thing, " ").concat(expected[0], " or ").concat(expected[1]);
     } else {
-      return 'of '.concat(thing, ' ').concat(expected[0]);
+      return "of ".concat(thing, " ").concat(expected[0]);
     }
   } else {
-    return 'of '.concat(thing, ' ').concat(String(expected));
+    return "of ".concat(thing, " ").concat(String(expected));
   }
 } // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/startsWith
+
 
 function startsWith(str, search, pos) {
   return str.substr(!pos || pos < 0 ? 0 : +pos, search.length) === search;
 } // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/endsWith
+
 
 function endsWith$1(str, search, this_len) {
   if (this_len === undefined || this_len > str.length) {
@@ -11207,6 +10241,7 @@ function endsWith$1(str, search, this_len) {
 
   return str.substring(this_len - search.length, this_len) === search;
 } // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/includes
+
 
 function includes(str, search, start) {
   if (typeof start !== 'number') {
@@ -11220,126 +10255,86 @@ function includes(str, search, start) {
   }
 }
 
-createErrorType(
-  'ERR_AMBIGUOUS_ARGUMENT',
-  'The "%s" argument is ambiguous. %s',
-  TypeError
-);
-createErrorType(
-  'ERR_INVALID_ARG_TYPE',
-  function(name, expected, actual) {
-    if (assert$1 === undefined) assert$1 = assert$2.exports;
-    assert$1(typeof name === 'string', "'name' must be a string"); // determiner: 'must be' or 'must not be'
+createErrorType('ERR_AMBIGUOUS_ARGUMENT', 'The "%s" argument is ambiguous. %s', TypeError);
+createErrorType('ERR_INVALID_ARG_TYPE', function (name, expected, actual) {
+  if (assert$1 === undefined) assert$1 = assert$2.exports;
+  assert$1(typeof name === 'string', "'name' must be a string"); // determiner: 'must be' or 'must not be'
 
-    var determiner;
+  var determiner;
 
-    if (typeof expected === 'string' && startsWith(expected, 'not ')) {
-      determiner = 'must not be';
-      expected = expected.replace(/^not /, '');
-    } else {
-      determiner = 'must be';
-    }
+  if (typeof expected === 'string' && startsWith(expected, 'not ')) {
+    determiner = 'must not be';
+    expected = expected.replace(/^not /, '');
+  } else {
+    determiner = 'must be';
+  }
 
-    var msg;
+  var msg;
 
-    if (endsWith$1(name, ' argument')) {
-      // For cases like 'first argument'
-      msg = 'The '
-        .concat(name, ' ')
-        .concat(determiner, ' ')
-        .concat(oneOf(expected, 'type'));
-    } else {
-      var type = includes(name, '.') ? 'property' : 'argument';
-      msg = 'The "'
-        .concat(name, '" ')
-        .concat(type, ' ')
-        .concat(determiner, ' ')
-        .concat(oneOf(expected, 'type'));
-    } // TODO(BridgeAR): Improve the output by showing `null` and similar.
+  if (endsWith$1(name, ' argument')) {
+    // For cases like 'first argument'
+    msg = "The ".concat(name, " ").concat(determiner, " ").concat(oneOf(expected, 'type'));
+  } else {
+    var type = includes(name, '.') ? 'property' : 'argument';
+    msg = "The \"".concat(name, "\" ").concat(type, " ").concat(determiner, " ").concat(oneOf(expected, 'type'));
+  } // TODO(BridgeAR): Improve the output by showing `null` and similar.
 
-    msg += '. Received type '.concat(_typeof$3(actual));
-    return msg;
-  },
-  TypeError
-);
-createErrorType(
-  'ERR_INVALID_ARG_VALUE',
-  function(name, value) {
-    var reason =
-      arguments.length > 2 && arguments[2] !== undefined
-        ? arguments[2]
-        : 'is invalid';
-    if (util === undefined) util = util$1;
-    var inspected = util.inspect(value);
 
-    if (inspected.length > 128) {
-      inspected = ''.concat(inspected.slice(0, 128), '...');
-    }
+  msg += ". Received type ".concat(_typeof$3(actual));
+  return msg;
+}, TypeError);
+createErrorType('ERR_INVALID_ARG_VALUE', function (name, value) {
+  var reason = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'is invalid';
+  if (util === undefined) util = util$1;
+  var inspected = util.inspect(value);
 
-    return "The argument '"
-      .concat(name, "' ")
-      .concat(reason, '. Received ')
-      .concat(inspected);
-  },
-  TypeError
-);
-createErrorType(
-  'ERR_INVALID_RETURN_VALUE',
-  function(input, name, value) {
-    var type;
+  if (inspected.length > 128) {
+    inspected = "".concat(inspected.slice(0, 128), "...");
+  }
 
-    if (value && value.constructor && value.constructor.name) {
-      type = 'instance of '.concat(value.constructor.name);
-    } else {
-      type = 'type '.concat(_typeof$3(value));
-    }
+  return "The argument '".concat(name, "' ").concat(reason, ". Received ").concat(inspected);
+}, TypeError);
+createErrorType('ERR_INVALID_RETURN_VALUE', function (input, name, value) {
+  var type;
 
-    return (
-      'Expected '
-        .concat(input, ' to be returned from the "')
-        .concat(name, '"') + ' function but got '.concat(type, '.')
-    );
-  },
-  TypeError
-);
-createErrorType(
-  'ERR_MISSING_ARGS',
-  function() {
-    for (
-      var _len = arguments.length, args = new Array(_len), _key = 0;
-      _key < _len;
-      _key++
-    ) {
-      args[_key] = arguments[_key];
-    }
+  if (value && value.constructor && value.constructor.name) {
+    type = "instance of ".concat(value.constructor.name);
+  } else {
+    type = "type ".concat(_typeof$3(value));
+  }
 
-    if (assert$1 === undefined) assert$1 = assert$2.exports;
-    assert$1(args.length > 0, 'At least one arg needs to be specified');
-    var msg = 'The ';
-    var len = args.length;
-    args = args.map(function(a) {
-      return '"'.concat(a, '"');
-    });
+  return "Expected ".concat(input, " to be returned from the \"").concat(name, "\"") + " function but got ".concat(type, ".");
+}, TypeError);
+createErrorType('ERR_MISSING_ARGS', function () {
+  for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+    args[_key] = arguments[_key];
+  }
 
-    switch (len) {
-      case 1:
-        msg += ''.concat(args[0], ' argument');
-        break;
+  if (assert$1 === undefined) assert$1 = assert$2.exports;
+  assert$1(args.length > 0, 'At least one arg needs to be specified');
+  var msg = 'The ';
+  var len = args.length;
+  args = args.map(function (a) {
+    return "\"".concat(a, "\"");
+  });
 
-      case 2:
-        msg += ''.concat(args[0], ' and ').concat(args[1], ' arguments');
-        break;
+  switch (len) {
+    case 1:
+      msg += "".concat(args[0], " argument");
+      break;
 
-      default:
-        msg += args.slice(0, len - 1).join(', ');
-        msg += ', and '.concat(args[len - 1], ' arguments');
-        break;
-    }
+    case 2:
+      msg += "".concat(args[0], " and ").concat(args[1], " arguments");
+      break;
 
-    return ''.concat(msg, ' must be specified');
-  },
-  TypeError
-);
+    default:
+      msg += args.slice(0, len - 1).join(', ');
+      msg += ", and ".concat(args[len - 1], " arguments");
+      break;
+  }
+
+  return "".concat(msg, " must be specified");
+}, TypeError);
 errors.codes = codes;
 
 function _objectSpread(target) {
@@ -11348,14 +10343,12 @@ function _objectSpread(target) {
     var ownKeys = Object.keys(source);
 
     if (typeof Object.getOwnPropertySymbols === 'function') {
-      ownKeys = ownKeys.concat(
-        Object.getOwnPropertySymbols(source).filter(function(sym) {
-          return Object.getOwnPropertyDescriptor(source, sym).enumerable;
-        })
-      );
+      ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {
+        return Object.getOwnPropertyDescriptor(source, sym).enumerable;
+      }));
     }
 
-    ownKeys.forEach(function(key) {
+    ownKeys.forEach(function (key) {
       _defineProperty(target, key, source[key]);
     });
   }
@@ -11380,7 +10373,7 @@ function _defineProperty(obj, key, value) {
 
 function _classCallCheck$1(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
-    throw new TypeError('Cannot call a class as a function');
+    throw new TypeError("Cannot call a class as a function");
   }
 }
 
@@ -11389,7 +10382,7 @@ function _defineProperties$1(target, props) {
     var descriptor = props[i];
     descriptor.enumerable = descriptor.enumerable || false;
     descriptor.configurable = true;
-    if ('value' in descriptor) descriptor.writable = true;
+    if ("value" in descriptor) descriptor.writable = true;
     Object.defineProperty(target, descriptor.key, descriptor);
   }
 }
@@ -11401,7 +10394,7 @@ function _createClass$1(Constructor, protoProps, staticProps) {
 }
 
 function _possibleConstructorReturn(self, call) {
-  if (call && (_typeof$2(call) === 'object' || typeof call === 'function')) {
+  if (call && (_typeof$2(call) === "object" || typeof call === "function")) {
     return call;
   }
 
@@ -11410,17 +10403,15 @@ function _possibleConstructorReturn(self, call) {
 
 function _assertThisInitialized(self) {
   if (self === void 0) {
-    throw new ReferenceError(
-      "this hasn't been initialised - super() hasn't been called"
-    );
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
   }
 
   return self;
 }
 
 function _inherits(subClass, superClass) {
-  if (typeof superClass !== 'function' && superClass !== null) {
-    throw new TypeError('Super expression must either be null or a function');
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError("Super expression must either be null or a function");
   }
 
   subClass.prototype = Object.create(superClass && superClass.prototype, {
@@ -11434,16 +10425,16 @@ function _inherits(subClass, superClass) {
 }
 
 function _wrapNativeSuper(Class) {
-  var _cache = typeof Map === 'function' ? new Map() : undefined;
+  var _cache = typeof Map === "function" ? new Map() : undefined;
 
   _wrapNativeSuper = function _wrapNativeSuper(Class) {
     if (Class === null || !_isNativeFunction(Class)) return Class;
 
-    if (typeof Class !== 'function') {
-      throw new TypeError('Super expression must either be null or a function');
+    if (typeof Class !== "function") {
+      throw new TypeError("Super expression must either be null or a function");
     }
 
-    if (typeof _cache !== 'undefined') {
+    if (typeof _cache !== "undefined") {
       if (_cache.has(Class)) return _cache.get(Class);
 
       _cache.set(Class, Wrapper);
@@ -11468,12 +10459,12 @@ function _wrapNativeSuper(Class) {
 }
 
 function isNativeReflectConstruct() {
-  if (typeof Reflect === 'undefined' || !Reflect.construct) return false;
+  if (typeof Reflect === "undefined" || !Reflect.construct) return false;
   if (Reflect.construct.sham) return false;
-  if (typeof Proxy === 'function') return true;
+  if (typeof Proxy === "function") return true;
 
   try {
-    Date.prototype.toString.call(Reflect.construct(Date, [], function() {}));
+    Date.prototype.toString.call(Reflect.construct(Date, [], function () {}));
     return true;
   } catch (e) {
     return false;
@@ -11498,42 +10489,33 @@ function _construct(Parent, args, Class) {
 }
 
 function _isNativeFunction(fn) {
-  return Function.toString.call(fn).indexOf('[native code]') !== -1;
+  return Function.toString.call(fn).indexOf("[native code]") !== -1;
 }
 
 function _setPrototypeOf(o, p) {
-  _setPrototypeOf =
-    Object.setPrototypeOf ||
-    function _setPrototypeOf(o, p) {
-      o.__proto__ = p;
-      return o;
-    };
+  _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
+    o.__proto__ = p;
+    return o;
+  };
 
   return _setPrototypeOf(o, p);
 }
 
 function _getPrototypeOf(o) {
-  _getPrototypeOf = Object.setPrototypeOf
-    ? Object.getPrototypeOf
-    : function _getPrototypeOf(o) {
-        return o.__proto__ || Object.getPrototypeOf(o);
-      };
+  _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
+    return o.__proto__ || Object.getPrototypeOf(o);
+  };
   return _getPrototypeOf(o);
 }
 
 function _typeof$2(obj) {
-  if (typeof Symbol === 'function' && typeof Symbol.iterator === 'symbol') {
+  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
     _typeof$2 = function _typeof(obj) {
       return typeof obj;
     };
   } else {
     _typeof$2 = function _typeof(obj) {
-      return obj &&
-        typeof Symbol === 'function' &&
-        obj.constructor === Symbol &&
-        obj !== Symbol.prototype
-        ? 'symbol'
-        : typeof obj;
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
     };
   }
 
@@ -11541,9 +10523,9 @@ function _typeof$2(obj) {
 }
 
 var _require$1 = util$1,
-  inspect$1 = _require$1.inspect;
+    inspect$1 = _require$1.inspect;
 var _require2$1 = errors,
-  ERR_INVALID_ARG_TYPE$1 = _require2$1.codes.ERR_INVALID_ARG_TYPE; // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/endsWith
+    ERR_INVALID_ARG_TYPE$1 = _require2$1.codes.ERR_INVALID_ARG_TYPE; // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/endsWith
 
 function endsWith(str, search, this_len) {
   if (this_len === undefined || this_len > str.length) {
@@ -11552,6 +10534,7 @@ function endsWith(str, search, this_len) {
 
   return str.substring(this_len - search.length, this_len) === search;
 } // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/repeat
+
 
 function repeat(str, count) {
   count = Math.floor(count);
@@ -11580,8 +10563,7 @@ var kReadableOperator = {
   equal: 'Expected values to be loosely equal:',
   notDeepStrictEqual: 'Expected "actual" not to be strictly deep-equal to:',
   notStrictEqual: 'Expected "actual" to be strictly unequal to:',
-  notStrictEqualObject:
-    'Expected "actual" not to be reference-equal to "expected":',
+  notStrictEqualObject: 'Expected "actual" not to be reference-equal to "expected":',
   notDeepEqual: 'Expected "actual" not to be loosely deep-equal to:',
   notEqual: 'Expected "actual" to be loosely unequal to:',
   notIdentical: 'Values identical but not reference-equal:'
@@ -11593,7 +10575,7 @@ var kMaxShortLength = 10;
 function copyError(source) {
   var keys = Object.keys(source);
   var target = Object.create(Object.getPrototypeOf(source));
-  keys.forEach(function(key) {
+  keys.forEach(function (key) {
     target[key] = source[key];
   });
   Object.defineProperty(target, 'message', {
@@ -11639,37 +10621,21 @@ function createErrDiff(actual, expected, operator) {
   var indicator = ''; // In case both values are objects explicitly mark them as not reference equal
   // for the `strictEqual` operator.
 
-  if (
-    operator === 'strictEqual' &&
-    _typeof$2(actual) === 'object' &&
-    _typeof$2(expected) === 'object' &&
-    actual !== null &&
-    expected !== null
-  ) {
+  if (operator === 'strictEqual' && _typeof$2(actual) === 'object' && _typeof$2(expected) === 'object' && actual !== null && expected !== null) {
     operator = 'strictEqualObject';
   } // If "actual" and "expected" fit on a single line and they are not strictly
   // equal, check further special handling.
 
-  if (
-    actualLines.length === 1 &&
-    expectedLines.length === 1 &&
-    actualLines[0] !== expectedLines[0]
-  ) {
+
+  if (actualLines.length === 1 && expectedLines.length === 1 && actualLines[0] !== expectedLines[0]) {
     var inputLength = actualLines[0].length + expectedLines[0].length; // If the character length of "actual" and "expected" together is less than
     // kMaxShortLength and if neither is an object and at least one of them is
     // not `zero`, use the strict equal comparison to visualize the output.
 
     if (inputLength <= kMaxShortLength) {
-      if (
-        (_typeof$2(actual) !== 'object' || actual === null) &&
-        (_typeof$2(expected) !== 'object' || expected === null) &&
-        (actual !== 0 || expected !== 0)
-      ) {
+      if ((_typeof$2(actual) !== 'object' || actual === null) && (_typeof$2(expected) !== 'object' || expected === null) && (actual !== 0 || expected !== 0)) {
         // -0 === +0
-        return (
-          ''.concat(kReadableOperator[operator], '\n\n') +
-          ''.concat(actualLines[0], ' !== ').concat(expectedLines[0], '\n')
-        );
+        return "".concat(kReadableOperator[operator], "\n\n") + "".concat(actualLines[0], " !== ").concat(expectedLines[0], "\n");
       }
     } else if (operator !== 'strictEqualObject') {
       // If the stderr is a tty and the input length is lower than the current
@@ -11682,10 +10648,11 @@ function createErrDiff(actual, expected, operator) {
           i++;
         } // Ignore the first characters.
 
+
         if (i > 2) {
           // Add position indicator for the first mismatch in case it is a
           // single line and the input length is less than the column length.
-          indicator = '\n  '.concat(repeat(' ', i), '^');
+          indicator = "\n  ".concat(repeat(' ', i), "^");
           i = 0;
         }
       }
@@ -11693,12 +10660,13 @@ function createErrDiff(actual, expected, operator) {
   } // Remove all ending lines that match (this optimizes the output for
   // readability by reducing the number of total changed lines).
 
+
   var a = actualLines[actualLines.length - 1];
   var b = expectedLines[expectedLines.length - 1];
 
   while (a === b) {
     if (i++ < 2) {
-      end = '\n  '.concat(a).concat(end);
+      end = "\n  ".concat(a).concat(end);
     } else {
       other = a;
     }
@@ -11718,41 +10686,31 @@ function createErrDiff(actual, expected, operator) {
     var _actualLines = actualInspected.split('\n'); // Only remove lines in case it makes sense to collapse those.
     // TODO: Accept env to always show the full error.
 
+
     if (_actualLines.length > 30) {
-      _actualLines[26] = ''.concat(blue, '...').concat(white);
+      _actualLines[26] = "".concat(blue, "...").concat(white);
 
       while (_actualLines.length > 27) {
         _actualLines.pop();
       }
     }
 
-    return ''
-      .concat(kReadableOperator.notIdentical, '\n\n')
-      .concat(_actualLines.join('\n'), '\n');
+    return "".concat(kReadableOperator.notIdentical, "\n\n").concat(_actualLines.join('\n'), "\n");
   }
 
   if (i > 3) {
-    end = '\n'
-      .concat(blue, '...')
-      .concat(white)
-      .concat(end);
+    end = "\n".concat(blue, "...").concat(white).concat(end);
     skipped = true;
   }
 
   if (other !== '') {
-    end = '\n  '.concat(other).concat(end);
+    end = "\n  ".concat(other).concat(end);
     other = '';
   }
 
   var printedLines = 0;
-  var msg =
-    kReadableOperator[operator] +
-    '\n'
-      .concat(green, '+ actual')
-      .concat(white, ' ')
-      .concat(red, '- expected')
-      .concat(white);
-  var skippedMsg = ' '.concat(blue, '...').concat(white, ' Lines skipped');
+  var msg = kReadableOperator[operator] + "\n".concat(green, "+ actual").concat(white, " ").concat(red, "- expected").concat(white);
+  var skippedMsg = " ".concat(blue, "...").concat(white, " Lines skipped");
 
   for (i = 0; i < maxLines; i++) {
     // Only extra expected lines exist
@@ -11764,23 +10722,21 @@ function createErrDiff(actual, expected, operator) {
       // also add dots to indicate skipped entries.
       if (cur > 1 && i > 2) {
         if (cur > 4) {
-          res += '\n'.concat(blue, '...').concat(white);
+          res += "\n".concat(blue, "...").concat(white);
           skipped = true;
         } else if (cur > 3) {
-          res += '\n  '.concat(expectedLines[i - 2]);
+          res += "\n  ".concat(expectedLines[i - 2]);
           printedLines++;
         }
 
-        res += '\n  '.concat(expectedLines[i - 1]);
+        res += "\n  ".concat(expectedLines[i - 1]);
         printedLines++;
       } // Mark the current line as the last diverging one.
 
+
       lastPos = i; // Add the expected line to the cache.
 
-      other += '\n'
-        .concat(red, '-')
-        .concat(white, ' ')
-        .concat(expectedLines[i]);
+      other += "\n".concat(red, "-").concat(white, " ").concat(expectedLines[i]);
       printedLines++; // Only extra actual lines exist
     } else if (expectedLines.length < i + 1) {
       // If the last diverging line is more than one line above and the
@@ -11788,23 +10744,21 @@ function createErrDiff(actual, expected, operator) {
       // also add dots to indicate skipped entries.
       if (cur > 1 && i > 2) {
         if (cur > 4) {
-          res += '\n'.concat(blue, '...').concat(white);
+          res += "\n".concat(blue, "...").concat(white);
           skipped = true;
         } else if (cur > 3) {
-          res += '\n  '.concat(actualLines[i - 2]);
+          res += "\n  ".concat(actualLines[i - 2]);
           printedLines++;
         }
 
-        res += '\n  '.concat(actualLines[i - 1]);
+        res += "\n  ".concat(actualLines[i - 1]);
         printedLines++;
       } // Mark the current line as the last diverging one.
 
+
       lastPos = i; // Add the actual line to the result.
 
-      res += '\n'
-        .concat(green, '+')
-        .concat(white, ' ')
-        .concat(actualLines[i]);
+      res += "\n".concat(green, "+").concat(white, " ").concat(actualLines[i]);
       printedLines++; // Lines diverge
     } else {
       var expectedLine = expectedLines[i];
@@ -11812,10 +10766,7 @@ function createErrDiff(actual, expected, operator) {
       // a trailing comma. In that case it is actually identical and we should
       // mark it as such.
 
-      var divergingLines =
-        actualLine !== expectedLine &&
-        (!endsWith(actualLine, ',') ||
-          actualLine.slice(0, -1) !== expectedLine); // If the expected line has a trailing comma but is otherwise identical,
+      var divergingLines = actualLine !== expectedLine && (!endsWith(actualLine, ',') || actualLine.slice(0, -1) !== expectedLine); // If the expected line has a trailing comma but is otherwise identical,
       // add a comma at the end of the actual line. Otherwise the output could
       // look weird as in:
       //
@@ -11825,11 +10776,7 @@ function createErrDiff(actual, expected, operator) {
       //   ]
       //
 
-      if (
-        divergingLines &&
-        endsWith(expectedLine, ',') &&
-        expectedLine.slice(0, -1) === actualLine
-      ) {
+      if (divergingLines && endsWith(expectedLine, ',') && expectedLine.slice(0, -1) === actualLine) {
         divergingLines = false;
         actualLine += ',';
       }
@@ -11840,28 +10787,23 @@ function createErrDiff(actual, expected, operator) {
         // also add dots to indicate skipped entries.
         if (cur > 1 && i > 2) {
           if (cur > 4) {
-            res += '\n'.concat(blue, '...').concat(white);
+            res += "\n".concat(blue, "...").concat(white);
             skipped = true;
           } else if (cur > 3) {
-            res += '\n  '.concat(actualLines[i - 2]);
+            res += "\n  ".concat(actualLines[i - 2]);
             printedLines++;
           }
 
-          res += '\n  '.concat(actualLines[i - 1]);
+          res += "\n  ".concat(actualLines[i - 1]);
           printedLines++;
         } // Mark the current line as the last diverging one.
+
 
         lastPos = i; // Add the actual line to the result and cache the expected diverging
         // line so consecutive diverging lines show up as +++--- and not +-+-+-.
 
-        res += '\n'
-          .concat(green, '+')
-          .concat(white, ' ')
-          .concat(actualLine);
-        other += '\n'
-          .concat(red, '-')
-          .concat(white, ' ')
-          .concat(expectedLine);
+        res += "\n".concat(green, "+").concat(white, " ").concat(actualLine);
+        other += "\n".concat(red, "-").concat(white, " ").concat(expectedLine);
         printedLines += 2; // Lines are identical
       } else {
         // Add all cached information to the result before adding other things
@@ -11871,35 +10813,22 @@ function createErrDiff(actual, expected, operator) {
         // very first line, add the line to the result.
 
         if (cur === 1 || i === 0) {
-          res += '\n  '.concat(actualLine);
+          res += "\n  ".concat(actualLine);
           printedLines++;
         }
       }
     } // Inspected object to big (Show ~20 rows max)
 
+
     if (printedLines > 20 && i < maxLines - 2) {
-      return (
-        ''
-          .concat(msg)
-          .concat(skippedMsg, '\n')
-          .concat(res, '\n')
-          .concat(blue, '...')
-          .concat(white)
-          .concat(other, '\n') + ''.concat(blue, '...').concat(white)
-      );
+      return "".concat(msg).concat(skippedMsg, "\n").concat(res, "\n").concat(blue, "...").concat(white).concat(other, "\n") + "".concat(blue, "...").concat(white);
     }
   }
 
-  return ''
-    .concat(msg)
-    .concat(skipped ? skippedMsg : '', '\n')
-    .concat(res)
-    .concat(other)
-    .concat(end)
-    .concat(indicator);
+  return "".concat(msg).concat(skipped ? skippedMsg : '', "\n").concat(res).concat(other).concat(end).concat(indicator);
 }
 
-var AssertionError$1 = /*#__PURE__*/ (function(_Error) {
+var AssertionError$1 = /*#__PURE__*/function (_Error) {
   _inherits(AssertionError, _Error);
 
   function AssertionError(options) {
@@ -11912,86 +10841,52 @@ var AssertionError$1 = /*#__PURE__*/ (function(_Error) {
     }
 
     var message = options.message,
-      operator = options.operator,
-      stackStartFn = options.stackStartFn;
+        operator = options.operator,
+        stackStartFn = options.stackStartFn;
     var actual = options.actual,
-      expected = options.expected;
+        expected = options.expected;
     var limit = Error.stackTraceLimit;
     Error.stackTraceLimit = 0;
 
     if (message != null) {
-      _this = _possibleConstructorReturn(
-        this,
-        _getPrototypeOf(AssertionError).call(this, String(message))
-      );
+      _this = _possibleConstructorReturn(this, _getPrototypeOf(AssertionError).call(this, String(message)));
     } else {
       // in a very close way to the original in case both sides are actually
       // instances of Error.
 
-      if (
-        _typeof$2(actual) === 'object' &&
-        actual !== null &&
-        _typeof$2(expected) === 'object' &&
-        expected !== null &&
-        'stack' in actual &&
-        actual instanceof Error &&
-        'stack' in expected &&
-        expected instanceof Error
-      ) {
+
+      if (_typeof$2(actual) === 'object' && actual !== null && _typeof$2(expected) === 'object' && expected !== null && 'stack' in actual && actual instanceof Error && 'stack' in expected && expected instanceof Error) {
         actual = copyError(actual);
         expected = copyError(expected);
       }
 
       if (operator === 'deepStrictEqual' || operator === 'strictEqual') {
-        _this = _possibleConstructorReturn(
-          this,
-          _getPrototypeOf(AssertionError).call(
-            this,
-            createErrDiff(actual, expected, operator)
-          )
-        );
-      } else if (
-        operator === 'notDeepStrictEqual' ||
-        operator === 'notStrictEqual'
-      ) {
+        _this = _possibleConstructorReturn(this, _getPrototypeOf(AssertionError).call(this, createErrDiff(actual, expected, operator)));
+      } else if (operator === 'notDeepStrictEqual' || operator === 'notStrictEqual') {
         // In case the objects are equal but the operator requires unequal, show
         // the first object and say A equals B
         var base = kReadableOperator[operator];
         var res = inspectValue(actual).split('\n'); // In case "actual" is an object, it should not be reference equal.
 
-        if (
-          operator === 'notStrictEqual' &&
-          _typeof$2(actual) === 'object' &&
-          actual !== null
-        ) {
+        if (operator === 'notStrictEqual' && _typeof$2(actual) === 'object' && actual !== null) {
           base = kReadableOperator.notStrictEqualObject;
         } // Only remove lines in case it makes sense to collapse those.
         // TODO: Accept env to always show the full error.
 
+
         if (res.length > 30) {
-          res[26] = ''.concat(blue, '...').concat(white);
+          res[26] = "".concat(blue, "...").concat(white);
 
           while (res.length > 27) {
             res.pop();
           }
         } // Only print a single input.
 
+
         if (res.length === 1) {
-          _this = _possibleConstructorReturn(
-            this,
-            _getPrototypeOf(AssertionError).call(
-              this,
-              ''.concat(base, ' ').concat(res[0])
-            )
-          );
+          _this = _possibleConstructorReturn(this, _getPrototypeOf(AssertionError).call(this, "".concat(base, " ").concat(res[0])));
         } else {
-          _this = _possibleConstructorReturn(
-            this,
-            _getPrototypeOf(AssertionError).call(
-              this,
-              ''.concat(base, '\n\n').concat(res.join('\n'), '\n')
-            )
-          );
+          _this = _possibleConstructorReturn(this, _getPrototypeOf(AssertionError).call(this, "".concat(base, "\n\n").concat(res.join('\n'), "\n")));
         }
       } else {
         var _res = inspectValue(actual);
@@ -12000,38 +10895,30 @@ var AssertionError$1 = /*#__PURE__*/ (function(_Error) {
         var knownOperators = kReadableOperator[operator];
 
         if (operator === 'notDeepEqual' || operator === 'notEqual') {
-          _res = ''.concat(kReadableOperator[operator], '\n\n').concat(_res);
+          _res = "".concat(kReadableOperator[operator], "\n\n").concat(_res);
 
           if (_res.length > 1024) {
-            _res = ''.concat(_res.slice(0, 1021), '...');
+            _res = "".concat(_res.slice(0, 1021), "...");
           }
         } else {
-          other = ''.concat(inspectValue(expected));
+          other = "".concat(inspectValue(expected));
 
           if (_res.length > 512) {
-            _res = ''.concat(_res.slice(0, 509), '...');
+            _res = "".concat(_res.slice(0, 509), "...");
           }
 
           if (other.length > 512) {
-            other = ''.concat(other.slice(0, 509), '...');
+            other = "".concat(other.slice(0, 509), "...");
           }
 
           if (operator === 'deepEqual' || operator === 'equal') {
-            _res = ''
-              .concat(knownOperators, '\n\n')
-              .concat(_res, '\n\nshould equal\n\n');
+            _res = "".concat(knownOperators, "\n\n").concat(_res, "\n\nshould equal\n\n");
           } else {
-            other = ' '.concat(operator, ' ').concat(other);
+            other = " ".concat(operator, " ").concat(other);
           }
         }
 
-        _this = _possibleConstructorReturn(
-          this,
-          _getPrototypeOf(AssertionError).call(
-            this,
-            ''.concat(_res).concat(other)
-          )
-        );
+        _this = _possibleConstructorReturn(this, _getPrototypeOf(AssertionError).call(this, "".concat(_res).concat(other)));
       }
     }
 
@@ -12053,42 +10940,34 @@ var AssertionError$1 = /*#__PURE__*/ (function(_Error) {
       Error.captureStackTrace(_assertThisInitialized(_this), stackStartFn);
     } // Create error message including the error code in the name.
 
+
     _this.stack; // Reset the name.
 
     _this.name = 'AssertionError';
     return _possibleConstructorReturn(_this);
   }
 
-  _createClass$1(AssertionError, [
-    {
-      key: 'toString',
-      value: function toString() {
-        return ''
-          .concat(this.name, ' [')
-          .concat(this.code, ']: ')
-          .concat(this.message);
-      }
-    },
-    {
-      key: inspect$1.custom,
-      value: function value(recurseTimes, ctx) {
-        // This limits the `actual` and `expected` property default inspection to
-        // the minimum depth. Otherwise those values would be too verbose compared
-        // to the actual error message which contains a combined view of these two
-        // input values.
-        return inspect$1(
-          this,
-          _objectSpread({}, ctx, {
-            customInspect: false,
-            depth: 0
-          })
-        );
-      }
+  _createClass$1(AssertionError, [{
+    key: "toString",
+    value: function toString() {
+      return "".concat(this.name, " [").concat(this.code, "]: ").concat(this.message);
     }
-  ]);
+  }, {
+    key: inspect$1.custom,
+    value: function value(recurseTimes, ctx) {
+      // This limits the `actual` and `expected` property default inspection to
+      // the minimum depth. Otherwise those values would be too verbose compared
+      // to the actual error message which contains a combined view of these two
+      // input values.
+      return inspect$1(this, _objectSpread({}, ctx, {
+        customInspect: false,
+        depth: 0
+      }));
+    }
+  }]);
 
   return AssertionError;
-})(_wrapNativeSuper(Error));
+}(_wrapNativeSuper(Error));
 
 var assertion_error = AssertionError$1;
 
@@ -12113,11 +10992,7 @@ function assign(target, firstSource) {
 
     var keysArray = Object.keys(Object(nextSource));
 
-    for (
-      var nextIndex = 0, len = keysArray.length;
-      nextIndex < len;
-      nextIndex++
-    ) {
+    for (var nextIndex = 0, len = keysArray.length; nextIndex < len; nextIndex++) {
       var nextKey = keysArray[nextIndex];
       var desc = Object.getOwnPropertyDescriptor(nextSource, nextKey);
 
@@ -12153,13 +11028,7 @@ var isArguments = function isArguments(value) {
   var isArgs = str === '[object Arguments]';
 
   if (!isArgs) {
-    isArgs =
-      str !== '[object Array]' &&
-      value !== null &&
-      typeof value === 'object' &&
-      typeof value.length === 'number' &&
-      value.length >= 0 &&
-      toStr$2.call(value.callee) === '[object Function]';
+    isArgs = str !== '[object Array]' && value !== null && typeof value === 'object' && typeof value.length === 'number' && value.length >= 0 && toStr$2.call(value.callee) === '[object Function]';
   }
 
   return isArgs;
@@ -12174,22 +11043,11 @@ if (!Object.keys) {
   var isArgs$1 = isArguments; // eslint-disable-line global-require
 
   var isEnumerable = Object.prototype.propertyIsEnumerable;
-  var hasDontEnumBug = !isEnumerable.call(
-    {
-      toString: null
-    },
-    'toString'
-  );
-  var hasProtoEnumBug = isEnumerable.call(function() {}, 'prototype');
-  var dontEnums = [
-    'toString',
-    'toLocaleString',
-    'valueOf',
-    'hasOwnProperty',
-    'isPrototypeOf',
-    'propertyIsEnumerable',
-    'constructor'
-  ];
+  var hasDontEnumBug = !isEnumerable.call({
+    toString: null
+  }, 'toString');
+  var hasProtoEnumBug = isEnumerable.call(function () {}, 'prototype');
+  var dontEnums = ['toString', 'toLocaleString', 'valueOf', 'hasOwnProperty', 'isPrototypeOf', 'propertyIsEnumerable', 'constructor'];
 
   var equalsConstructorPrototype = function equalsConstructorPrototype(o) {
     var ctor = o.constructor;
@@ -12222,7 +11080,7 @@ if (!Object.keys) {
     $window: true
   };
 
-  var hasAutomationEqualityBug = (function() {
+  var hasAutomationEqualityBug = function () {
     /* global window */
     if (typeof window === 'undefined') {
       return false;
@@ -12230,12 +11088,7 @@ if (!Object.keys) {
 
     for (var k in window) {
       try {
-        if (
-          !excludedKeys['$' + k] &&
-          has.call(window, k) &&
-          window[k] !== null &&
-          typeof window[k] === 'object'
-        ) {
+        if (!excludedKeys['$' + k] && has.call(window, k) && window[k] !== null && typeof window[k] === 'object') {
           try {
             equalsConstructorPrototype(window[k]);
           } catch (e) {
@@ -12248,11 +11101,9 @@ if (!Object.keys) {
     }
 
     return false;
-  })();
+  }();
 
-  var equalsConstructorPrototypeIfNotBuggy = function equalsConstructorPrototypeIfNotBuggy(
-    o
-  ) {
+  var equalsConstructorPrototypeIfNotBuggy = function equalsConstructorPrototypeIfNotBuggy(o) {
     /* global window */
     if (typeof window === 'undefined' || !hasAutomationEqualityBug) {
       return equalsConstructorPrototype(o);
@@ -12300,10 +11151,7 @@ if (!Object.keys) {
       var skipConstructor = equalsConstructorPrototypeIfNotBuggy(object);
 
       for (var k = 0; k < dontEnums.length; ++k) {
-        if (
-          !(skipConstructor && dontEnums[k] === 'constructor') &&
-          has.call(object, dontEnums[k])
-        ) {
+        if (!(skipConstructor && dontEnums[k] === 'constructor') && has.call(object, dontEnums[k])) {
           theKeys.push(dontEnums[k]);
         }
       }
@@ -12318,20 +11166,18 @@ var implementation$6 = keysShim$1;
 var slice = Array.prototype.slice;
 var isArgs = isArguments;
 var origKeys = Object.keys;
-var keysShim = origKeys
-  ? function keys(o) {
-      return origKeys(o);
-    }
-  : implementation$6;
+var keysShim = origKeys ? function keys(o) {
+  return origKeys(o);
+} : implementation$6;
 var originalKeys = Object.keys;
 
 keysShim.shim = function shimObjectKeys() {
   if (Object.keys) {
-    var keysWorksWithArguments = (function() {
+    var keysWorksWithArguments = function () {
       // Safari 5.0 bug
       var args = Object.keys(arguments);
       return args && args.length === arguments.length;
-    })(1, 2);
+    }(1, 2);
 
     if (!keysWorksWithArguments) {
       Object.keys = function keys(object) {
@@ -12353,8 +11199,7 @@ keysShim.shim = function shimObjectKeys() {
 var objectKeys = keysShim;
 
 var keys = objectKeys;
-var hasSymbols =
-  typeof Symbol === 'function' && typeof Symbol('foo') === 'symbol';
+var hasSymbols = typeof Symbol === 'function' && typeof Symbol('foo') === 'symbol';
 var toStr = Object.prototype.toString;
 var concat = Array.prototype.concat;
 var origDefineProperty = Object.defineProperty;
@@ -12384,8 +11229,7 @@ var arePropertyDescriptorsSupported = function arePropertyDescriptorsSupported()
   }
 };
 
-var supportsDescriptors =
-  origDefineProperty && arePropertyDescriptorsSupported();
+var supportsDescriptors = origDefineProperty && arePropertyDescriptorsSupported();
 
 var defineProperty = function defineProperty(object, name, value, predicate) {
   if (name in object && (!isFunction(predicate) || !predicate())) {
@@ -12451,17 +11295,13 @@ var define$3 = defineProperties_1;
 
 var shim$3 = function shimObjectIs() {
   var polyfill = getPolyfill$3();
-  define$3(
-    Object,
-    {
-      is: polyfill
-    },
-    {
-      is: function testObjectIs() {
-        return Object.is !== polyfill;
-      }
+  define$3(Object, {
+    is: polyfill
+  }, {
+    is: function testObjectIs() {
+      return Object.is !== polyfill;
     }
-  );
+  });
   return polyfill;
 };
 
@@ -12479,6 +11319,7 @@ define$2(polyfill$2, {
 var objectIs$2 = polyfill$2;
 
 /* http://www.ecma-international.org/ecma-262/6.0/#sec-number.isnan */
+
 
 var implementation$2 = function isNaN(value) {
   return value !== value;
@@ -12500,17 +11341,13 @@ var getPolyfill$1 = polyfill$1;
 
 var shim$1 = function shimNumberIsNaN() {
   var polyfill = getPolyfill$1();
-  define$1(
-    Number,
-    {
-      isNaN: polyfill
-    },
-    {
-      isNaN: function testIsNaN() {
-        return Number.isNaN !== polyfill;
-      }
+  define$1(Number, {
+    isNaN: polyfill
+  }, {
+    isNaN: function testIsNaN() {
+      return Number.isNaN !== polyfill;
     }
-  );
+  });
   return polyfill;
 };
 
@@ -12530,13 +11367,11 @@ define(polyfill, {
 var isNan = polyfill;
 
 function _slicedToArray(arr, i) {
-  return (
-    _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest()
-  );
+  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest();
 }
 
 function _nonIterableRest() {
-  throw new TypeError('Invalid attempt to destructure non-iterable instance');
+  throw new TypeError("Invalid attempt to destructure non-iterable instance");
 }
 
 function _iterableToArrayLimit(arr, i) {
@@ -12546,11 +11381,7 @@ function _iterableToArrayLimit(arr, i) {
   var _e = undefined;
 
   try {
-    for (
-      var _i = arr[Symbol.iterator](), _s;
-      !(_n = (_s = _i.next()).done);
-      _n = true
-    ) {
+    for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
       _arr.push(_s.value);
 
       if (i && _arr.length === i) break;
@@ -12560,7 +11391,7 @@ function _iterableToArrayLimit(arr, i) {
     _e = err;
   } finally {
     try {
-      if (!_n && _i['return'] != null) _i['return']();
+      if (!_n && _i["return"] != null) _i["return"]();
     } finally {
       if (_d) throw _e;
     }
@@ -12574,18 +11405,13 @@ function _arrayWithHoles(arr) {
 }
 
 function _typeof$1(obj) {
-  if (typeof Symbol === 'function' && typeof Symbol.iterator === 'symbol') {
+  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
     _typeof$1 = function _typeof(obj) {
       return typeof obj;
     };
   } else {
     _typeof$1 = function _typeof(obj) {
-      return obj &&
-        typeof Symbol === 'function' &&
-        obj.constructor === Symbol &&
-        obj !== Symbol.prototype
-        ? 'symbol'
-        : typeof obj;
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
     };
   }
 
@@ -12596,7 +11422,7 @@ var regexFlagsSupported = /a/g.flags !== undefined;
 
 var arrayFromSet = function arrayFromSet(set) {
   var array = [];
-  set.forEach(function(value) {
+  set.forEach(function (value) {
     return array.push(value);
   });
   return array;
@@ -12604,18 +11430,16 @@ var arrayFromSet = function arrayFromSet(set) {
 
 var arrayFromMap = function arrayFromMap(map) {
   var array = [];
-  map.forEach(function(value, key) {
+  map.forEach(function (value, key) {
     return array.push([key, value]);
   });
   return array;
 };
 
 var objectIs$1 = Object.is ? Object.is : objectIs$2;
-var objectGetOwnPropertySymbols = Object.getOwnPropertySymbols
-  ? Object.getOwnPropertySymbols
-  : function() {
-      return [];
-    };
+var objectGetOwnPropertySymbols = Object.getOwnPropertySymbols ? Object.getOwnPropertySymbols : function () {
+  return [];
+};
 var numberIsNaN = Number.isNaN ? Number.isNaN : isNan;
 
 function uncurryThis(f) {
@@ -12626,21 +11450,21 @@ var hasOwnProperty = uncurryThis(Object.prototype.hasOwnProperty);
 var propertyIsEnumerable = uncurryThis(Object.prototype.propertyIsEnumerable);
 var objectToString = uncurryThis(Object.prototype.toString);
 var _require$types$1 = util$1.types,
-  isAnyArrayBuffer = _require$types$1.isAnyArrayBuffer,
-  isArrayBufferView = _require$types$1.isArrayBufferView,
-  isDate = _require$types$1.isDate,
-  isMap = _require$types$1.isMap,
-  isRegExp$1 = _require$types$1.isRegExp,
-  isSet = _require$types$1.isSet,
-  isNativeError = _require$types$1.isNativeError,
-  isBoxedPrimitive = _require$types$1.isBoxedPrimitive,
-  isNumberObject = _require$types$1.isNumberObject,
-  isStringObject = _require$types$1.isStringObject,
-  isBooleanObject = _require$types$1.isBooleanObject,
-  isBigIntObject = _require$types$1.isBigIntObject,
-  isSymbolObject = _require$types$1.isSymbolObject,
-  isFloat32Array = _require$types$1.isFloat32Array,
-  isFloat64Array = _require$types$1.isFloat64Array;
+    isAnyArrayBuffer = _require$types$1.isAnyArrayBuffer,
+    isArrayBufferView = _require$types$1.isArrayBufferView,
+    isDate = _require$types$1.isDate,
+    isMap = _require$types$1.isMap,
+    isRegExp$1 = _require$types$1.isRegExp,
+    isSet = _require$types$1.isSet,
+    isNativeError = _require$types$1.isNativeError,
+    isBoxedPrimitive = _require$types$1.isBoxedPrimitive,
+    isNumberObject = _require$types$1.isNumberObject,
+    isStringObject = _require$types$1.isStringObject,
+    isBooleanObject = _require$types$1.isBooleanObject,
+    isBigIntObject = _require$types$1.isBigIntObject,
+    isSymbolObject = _require$types$1.isSymbolObject,
+    isFloat32Array = _require$types$1.isFloat32Array,
+    isFloat64Array = _require$types$1.isFloat64Array;
 
 function isNonIndex(key) {
   if (key.length === 0 || key.length > 10) return true;
@@ -12650,17 +11474,12 @@ function isNonIndex(key) {
     if (code < 48 || code > 57) return true;
   } // The maximum size for an array is 2 ** 32 -1.
 
+
   return key.length === 10 && key >= Math.pow(2, 32);
 }
 
 function getOwnNonIndexProperties(value) {
-  return Object.keys(value)
-    .filter(isNonIndex)
-    .concat(
-      objectGetOwnPropertySymbols(value).filter(
-        Object.prototype.propertyIsEnumerable.bind(value)
-      )
-    );
+  return Object.keys(value).filter(isNonIndex).concat(objectGetOwnPropertySymbols(value).filter(Object.prototype.propertyIsEnumerable.bind(value)));
 } // Taken from https://github.com/feross/buffer/blob/680e9e5e488f22aac27599a57dc844a6315928dd/index.js
 // original notice:
 
@@ -12670,6 +11489,7 @@ function getOwnNonIndexProperties(value) {
  * @author   Feross Aboukhadijeh <feross@feross.org> <http://feross.org>
  * @license  MIT
  */
+
 
 function compare(a, b) {
   if (a === b) {
@@ -12705,9 +11525,7 @@ var kIsSet = 2;
 var kIsMap = 3; // Check if they have the same source and flags
 
 function areSimilarRegExps(a, b) {
-  return regexFlagsSupported
-    ? a.source === b.source && a.flags === b.flags
-    : RegExp.prototype.toString.call(a) === RegExp.prototype.toString.call(b);
+  return regexFlagsSupported ? a.source === b.source && a.flags === b.flags : RegExp.prototype.toString.call(a) === RegExp.prototype.toString.call(b);
 }
 
 function areSimilarFloatArrays(a, b) {
@@ -12729,60 +11547,31 @@ function areSimilarTypedArrays(a, b) {
     return false;
   }
 
-  return (
-    compare(
-      new Uint8Array(a.buffer, a.byteOffset, a.byteLength),
-      new Uint8Array(b.buffer, b.byteOffset, b.byteLength)
-    ) === 0
-  );
+  return compare(new Uint8Array(a.buffer, a.byteOffset, a.byteLength), new Uint8Array(b.buffer, b.byteOffset, b.byteLength)) === 0;
 }
 
 function areEqualArrayBuffers(buf1, buf2) {
-  return (
-    buf1.byteLength === buf2.byteLength &&
-    compare(new Uint8Array(buf1), new Uint8Array(buf2)) === 0
-  );
+  return buf1.byteLength === buf2.byteLength && compare(new Uint8Array(buf1), new Uint8Array(buf2)) === 0;
 }
 
 function isEqualBoxedPrimitive(val1, val2) {
   if (isNumberObject(val1)) {
-    return (
-      isNumberObject(val2) &&
-      objectIs$1(
-        Number.prototype.valueOf.call(val1),
-        Number.prototype.valueOf.call(val2)
-      )
-    );
+    return isNumberObject(val2) && objectIs$1(Number.prototype.valueOf.call(val1), Number.prototype.valueOf.call(val2));
   }
 
   if (isStringObject(val1)) {
-    return (
-      isStringObject(val2) &&
-      String.prototype.valueOf.call(val1) ===
-        String.prototype.valueOf.call(val2)
-    );
+    return isStringObject(val2) && String.prototype.valueOf.call(val1) === String.prototype.valueOf.call(val2);
   }
 
   if (isBooleanObject(val1)) {
-    return (
-      isBooleanObject(val2) &&
-      Boolean.prototype.valueOf.call(val1) ===
-        Boolean.prototype.valueOf.call(val2)
-    );
+    return isBooleanObject(val2) && Boolean.prototype.valueOf.call(val1) === Boolean.prototype.valueOf.call(val2);
   }
 
   if (isBigIntObject(val1)) {
-    return (
-      isBigIntObject(val2) &&
-      BigInt.prototype.valueOf.call(val1) ===
-        BigInt.prototype.valueOf.call(val2)
-    );
+    return isBigIntObject(val2) && BigInt.prototype.valueOf.call(val1) === BigInt.prototype.valueOf.call(val2);
   }
 
-  return (
-    isSymbolObject(val2) &&
-    Symbol.prototype.valueOf.call(val1) === Symbol.prototype.valueOf.call(val2)
-  );
+  return isSymbolObject(val2) && Symbol.prototype.valueOf.call(val1) === Symbol.prototype.valueOf.call(val2);
 } // Notes: Type tags are historical [[Class]] properties that can be set by
 // FunctionTemplate::SetClassName() in C++ or Symbol.toStringTag in JS
 // and retrieved using Object.prototype.toString.call(obj) in JS
@@ -12802,12 +11591,14 @@ function isEqualBoxedPrimitive(val1, val2) {
 // a) The same built-in type tags
 // b) The same prototypes.
 
+
 function innerDeepEqual(val1, val2, strict, memos) {
   // All identical values are equivalent, as determined by ===.
   if (val1 === val2) {
     if (val1 !== 0) return true;
     return strict ? objectIs$1(val1, val2) : true;
   } // Check more closely if val1 and val2 are equal.
+
 
   if (strict) {
     if (_typeof$1(val1) !== 'object') {
@@ -12861,18 +11652,16 @@ function innerDeepEqual(val1, val2, strict, memos) {
   // wan't to early return out of the rest of the checks. However we can check
   // if the second value is one of these values and the first isn't.
 
+
   if (val1Tag === '[object Object]') {
     // return keyCheck(val1, val2, strict, memos, kNoIterator);
-    if ((!isMap(val1) && isMap(val2)) || (!isSet(val1) && isSet(val2))) {
+    if (!isMap(val1) && isMap(val2) || !isSet(val1) && isSet(val2)) {
       return false;
     }
   }
 
   if (isDate(val1)) {
-    if (
-      !isDate(val2) ||
-      Date.prototype.getTime.call(val1) !== Date.prototype.getTime.call(val2)
-    ) {
+    if (!isDate(val2) || Date.prototype.getTime.call(val1) !== Date.prototype.getTime.call(val2)) {
       return false;
     }
   } else if (isRegExp$1(val1)) {
@@ -12895,6 +11684,7 @@ function innerDeepEqual(val1, val2, strict, memos) {
     } // Buffer.compare returns true, so val1.length === val2.length. If they both
     // only contain numeric keys, we don't need to exam further than checking
     // the symbols.
+
 
     var _keys = getOwnNonIndexProperties(val1);
 
@@ -12929,7 +11719,7 @@ function innerDeepEqual(val1, val2, strict, memos) {
 }
 
 function getEnumerables(val, keys) {
-  return keys.filter(function(k) {
+  return keys.filter(function (k) {
     return propertyIsEnumerable(val, k);
   });
 }
@@ -12950,6 +11740,7 @@ function keyCheck(val1, val2, strict, memos, iterationType, aKeys) {
       return false;
     }
   } // Cheap key test
+
 
   var i = 0;
 
@@ -12982,32 +11773,22 @@ function keyCheck(val1, val2, strict, memos, iterationType, aKeys) {
 
       var symbolKeysB = objectGetOwnPropertySymbols(val2);
 
-      if (
-        symbolKeysA.length !== symbolKeysB.length &&
-        getEnumerables(val2, symbolKeysB).length !== count
-      ) {
+      if (symbolKeysA.length !== symbolKeysB.length && getEnumerables(val2, symbolKeysB).length !== count) {
         return false;
       }
     } else {
       var _symbolKeysB = objectGetOwnPropertySymbols(val2);
 
-      if (
-        _symbolKeysB.length !== 0 &&
-        getEnumerables(val2, _symbolKeysB).length !== 0
-      ) {
+      if (_symbolKeysB.length !== 0 && getEnumerables(val2, _symbolKeysB).length !== 0) {
         return false;
       }
     }
   }
 
-  if (
-    aKeys.length === 0 &&
-    (iterationType === kNoIterator ||
-      (iterationType === kIsArray && val1.length === 0) ||
-      val1.size === 0)
-  ) {
+  if (aKeys.length === 0 && (iterationType === kNoIterator || iterationType === kIsArray && val1.length === 0 || val1.size === 0)) {
     return true;
   } // Use memos to handle cycles.
+
 
   if (memos === undefined) {
     memos = {
@@ -13060,6 +11841,7 @@ function setHasEqualElement(set, val1, strict, memo) {
 // type is a string, number, bigint or boolean. The reason is that those values
 // can match lots of different string values (e.g., 1n == '+00001').
 
+
 function findLooseMatchingPrimitives(prim) {
   switch (_typeof$1(prim)) {
     case 'undefined':
@@ -13082,6 +11864,7 @@ function findLooseMatchingPrimitives(prim) {
       if (numberIsNaN(prim)) {
         return false;
       }
+
   }
 
   return true;
@@ -13102,10 +11885,7 @@ function mapMightHaveLoosePrim(a, b, prim, item, memo) {
 
   var curB = b.get(altValue);
 
-  if (
-    (curB === undefined && !b.has(altValue)) ||
-    !innerDeepEqual(item, curB, false, memo)
-  ) {
+  if (curB === undefined && !b.has(altValue) || !innerDeepEqual(item, curB, false, memo)) {
     return false;
   }
 
@@ -13130,6 +11910,7 @@ function setEquiv(a, b, strict, memo) {
       // object (or non strict only: a not matching primitive) we'll need to go
       // hunting for something thats deep-(strict-)equal to it. To make this
       // O(n log n) complexity we have to copy these values in a new set first.
+
 
       set.add(val);
     } else if (!b.has(val)) {
@@ -13156,11 +11937,7 @@ function setEquiv(a, b, strict, memo) {
 
       if (_typeof$1(_val) === 'object' && _val !== null) {
         if (!setHasEqualElement(set, _val, strict, memo)) return false;
-      } else if (
-        !strict &&
-        !a.has(_val) &&
-        !setHasEqualElement(set, _val, strict, memo)
-      ) {
+      } else if (!strict && !a.has(_val) && !setHasEqualElement(set, _val, strict, memo)) {
         return false;
       }
     }
@@ -13180,10 +11957,7 @@ function mapHasEqualEntry(set, map, key1, item1, strict, memo) {
   for (var i = 0; i < setValues.length; i++) {
     var key2 = setValues[i];
 
-    if (
-      innerDeepEqual(key1, key2, strict, memo) &&
-      innerDeepEqual(item1, map.get(key2), strict, memo)
-    ) {
+    if (innerDeepEqual(key1, key2, strict, memo) && innerDeepEqual(item1, map.get(key2), strict, memo)) {
       set.delete(key2);
       return true;
     }
@@ -13198,8 +11972,8 @@ function mapEquiv(a, b, strict, memo) {
 
   for (var i = 0; i < aEntries.length; i++) {
     var _aEntries$i = _slicedToArray(aEntries[i], 2),
-      key = _aEntries$i[0],
-      item1 = _aEntries$i[1];
+        key = _aEntries$i[0],
+        item1 = _aEntries$i[1];
 
     if (_typeof$1(key) === 'object' && key !== null) {
       if (set === null) {
@@ -13212,10 +11986,7 @@ function mapEquiv(a, b, strict, memo) {
       // almost all possible cases.
       var item2 = b.get(key);
 
-      if (
-        (item2 === undefined && !b.has(key)) ||
-        !innerDeepEqual(item1, item2, strict, memo)
-      ) {
+      if (item2 === undefined && !b.has(key) || !innerDeepEqual(item1, item2, strict, memo)) {
         if (strict) return false; // Fast path to detect missing string, symbol, undefined and null
         // keys.
 
@@ -13235,16 +12006,12 @@ function mapEquiv(a, b, strict, memo) {
 
     for (var _i2 = 0; _i2 < bEntries.length; _i2++) {
       var _bEntries$_i = _slicedToArray(bEntries[_i2], 2),
-        key = _bEntries$_i[0],
-        item = _bEntries$_i[1];
+          key = _bEntries$_i[0],
+          item = _bEntries$_i[1];
 
       if (_typeof$1(key) === 'object' && key !== null) {
         if (!mapHasEqualEntry(set, a, key, item, strict, memo)) return false;
-      } else if (
-        !strict &&
-        (!a.has(key) || !innerDeepEqual(a.get(key), item, false, memo)) &&
-        !mapHasEqualEntry(set, a, key, item, false, memo)
-      ) {
+      } else if (!strict && (!a.has(key) || !innerDeepEqual(a.get(key), item, false, memo)) && !mapHasEqualEntry(set, a, key, item, false, memo)) {
         return false;
       }
     }
@@ -13271,10 +12038,7 @@ function objEquiv(a, b, strict, keys, memos, iterationType) {
   } else if (iterationType === kIsArray) {
     for (; i < a.length; i++) {
       if (hasOwnProperty(a, i)) {
-        if (
-          !hasOwnProperty(b, i) ||
-          !innerDeepEqual(a[i], b[i], strict, memos)
-        ) {
+        if (!hasOwnProperty(b, i) || !innerDeepEqual(a[i], b[i], strict, memos)) {
           return false;
         }
       } else if (hasOwnProperty(b, i)) {
@@ -13286,10 +12050,7 @@ function objEquiv(a, b, strict, keys, memos, iterationType) {
         for (; i < keysA.length; i++) {
           var key = keysA[i];
 
-          if (
-            !hasOwnProperty(b, key) ||
-            !innerDeepEqual(a[key], b[key], strict, memos)
-          ) {
+          if (!hasOwnProperty(b, key) || !innerDeepEqual(a[key], b[key], strict, memos)) {
             return false;
           }
         }
@@ -13303,6 +12064,7 @@ function objEquiv(a, b, strict, keys, memos, iterationType) {
     }
   } // The pair must have equivalent values for every corresponding key.
   // Possibly expensive deep test:
+
 
   for (i = 0; i < keys.length; i++) {
     var _key = keys[i];
@@ -13329,18 +12091,13 @@ var comparisons = {
 };
 
 function _typeof(obj) {
-  if (typeof Symbol === 'function' && typeof Symbol.iterator === 'symbol') {
+  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
     _typeof = function _typeof(obj) {
       return typeof obj;
     };
   } else {
     _typeof = function _typeof(obj) {
-      return obj &&
-        typeof Symbol === 'function' &&
-        obj.constructor === Symbol &&
-        obj !== Symbol.prototype
-        ? 'symbol'
-        : typeof obj;
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
     };
   }
 
@@ -13349,23 +12106,23 @@ function _typeof(obj) {
 
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
-    throw new TypeError('Cannot call a class as a function');
+    throw new TypeError("Cannot call a class as a function");
   }
 }
 
 var _require = errors,
-  _require$codes = _require.codes,
-  ERR_AMBIGUOUS_ARGUMENT = _require$codes.ERR_AMBIGUOUS_ARGUMENT,
-  ERR_INVALID_ARG_TYPE = _require$codes.ERR_INVALID_ARG_TYPE,
-  ERR_INVALID_ARG_VALUE = _require$codes.ERR_INVALID_ARG_VALUE,
-  ERR_INVALID_RETURN_VALUE = _require$codes.ERR_INVALID_RETURN_VALUE,
-  ERR_MISSING_ARGS = _require$codes.ERR_MISSING_ARGS;
+    _require$codes = _require.codes,
+    ERR_AMBIGUOUS_ARGUMENT = _require$codes.ERR_AMBIGUOUS_ARGUMENT,
+    ERR_INVALID_ARG_TYPE = _require$codes.ERR_INVALID_ARG_TYPE,
+    ERR_INVALID_ARG_VALUE = _require$codes.ERR_INVALID_ARG_VALUE,
+    ERR_INVALID_RETURN_VALUE = _require$codes.ERR_INVALID_RETURN_VALUE,
+    ERR_MISSING_ARGS = _require$codes.ERR_MISSING_ARGS;
 var AssertionError = assertion_error;
 var _require2 = util$1,
-  inspect = _require2.inspect;
+    inspect = _require2.inspect;
 var _require$types = util$1.types,
-  isPromise = _require$types.isPromise,
-  isRegExp = _require$types.isRegExp;
+    isPromise = _require$types.isPromise,
+    isRegExp = _require$types.isRegExp;
 var objectAssign = Object.assign ? Object.assign : es6ObjectAssign.assign;
 var objectIs = Object.is ? Object.is : objectIs$2;
 var isDeepEqual;
@@ -13381,7 +12138,7 @@ var warned = false; // The assert module provides functions that throw
 // AssertionError's when particular conditions are not met. The
 // assert module must conform to the following interface.
 
-var assert = (assert$2.exports = ok);
+var assert = assert$2.exports = ok;
 var NO_EXCEPTION_SENTINEL = {}; // All of the following functions must throw an AssertionError
 // when a corresponding condition is not met, with a message that
 // may be undefined if not provided. All assertion methods provide
@@ -13406,12 +12163,7 @@ function fail(actual, expected, message, operator, stackStartFn) {
     if (warned === false) {
       warned = true;
       var warn = console.warn.bind(console);
-      warn(
-        'assert.fail() with more than one argument is deprecated. ' +
-          'Please use assert.strictEqual() instead or only pass a message.',
-        'DeprecationWarning',
-        'DEP0094'
-      );
+      warn('assert.fail() with more than one argument is deprecated. ' + 'Please use assert.strictEqual() instead or only pass a message.', 'DeprecationWarning', 'DEP0094');
     }
 
     if (argsLen === 2) operator = '!=';
@@ -13467,12 +12219,9 @@ function innerOk(fn, argLen, value, message) {
 } // Pure assertion tests whether a value is truthy, as determined
 // by !!value.
 
+
 function ok() {
-  for (
-    var _len = arguments.length, args = new Array(_len), _key = 0;
-    _key < _len;
-    _key++
-  ) {
+  for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
     args[_key] = arguments[_key];
   }
 
@@ -13488,6 +12237,7 @@ assert.equal = function equal(actual, expected, message) {
     throw new ERR_MISSING_ARGS('actual', 'expected');
   } // eslint-disable-next-line eqeqeq
 
+
   if (actual != expected) {
     innerFail({
       actual: actual,
@@ -13500,10 +12250,12 @@ assert.equal = function equal(actual, expected, message) {
 }; // The non-equality assertion tests for whether two objects are not
 // equal with !=.
 
+
 assert.notEqual = function notEqual(actual, expected, message) {
   if (arguments.length < 2) {
     throw new ERR_MISSING_ARGS('actual', 'expected');
   } // eslint-disable-next-line eqeqeq
+
 
   if (actual == expected) {
     innerFail({
@@ -13515,6 +12267,7 @@ assert.notEqual = function notEqual(actual, expected, message) {
     });
   }
 }; // The equivalence assertion tests a deep equality relation.
+
 
 assert.deepEqual = function deepEqual(actual, expected, message) {
   if (arguments.length < 2) {
@@ -13534,6 +12287,7 @@ assert.deepEqual = function deepEqual(actual, expected, message) {
   }
 }; // The non-equivalence assertion tests for any deep inequality.
 
+
 assert.notDeepEqual = function notDeepEqual(actual, expected, message) {
   if (arguments.length < 2) {
     throw new ERR_MISSING_ARGS('actual', 'expected');
@@ -13552,6 +12306,7 @@ assert.notDeepEqual = function notDeepEqual(actual, expected, message) {
   }
 };
 /* eslint-enable */
+
 
 assert.deepStrictEqual = function deepStrictEqual(actual, expected, message) {
   if (arguments.length < 2) {
@@ -13628,14 +12383,9 @@ var Comparison = function Comparison(obj, keys, actual) {
 
   _classCallCheck(this, Comparison);
 
-  keys.forEach(function(key) {
+  keys.forEach(function (key) {
     if (key in obj) {
-      if (
-        actual !== undefined &&
-        typeof actual[key] === 'string' &&
-        isRegExp(obj[key]) &&
-        obj[key].test(actual[key])
-      ) {
+      if (actual !== undefined && typeof actual[key] === 'string' && isRegExp(obj[key]) && obj[key].test(actual[key])) {
         _this[key] = actual[key];
       } else {
         _this[key] = obj[key];
@@ -13677,12 +12427,9 @@ function expectedException(actual, expected, msg, fn) {
     if (isRegExp(expected)) return expected.test(actual); // assert.doesNotThrow does not accept objects.
 
     if (arguments.length === 2) {
-      throw new ERR_INVALID_ARG_TYPE(
-        'expected',
-        ['Function', 'RegExp'],
-        expected
-      );
+      throw new ERR_INVALID_ARG_TYPE('expected', ['Function', 'RegExp'], expected);
     } // Handle primitives properly.
+
 
     if (_typeof(actual) !== 'object' || actual === null) {
       var err = new AssertionError({
@@ -13702,20 +12449,12 @@ function expectedException(actual, expected, msg, fn) {
     if (expected instanceof Error) {
       keys.push('name', 'message');
     } else if (keys.length === 0) {
-      throw new ERR_INVALID_ARG_VALUE(
-        'error',
-        expected,
-        'may not be an empty object'
-      );
+      throw new ERR_INVALID_ARG_VALUE('error', expected, 'may not be an empty object');
     }
 
     if (isDeepEqual === undefined) lazyLoadComparison();
-    keys.forEach(function(key) {
-      if (
-        typeof actual[key] === 'string' &&
-        isRegExp(expected[key]) &&
-        expected[key].test(actual[key])
-      ) {
+    keys.forEach(function (key) {
+      if (typeof actual[key] === 'string' && isRegExp(expected[key]) && expected[key].test(actual[key])) {
         return;
       }
 
@@ -13723,6 +12462,7 @@ function expectedException(actual, expected, msg, fn) {
     });
     return true;
   } // Guard instanceof against arrow functions as they don't have a prototype.
+
 
   if (expected.prototype !== undefined && actual instanceof expected) {
     return true;
@@ -13756,17 +12496,11 @@ function checkIsPromise(obj) {
   // TODO: thenables are checked up until they have the correct methods,
   // but according to documentation, the `then` method should receive
   // the `fulfill` and `reject` arguments as well or it may be never resolved.
-  return (
-    isPromise(obj) ||
-    (obj !== null &&
-      _typeof(obj) === 'object' &&
-      typeof obj.then === 'function' &&
-      typeof obj.catch === 'function')
-  );
+  return isPromise(obj) || obj !== null && _typeof(obj) === 'object' && typeof obj.then === 'function' && typeof obj.catch === 'function';
 }
 
 function waitForActual(promiseFn) {
-  return Promise.resolve().then(function() {
+  return Promise.resolve().then(function () {
     var resultPromise;
 
     if (typeof promiseFn === 'function') {
@@ -13774,90 +12508,58 @@ function waitForActual(promiseFn) {
       resultPromise = promiseFn(); // Fail in case no promise is returned.
 
       if (!checkIsPromise(resultPromise)) {
-        throw new ERR_INVALID_RETURN_VALUE(
-          'instance of Promise',
-          'promiseFn',
-          resultPromise
-        );
+        throw new ERR_INVALID_RETURN_VALUE('instance of Promise', 'promiseFn', resultPromise);
       }
     } else if (checkIsPromise(promiseFn)) {
       resultPromise = promiseFn;
     } else {
-      throw new ERR_INVALID_ARG_TYPE(
-        'promiseFn',
-        ['Function', 'Promise'],
-        promiseFn
-      );
+      throw new ERR_INVALID_ARG_TYPE('promiseFn', ['Function', 'Promise'], promiseFn);
     }
 
-    return Promise.resolve()
-      .then(function() {
-        return resultPromise;
-      })
-      .then(function() {
-        return NO_EXCEPTION_SENTINEL;
-      })
-      .catch(function(e) {
-        return e;
-      });
+    return Promise.resolve().then(function () {
+      return resultPromise;
+    }).then(function () {
+      return NO_EXCEPTION_SENTINEL;
+    }).catch(function (e) {
+      return e;
+    });
   });
 }
 
 function expectsError(stackStartFn, actual, error, message) {
   if (typeof error === 'string') {
     if (arguments.length === 4) {
-      throw new ERR_INVALID_ARG_TYPE(
-        'error',
-        ['Object', 'Error', 'Function', 'RegExp'],
-        error
-      );
+      throw new ERR_INVALID_ARG_TYPE('error', ['Object', 'Error', 'Function', 'RegExp'], error);
     }
 
     if (_typeof(actual) === 'object' && actual !== null) {
       if (actual.message === error) {
-        throw new ERR_AMBIGUOUS_ARGUMENT(
-          'error/message',
-          'The error message "'.concat(
-            actual.message,
-            '" is identical to the message.'
-          )
-        );
+        throw new ERR_AMBIGUOUS_ARGUMENT('error/message', "The error message \"".concat(actual.message, "\" is identical to the message."));
       }
     } else if (actual === error) {
-      throw new ERR_AMBIGUOUS_ARGUMENT(
-        'error/message',
-        'The error "'.concat(actual, '" is identical to the message.')
-      );
+      throw new ERR_AMBIGUOUS_ARGUMENT('error/message', "The error \"".concat(actual, "\" is identical to the message."));
     }
 
     message = error;
     error = undefined;
-  } else if (
-    error != null &&
-    _typeof(error) !== 'object' &&
-    typeof error !== 'function'
-  ) {
-    throw new ERR_INVALID_ARG_TYPE(
-      'error',
-      ['Object', 'Error', 'Function', 'RegExp'],
-      error
-    );
+  } else if (error != null && _typeof(error) !== 'object' && typeof error !== 'function') {
+    throw new ERR_INVALID_ARG_TYPE('error', ['Object', 'Error', 'Function', 'RegExp'], error);
   }
 
   if (actual === NO_EXCEPTION_SENTINEL) {
     var details = '';
 
     if (error && error.name) {
-      details += ' ('.concat(error.name, ')');
+      details += " (".concat(error.name, ")");
     }
 
-    details += message ? ': '.concat(message) : '.';
+    details += message ? ": ".concat(message) : '.';
     var fnType = stackStartFn.name === 'rejects' ? 'rejection' : 'exception';
     innerFail({
       actual: undefined,
       expected: error,
       operator: stackStartFn.name,
-      message: 'Missing expected '.concat(fnType).concat(details),
+      message: "Missing expected ".concat(fnType).concat(details),
       stackStartFn: stackStartFn
     });
   }
@@ -13876,16 +12578,13 @@ function expectsNoError(stackStartFn, actual, error, message) {
   }
 
   if (!error || expectedException(actual, error)) {
-    var details = message ? ': '.concat(message) : '.';
-    var fnType =
-      stackStartFn.name === 'doesNotReject' ? 'rejection' : 'exception';
+    var details = message ? ": ".concat(message) : '.';
+    var fnType = stackStartFn.name === 'doesNotReject' ? 'rejection' : 'exception';
     innerFail({
       actual: actual,
       expected: error,
       operator: stackStartFn.name,
-      message:
-        'Got unwanted '.concat(fnType).concat(details, '\n') +
-        'Actual message: "'.concat(actual && actual.message, '"'),
+      message: "Got unwanted ".concat(fnType).concat(details, "\n") + "Actual message: \"".concat(actual && actual.message, "\""),
       stackStartFn: stackStartFn
     });
   }
@@ -13894,13 +12593,7 @@ function expectsNoError(stackStartFn, actual, error, message) {
 }
 
 assert.throws = function throws(promiseFn) {
-  for (
-    var _len2 = arguments.length,
-      args = new Array(_len2 > 1 ? _len2 - 1 : 0),
-      _key2 = 1;
-    _key2 < _len2;
-    _key2++
-  ) {
+  for (var _len2 = arguments.length, args = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
     args[_key2 - 1] = arguments[_key2];
   }
 
@@ -13908,29 +12601,17 @@ assert.throws = function throws(promiseFn) {
 };
 
 assert.rejects = function rejects(promiseFn) {
-  for (
-    var _len3 = arguments.length,
-      args = new Array(_len3 > 1 ? _len3 - 1 : 0),
-      _key3 = 1;
-    _key3 < _len3;
-    _key3++
-  ) {
+  for (var _len3 = arguments.length, args = new Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
     args[_key3 - 1] = arguments[_key3];
   }
 
-  return waitForActual(promiseFn).then(function(result) {
+  return waitForActual(promiseFn).then(function (result) {
     return expectsError.apply(void 0, [rejects, result].concat(args));
   });
 };
 
 assert.doesNotThrow = function doesNotThrow(fn) {
-  for (
-    var _len4 = arguments.length,
-      args = new Array(_len4 > 1 ? _len4 - 1 : 0),
-      _key4 = 1;
-    _key4 < _len4;
-    _key4++
-  ) {
+  for (var _len4 = arguments.length, args = new Array(_len4 > 1 ? _len4 - 1 : 0), _key4 = 1; _key4 < _len4; _key4++) {
     args[_key4 - 1] = arguments[_key4];
   }
 
@@ -13938,17 +12619,11 @@ assert.doesNotThrow = function doesNotThrow(fn) {
 };
 
 assert.doesNotReject = function doesNotReject(fn) {
-  for (
-    var _len5 = arguments.length,
-      args = new Array(_len5 > 1 ? _len5 - 1 : 0),
-      _key5 = 1;
-    _key5 < _len5;
-    _key5++
-  ) {
+  for (var _len5 = arguments.length, args = new Array(_len5 > 1 ? _len5 - 1 : 0), _key5 = 1; _key5 < _len5; _key5++) {
     args[_key5 - 1] = arguments[_key5];
   }
 
-  return waitForActual(fn).then(function(result) {
+  return waitForActual(fn).then(function (result) {
     return expectsNoError.apply(void 0, [doesNotReject, result].concat(args));
   });
 };
@@ -13997,19 +12672,16 @@ assert.ifError = function ifError(err) {
         }
       }
 
-      newErr.stack = ''.concat(tmp1.join('\n'), '\n').concat(tmp2.join('\n'));
+      newErr.stack = "".concat(tmp1.join('\n'), "\n").concat(tmp2.join('\n'));
     }
 
     throw newErr;
   }
 }; // Expose a strict only variant of assert
 
+
 function strict() {
-  for (
-    var _len6 = arguments.length, args = new Array(_len6), _key6 = 0;
-    _key6 < _len6;
-    _key6++
-  ) {
+  for (var _len6 = arguments.length, args = new Array(_len6), _key6 = 0; _key6 < _len6; _key6++) {
     args[_key6] = arguments[_key6];
   }
 
@@ -14024,18 +12696,19 @@ assert.strict = objectAssign(strict, assert, {
 });
 assert.strict.strict = assert.strict;
 
-(function(exports) {
+(function (exports) {
   /* eslint camelcase: "off" */
 
   var assert = assert$2.exports;
-  var Zstream = require$$1__default['default'];
-  var zlib_deflate = require$$2__default['default'];
-  var zlib_inflate = require$$3__default['default'];
-  var constants = require$$4__default['default'];
+  var Zstream = require$$1__default["default"];
+  var zlib_deflate = require$$2__default["default"];
+  var zlib_inflate = require$$3__default["default"];
+  var constants = require$$4__default["default"];
 
   for (var key in constants) {
     exports[key] = constants[key];
   } // zlib modes
+
 
   exports.NONE = 0;
   exports.DEFLATE = 1;
@@ -14052,11 +12725,7 @@ assert.strict.strict = assert.strict;
    */
 
   function Zlib(mode) {
-    if (
-      typeof mode !== 'number' ||
-      mode < exports.DEFLATE ||
-      mode > exports.UNZIP
-    ) {
+    if (typeof mode !== 'number' || mode < exports.DEFLATE || mode > exports.UNZIP) {
       throw new TypeError('Bad argument');
     }
 
@@ -14074,7 +12743,7 @@ assert.strict.strict = assert.strict;
     this.gzip_id_bytes_read = 0;
   }
 
-  Zlib.prototype.close = function() {
+  Zlib.prototype.close = function () {
     if (this.write_in_progress) {
       this.pending_close = true;
       return;
@@ -14084,18 +12753,9 @@ assert.strict.strict = assert.strict;
     assert(this.init_done, 'close before init');
     assert(this.mode <= exports.UNZIP);
 
-    if (
-      this.mode === exports.DEFLATE ||
-      this.mode === exports.GZIP ||
-      this.mode === exports.DEFLATERAW
-    ) {
+    if (this.mode === exports.DEFLATE || this.mode === exports.GZIP || this.mode === exports.DEFLATERAW) {
       zlib_deflate.deflateEnd(this.strm);
-    } else if (
-      this.mode === exports.INFLATE ||
-      this.mode === exports.GUNZIP ||
-      this.mode === exports.INFLATERAW ||
-      this.mode === exports.UNZIP
-    ) {
+    } else if (this.mode === exports.INFLATE || this.mode === exports.GUNZIP || this.mode === exports.INFLATERAW || this.mode === exports.UNZIP) {
       zlib_inflate.inflateEnd(this.strm);
     }
 
@@ -14103,58 +12763,15 @@ assert.strict.strict = assert.strict;
     this.dictionary = null;
   };
 
-  Zlib.prototype.write = function(
-    flush,
-    input,
-    in_off,
-    in_len,
-    out,
-    out_off,
-    out_len
-  ) {
-    return this._write(
-      true,
-      flush,
-      input,
-      in_off,
-      in_len,
-      out,
-      out_off,
-      out_len
-    );
+  Zlib.prototype.write = function (flush, input, in_off, in_len, out, out_off, out_len) {
+    return this._write(true, flush, input, in_off, in_len, out, out_off, out_len);
   };
 
-  Zlib.prototype.writeSync = function(
-    flush,
-    input,
-    in_off,
-    in_len,
-    out,
-    out_off,
-    out_len
-  ) {
-    return this._write(
-      false,
-      flush,
-      input,
-      in_off,
-      in_len,
-      out,
-      out_off,
-      out_len
-    );
+  Zlib.prototype.writeSync = function (flush, input, in_off, in_len, out, out_off, out_len) {
+    return this._write(false, flush, input, in_off, in_len, out, out_off, out_len);
   };
 
-  Zlib.prototype._write = function(
-    async,
-    flush,
-    input,
-    in_off,
-    in_len,
-    out,
-    out_off,
-    out_len
-  ) {
+  Zlib.prototype._write = function (async, flush, input, in_off, in_len, out, out_off, out_len) {
     assert.equal(arguments.length, 8);
     assert(this.init_done, 'write before init');
     assert(this.mode !== exports.NONE, 'already finalized');
@@ -14164,14 +12781,7 @@ assert.strict.strict = assert.strict;
     assert.equal(false, flush === undefined, 'must provide flush value');
     this.write_in_progress = true;
 
-    if (
-      flush !== exports.Z_NO_FLUSH &&
-      flush !== exports.Z_PARTIAL_FLUSH &&
-      flush !== exports.Z_SYNC_FLUSH &&
-      flush !== exports.Z_FULL_FLUSH &&
-      flush !== exports.Z_FINISH &&
-      flush !== exports.Z_BLOCK
-    ) {
+    if (flush !== exports.Z_NO_FLUSH && flush !== exports.Z_PARTIAL_FLUSH && flush !== exports.Z_SYNC_FLUSH && flush !== exports.Z_FULL_FLUSH && flush !== exports.Z_FINISH && flush !== exports.Z_BLOCK) {
       throw new Error('Invalid flush value');
     }
 
@@ -14200,8 +12810,9 @@ assert.strict.strict = assert.strict;
       return;
     } // async version
 
+
     var self = this;
-    browser$1$1.nextTick(function() {
+    browser$1$1.nextTick(function () {
       self._process();
 
       self._after();
@@ -14209,14 +12820,14 @@ assert.strict.strict = assert.strict;
     return this;
   };
 
-  Zlib.prototype._afterSync = function() {
+  Zlib.prototype._afterSync = function () {
     var avail_out = this.strm.avail_out;
     var avail_in = this.strm.avail_in;
     this.write_in_progress = false;
     return [avail_in, avail_out];
   };
 
-  Zlib.prototype._process = function() {
+  Zlib.prototype._process = function () {
     var next_expected_header_byte = null; // If the avail_out is left at 0, then it means that it ran out
     // of room.  If there was avail_out left over, then it means
     // that all of the input was consumed.
@@ -14239,9 +12850,7 @@ assert.strict.strict = assert.strict;
               break;
             }
 
-            if (
-              this.strm.input[next_expected_header_byte] === GZIP_HEADER_ID1
-            ) {
+            if (this.strm.input[next_expected_header_byte] === GZIP_HEADER_ID1) {
               this.gzip_id_bytes_read = 1;
               next_expected_header_byte++;
 
@@ -14261,9 +12870,7 @@ assert.strict.strict = assert.strict;
               break;
             }
 
-            if (
-              this.strm.input[next_expected_header_byte] === GZIP_HEADER_ID2
-            ) {
+            if (this.strm.input[next_expected_header_byte] === GZIP_HEADER_ID2) {
               this.gzip_id_bytes_read = 2;
               this.mode = exports.GUNZIP;
             } else {
@@ -14283,17 +12890,12 @@ assert.strict.strict = assert.strict;
       case exports.INFLATE:
       case exports.GUNZIP:
       case exports.INFLATERAW:
-        this.err = zlib_inflate.inflate(
-          this.strm,
-          this.flush // If data was encoded with dictionary
+        this.err = zlib_inflate.inflate(this.strm, this.flush // If data was encoded with dictionary
         );
 
         if (this.err === exports.Z_NEED_DICT && this.dictionary) {
           // Load it
-          this.err = zlib_inflate.inflateSetDictionary(
-            this.strm,
-            this.dictionary
-          );
+          this.err = zlib_inflate.inflateSetDictionary(this.strm, this.dictionary);
 
           if (this.err === exports.Z_OK) {
             // And try to decode again
@@ -14306,12 +12908,7 @@ assert.strict.strict = assert.strict;
           }
         }
 
-        while (
-          this.strm.avail_in > 0 &&
-          this.mode === exports.GUNZIP &&
-          this.err === exports.Z_STREAM_END &&
-          this.strm.next_in[0] !== 0x00
-        ) {
+        while (this.strm.avail_in > 0 && this.mode === exports.GUNZIP && this.err === exports.Z_STREAM_END && this.strm.next_in[0] !== 0x00) {
           // Bytes remain in input buffer. Perhaps this is another compressed
           // member in the same archive, or just trailing garbage.
           // Trailing zero bytes are okay, though, since they are frequently
@@ -14327,7 +12924,7 @@ assert.strict.strict = assert.strict;
     }
   };
 
-  Zlib.prototype._checkError = function() {
+  Zlib.prototype._checkError = function () {
     // Acceptable error states depend on the type of zlib stream.
     switch (this.err) {
       case exports.Z_OK:
@@ -14363,7 +12960,7 @@ assert.strict.strict = assert.strict;
     return true;
   };
 
-  Zlib.prototype._after = function() {
+  Zlib.prototype._after = function () {
     if (!this._checkError()) {
       return;
     }
@@ -14379,14 +12976,12 @@ assert.strict.strict = assert.strict;
     }
   };
 
-  Zlib.prototype._error = function(message) {
+  Zlib.prototype._error = function (message) {
     if (this.strm.msg) {
       message = this.strm.msg;
     }
 
-    this.onerror(
-      message,
-      this.err // no hope of rescue.
+    this.onerror(message, this.err // no hope of rescue.
     );
     this.write_in_progress = false;
 
@@ -14395,51 +12990,29 @@ assert.strict.strict = assert.strict;
     }
   };
 
-  Zlib.prototype.init = function(
-    windowBits,
-    level,
-    memLevel,
-    strategy,
-    dictionary
-  ) {
-    assert(
-      arguments.length === 4 || arguments.length === 5,
-      'init(windowBits, level, memLevel, strategy, [dictionary])'
-    );
+  Zlib.prototype.init = function (windowBits, level, memLevel, strategy, dictionary) {
+    assert(arguments.length === 4 || arguments.length === 5, 'init(windowBits, level, memLevel, strategy, [dictionary])');
     assert(windowBits >= 8 && windowBits <= 15, 'invalid windowBits');
     assert(level >= -1 && level <= 9, 'invalid compression level');
     assert(memLevel >= 1 && memLevel <= 9, 'invalid memlevel');
-    assert(
-      strategy === exports.Z_FILTERED ||
-        strategy === exports.Z_HUFFMAN_ONLY ||
-        strategy === exports.Z_RLE ||
-        strategy === exports.Z_FIXED ||
-        strategy === exports.Z_DEFAULT_STRATEGY,
-      'invalid strategy'
-    );
+    assert(strategy === exports.Z_FILTERED || strategy === exports.Z_HUFFMAN_ONLY || strategy === exports.Z_RLE || strategy === exports.Z_FIXED || strategy === exports.Z_DEFAULT_STRATEGY, 'invalid strategy');
 
     this._init(level, windowBits, memLevel, strategy, dictionary);
 
     this._setDictionary();
   };
 
-  Zlib.prototype.params = function() {
+  Zlib.prototype.params = function () {
     throw new Error('deflateParams Not supported');
   };
 
-  Zlib.prototype.reset = function() {
+  Zlib.prototype.reset = function () {
     this._reset();
 
     this._setDictionary();
   };
 
-  Zlib.prototype._init = function(
-    level,
-    windowBits,
-    memLevel,
-    strategy,
-    dictionary
-  ) {
+  Zlib.prototype._init = function (level, windowBits, memLevel, strategy, dictionary) {
     this.level = level;
     this.windowBits = windowBits;
     this.memLevel = memLevel;
@@ -14465,14 +13038,7 @@ assert.strict.strict = assert.strict;
       case exports.DEFLATE:
       case exports.GZIP:
       case exports.DEFLATERAW:
-        this.err = zlib_deflate.deflateInit2(
-          this.strm,
-          this.level,
-          exports.Z_DEFLATED,
-          this.windowBits,
-          this.memLevel,
-          this.strategy
-        );
+        this.err = zlib_deflate.deflateInit2(this.strm, this.level, exports.Z_DEFLATED, this.windowBits, this.memLevel, this.strategy);
         break;
 
       case exports.INFLATE:
@@ -14495,7 +13061,7 @@ assert.strict.strict = assert.strict;
     this.init_done = true;
   };
 
-  Zlib.prototype._setDictionary = function() {
+  Zlib.prototype._setDictionary = function () {
     if (this.dictionary == null) {
       return;
     }
@@ -14505,10 +13071,7 @@ assert.strict.strict = assert.strict;
     switch (this.mode) {
       case exports.DEFLATE:
       case exports.DEFLATERAW:
-        this.err = zlib_deflate.deflateSetDictionary(
-          this.strm,
-          this.dictionary
-        );
+        this.err = zlib_deflate.deflateSetDictionary(this.strm, this.dictionary);
         break;
     }
 
@@ -14517,7 +13080,7 @@ assert.strict.strict = assert.strict;
     }
   };
 
-  Zlib.prototype._reset = function() {
+  Zlib.prototype._reset = function () {
     this.err = exports.Z_OK;
 
     switch (this.mode) {
@@ -14542,18 +13105,15 @@ assert.strict.strict = assert.strict;
   exports.Zlib = Zlib;
 })(binding);
 
-(function(exports) {
+(function (exports) {
+
   var Buffer = buffer.Buffer;
   var Transform = readableBrowser.exports.Transform;
   var binding$1 = binding;
   var util = util$1;
   var assert = assert$2.exports.ok;
   var kMaxLength = buffer.kMaxLength;
-  var kRangeErrorMessage =
-    'Cannot create final Buffer. It would be larger ' +
-    'than 0x' +
-    kMaxLength.toString(16) +
-    ' bytes'; // zlib doesn't provide these, so kludge them in following the same
+  var kRangeErrorMessage = 'Cannot create final Buffer. It would be larger ' + 'than 0x' + kMaxLength.toString(16) + ' bytes'; // zlib doesn't provide these, so kludge them in following the same
   // const naming scheme zlib uses.
 
   binding$1.Z_MIN_WINDOWBITS = 8;
@@ -14586,6 +13146,7 @@ assert.strict.strict = assert.strict;
     }
   } // translation table for return codes.
 
+
   var codes = {
     Z_OK: binding$1.Z_OK,
     Z_STREAM_END: binding$1.Z_STREAM_END,
@@ -14617,36 +13178,37 @@ assert.strict.strict = assert.strict;
   exports.InflateRaw = InflateRaw;
   exports.Unzip = Unzip;
 
-  exports.createDeflate = function(o) {
+  exports.createDeflate = function (o) {
     return new Deflate(o);
   };
 
-  exports.createInflate = function(o) {
+  exports.createInflate = function (o) {
     return new Inflate(o);
   };
 
-  exports.createDeflateRaw = function(o) {
+  exports.createDeflateRaw = function (o) {
     return new DeflateRaw(o);
   };
 
-  exports.createInflateRaw = function(o) {
+  exports.createInflateRaw = function (o) {
     return new InflateRaw(o);
   };
 
-  exports.createGzip = function(o) {
+  exports.createGzip = function (o) {
     return new Gzip(o);
   };
 
-  exports.createGunzip = function(o) {
+  exports.createGunzip = function (o) {
     return new Gunzip(o);
   };
 
-  exports.createUnzip = function(o) {
+  exports.createUnzip = function (o) {
     return new Unzip(o);
   }; // Convenience methods.
   // compress/decompress a string or buffer in one step.
 
-  exports.deflate = function(buffer, opts, callback) {
+
+  exports.deflate = function (buffer, opts, callback) {
     if (typeof opts === 'function') {
       callback = opts;
       opts = {};
@@ -14655,11 +13217,11 @@ assert.strict.strict = assert.strict;
     return zlibBuffer(new Deflate(opts), buffer, callback);
   };
 
-  exports.deflateSync = function(buffer, opts) {
+  exports.deflateSync = function (buffer, opts) {
     return zlibBufferSync(new Deflate(opts), buffer);
   };
 
-  exports.gzip = function(buffer, opts, callback) {
+  exports.gzip = function (buffer, opts, callback) {
     if (typeof opts === 'function') {
       callback = opts;
       opts = {};
@@ -14668,11 +13230,11 @@ assert.strict.strict = assert.strict;
     return zlibBuffer(new Gzip(opts), buffer, callback);
   };
 
-  exports.gzipSync = function(buffer, opts) {
+  exports.gzipSync = function (buffer, opts) {
     return zlibBufferSync(new Gzip(opts), buffer);
   };
 
-  exports.deflateRaw = function(buffer, opts, callback) {
+  exports.deflateRaw = function (buffer, opts, callback) {
     if (typeof opts === 'function') {
       callback = opts;
       opts = {};
@@ -14681,11 +13243,11 @@ assert.strict.strict = assert.strict;
     return zlibBuffer(new DeflateRaw(opts), buffer, callback);
   };
 
-  exports.deflateRawSync = function(buffer, opts) {
+  exports.deflateRawSync = function (buffer, opts) {
     return zlibBufferSync(new DeflateRaw(opts), buffer);
   };
 
-  exports.unzip = function(buffer, opts, callback) {
+  exports.unzip = function (buffer, opts, callback) {
     if (typeof opts === 'function') {
       callback = opts;
       opts = {};
@@ -14694,11 +13256,11 @@ assert.strict.strict = assert.strict;
     return zlibBuffer(new Unzip(opts), buffer, callback);
   };
 
-  exports.unzipSync = function(buffer, opts) {
+  exports.unzipSync = function (buffer, opts) {
     return zlibBufferSync(new Unzip(opts), buffer);
   };
 
-  exports.inflate = function(buffer, opts, callback) {
+  exports.inflate = function (buffer, opts, callback) {
     if (typeof opts === 'function') {
       callback = opts;
       opts = {};
@@ -14707,11 +13269,11 @@ assert.strict.strict = assert.strict;
     return zlibBuffer(new Inflate(opts), buffer, callback);
   };
 
-  exports.inflateSync = function(buffer, opts) {
+  exports.inflateSync = function (buffer, opts) {
     return zlibBufferSync(new Inflate(opts), buffer);
   };
 
-  exports.gunzip = function(buffer, opts, callback) {
+  exports.gunzip = function (buffer, opts, callback) {
     if (typeof opts === 'function') {
       callback = opts;
       opts = {};
@@ -14720,11 +13282,11 @@ assert.strict.strict = assert.strict;
     return zlibBuffer(new Gunzip(opts), buffer, callback);
   };
 
-  exports.gunzipSync = function(buffer, opts) {
+  exports.gunzipSync = function (buffer, opts) {
     return zlibBufferSync(new Gunzip(opts), buffer);
   };
 
-  exports.inflateRaw = function(buffer, opts, callback) {
+  exports.inflateRaw = function (buffer, opts, callback) {
     if (typeof opts === 'function') {
       callback = opts;
       opts = {};
@@ -14733,7 +13295,7 @@ assert.strict.strict = assert.strict;
     return zlibBuffer(new InflateRaw(opts), buffer, callback);
   };
 
-  exports.inflateRawSync = function(buffer, opts) {
+  exports.inflateRawSync = function (buffer, opts) {
     return zlibBufferSync(new InflateRaw(opts), buffer);
   };
 
@@ -14786,6 +13348,7 @@ assert.strict.strict = assert.strict;
   } // generic zlib
   // minimal 2-byte header
 
+
   function Deflate(opts) {
     if (!(this instanceof Deflate)) return new Deflate(opts);
     Zlib.call(this, opts, binding$1.DEFLATE);
@@ -14795,6 +13358,7 @@ assert.strict.strict = assert.strict;
     if (!(this instanceof Inflate)) return new Inflate(opts);
     Zlib.call(this, opts, binding$1.INFLATE);
   } // gzip - bigger header, same deflate compression
+
 
   function Gzip(opts) {
     if (!(this instanceof Gzip)) return new Gzip(opts);
@@ -14806,6 +13370,7 @@ assert.strict.strict = assert.strict;
     Zlib.call(this, opts, binding$1.GUNZIP);
   } // raw - no header
 
+
   function DeflateRaw(opts) {
     if (!(this instanceof DeflateRaw)) return new DeflateRaw(opts);
     Zlib.call(this, opts, binding$1.DEFLATERAW);
@@ -14816,24 +13381,19 @@ assert.strict.strict = assert.strict;
     Zlib.call(this, opts, binding$1.INFLATERAW);
   } // auto-detect header.
 
+
   function Unzip(opts) {
     if (!(this instanceof Unzip)) return new Unzip(opts);
     Zlib.call(this, opts, binding$1.UNZIP);
   }
 
   function isValidFlushFlag(flag) {
-    return (
-      flag === binding$1.Z_NO_FLUSH ||
-      flag === binding$1.Z_PARTIAL_FLUSH ||
-      flag === binding$1.Z_SYNC_FLUSH ||
-      flag === binding$1.Z_FULL_FLUSH ||
-      flag === binding$1.Z_FINISH ||
-      flag === binding$1.Z_BLOCK
-    );
+    return flag === binding$1.Z_NO_FLUSH || flag === binding$1.Z_PARTIAL_FLUSH || flag === binding$1.Z_SYNC_FLUSH || flag === binding$1.Z_FULL_FLUSH || flag === binding$1.Z_FINISH || flag === binding$1.Z_BLOCK;
   } // the Zlib class they all inherit from
   // This thing manages the queue of requests, and returns
   // true or false if there is anything in the queue when
   // you call the .write() method.
+
 
   function Zlib(opts, mode) {
     var _this = this;
@@ -14851,55 +13411,34 @@ assert.strict.strict = assert.strict;
     }
 
     this._flushFlag = opts.flush || binding$1.Z_NO_FLUSH;
-    this._finishFlushFlag =
-      typeof opts.finishFlush !== 'undefined'
-        ? opts.finishFlush
-        : binding$1.Z_FINISH;
+    this._finishFlushFlag = typeof opts.finishFlush !== 'undefined' ? opts.finishFlush : binding$1.Z_FINISH;
 
     if (opts.chunkSize) {
-      if (
-        opts.chunkSize < exports.Z_MIN_CHUNK ||
-        opts.chunkSize > exports.Z_MAX_CHUNK
-      ) {
+      if (opts.chunkSize < exports.Z_MIN_CHUNK || opts.chunkSize > exports.Z_MAX_CHUNK) {
         throw new Error('Invalid chunk size: ' + opts.chunkSize);
       }
     }
 
     if (opts.windowBits) {
-      if (
-        opts.windowBits < exports.Z_MIN_WINDOWBITS ||
-        opts.windowBits > exports.Z_MAX_WINDOWBITS
-      ) {
+      if (opts.windowBits < exports.Z_MIN_WINDOWBITS || opts.windowBits > exports.Z_MAX_WINDOWBITS) {
         throw new Error('Invalid windowBits: ' + opts.windowBits);
       }
     }
 
     if (opts.level) {
-      if (
-        opts.level < exports.Z_MIN_LEVEL ||
-        opts.level > exports.Z_MAX_LEVEL
-      ) {
+      if (opts.level < exports.Z_MIN_LEVEL || opts.level > exports.Z_MAX_LEVEL) {
         throw new Error('Invalid compression level: ' + opts.level);
       }
     }
 
     if (opts.memLevel) {
-      if (
-        opts.memLevel < exports.Z_MIN_MEMLEVEL ||
-        opts.memLevel > exports.Z_MAX_MEMLEVEL
-      ) {
+      if (opts.memLevel < exports.Z_MIN_MEMLEVEL || opts.memLevel > exports.Z_MAX_MEMLEVEL) {
         throw new Error('Invalid memLevel: ' + opts.memLevel);
       }
     }
 
     if (opts.strategy) {
-      if (
-        opts.strategy != exports.Z_FILTERED &&
-        opts.strategy != exports.Z_HUFFMAN_ONLY &&
-        opts.strategy != exports.Z_RLE &&
-        opts.strategy != exports.Z_FIXED &&
-        opts.strategy != exports.Z_DEFAULT_STRATEGY
-      ) {
+      if (opts.strategy != exports.Z_FILTERED && opts.strategy != exports.Z_HUFFMAN_ONLY && opts.strategy != exports.Z_RLE && opts.strategy != exports.Z_FIXED && opts.strategy != exports.Z_DEFAULT_STRATEGY) {
         throw new Error('Invalid strategy: ' + opts.strategy);
       }
     }
@@ -14914,7 +13453,7 @@ assert.strict.strict = assert.strict;
     var self = this;
     this._hadError = false;
 
-    this._handle.onerror = function(message, errno) {
+    this._handle.onerror = function (message, errno) {
       // there is no way to cleanly recover.
       // continuing only obscures problems.
       _close(self);
@@ -14931,13 +13470,7 @@ assert.strict.strict = assert.strict;
     var strategy = exports.Z_DEFAULT_STRATEGY;
     if (typeof opts.strategy === 'number') strategy = opts.strategy;
 
-    this._handle.init(
-      opts.windowBits || exports.Z_DEFAULT_WINDOWBITS,
-      level,
-      opts.memLevel || exports.Z_DEFAULT_MEMLEVEL,
-      strategy,
-      opts.dictionary
-    );
+    this._handle.init(opts.windowBits || exports.Z_DEFAULT_WINDOWBITS, level, opts.memLevel || exports.Z_DEFAULT_MEMLEVEL, strategy, opts.dictionary);
 
     this._buffer = Buffer.allocUnsafe(this._chunkSize);
     this._offset = 0;
@@ -14955,24 +13488,18 @@ assert.strict.strict = assert.strict;
 
   util.inherits(Zlib, Transform);
 
-  Zlib.prototype.params = function(level, strategy, callback) {
+  Zlib.prototype.params = function (level, strategy, callback) {
     if (level < exports.Z_MIN_LEVEL || level > exports.Z_MAX_LEVEL) {
       throw new RangeError('Invalid compression level: ' + level);
     }
 
-    if (
-      strategy != exports.Z_FILTERED &&
-      strategy != exports.Z_HUFFMAN_ONLY &&
-      strategy != exports.Z_RLE &&
-      strategy != exports.Z_FIXED &&
-      strategy != exports.Z_DEFAULT_STRATEGY
-    ) {
+    if (strategy != exports.Z_FILTERED && strategy != exports.Z_HUFFMAN_ONLY && strategy != exports.Z_RLE && strategy != exports.Z_FIXED && strategy != exports.Z_DEFAULT_STRATEGY) {
       throw new TypeError('Invalid strategy: ' + strategy);
     }
 
     if (this._level !== level || this._strategy !== strategy) {
       var self = this;
-      this.flush(binding$1.Z_SYNC_FLUSH, function() {
+      this.flush(binding$1.Z_SYNC_FLUSH, function () {
         assert(self._handle, 'zlib binding closed');
 
         self._handle.params(level, strategy);
@@ -14988,22 +13515,23 @@ assert.strict.strict = assert.strict;
     }
   };
 
-  Zlib.prototype.reset = function() {
+  Zlib.prototype.reset = function () {
     assert(this._handle, 'zlib binding closed');
     return this._handle.reset();
   }; // This is the _flush function called by the transform class,
   // internally, when the last chunk has been written.
 
-  Zlib.prototype._flush = function(callback) {
+
+  Zlib.prototype._flush = function (callback) {
     this._transform(Buffer.alloc(0), '', callback);
   };
 
-  Zlib.prototype.flush = function(kind, callback) {
+  Zlib.prototype.flush = function (kind, callback) {
     var _this2 = this;
 
     var ws = this._writableState;
 
-    if (typeof kind === 'function' || (kind === undefined && !callback)) {
+    if (typeof kind === 'function' || kind === undefined && !callback) {
       callback = kind;
       kind = binding$1.Z_FULL_FLUSH;
     }
@@ -15014,7 +13542,7 @@ assert.strict.strict = assert.strict;
       if (callback) this.once('end', callback);
     } else if (ws.needDrain) {
       if (callback) {
-        this.once('drain', function() {
+        this.once('drain', function () {
           return _this2.flush(kind, callback);
         });
       }
@@ -15024,7 +13552,7 @@ assert.strict.strict = assert.strict;
     }
   };
 
-  Zlib.prototype.close = function(callback) {
+  Zlib.prototype.close = function (callback) {
     _close(this, callback);
 
     browser$1$1.nextTick(emitCloseNT, this);
@@ -15044,21 +13572,19 @@ assert.strict.strict = assert.strict;
     self.emit('close');
   }
 
-  Zlib.prototype._transform = function(chunk, encoding, cb) {
+  Zlib.prototype._transform = function (chunk, encoding, cb) {
     var flushFlag;
     var ws = this._writableState;
     var ending = ws.ending || ws.ended;
     var last = ending && (!chunk || ws.length === chunk.length);
-    if (chunk !== null && !Buffer.isBuffer(chunk))
-      return cb(new Error('invalid input'));
+    if (chunk !== null && !Buffer.isBuffer(chunk)) return cb(new Error('invalid input'));
     if (!this._handle) return cb(new Error('zlib binding closed')); // If it's the last chunk, or a final flush, we use the Z_FINISH flush flag
     // (or whatever flag was provided using opts.finishFlush).
     // If it's explicitly flushing at some other time, then we use
     // Z_FULL_FLUSH. Otherwise, use Z_NO_FLUSH for maximum compression
     // goodness.
 
-    if (last) flushFlag = this._finishFlushFlag;
-    else {
+    if (last) flushFlag = this._finishFlushFlag;else {
       flushFlag = this._flushFlag; // once we've flushed the last of the queue, stop flushing and
       // go back to the normal behavior.
 
@@ -15070,7 +13596,7 @@ assert.strict.strict = assert.strict;
     this._processChunk(chunk, flushFlag, cb);
   };
 
-  Zlib.prototype._processChunk = function(chunk, flushFlag, cb) {
+  Zlib.prototype._processChunk = function (chunk, flushFlag, cb) {
     var availInBefore = chunk && chunk.length;
     var availOutBefore = this._chunkSize - this._offset;
     var inOff = 0;
@@ -15081,21 +13607,19 @@ assert.strict.strict = assert.strict;
       var buffers = [];
       var nread = 0;
       var error;
-      this.on('error', function(er) {
+      this.on('error', function (er) {
         error = er;
       });
       assert(this._handle, 'zlib binding closed');
 
       do {
-        var res = this._handle.writeSync(
-          flushFlag,
-          chunk, // in
-          inOff, // in_off
-          availInBefore, // in_len
-          this._buffer, // out
-          this._offset, //out_off
-          availOutBefore
-        ); // out_len
+        var res = this._handle.writeSync(flushFlag, chunk, // in
+        inOff, // in_off
+        availInBefore, // in_len
+        this._buffer, // out
+        this._offset, //out_off
+        availOutBefore); // out_len
+
       } while (!this._hadError && callback(res[0], res[1]));
 
       if (this._hadError) {
@@ -15117,15 +13641,13 @@ assert.strict.strict = assert.strict;
 
     assert(this._handle, 'zlib binding closed');
 
-    var req = this._handle.write(
-      flushFlag,
-      chunk, // in
-      inOff, // in_off
-      availInBefore, // in_len
-      this._buffer, // out
-      this._offset, //out_off
-      availOutBefore
-    ); // out_len
+    var req = this._handle.write(flushFlag, chunk, // in
+    inOff, // in_off
+    availInBefore, // in_len
+    this._buffer, // out
+    this._offset, //out_off
+    availOutBefore); // out_len
+
 
     req.buffer = chunk;
     req.callback = callback;
@@ -15158,6 +13680,7 @@ assert.strict.strict = assert.strict;
         }
       } // exhausted the output buffer, or used all the input create a new one.
 
+
       if (availOutAfter === 0 || self._offset >= self._chunkSize) {
         availOutBefore = self._chunkSize;
         self._offset = 0;
@@ -15173,15 +13696,7 @@ assert.strict.strict = assert.strict;
         availInBefore = availInAfter;
         if (!async) return true;
 
-        var newReq = self._handle.write(
-          flushFlag,
-          chunk,
-          inOff,
-          availInBefore,
-          self._buffer,
-          self._offset,
-          self._chunkSize
-        );
+        var newReq = self._handle.write(flushFlag, chunk, inOff, availInBefore, self._buffer, self._offset, self._chunkSize);
 
         newReq.callback = callback; // this same function
 
@@ -15204,19 +13719,16 @@ assert.strict.strict = assert.strict;
   util.inherits(Unzip, Zlib);
 })(lib);
 
-var PDFReference = /*#__PURE__*/ (function(_stream$Writable) {
-  _inheritsLoose__default['default'](PDFReference, _stream$Writable);
+var PDFReference = /*#__PURE__*/function (_stream$Writable) {
+  _inheritsLoose__default["default"](PDFReference, _stream$Writable);
 
   function PDFReference(document, id, data) {
     var _this;
 
-    _this =
-      _stream$Writable.call(this, {
-        decodeStrings: false
-      }) || this;
-    _this.finalize = _this.finalize.bind(
-      _assertThisInitialized__default['default'](_this)
-    );
+    _this = _stream$Writable.call(this, {
+      decodeStrings: false
+    }) || this;
+    _this.finalize = _this.finalize.bind(_assertThisInitialized__default["default"](_this));
     _this.document = document;
     _this.id = id;
 
@@ -15240,10 +13752,10 @@ var PDFReference = /*#__PURE__*/ (function(_stream$Writable) {
 
     this.data.Filter = 'FlateDecode';
     this.deflate = lib.createDeflate();
-    this.deflate.on('data', function(chunk) {
+    this.deflate.on('data', function (chunk) {
       _this2.chunks.push(chunk);
 
-      return (_this2.data.Length += chunk.length);
+      return _this2.data.Length += chunk.length;
     });
     return this.deflate.on('end', this.finalize);
   };
@@ -15286,18 +13798,14 @@ var PDFReference = /*#__PURE__*/ (function(_stream$Writable) {
   _proto.finalize = function finalize() {
     this.offset = this.document._offset;
 
-    this.document._write(this.id + ' ' + this.gen + ' obj');
+    this.document._write(this.id + " " + this.gen + " obj");
 
     this.document._write(PDFObject$1.convert(this.data));
 
     if (this.chunks.length) {
       this.document._write('stream');
 
-      for (
-        var _i = 0, _Array$from = Array.from(this.chunks);
-        _i < _Array$from.length;
-        _i++
-      ) {
+      for (var _i = 0, _Array$from = Array.from(this.chunks); _i < _Array$from.length; _i++) {
         var chunk = _Array$from[_i];
 
         this.document._write(chunk);
@@ -15314,13 +13822,13 @@ var PDFReference = /*#__PURE__*/ (function(_stream$Writable) {
   };
 
   _proto.toString = function toString() {
-    return this.id + ' ' + this.gen + ' R';
+    return this.id + " " + this.gen + " R";
   };
 
   return PDFReference;
-})(stream.Writable);
+}(stream.Writable);
 
-var PDFTree = /*#__PURE__*/ (function() {
+var PDFTree = /*#__PURE__*/function () {
   function PDFTree(options) {
     if (options === void 0) {
       options = {};
@@ -15334,7 +13842,7 @@ var PDFTree = /*#__PURE__*/ (function() {
   var _proto = PDFTree.prototype;
 
   _proto.add = function add(key, val) {
-    return (this._items[key] = val);
+    return this._items[key] = val;
   };
 
   _proto.get = function get(key) {
@@ -15345,7 +13853,7 @@ var PDFTree = /*#__PURE__*/ (function() {
     var _this = this;
 
     // Needs to be sorted by key
-    var sortedKeys = Object.keys(this._items).sort(function(a, b) {
+    var sortedKeys = Object.keys(this._items).sort(function (a, b) {
       return _this._compareKeys(a, b);
     });
     var out = ['<<'];
@@ -15353,29 +13861,14 @@ var PDFTree = /*#__PURE__*/ (function() {
     if (this.limits && sortedKeys.length > 1) {
       var first = sortedKeys[0];
       var last = sortedKeys[sortedKeys.length - 1];
-      out.push(
-        '  /Limits ' +
-          PDFObject$1.convert([this._dataForKey(first), this._dataForKey(last)])
-      );
+      out.push("  /Limits " + PDFObject$1.convert([this._dataForKey(first), this._dataForKey(last)]));
     }
 
-    out.push('  /' + this._keysName() + ' [');
+    out.push("  /" + this._keysName() + " [");
 
-    for (
-      var _iterator = _createForOfIteratorHelperLoose__default['default'](
-          sortedKeys
-        ),
-        _step;
-      !(_step = _iterator()).done;
-
-    ) {
+    for (var _iterator = _createForOfIteratorHelperLoose__default["default"](sortedKeys), _step; !(_step = _iterator()).done;) {
       var key = _step.value;
-      out.push(
-        '    ' +
-          PDFObject$1.convert(this._dataForKey(key)) +
-          ' ' +
-          PDFObject$1.convert(this._items[key])
-      );
+      out.push("    " + PDFObject$1.convert(this._dataForKey(key)) + " " + PDFObject$1.convert(this._items[key]));
     }
 
     out.push(']');
@@ -15396,10 +13889,10 @@ var PDFTree = /*#__PURE__*/ (function() {
   };
 
   return PDFTree;
-})();
+}();
 
-var PDFNameTree = /*#__PURE__*/ (function(_PDFTree) {
-  _inheritsLoose__default['default'](PDFNameTree, _PDFTree);
+var PDFNameTree = /*#__PURE__*/function (_PDFTree) {
+  _inheritsLoose__default["default"](PDFNameTree, _PDFTree);
 
   function PDFNameTree() {
     return _PDFTree.apply(this, arguments) || this;
@@ -15420,7 +13913,7 @@ var PDFNameTree = /*#__PURE__*/ (function(_PDFTree) {
   };
 
   return PDFNameTree;
-})(PDFTree);
+}(PDFTree);
 
 var escapableRe = /[\n\r\t\b\f\(\)\\]/g;
 var escapable = {
@@ -15438,6 +13931,7 @@ var pad = function pad(str, length) {
   return (Array(length + 1).join('0') + str).slice(-length);
 }; // Convert little endian UTF-16 to big endian
 
+
 var swapBytes = function swapBytes(buff) {
   var l = buff.length;
 
@@ -15454,14 +13948,15 @@ var swapBytes = function swapBytes(buff) {
   return buff;
 };
 
-var PDFObject = /*#__PURE__*/ (function() {
+var PDFObject = /*#__PURE__*/function () {
   function PDFObject() {}
 
   PDFObject.convert = function convert(object) {
     // String literals are converted to the PDF name type
     if (typeof object === 'string') {
-      return '/' + object;
+      return "/" + object;
     } // String objects are converted to PDF strings (UTF-16)
+
 
     if (object instanceof String) {
       var string = object; // Detect if this is a unicode string
@@ -15475,20 +13970,20 @@ var PDFObject = /*#__PURE__*/ (function() {
         }
       } // If so, encode it as big endian UTF-16
 
+
       if (isUnicode) {
-        string = swapBytes(
-          Buffer$4.from('\uFEFF' + string, 'utf16le')
-        ).toString('binary');
+        string = swapBytes(Buffer$4.from("\uFEFF" + string, 'utf16le')).toString('binary');
       } // Escape characters as required by the spec
 
-      string = string.replace(escapableRe, function(c) {
+
+      string = string.replace(escapableRe, function (c) {
         return escapable[c];
       });
-      return '(' + string + ')'; // Buffers are converted to PDF hex strings
+      return "(" + string + ")"; // Buffers are converted to PDF hex strings
     }
 
     if (Buffer$4.isBuffer(object)) {
-      return '<' + object.toString('hex') + '>';
+      return "<" + object.toString('hex') + ">";
     }
 
     if (object instanceof PDFReference || object instanceof PDFNameTree) {
@@ -15496,25 +13991,14 @@ var PDFObject = /*#__PURE__*/ (function() {
     }
 
     if (object instanceof Date) {
-      return (
-        '(D:' +
-        pad(object.getUTCFullYear(), 4) +
-        pad(object.getUTCMonth() + 1, 2) +
-        pad(object.getUTCDate(), 2) +
-        pad(object.getUTCHours(), 2) +
-        pad(object.getUTCMinutes(), 2) +
-        pad(object.getUTCSeconds(), 2) +
-        'Z)'
-      );
+      return "(D:" + pad(object.getUTCFullYear(), 4) + pad(object.getUTCMonth() + 1, 2) + pad(object.getUTCDate(), 2) + pad(object.getUTCHours(), 2) + pad(object.getUTCMinutes(), 2) + pad(object.getUTCSeconds(), 2) + 'Z)';
     }
 
     if (Array.isArray(object)) {
-      var items = Array.from(object)
-        .map(function(e) {
-          return PDFObject.convert(e);
-        })
-        .join(' ');
-      return '[' + items + ']';
+      var items = Array.from(object).map(function (e) {
+        return PDFObject.convert(e);
+      }).join(' ');
+      return "[" + items + "]";
     }
 
     if ({}.toString.call(object) === '[object Object]') {
@@ -15522,7 +14006,7 @@ var PDFObject = /*#__PURE__*/ (function() {
 
       for (var key in object) {
         var val = object[key];
-        out.push('/' + key + ' ' + PDFObject.convert(val));
+        out.push("/" + key + " " + PDFObject.convert(val));
       }
 
       out.push('>>');
@@ -15533,7 +14017,7 @@ var PDFObject = /*#__PURE__*/ (function() {
       return PDFObject.number(object);
     }
 
-    return '' + object;
+    return "" + object;
   };
 
   PDFObject.number = function number(n) {
@@ -15541,11 +14025,11 @@ var PDFObject = /*#__PURE__*/ (function() {
       return Math.round(n * 1e6) / 1e6;
     }
 
-    throw new Error('unsupported number: ' + n);
+    throw new Error("unsupported number: " + n);
   };
 
   return PDFObject;
-})();
+}();
 
 var PDFObject$1 = PDFObject;
 
@@ -15554,7 +14038,7 @@ function _defineProperties(target, props) {
     var descriptor = props[i];
     descriptor.enumerable = descriptor.enumerable || false;
     descriptor.configurable = true;
-    if ('value' in descriptor) descriptor.writable = true;
+    if ("value" in descriptor) descriptor.writable = true;
     Object.defineProperty(target, descriptor.key, descriptor);
   }
 }
@@ -15562,7 +14046,7 @@ function _defineProperties(target, props) {
 function _createClass(Constructor, protoProps, staticProps) {
   if (protoProps) _defineProperties(Constructor.prototype, protoProps);
   if (staticProps) _defineProperties(Constructor, staticProps);
-  Object.defineProperty(Constructor, 'prototype', {
+  Object.defineProperty(Constructor, "prototype", {
     writable: false
   });
   return Constructor;
@@ -15627,7 +14111,7 @@ var SIZES = {
   TABLOID: [792.0, 1224.0]
 };
 
-var PDFPage = /*#__PURE__*/ (function() {
+var PDFPage = /*#__PURE__*/function () {
   function PDFPage(document, options) {
     if (options === void 0) {
       options = {};
@@ -15639,9 +14123,7 @@ var PDFPage = /*#__PURE__*/ (function() {
     this.userUnit = options.userUnit || 1.0;
     this.margins = DEFAULT_MARGINS; // calculate page dimensions
 
-    var dimensions = Array.isArray(this.size)
-      ? this.size
-      : SIZES[this.size.toUpperCase()];
+    var dimensions = Array.isArray(this.size) ? this.size : SIZES[this.size.toUpperCase()];
     this.width = dimensions[this.layout === 'portrait' ? 0 : 1];
     this.height = dimensions[this.layout === 'portrait' ? 1 : 0];
     this.content = this.document.ref(); // Initialize the Font, XObject, and ExtGState dictionaries
@@ -15660,6 +14142,7 @@ var PDFPage = /*#__PURE__*/ (function() {
     });
   } // Lazily create these objects
 
+
   var _proto = PDFPage.prototype;
 
   _proto.maxY = function maxY() {
@@ -15676,76 +14159,64 @@ var PDFPage = /*#__PURE__*/ (function() {
     return this.content.end();
   };
 
-  _createClass(PDFPage, [
-    {
-      key: 'fonts',
-      get: function get() {
-        var data = this.resources.data;
-        return data.Font != null ? data.Font : (data.Font = {});
-      }
-    },
-    {
-      key: 'xobjects',
-      get: function get() {
-        var data = this.resources.data;
-        return data.XObject != null ? data.XObject : (data.XObject = {});
-      }
-    },
-    {
-      key: 'ext_gstates',
-      get: function get() {
-        var data = this.resources.data;
-        return data.ExtGState != null ? data.ExtGState : (data.ExtGState = {});
-      }
-    },
-    {
-      key: 'patterns',
-      get: function get() {
-        var data = this.resources.data;
-        return data.Pattern != null ? data.Pattern : (data.Pattern = {});
-      }
-    },
-    {
-      key: 'colorSpaces',
-      get: function get() {
-        var data = this.resources.data;
-        return data.ColorSpace || (data.ColorSpace = {});
-      }
-    },
-    {
-      key: 'annotations',
-      get: function get() {
-        var data = this.dictionary.data;
-        return data.Annots != null ? data.Annots : (data.Annots = []);
-      }
-    },
-    {
-      key: 'structParentTreeKey',
-      get: function get() {
-        var data = this.dictionary.data;
-        return data.StructParents != null
-          ? data.StructParents
-          : (data.StructParents = this.document.createStructParentTreeNextKey());
-      }
+  _createClass(PDFPage, [{
+    key: "fonts",
+    get: function get() {
+      var data = this.resources.data;
+      return data.Font != null ? data.Font : data.Font = {};
     }
-  ]);
+  }, {
+    key: "xobjects",
+    get: function get() {
+      var data = this.resources.data;
+      return data.XObject != null ? data.XObject : data.XObject = {};
+    }
+  }, {
+    key: "ext_gstates",
+    get: function get() {
+      var data = this.resources.data;
+      return data.ExtGState != null ? data.ExtGState : data.ExtGState = {};
+    }
+  }, {
+    key: "patterns",
+    get: function get() {
+      var data = this.resources.data;
+      return data.Pattern != null ? data.Pattern : data.Pattern = {};
+    }
+  }, {
+    key: "colorSpaces",
+    get: function get() {
+      var data = this.resources.data;
+      return data.ColorSpace || (data.ColorSpace = {});
+    }
+  }, {
+    key: "annotations",
+    get: function get() {
+      var data = this.dictionary.data;
+      return data.Annots != null ? data.Annots : data.Annots = [];
+    }
+  }, {
+    key: "structParentTreeKey",
+    get: function get() {
+      var data = this.dictionary.data;
+      return data.StructParents != null ? data.StructParents : data.StructParents = this.document.createStructParentTreeNextKey();
+    }
+  }]);
 
   return PDFPage;
-})();
+}();
 
 var wordArrayToBuffer = function wordArrayToBuffer(wordArray) {
   var byteArray = [];
 
   for (var i = 0; i < wordArray.sigBytes; i++) {
-    byteArray.push(
-      (wordArray.words[Math.floor(i / 4)] >> (8 * (3 - (i % 4)))) & 0xff
-    );
+    byteArray.push(wordArray.words[Math.floor(i / 4)] >> 8 * (3 - i % 4) & 0xff);
   }
 
   return Buffer$4.from(byteArray);
 };
 
-var PDFSecurity = /*#__PURE__*/ (function() {
+var PDFSecurity = /*#__PURE__*/function () {
   function PDFSecurity() {}
 
   PDFSecurity.generateFileID = function generateFileID(info) {
@@ -15753,22 +14224,22 @@ var PDFSecurity = /*#__PURE__*/ (function() {
       info = {};
     }
 
-    var infoStr = info.CreationDate.getTime() + '\n';
+    var infoStr = info.CreationDate.getTime() + "\n";
 
     for (var key in info) {
       if (!info.hasOwnProperty(key)) continue;
-      infoStr += key + ': ' + info[key].valueOf() + '\n';
+      infoStr += key + ": " + info[key].valueOf() + "\n";
     }
 
-    return wordArrayToBuffer(CryptoJS__default['default'](infoStr));
+    return wordArrayToBuffer(CryptoJS__default["default"](infoStr));
   };
 
   return PDFSecurity;
-})();
+}();
 
 var number$2 = PDFObject$1.number;
 
-var PDFGradient$1 = /*#__PURE__*/ (function() {
+var PDFGradient$1 = /*#__PURE__*/function () {
   function PDFGradient(doc) {
     this.doc = doc;
     this.stops = [];
@@ -15795,11 +14266,7 @@ var PDFGradient$1 = /*#__PURE__*/ (function() {
       } else {
         throw new Error('Unknown color space');
       }
-    } else if (
-      (this._colorSpace === 'DeviceRGB' && color.length !== 3) ||
-      (this._colorSpace === 'DeviceCMYK' && color.length !== 4) ||
-      (this._colorSpace === 'DeviceGray' && color.length !== 1)
-    ) {
+    } else if (this._colorSpace === 'DeviceRGB' && color.length !== 3 || this._colorSpace === 'DeviceCMYK' && color.length !== 4 || this._colorSpace === 'DeviceGray' && color.length !== 1) {
       throw new Error('All gradient stops must use the same color space');
     }
 
@@ -15852,6 +14319,7 @@ var PDFGradient$1 = /*#__PURE__*/ (function() {
       fn.end();
     } // if there are only two stops, we don't need a stitching function
 
+
     if (stopsLength === 1) {
       fn = stops[0];
     } else {
@@ -15866,7 +14334,7 @@ var PDFGradient$1 = /*#__PURE__*/ (function() {
       fn.end();
     }
 
-    this.id = 'Sh' + ++this.doc._gradCount;
+    this.id = "Sh" + ++this.doc._gradCount;
     var shader = this.shader(fn);
     shader.end();
     var pattern = this.doc.ref({
@@ -15877,22 +14345,13 @@ var PDFGradient$1 = /*#__PURE__*/ (function() {
     });
     pattern.end();
 
-    if (
-      this.stops.some(function(stop) {
-        return stop[2] < 1;
-      })
-    ) {
+    if (this.stops.some(function (stop) {
+      return stop[2] < 1;
+    })) {
       var grad = this.opacityGradient();
       grad._colorSpace = 'DeviceGray';
 
-      for (
-        var _iterator = _createForOfIteratorHelperLoose__default['default'](
-            this.stops
-          ),
-          _step;
-        !(_step = _iterator()).done;
-
-      ) {
+      for (var _iterator = _createForOfIteratorHelperLoose__default["default"](this.stops), _step; !(_step = _iterator()).done;) {
         var stop = _step.value;
         grad.stop(stop[0], [stop[2]]);
       }
@@ -15917,7 +14376,7 @@ var PDFGradient$1 = /*#__PURE__*/ (function() {
         }
       });
       form.write('/Pattern cs /Sh1 scn');
-      form.end(pageBBox.join(' ') + ' re f');
+      form.end(pageBBox.join(' ') + " re f");
       var gstate = this.doc.ref({
         Type: 'ExtGState',
         SMask: {
@@ -15946,7 +14405,7 @@ var PDFGradient$1 = /*#__PURE__*/ (function() {
         }
       });
       opacityPattern.write('/Gs1 gs /Pattern cs /Sh1 scn');
-      opacityPattern.end(pageBBox.join(' ') + ' re f');
+      opacityPattern.end(pageBBox.join(' ') + " re f");
       this.doc.page.patterns[this.id] = opacityPattern;
     } else {
       this.doc.page.patterns[this.id] = pattern;
@@ -15958,40 +14417,33 @@ var PDFGradient$1 = /*#__PURE__*/ (function() {
   _proto.apply = function apply(op) {
     // apply gradient transform to existing document ctm
     var _this$doc$_ctm = this.doc._ctm,
-      m0 = _this$doc$_ctm[0],
-      m1 = _this$doc$_ctm[1],
-      m2 = _this$doc$_ctm[2],
-      m3 = _this$doc$_ctm[3],
-      m4 = _this$doc$_ctm[4],
-      m5 = _this$doc$_ctm[5];
+        m0 = _this$doc$_ctm[0],
+        m1 = _this$doc$_ctm[1],
+        m2 = _this$doc$_ctm[2],
+        m3 = _this$doc$_ctm[3],
+        m4 = _this$doc$_ctm[4],
+        m5 = _this$doc$_ctm[5];
     var _this$transform = this.transform,
-      m11 = _this$transform[0],
-      m12 = _this$transform[1],
-      m21 = _this$transform[2],
-      m22 = _this$transform[3],
-      dx = _this$transform[4],
-      dy = _this$transform[5];
-    var m = [
-      m0 * m11 + m2 * m12,
-      m1 * m11 + m3 * m12,
-      m0 * m21 + m2 * m22,
-      m1 * m21 + m3 * m22,
-      m0 * dx + m2 * dy + m4,
-      m1 * dx + m3 * dy + m5
-    ];
+        m11 = _this$transform[0],
+        m12 = _this$transform[1],
+        m21 = _this$transform[2],
+        m22 = _this$transform[3],
+        dx = _this$transform[4],
+        dy = _this$transform[5];
+    var m = [m0 * m11 + m2 * m12, m1 * m11 + m3 * m12, m0 * m21 + m2 * m22, m1 * m21 + m3 * m22, m0 * dx + m2 * dy + m4, m1 * dx + m3 * dy + m5];
 
     if (!this.embedded || m.join(' ') !== this.matrix.join(' ')) {
       this.embed(m);
     }
 
-    return this.doc.addContent('/' + this.id + ' ' + op);
+    return this.doc.addContent("/" + this.id + " " + op);
   };
 
   return PDFGradient;
-})();
+}();
 
-var PDFLinearGradient$1 = /*#__PURE__*/ (function(_PDFGradient) {
-  _inheritsLoose__default['default'](PDFLinearGradient, _PDFGradient);
+var PDFLinearGradient$1 = /*#__PURE__*/function (_PDFGradient) {
+  _inheritsLoose__default["default"](PDFLinearGradient, _PDFGradient);
 
   function PDFLinearGradient(doc, x1, y1, x2, y2) {
     var _this;
@@ -16021,10 +14473,10 @@ var PDFLinearGradient$1 = /*#__PURE__*/ (function(_PDFGradient) {
   };
 
   return PDFLinearGradient;
-})(PDFGradient$1);
+}(PDFGradient$1);
 
-var PDFRadialGradient$1 = /*#__PURE__*/ (function(_PDFGradient2) {
-  _inheritsLoose__default['default'](PDFRadialGradient, _PDFGradient2);
+var PDFRadialGradient$1 = /*#__PURE__*/function (_PDFGradient2) {
+  _inheritsLoose__default["default"](PDFRadialGradient, _PDFGradient2);
 
   function PDFRadialGradient(doc, x1, y1, r1, x2, y2, r2) {
     var _this2;
@@ -16053,19 +14505,11 @@ var PDFRadialGradient$1 = /*#__PURE__*/ (function(_PDFGradient2) {
   };
 
   _proto3.opacityGradient = function opacityGradient() {
-    return new PDFRadialGradient(
-      this.doc,
-      this.x1,
-      this.y1,
-      this.r1,
-      this.x2,
-      this.y2,
-      this.r2
-    );
+    return new PDFRadialGradient(this.doc, this.x1, this.y1, this.r1, this.x2, this.y2, this.r2);
   };
 
   return PDFRadialGradient;
-})(PDFGradient$1);
+}(PDFGradient$1);
 
 var Gradient = {
   PDFGradient: PDFGradient$1,
@@ -16074,14 +14518,14 @@ var Gradient = {
 };
 
 var PDFGradient = Gradient.PDFGradient,
-  PDFLinearGradient = Gradient.PDFLinearGradient,
-  PDFRadialGradient = Gradient.PDFRadialGradient;
+    PDFLinearGradient = Gradient.PDFLinearGradient,
+    PDFRadialGradient = Gradient.PDFRadialGradient;
 var ColorMixin = {
   initColor: function initColor() {
     // The opacity dictionaries
     this._opacityRegistry = {};
     this._opacityCount = 0;
-    return (this._gradCount = 0);
+    return this._gradCount = 0;
   },
   _normalizeColor: function _normalizeColor(color) {
     if (color instanceof PDFGradient) {
@@ -16093,14 +14537,11 @@ var ColorMixin = {
     if (typeof color === 'string') {
       if (color.charAt(0) === '#') {
         if (color.length === 4) {
-          color = color.replace(
-            /#([0-9A-F])([0-9A-F])([0-9A-F])/i,
-            '#$1$1$2$2$3$3'
-          );
+          color = color.replace(/#([0-9A-F])([0-9A-F])([0-9A-F])/i, '#$1$1$2$2$3$3');
         }
 
         var hex = parseInt(color.slice(1), 16);
-        color = [hex >> 16, (hex >> 8) & 0xff, hex & 0xff];
+        color = [hex >> 16, hex >> 8 & 0xff, hex & 0xff];
       } else if (namedColors[color]) {
         color = namedColors[color];
       }
@@ -16109,35 +14550,28 @@ var ColorMixin = {
     if (Array.isArray(color)) {
       // RGB
       if (color.length === 3) {
-        color = (function() {
+        color = function () {
           var result = [];
 
-          for (
-            var _i = 0, _Array$from = Array.from(color);
-            _i < _Array$from.length;
-            _i++
-          ) {
+          for (var _i = 0, _Array$from = Array.from(color); _i < _Array$from.length; _i++) {
             part = _Array$from[_i];
             result.push(part / 255);
           }
 
           return result;
-        })(); // CMYK
+        }(); // CMYK
+
       } else if (color.length === 4) {
-        color = (function() {
+        color = function () {
           var result1 = [];
 
-          for (
-            var _i2 = 0, _Array$from2 = Array.from(color);
-            _i2 < _Array$from2.length;
-            _i2++
-          ) {
+          for (var _i2 = 0, _Array$from2 = Array.from(color); _i2 < _Array$from2.length; _i2++) {
             part = _Array$from2[_i2];
             result1.push(part / 100);
           }
 
           return result1;
-        })();
+        }();
       }
 
       return color;
@@ -16164,14 +14598,14 @@ var ColorMixin = {
       this._setColorSpace(space, stroke);
 
       color = color.join(' ');
-      this.addContent(color + ' ' + op);
+      this.addContent(color + " " + op);
     }
 
     return true;
   },
   _setColorSpace: function _setColorSpace(space, stroke) {
     var op = stroke ? 'CS' : 'cs';
-    return this.addContent('/' + space + ' ' + op);
+    return this.addContent("/" + space + " " + op);
   },
   fillColor: function fillColor(color, opacity) {
     var set = this._setColor(color, false);
@@ -16180,6 +14614,7 @@ var ColorMixin = {
       this.fillOpacity(opacity);
     } // save this for text wrapper, which needs to reset
     // the fill color on new pages
+
 
     this._fillColor = [color, opacity];
     return this;
@@ -16223,7 +14658,7 @@ var ColorMixin = {
       strokeOpacity = Math.max(0, Math.min(1, strokeOpacity));
     }
 
-    var key = fillOpacity + '_' + strokeOpacity;
+    var key = fillOpacity + "_" + strokeOpacity;
 
     if (this._opacityRegistry[key]) {
       var _Array$from3 = Array.from(this._opacityRegistry[key]);
@@ -16246,12 +14681,12 @@ var ColorMixin = {
       dictionary = this.ref(dictionary);
       dictionary.end();
       var id = ++this._opacityCount;
-      name = 'Gs' + id;
+      name = "Gs" + id;
       this._opacityRegistry[key] = [dictionary, name];
     }
 
     this.page.ext_gstates[name] = dictionary;
-    return this.addContent('/' + name + ' gs');
+    return this.addContent("/" + name + " gs");
   },
   linearGradient: function linearGradient(x1, y1, x2, y2) {
     return new PDFLinearGradient(this, x1, y1, x2, y2);
@@ -16448,18 +14883,15 @@ var isCommand = function isCommand(c) {
  * @type {(c: string) => boolean}
  */
 
+
 var isWsp = function isWsp(c) {
   var codePoint = c.codePointAt(0);
-  return (
-    codePoint === 0x20 ||
-    codePoint === 0x9 ||
-    codePoint === 0xd ||
-    codePoint === 0xa
-  );
+  return codePoint === 0x20 || codePoint === 0x9 || codePoint === 0xd || codePoint === 0xa;
 };
 /**
  * @type {(c: string) => boolean}
  */
+
 
 var isDigit = function isDigit(c) {
   var codePoint = c.codePointAt(0);
@@ -16478,12 +14910,13 @@ var isDigit = function isDigit(c) {
  * @type {(string: string, cursor: number) => [number, number | null]}
  */
 
+
 var readNumber = function readNumber(string, cursor) {
   var i = cursor;
   var value = '';
   var state =
-    /** @type {ReadNumberState} */
-    'none';
+  /** @type {ReadNumberState} */
+  'none';
 
   for (; i < string.length; i += 1) {
     var c = string[i];
@@ -16531,11 +14964,7 @@ var readNumber = function readNumber(string, cursor) {
     }
 
     if (c === 'E' || c === 'e') {
-      if (
-        state === 'whole' ||
-        state === 'decimal_point' ||
-        state === 'decimal'
-      ) {
+      if (state === 'whole' || state === 'decimal_point' || state === 'decimal') {
         state = 'e';
         value += c;
         continue;
@@ -16558,6 +14987,7 @@ var readNumber = function readNumber(string, cursor) {
  * @type {(string: string) => Array<PathDataItem>}
  */
 
+
 var parsePathData = function parsePathData(string) {
   /**
    * @type {Array<PathDataItem>}
@@ -16569,8 +14999,8 @@ var parsePathData = function parsePathData(string) {
 
   var command = null;
   var args =
-    /** @type {number[]} */
-    [];
+  /** @type {number[]} */
+  [];
   var argsCount = 0;
   var canHaveComma = false;
   var hadComma = false;
@@ -16581,6 +15011,7 @@ var parsePathData = function parsePathData(string) {
     if (isWsp(c)) {
       continue;
     } // allow comma only between arguments
+
 
     if (canHaveComma && c === ',') {
       if (hadComma) {
@@ -16623,9 +15054,11 @@ var parsePathData = function parsePathData(string) {
       continue;
     } // avoid parsing arguments if no command detected
 
+
     if (command == null) {
       return pathData;
     } // read next argument
+
 
     var newCursor = i;
     var number = null;
@@ -16703,8 +15136,8 @@ var _apply = function apply(commands, doc) {
 
   for (var i = 0; i < commands.length; i++) {
     var _commands$i = commands[i],
-      command = _commands$i.command,
-      args = _commands$i.args;
+        command = _commands$i.command,
+        args = _commands$i.args;
 
     if (typeof runners[command] === 'function') {
       runners[command](doc, args);
@@ -16737,18 +15170,11 @@ var runners = {
     return doc.bezierCurveTo.apply(doc, a);
   },
   c: function c(doc, a) {
-    doc.bezierCurveTo(
-      a[0] + cx,
-      a[1] + cy,
-      a[2] + cx,
-      a[3] + cy,
-      a[4] + cx,
-      a[5] + cy
-    );
+    doc.bezierCurveTo(a[0] + cx, a[1] + cy, a[2] + cx, a[3] + cy, a[4] + cx, a[5] + cy);
     px = cx + a[2];
     py = cy + a[3];
     cx += a[4];
-    return (cy += a[5]);
+    return cy += a[5];
   },
   S: function S(doc, a) {
     if (px === null) {
@@ -16760,7 +15186,7 @@ var runners = {
     px = a[0];
     py = a[1];
     cx = a[2];
-    return (cy = a[3]);
+    return cy = a[3];
   },
   s: function s(doc, a) {
     if (px === null) {
@@ -16768,18 +15194,11 @@ var runners = {
       py = cy;
     }
 
-    doc.bezierCurveTo(
-      cx - (px - cx),
-      cy - (py - cy),
-      cx + a[0],
-      cy + a[1],
-      cx + a[2],
-      cy + a[3]
-    );
+    doc.bezierCurveTo(cx - (px - cx), cy - (py - cy), cx + a[0], cy + a[1], cx + a[2], cy + a[3]);
     px = cx + a[0];
     py = cy + a[1];
     cx += a[2];
-    return (cy += a[3]);
+    return cy += a[3];
   },
   Q: function Q(doc, a) {
     px = a[0];
@@ -16793,7 +15212,7 @@ var runners = {
     px = cx + a[0];
     py = cy + a[1];
     cx += a[2];
-    return (cy += a[3]);
+    return cy += a[3];
   },
   T: function T(doc, a) {
     if (px === null) {
@@ -16808,7 +15227,7 @@ var runners = {
     px = cx - (px - cx);
     py = cy - (py - cy);
     cx = a[0];
-    return (cy = a[1]);
+    return cy = a[1];
   },
   t: function t(doc, a) {
     if (px === null) {
@@ -16821,19 +15240,19 @@ var runners = {
 
     doc.quadraticCurveTo(px, py, cx + a[0], cy + a[1]);
     cx += a[0];
-    return (cy += a[1]);
+    return cy += a[1];
   },
   A: function A(doc, a) {
     solveArc(doc, cx, cy, a);
     cx = a[5];
-    return (cy = a[6]);
+    return cy = a[6];
   },
   a: function a(doc, _a) {
     _a[5] += cx;
     _a[6] += cy;
     solveArc(doc, cx, cy, _a);
     cx = _a[5];
-    return (cy = _a[6]);
+    return cy = _a[6];
   },
   L: function L(doc, a) {
     cx = a[0];
@@ -16870,48 +15289,34 @@ var runners = {
   Z: function Z(doc) {
     doc.closePath();
     cx = sx;
-    return (cy = sy);
+    return cy = sy;
   },
   z: function z(doc) {
     doc.closePath();
     cx = sx;
-    return (cy = sy);
+    return cy = sy;
   }
 };
 
 var solveArc = function solveArc(doc, x, y, coords) {
   var rx = coords[0],
-    ry = coords[1],
-    rot = coords[2],
-    large = coords[3],
-    sweep = coords[4],
-    ex = coords[5],
-    ey = coords[6];
+      ry = coords[1],
+      rot = coords[2],
+      large = coords[3],
+      sweep = coords[4],
+      ex = coords[5],
+      ey = coords[6];
   var segs = arcToSegments(ex, ey, rx, ry, large, sweep, rot, x, y);
 
-  for (
-    var _iterator = _createForOfIteratorHelperLoose__default['default'](segs),
-      _step;
-    !(_step = _iterator()).done;
-
-  ) {
+  for (var _iterator = _createForOfIteratorHelperLoose__default["default"](segs), _step; !(_step = _iterator()).done;) {
     var seg = _step.value;
     var bez = segmentToBezier.apply(void 0, seg);
     doc.bezierCurveTo.apply(doc, bez);
   }
 }; // from Inkscape svgtopdf, thanks!
 
-var arcToSegments = function arcToSegments(
-  x,
-  y,
-  rx,
-  ry,
-  large,
-  sweep,
-  rotateX,
-  ox,
-  oy
-) {
+
+var arcToSegments = function arcToSegments(x, y, rx, ry, large, sweep, rotateX, ox, oy) {
   var th = rotateX * (Math.PI / 180);
   var sin_th = Math.sin(th);
   var cos_th = Math.cos(th);
@@ -16919,7 +15324,7 @@ var arcToSegments = function arcToSegments(
   ry = Math.abs(ry);
   px = cos_th * (ox - x) * 0.5 + sin_th * (oy - y) * 0.5;
   py = cos_th * (oy - y) * 0.5 - sin_th * (ox - x) * 0.5;
-  var pl = (px * px) / (rx * rx) + (py * py) / (ry * ry);
+  var pl = px * px / (rx * rx) + py * py / (ry * ry);
 
   if (pl > 1) {
     pl = Math.sqrt(pl);
@@ -16964,49 +15369,31 @@ var arcToSegments = function arcToSegments(
   var result = [];
 
   for (var i = 0; i < segments; i++) {
-    var th2 = th0 + (i * th_arc) / segments;
-    var th3 = th0 + ((i + 1) * th_arc) / segments;
+    var th2 = th0 + i * th_arc / segments;
+    var th3 = th0 + (i + 1) * th_arc / segments;
     result[i] = [xc, yc, th2, th3, rx, ry, sin_th, cos_th];
   }
 
   return result;
 };
 
-var segmentToBezier = function segmentToBezier(
-  cx,
-  cy,
-  th0,
-  th1,
-  rx,
-  ry,
-  sin_th,
-  cos_th
-) {
+var segmentToBezier = function segmentToBezier(cx, cy, th0, th1, rx, ry, sin_th, cos_th) {
   var a00 = cos_th * rx;
   var a01 = -sin_th * ry;
   var a10 = sin_th * rx;
   var a11 = cos_th * ry;
   var th_half = 0.5 * (th1 - th0);
-  var t =
-    ((8 / 3) * Math.sin(th_half * 0.5) * Math.sin(th_half * 0.5)) /
-    Math.sin(th_half);
+  var t = 8 / 3 * Math.sin(th_half * 0.5) * Math.sin(th_half * 0.5) / Math.sin(th_half);
   var x1 = cx + Math.cos(th0) - t * Math.sin(th0);
   var y1 = cy + Math.sin(th0) + t * Math.cos(th0);
   var x3 = cx + Math.cos(th1);
   var y3 = cy + Math.sin(th1);
   var x2 = x3 + t * Math.sin(th1);
   var y2 = y3 - t * Math.cos(th1);
-  return [
-    a00 * x1 + a01 * y1,
-    a10 * x1 + a11 * y1,
-    a00 * x2 + a01 * y2,
-    a10 * x2 + a11 * y2,
-    a00 * x3 + a01 * y3,
-    a10 * x3 + a11 * y3
-  ];
+  return [a00 * x1 + a01 * y1, a10 * x1 + a11 * y1, a00 * x2 + a01 * y2, a10 * x2 + a11 * y2, a00 * x3 + a01 * y3, a10 * x3 + a11 * y3];
 };
 
-var SVGPath = /*#__PURE__*/ (function() {
+var SVGPath = /*#__PURE__*/function () {
   function SVGPath() {}
 
   SVGPath.apply = function apply(doc, path) {
@@ -17016,7 +15403,7 @@ var SVGPath = /*#__PURE__*/ (function() {
   };
 
   return SVGPath;
-})();
+}();
 
 var number$1 = PDFObject$1.number; // This constant is used to approximate a symmetrical arc using a cubic
 // Bezier curve.
@@ -17026,10 +15413,11 @@ var VectorMixin = {
   initVector: function initVector() {
     this._ctm = [1, 0, 0, 1, 0, 0]; // current transformation matrix
 
-    return (this._ctmStack = []);
+    return this._ctmStack = [];
   },
   save: function save() {
     this._ctmStack.push(this._ctm.slice()); // TODO: save/restore colorspace and styles so not setting it unnessesarily all the time?
+
 
     return this.addContent('q');
   },
@@ -17041,7 +15429,7 @@ var VectorMixin = {
     return this.addContent('h');
   },
   lineWidth: function lineWidth(w) {
-    return this.addContent(number$1(w) + ' w');
+    return this.addContent(number$1(w) + " w");
   },
   _CAP_STYLES: {
     BUTT: 0,
@@ -17053,7 +15441,7 @@ var VectorMixin = {
       c = this._CAP_STYLES[c.toUpperCase()];
     }
 
-    return this.addContent(c + ' J');
+    return this.addContent(c + " J");
   },
   _JOIN_STYLES: {
     MITER: 0,
@@ -17065,10 +15453,10 @@ var VectorMixin = {
       j = this._JOIN_STYLES[j.toUpperCase()];
     }
 
-    return this.addContent(j + ' j');
+    return this.addContent(j + " j");
   },
   miterLimit: function miterLimit(m) {
-    return this.addContent(number$1(m) + ' M');
+    return this.addContent(number$1(m) + " M");
   },
   dash: function dash(length, options) {
     var phase;
@@ -17082,77 +15470,34 @@ var VectorMixin = {
     }
 
     if (Array.isArray(length)) {
-      length = Array.from(length)
-        .map(function(v) {
-          return PDFObject$1.number(v);
-        })
-        .join(' ');
+      length = Array.from(length).map(function (v) {
+        return PDFObject$1.number(v);
+      }).join(' ');
       phase = options.phase || 0;
-      return this.addContent(
-        '[' + length + '] ' + PDFObject$1.number(phase) + ' d'
-      );
+      return this.addContent("[" + length + "] " + PDFObject$1.number(phase) + " d");
     }
 
     var space = options.space != null ? options.space : length;
     phase = options.phase || 0;
-    return this.addContent(
-      '[' +
-        PDFObject$1.number(length) +
-        ' ' +
-        PDFObject$1.number(space) +
-        '] ' +
-        PDFObject$1.number(phase) +
-        ' d'
-    );
+    return this.addContent("[" + PDFObject$1.number(length) + " " + PDFObject$1.number(space) + "] " + PDFObject$1.number(phase) + " d");
   },
   undash: function undash() {
     return this.addContent('[] 0 d');
   },
   moveTo: function moveTo(x, y) {
-    return this.addContent(number$1(x) + ' ' + number$1(y) + ' m');
+    return this.addContent(number$1(x) + " " + number$1(y) + " m");
   },
   lineTo: function lineTo(x, y) {
-    return this.addContent(number$1(x) + ' ' + number$1(y) + ' l');
+    return this.addContent(number$1(x) + " " + number$1(y) + " l");
   },
   bezierCurveTo: function bezierCurveTo(cp1x, cp1y, cp2x, cp2y, x, y) {
-    return this.addContent(
-      number$1(cp1x) +
-        ' ' +
-        number$1(cp1y) +
-        ' ' +
-        number$1(cp2x) +
-        ' ' +
-        number$1(cp2y) +
-        ' ' +
-        number$1(x) +
-        ' ' +
-        number$1(y) +
-        ' c'
-    );
+    return this.addContent(number$1(cp1x) + " " + number$1(cp1y) + " " + number$1(cp2x) + " " + number$1(cp2y) + " " + number$1(x) + " " + number$1(y) + " c");
   },
   quadraticCurveTo: function quadraticCurveTo(cpx, cpy, x, y) {
-    return this.addContent(
-      number$1(cpx) +
-        ' ' +
-        number$1(cpy) +
-        ' ' +
-        number$1(x) +
-        ' ' +
-        number$1(y) +
-        ' v'
-    );
+    return this.addContent(number$1(cpx) + " " + number$1(cpy) + " " + number$1(x) + " " + number$1(y) + " v");
   },
   rect: function rect(x, y, w, h) {
-    return this.addContent(
-      number$1(x) +
-        ' ' +
-        number$1(y) +
-        ' ' +
-        number$1(w) +
-        ' ' +
-        number$1(h) +
-        ' re'
-    );
+    return this.addContent(number$1(x) + " " + number$1(y) + " " + number$1(w) + " " + number$1(h) + " re");
   },
   roundedRect: function roundedRect(x, y, w, h, r) {
     if (r == null) {
@@ -17217,7 +15562,7 @@ var VectorMixin = {
 
     var numSegs = Math.ceil(Math.abs(deltaAng) / HALF_PI);
     var segAng = deltaAng / numSegs;
-    var handleLen = (segAng / HALF_PI) * KAPPA * radius;
+    var handleLen = segAng / HALF_PI * KAPPA * radius;
     var curAng = startAngle; // component distances between anchor point and control point
 
     var deltaCx = -Math.sin(curAng) * handleLen;
@@ -17228,11 +15573,7 @@ var VectorMixin = {
 
     this.moveTo(ax, ay);
 
-    for (
-      var segIdx = 0, end = numSegs, asc = 0 <= end;
-      asc ? segIdx < end : segIdx > end;
-      asc ? segIdx++ : segIdx--
-    ) {
+    for (var segIdx = 0, end = numSegs, asc = 0 <= end; asc ? segIdx < end : segIdx > end; asc ? segIdx++ : segIdx--) {
       // starting control point
       var cp1x = ax + deltaCx;
       var cp1y = ay + deltaCy; // step angle
@@ -17254,21 +15595,13 @@ var VectorMixin = {
     return this;
   },
   polygon: function polygon() {
-    for (
-      var _len = arguments.length, points = new Array(_len), _key = 0;
-      _key < _len;
-      _key++
-    ) {
+    for (var _len = arguments.length, points = new Array(_len), _key = 0; _key < _len; _key++) {
       points[_key] = arguments[_key];
     }
 
     this.moveTo.apply(this, Array.from(points.shift() || []));
 
-    for (
-      var _i = 0, _Array$from = Array.from(points);
-      _i < _Array$from.length;
-      _i++
-    ) {
+    for (var _i = 0, _Array$from = Array.from(points); _i < _Array$from.length; _i++) {
       var point = _Array$from[_i];
       this.lineTo.apply(this, Array.from(point || []));
     }
@@ -17296,7 +15629,7 @@ var VectorMixin = {
       this.fillColor(color);
     }
 
-    return this.addContent('f' + this._windingRule(rule));
+    return this.addContent("f" + this._windingRule(rule));
   },
   stroke: function stroke(color) {
     if (color) {
@@ -17327,22 +15660,22 @@ var VectorMixin = {
       this.strokeColor(strokeColor);
     }
 
-    return this.addContent('B' + this._windingRule(rule));
+    return this.addContent("B" + this._windingRule(rule));
   },
   clip: function clip(rule) {
-    return this.addContent('W' + this._windingRule(rule) + ' n');
+    return this.addContent("W" + this._windingRule(rule) + " n");
   },
   transform: function transform(m11, m12, m21, m22, dx, dy) {
     // keep track of the current transformation matrix
     var m = this._ctm;
 
     var _Array$from2 = Array.from(m),
-      m0 = _Array$from2[0],
-      m1 = _Array$from2[1],
-      m2 = _Array$from2[2],
-      m3 = _Array$from2[3],
-      m4 = _Array$from2[4],
-      m5 = _Array$from2[5];
+        m0 = _Array$from2[0],
+        m1 = _Array$from2[1],
+        m2 = _Array$from2[2],
+        m3 = _Array$from2[3],
+        m4 = _Array$from2[4],
+        m5 = _Array$from2[5];
 
     m[0] = m0 * m11 + m2 * m12;
     m[1] = m1 * m11 + m3 * m12;
@@ -17350,12 +15683,10 @@ var VectorMixin = {
     m[3] = m1 * m21 + m3 * m22;
     m[4] = m0 * dx + m2 * dy + m4;
     m[5] = m1 * dx + m3 * dy + m5;
-    var values = [m11, m12, m21, m22, dx, dy]
-      .map(function(v) {
-        return PDFObject$1.number(v);
-      })
-      .join(' ');
-    return this.addContent(values + ' cm');
+    var values = [m11, m12, m21, m22, dx, dy].map(function (v) {
+      return PDFObject$1.number(v);
+    }).join(' ');
+    return this.addContent(values + " cm");
   },
   translate: function translate(x, y) {
     return this.transform(1, 0, 0, 1, x, y);
@@ -17365,7 +15696,7 @@ var VectorMixin = {
       options = {};
     }
 
-    var rad = (angle * Math.PI) / 180;
+    var rad = angle * Math.PI / 180;
     var cos = Math.cos(rad);
     var sin = Math.sin(rad);
     var x = 0;
@@ -17421,8 +15752,8 @@ var VectorMixin = {
       yAngle = 0;
     }
 
-    var radx = (xAngle * Math.PI) / 180;
-    var rady = (yAngle * Math.PI) / 180;
+    var radx = xAngle * Math.PI / 180;
+    var rady = yAngle * Math.PI / 180;
     var tanx = Math.tan(radx);
     var tany = Math.tan(rady);
     var x = 0;
@@ -17484,9 +15815,7 @@ var WIN_ANSI_MAP = {
   381: 142,
   382: 158
 };
-var characters = '.notdef       .notdef        .notdef        .notdef\n.notdef       .notdef        .notdef        .notdef\n.notdef       .notdef        .notdef        .notdef\n.notdef       .notdef        .notdef        .notdef\n.notdef       .notdef        .notdef        .notdef\n.notdef       .notdef        .notdef        .notdef\n.notdef       .notdef        .notdef        .notdef\n.notdef       .notdef        .notdef        .notdef\n\nspace         exclam         quotedbl       numbersign\ndollar        percent        ampersand      quotesingle\nparenleft     parenright     asterisk       plus\ncomma         hyphen         period         slash\nzero          one            two            three\nfour          five           six            seven\neight         nine           colon          semicolon\nless          equal          greater        question\n\nat            A              B              C\nD             E              F              G\nH             I              J              K\nL             M              N              O\nP             Q              R              S\nT             U              V              W\nX             Y              Z              bracketleft\nbackslash     bracketright   asciicircum    underscore\n\ngrave         a              b              c\nd             e              f              g\nh             i              j              k\nl             m              n              o\np             q              r              s\nt             u              v              w\nx             y              z              braceleft\nbar           braceright     asciitilde     .notdef\n\nEuro          .notdef        quotesinglbase florin\nquotedblbase  ellipsis       dagger         daggerdbl\ncircumflex    perthousand    Scaron         guilsinglleft\nOE            .notdef        Zcaron         .notdef\n.notdef       quoteleft      quoteright     quotedblleft\nquotedblright bullet         endash         emdash\ntilde         trademark      scaron         guilsinglright\noe            .notdef        zcaron         ydieresis\n\nspace         exclamdown     cent           sterling\ncurrency      yen            brokenbar      section\ndieresis      copyright      ordfeminine    guillemotleft\nlogicalnot    hyphen         registered     macron\ndegree        plusminus      twosuperior    threesuperior\nacute         mu             paragraph      periodcentered\ncedilla       onesuperior    ordmasculine   guillemotright\nonequarter    onehalf        threequarters  questiondown\n\nAgrave        Aacute         Acircumflex    Atilde\nAdieresis     Aring          AE             Ccedilla\nEgrave        Eacute         Ecircumflex    Edieresis\nIgrave        Iacute         Icircumflex    Idieresis\nEth           Ntilde         Ograve         Oacute\nOcircumflex   Otilde         Odieresis      multiply\nOslash        Ugrave         Uacute         Ucircumflex\nUdieresis     Yacute         Thorn          germandbls\n\nagrave        aacute         acircumflex    atilde\nadieresis     aring          ae             ccedilla\negrave        eacute         ecircumflex    edieresis\nigrave        iacute         icircumflex    idieresis\neth           ntilde         ograve         oacute\nocircumflex   otilde         odieresis      divide\noslash        ugrave         uacute         ucircumflex\nudieresis     yacute         thorn          ydieresis'.split(
-  /\s+/
-);
+var characters = ".notdef       .notdef        .notdef        .notdef\n.notdef       .notdef        .notdef        .notdef\n.notdef       .notdef        .notdef        .notdef\n.notdef       .notdef        .notdef        .notdef\n.notdef       .notdef        .notdef        .notdef\n.notdef       .notdef        .notdef        .notdef\n.notdef       .notdef        .notdef        .notdef\n.notdef       .notdef        .notdef        .notdef\n\nspace         exclam         quotedbl       numbersign\ndollar        percent        ampersand      quotesingle\nparenleft     parenright     asterisk       plus\ncomma         hyphen         period         slash\nzero          one            two            three\nfour          five           six            seven\neight         nine           colon          semicolon\nless          equal          greater        question\n\nat            A              B              C\nD             E              F              G\nH             I              J              K\nL             M              N              O\nP             Q              R              S\nT             U              V              W\nX             Y              Z              bracketleft\nbackslash     bracketright   asciicircum    underscore\n\ngrave         a              b              c\nd             e              f              g\nh             i              j              k\nl             m              n              o\np             q              r              s\nt             u              v              w\nx             y              z              braceleft\nbar           braceright     asciitilde     .notdef\n\nEuro          .notdef        quotesinglbase florin\nquotedblbase  ellipsis       dagger         daggerdbl\ncircumflex    perthousand    Scaron         guilsinglleft\nOE            .notdef        Zcaron         .notdef\n.notdef       quoteleft      quoteright     quotedblleft\nquotedblright bullet         endash         emdash\ntilde         trademark      scaron         guilsinglright\noe            .notdef        zcaron         ydieresis\n\nspace         exclamdown     cent           sterling\ncurrency      yen            brokenbar      section\ndieresis      copyright      ordfeminine    guillemotleft\nlogicalnot    hyphen         registered     macron\ndegree        plusminus      twosuperior    threesuperior\nacute         mu             paragraph      periodcentered\ncedilla       onesuperior    ordmasculine   guillemotright\nonequarter    onehalf        threequarters  questiondown\n\nAgrave        Aacute         Acircumflex    Atilde\nAdieresis     Aring          AE             Ccedilla\nEgrave        Eacute         Ecircumflex    Edieresis\nIgrave        Iacute         Icircumflex    Idieresis\nEth           Ntilde         Ograve         Oacute\nOcircumflex   Otilde         Odieresis      multiply\nOslash        Ugrave         Uacute         Ucircumflex\nUdieresis     Yacute         Thorn          germandbls\n\nagrave        aacute         acircumflex    atilde\nadieresis     aring          ae             ccedilla\negrave        eacute         ecircumflex    edieresis\nigrave        iacute         icircumflex    idieresis\neth           ntilde         ograve         oacute\nocircumflex   otilde         odieresis      divide\noslash        ugrave         uacute         ucircumflex\nudieresis     yacute         thorn          ydieresis".split(/\s+/);
 
 function _parse(contents) {
   var obj = {
@@ -17496,22 +15825,15 @@ function _parse(contents) {
   };
   var section = '';
 
-  for (
-    var _iterator = _createForOfIteratorHelperLoose__default['default'](
-        contents.split('\n')
-      ),
-      _step;
-    !(_step = _iterator()).done;
-
-  ) {
+  for (var _iterator = _createForOfIteratorHelperLoose__default["default"](contents.split('\n')), _step; !(_step = _iterator()).done;) {
     var line = _step.value;
     var match;
     var a;
 
-    if ((match = line.match(/^Start(\w+)/))) {
+    if (match = line.match(/^Start(\w+)/)) {
       section = match[1];
       continue;
-    } else if ((match = line.match(/^End(\w+)/))) {
+    } else if (match = line.match(/^End(\w+)/)) {
       section = '';
       continue;
     }
@@ -17522,7 +15844,7 @@ function _parse(contents) {
         var key = match[1];
         var value = match[2];
 
-        if ((a = obj.attributes[key])) {
+        if (a = obj.attributes[key]) {
           if (!Array.isArray(a)) {
             a = obj.attributes[key] = [a];
           }
@@ -17557,7 +15879,7 @@ function _parse(contents) {
   return obj;
 }
 
-var AFMFont = /*#__PURE__*/ (function() {
+var AFMFont = /*#__PURE__*/function () {
   AFMFont.open = function open(filename) {
     {
       throw new Error('AFMFont.open not available on browser build');
@@ -17580,20 +15902,17 @@ var AFMFont = /*#__PURE__*/ (function() {
       this.kernPairs = contents.kernPairs;
     }
 
-    this.charWidths = range(0, 255, true).map(function(i) {
+    this.charWidths = range(0, 255, true).map(function (i) {
       return _this.glyphWidths[characters[i]];
     });
-    this.bbox = Array.from(this.attributes.FontBBox.split(/\s+/)).map(function(
-      e
-    ) {
+    this.bbox = Array.from(this.attributes.FontBBox.split(/\s+/)).map(function (e) {
       return +e;
     });
     this.ascender = +(this.attributes.Ascender || 0);
     this.descender = +(this.attributes.Descender || 0);
     this.xHeight = +(this.attributes.XHeight || 0);
     this.capHeight = +(this.attributes.CapHeight || 0);
-    this.lineGap =
-      this.bbox[3] - this.bbox[1] - (this.ascender - this.descender);
+    this.lineGap = this.bbox[3] - this.bbox[1] - (this.ascender - this.descender);
   }
 
   var _proto = AFMFont.prototype;
@@ -17609,11 +15928,7 @@ var AFMFont = /*#__PURE__*/ (function() {
   _proto.encodeText = function encodeText(text) {
     var res = [];
 
-    for (
-      var i = 0, end = text.length, asc = 0 <= end;
-      asc ? i < end : i > end;
-      asc ? i++ : i--
-    ) {
+    for (var i = 0, end = text.length, asc = 0 <= end; asc ? i < end : i > end; asc ? i++ : i--) {
       var char = text.charCodeAt(i);
       char = WIN_ANSI_MAP[char] || char;
       res.push(char.toString(16));
@@ -17625,11 +15940,7 @@ var AFMFont = /*#__PURE__*/ (function() {
   _proto.glyphsForString = function glyphsForString(string) {
     var glyphs = [];
 
-    for (
-      var i = 0, end = string.length, asc = 0 <= end;
-      asc ? i < end : i > end;
-      asc ? i++ : i--
-    ) {
+    for (var i = 0, end = string.length, asc = 0 <= end; asc ? i < end : i > end; asc ? i++ : i--) {
       var charCode = string.charCodeAt(i);
       glyphs.push(this.characterToGlyph(charCode));
     }
@@ -17662,3967 +15973,34192 @@ var AFMFont = /*#__PURE__*/ (function() {
   };
 
   return AFMFont;
-})();
+}();
 
 var attributes = [
-  {
-    Comment: [
-      'Copyright (c) 1985, 1987, 1989, 1990, 1997 Adobe Systems Incorporated.  All Rights Reserved.',
-      'Creation Date: Thu May  1 12:43:52 1997',
-      'UniqueID 43052',
-      'VMusage 37169 48194'
-    ],
-    FontName: 'Helvetica-Bold',
-    FullName: 'Helvetica Bold',
-    FamilyName: 'Helvetica',
-    Weight: 'Bold',
-    ItalicAngle: '0',
-    IsFixedPitch: 'false',
-    CharacterSet: 'ExtendedRoman',
-    FontBBox: '-170 -228 1003 962 ',
-    UnderlinePosition: '-100',
-    UnderlineThickness: '50',
-    Version: '002.000',
-    Notice:
-      'Copyright (c) 1985, 1987, 1989, 1990, 1997 Adobe Systems Incorporated.  All Rights Reserved.Helvetica is a trademark of Linotype-Hell AG and/or its subsidiaries.',
-    EncodingScheme: 'AdobeStandardEncoding',
-    CapHeight: '718',
-    XHeight: '532',
-    Ascender: '718',
-    Descender: '-207',
-    StdHW: '118',
-    StdVW: '140'
-  },
-  {
-    Comment: [
-      'Copyright (c) 1985, 1987, 1989, 1990, 1997 Adobe Systems Incorporated.  All Rights Reserved.',
-      'Creation Date: Thu May  1 12:45:12 1997',
-      'UniqueID 43053',
-      'VMusage 14482 68586'
-    ],
-    FontName: 'Helvetica-BoldOblique',
-    FullName: 'Helvetica Bold Oblique',
-    FamilyName: 'Helvetica',
-    Weight: 'Bold',
-    ItalicAngle: '-12',
-    IsFixedPitch: 'false',
-    CharacterSet: 'ExtendedRoman',
-    FontBBox: '-174 -228 1114 962',
-    UnderlinePosition: '-100',
-    UnderlineThickness: '50',
-    Version: '002.000',
-    Notice:
-      'Copyright (c) 1985, 1987, 1989, 1990, 1997 Adobe Systems Incorporated.  All Rights Reserved.Helvetica is a trademark of Linotype-Hell AG and/or its subsidiaries.',
-    EncodingScheme: 'AdobeStandardEncoding',
-    CapHeight: '718',
-    XHeight: '532',
-    Ascender: '718',
-    Descender: '-207',
-    StdHW: '118',
-    StdVW: '140'
-  },
-  {
-    Comment: [
-      'Copyright (c) 1985, 1987, 1989, 1990, 1997 Adobe Systems Incorporated.  All Rights Reserved.',
-      'Creation Date: Thu May  1 12:44:31 1997',
-      'UniqueID 43055',
-      'VMusage 14960 69346'
-    ],
-    FontName: 'Helvetica-Oblique',
-    FullName: 'Helvetica Oblique',
-    FamilyName: 'Helvetica',
-    Weight: 'Medium',
-    ItalicAngle: '-12',
-    IsFixedPitch: 'false',
-    CharacterSet: 'ExtendedRoman',
-    FontBBox: '-170 -225 1116 931 ',
-    UnderlinePosition: '-100',
-    UnderlineThickness: '50',
-    Version: '002.000',
-    Notice:
-      'Copyright (c) 1985, 1987, 1989, 1990, 1997 Adobe Systems Incorporated.  All Rights Reserved.Helvetica is a trademark of Linotype-Hell AG and/or its subsidiaries.',
-    EncodingScheme: 'AdobeStandardEncoding',
-    CapHeight: '718',
-    XHeight: '523',
-    Ascender: '718',
-    Descender: '-207',
-    StdHW: '76',
-    StdVW: '88'
-  },
-  {
-    Comment: [
-      'Copyright (c) 1985, 1987, 1989, 1990, 1997 Adobe Systems Incorporated.  All Rights Reserved.',
-      'Creation Date: Thu May  1 12:38:23 1997',
-      'UniqueID 43054',
-      'VMusage 37069 48094'
-    ],
-    FontName: 'Helvetica',
-    FullName: 'Helvetica',
-    FamilyName: 'Helvetica',
-    Weight: 'Medium',
-    ItalicAngle: '0',
-    IsFixedPitch: 'false',
-    CharacterSet: 'ExtendedRoman',
-    FontBBox: '-166 -225 1000 931 ',
-    UnderlinePosition: '-100',
-    UnderlineThickness: '50',
-    Version: '002.000',
-    Notice:
-      'Copyright (c) 1985, 1987, 1989, 1990, 1997 Adobe Systems Incorporated.  All Rights Reserved.Helvetica is a trademark of Linotype-Hell AG and/or its subsidiaries.',
-    EncodingScheme: 'AdobeStandardEncoding',
-    CapHeight: '718',
-    XHeight: '523',
-    Ascender: '718',
-    Descender: '-207',
-    StdHW: '76',
-    StdVW: '88'
-  },
-  {
-    Comment: [
-      'Copyright (c) 1985, 1987, 1989, 1990, 1993, 1997 Adobe Systems Incorporated.  All Rights Reserved.',
-      'Creation Date: Thu May  1 12:52:56 1997',
-      'UniqueID 43065',
-      'VMusage 41636 52661'
-    ],
-    FontName: 'Times-Bold',
-    FullName: 'Times Bold',
-    FamilyName: 'Times',
-    Weight: 'Bold',
-    ItalicAngle: '0',
-    IsFixedPitch: 'false',
-    CharacterSet: 'ExtendedRoman',
-    FontBBox: '-168 -218 1000 935 ',
-    UnderlinePosition: '-100',
-    UnderlineThickness: '50',
-    Version: '002.000',
-    Notice:
-      'Copyright (c) 1985, 1987, 1989, 1990, 1993, 1997 Adobe Systems Incorporated.  All Rights Reserved.Times is a trademark of Linotype-Hell AG and/or its subsidiaries.',
-    EncodingScheme: 'AdobeStandardEncoding',
-    CapHeight: '676',
-    XHeight: '461',
-    Ascender: '683',
-    Descender: '-217',
-    StdHW: '44',
-    StdVW: '139'
-  },
-  {
-    Comment: [
-      'Copyright (c) 1985, 1987, 1989, 1990, 1993, 1997 Adobe Systems Incorporated.  All Rights Reserved.',
-      'Creation Date: Thu May  1 13:04:06 1997',
-      'UniqueID 43066',
-      'VMusage 45874 56899'
-    ],
-    FontName: 'Times-BoldItalic',
-    FullName: 'Times Bold Italic',
-    FamilyName: 'Times',
-    Weight: 'Bold',
-    ItalicAngle: '-15',
-    IsFixedPitch: 'false',
-    CharacterSet: 'ExtendedRoman',
-    FontBBox: '-200 -218 996 921',
-    UnderlinePosition: '-100',
-    UnderlineThickness: '50',
-    Version: '002.000',
-    Notice:
-      'Copyright (c) 1985, 1987, 1989, 1990, 1993, 1997 Adobe Systems Incorporated.  All Rights Reserved.Times is a trademark of Linotype-Hell AG and/or its subsidiaries.',
-    EncodingScheme: 'AdobeStandardEncoding',
-    CapHeight: '669',
-    XHeight: '462',
-    Ascender: '683',
-    Descender: '-217',
-    StdHW: '42',
-    StdVW: '121'
-  },
-  {
-    Comment: [
-      'Copyright (c) 1985, 1987, 1989, 1990, 1993, 1997 Adobe Systems Incorporated.  All Rights Reserved.',
-      'Creation Date: Thu May  1 12:56:55 1997',
-      'UniqueID 43067',
-      'VMusage 47727 58752'
-    ],
-    FontName: 'Times-Italic',
-    FullName: 'Times Italic',
-    FamilyName: 'Times',
-    Weight: 'Medium',
-    ItalicAngle: '-15.5',
-    IsFixedPitch: 'false',
-    CharacterSet: 'ExtendedRoman',
-    FontBBox: '-169 -217 1010 883 ',
-    UnderlinePosition: '-100',
-    UnderlineThickness: '50',
-    Version: '002.000',
-    Notice:
-      'Copyright (c) 1985, 1987, 1989, 1990, 1993, 1997 Adobe Systems Incorporated.  All Rights Reserved.Times is a trademark of Linotype-Hell AG and/or its subsidiaries.',
-    EncodingScheme: 'AdobeStandardEncoding',
-    CapHeight: '653',
-    XHeight: '441',
-    Ascender: '683',
-    Descender: '-217',
-    StdHW: '32',
-    StdVW: '76'
-  },
-  {
-    Comment: [
-      'Copyright (c) 1985, 1987, 1989, 1990, 1993, 1997 Adobe Systems Incorporated.  All Rights Reserved.',
-      'Creation Date: Thu May  1 12:49:17 1997',
-      'UniqueID 43068',
-      'VMusage 43909 54934'
-    ],
-    FontName: 'Times-Roman',
-    FullName: 'Times Roman',
-    FamilyName: 'Times',
-    Weight: 'Roman',
-    ItalicAngle: '0',
-    IsFixedPitch: 'false',
-    CharacterSet: 'ExtendedRoman',
-    FontBBox: '-168 -218 1000 898 ',
-    UnderlinePosition: '-100',
-    UnderlineThickness: '50',
-    Version: '002.000',
-    Notice:
-      'Copyright (c) 1985, 1987, 1989, 1990, 1993, 1997 Adobe Systems Incorporated.  All Rights Reserved.Times is a trademark of Linotype-Hell AG and/or its subsidiaries.',
-    EncodingScheme: 'AdobeStandardEncoding',
-    CapHeight: '662',
-    XHeight: '450',
-    Ascender: '683',
-    Descender: '-217',
-    StdHW: '28',
-    StdVW: '84'
-  },
-  {
-    Comment: [
-      'Copyright (c) 1989, 1990, 1991, 1993, 1997 Adobe Systems Incorporated.  All Rights Reserved.',
-      'Creation Date: Mon Jun 23 16:28:00 1997',
-      'UniqueID 43048',
-      'VMusage 41139 52164'
-    ],
-    FontName: 'Courier-Bold',
-    FullName: 'Courier Bold',
-    FamilyName: 'Courier',
-    Weight: 'Bold',
-    ItalicAngle: '0',
-    IsFixedPitch: 'true',
-    CharacterSet: 'ExtendedRoman',
-    FontBBox: '-113 -250 749 801 ',
-    UnderlinePosition: '-100',
-    UnderlineThickness: '50',
-    Version: '003.000',
-    Notice:
-      'Copyright (c) 1989, 1990, 1991, 1993, 1997 Adobe Systems Incorporated.  All Rights Reserved.',
-    EncodingScheme: 'AdobeStandardEncoding',
-    CapHeight: '562',
-    XHeight: '439',
-    Ascender: '629',
-    Descender: '-157',
-    StdHW: '84',
-    StdVW: '106'
-  },
-  {
-    Comment: [
-      'Copyright (c) 1989, 1990, 1991, 1993, 1997 Adobe Systems Incorporated.  All Rights Reserved.',
-      'Creation Date: Mon Jun 23 16:28:46 1997',
-      'UniqueID 43049',
-      'VMusage 17529 79244'
-    ],
-    FontName: 'Courier-BoldOblique',
-    FullName: 'Courier Bold Oblique',
-    FamilyName: 'Courier',
-    Weight: 'Bold',
-    ItalicAngle: '-12',
-    IsFixedPitch: 'true',
-    CharacterSet: 'ExtendedRoman',
-    FontBBox: '-57 -250 869 801',
-    UnderlinePosition: '-100',
-    UnderlineThickness: '50',
-    Version: '003.000',
-    Notice:
-      'Copyright (c) 1989, 1990, 1991, 1993, 1997 Adobe Systems Incorporated.  All Rights Reserved.',
-    EncodingScheme: 'AdobeStandardEncoding',
-    CapHeight: '562',
-    XHeight: '439',
-    Ascender: '629',
-    Descender: '-157',
-    StdHW: '84',
-    StdVW: '106'
-  },
-  {
-    Comment: [
-      'Copyright (c) 1989, 1990, 1991, 1992, 1993, 1997 Adobe Systems Incorporated.  All Rights Reserved.',
-      'Creation Date: Thu May  1 17:37:52 1997',
-      'UniqueID 43051',
-      'VMusage 16248 75829'
-    ],
-    FontName: 'Courier-Oblique',
-    FullName: 'Courier Oblique',
-    FamilyName: 'Courier',
-    Weight: 'Medium',
-    ItalicAngle: '-12',
-    IsFixedPitch: 'true',
-    CharacterSet: 'ExtendedRoman',
-    FontBBox: '-27 -250 849 805 ',
-    UnderlinePosition: '-100',
-    UnderlineThickness: '50',
-    Version: '003.000',
-    Notice:
-      'Copyright (c) 1989, 1990, 1991, 1992, 1993, 1997 Adobe Systems Incorporated.  All Rights Reserved.',
-    EncodingScheme: 'AdobeStandardEncoding',
-    CapHeight: '562',
-    XHeight: '426',
-    Ascender: '629',
-    Descender: '-157',
-    StdHW: '51',
-    StdVW: '51'
-  },
-  {
-    Comment: [
-      'Copyright (c) 1989, 1990, 1991, 1992, 1993, 1997 Adobe Systems Incorporated.  All Rights Reserved.',
-      'Creation Date: Thu May  1 17:27:09 1997',
-      'UniqueID 43050',
-      'VMusage 39754 50779'
-    ],
-    FontName: 'Courier',
-    FullName: 'Courier',
-    FamilyName: 'Courier',
-    Weight: 'Medium',
-    ItalicAngle: '0',
-    IsFixedPitch: 'true',
-    CharacterSet: 'ExtendedRoman',
-    FontBBox: '-23 -250 715 805 ',
-    UnderlinePosition: '-100',
-    UnderlineThickness: '50',
-    Version: '003.000',
-    Notice:
-      'Copyright (c) 1989, 1990, 1991, 1992, 1993, 1997 Adobe Systems Incorporated.  All Rights Reserved.',
-    EncodingScheme: 'AdobeStandardEncoding',
-    CapHeight: '562',
-    XHeight: '426',
-    Ascender: '629',
-    Descender: '-157',
-    StdHW: '51',
-    StdVW: '51'
-  }
+	{
+		Comment: [
+			"Copyright (c) 1985, 1987, 1989, 1990, 1997 Adobe Systems Incorporated.  All Rights Reserved.",
+			"Creation Date: Thu May  1 12:43:52 1997",
+			"UniqueID 43052",
+			"VMusage 37169 48194"
+		],
+		FontName: "Helvetica-Bold",
+		FullName: "Helvetica Bold",
+		FamilyName: "Helvetica",
+		Weight: "Bold",
+		ItalicAngle: "0",
+		IsFixedPitch: "false",
+		CharacterSet: "ExtendedRoman",
+		FontBBox: "-170 -228 1003 962 ",
+		UnderlinePosition: "-100",
+		UnderlineThickness: "50",
+		Version: "002.000",
+		Notice: "Copyright (c) 1985, 1987, 1989, 1990, 1997 Adobe Systems Incorporated.  All Rights Reserved.Helvetica is a trademark of Linotype-Hell AG and/or its subsidiaries.",
+		EncodingScheme: "AdobeStandardEncoding",
+		CapHeight: "718",
+		XHeight: "532",
+		Ascender: "718",
+		Descender: "-207",
+		StdHW: "118",
+		StdVW: "140"
+	},
+	{
+		Comment: [
+			"Copyright (c) 1985, 1987, 1989, 1990, 1997 Adobe Systems Incorporated.  All Rights Reserved.",
+			"Creation Date: Thu May  1 12:45:12 1997",
+			"UniqueID 43053",
+			"VMusage 14482 68586"
+		],
+		FontName: "Helvetica-BoldOblique",
+		FullName: "Helvetica Bold Oblique",
+		FamilyName: "Helvetica",
+		Weight: "Bold",
+		ItalicAngle: "-12",
+		IsFixedPitch: "false",
+		CharacterSet: "ExtendedRoman",
+		FontBBox: "-174 -228 1114 962",
+		UnderlinePosition: "-100",
+		UnderlineThickness: "50",
+		Version: "002.000",
+		Notice: "Copyright (c) 1985, 1987, 1989, 1990, 1997 Adobe Systems Incorporated.  All Rights Reserved.Helvetica is a trademark of Linotype-Hell AG and/or its subsidiaries.",
+		EncodingScheme: "AdobeStandardEncoding",
+		CapHeight: "718",
+		XHeight: "532",
+		Ascender: "718",
+		Descender: "-207",
+		StdHW: "118",
+		StdVW: "140"
+	},
+	{
+		Comment: [
+			"Copyright (c) 1985, 1987, 1989, 1990, 1997 Adobe Systems Incorporated.  All Rights Reserved.",
+			"Creation Date: Thu May  1 12:44:31 1997",
+			"UniqueID 43055",
+			"VMusage 14960 69346"
+		],
+		FontName: "Helvetica-Oblique",
+		FullName: "Helvetica Oblique",
+		FamilyName: "Helvetica",
+		Weight: "Medium",
+		ItalicAngle: "-12",
+		IsFixedPitch: "false",
+		CharacterSet: "ExtendedRoman",
+		FontBBox: "-170 -225 1116 931 ",
+		UnderlinePosition: "-100",
+		UnderlineThickness: "50",
+		Version: "002.000",
+		Notice: "Copyright (c) 1985, 1987, 1989, 1990, 1997 Adobe Systems Incorporated.  All Rights Reserved.Helvetica is a trademark of Linotype-Hell AG and/or its subsidiaries.",
+		EncodingScheme: "AdobeStandardEncoding",
+		CapHeight: "718",
+		XHeight: "523",
+		Ascender: "718",
+		Descender: "-207",
+		StdHW: "76",
+		StdVW: "88"
+	},
+	{
+		Comment: [
+			"Copyright (c) 1985, 1987, 1989, 1990, 1997 Adobe Systems Incorporated.  All Rights Reserved.",
+			"Creation Date: Thu May  1 12:38:23 1997",
+			"UniqueID 43054",
+			"VMusage 37069 48094"
+		],
+		FontName: "Helvetica",
+		FullName: "Helvetica",
+		FamilyName: "Helvetica",
+		Weight: "Medium",
+		ItalicAngle: "0",
+		IsFixedPitch: "false",
+		CharacterSet: "ExtendedRoman",
+		FontBBox: "-166 -225 1000 931 ",
+		UnderlinePosition: "-100",
+		UnderlineThickness: "50",
+		Version: "002.000",
+		Notice: "Copyright (c) 1985, 1987, 1989, 1990, 1997 Adobe Systems Incorporated.  All Rights Reserved.Helvetica is a trademark of Linotype-Hell AG and/or its subsidiaries.",
+		EncodingScheme: "AdobeStandardEncoding",
+		CapHeight: "718",
+		XHeight: "523",
+		Ascender: "718",
+		Descender: "-207",
+		StdHW: "76",
+		StdVW: "88"
+	},
+	{
+		Comment: [
+			"Copyright (c) 1985, 1987, 1989, 1990, 1993, 1997 Adobe Systems Incorporated.  All Rights Reserved.",
+			"Creation Date: Thu May  1 12:52:56 1997",
+			"UniqueID 43065",
+			"VMusage 41636 52661"
+		],
+		FontName: "Times-Bold",
+		FullName: "Times Bold",
+		FamilyName: "Times",
+		Weight: "Bold",
+		ItalicAngle: "0",
+		IsFixedPitch: "false",
+		CharacterSet: "ExtendedRoman",
+		FontBBox: "-168 -218 1000 935 ",
+		UnderlinePosition: "-100",
+		UnderlineThickness: "50",
+		Version: "002.000",
+		Notice: "Copyright (c) 1985, 1987, 1989, 1990, 1993, 1997 Adobe Systems Incorporated.  All Rights Reserved.Times is a trademark of Linotype-Hell AG and/or its subsidiaries.",
+		EncodingScheme: "AdobeStandardEncoding",
+		CapHeight: "676",
+		XHeight: "461",
+		Ascender: "683",
+		Descender: "-217",
+		StdHW: "44",
+		StdVW: "139"
+	},
+	{
+		Comment: [
+			"Copyright (c) 1985, 1987, 1989, 1990, 1993, 1997 Adobe Systems Incorporated.  All Rights Reserved.",
+			"Creation Date: Thu May  1 13:04:06 1997",
+			"UniqueID 43066",
+			"VMusage 45874 56899"
+		],
+		FontName: "Times-BoldItalic",
+		FullName: "Times Bold Italic",
+		FamilyName: "Times",
+		Weight: "Bold",
+		ItalicAngle: "-15",
+		IsFixedPitch: "false",
+		CharacterSet: "ExtendedRoman",
+		FontBBox: "-200 -218 996 921",
+		UnderlinePosition: "-100",
+		UnderlineThickness: "50",
+		Version: "002.000",
+		Notice: "Copyright (c) 1985, 1987, 1989, 1990, 1993, 1997 Adobe Systems Incorporated.  All Rights Reserved.Times is a trademark of Linotype-Hell AG and/or its subsidiaries.",
+		EncodingScheme: "AdobeStandardEncoding",
+		CapHeight: "669",
+		XHeight: "462",
+		Ascender: "683",
+		Descender: "-217",
+		StdHW: "42",
+		StdVW: "121"
+	},
+	{
+		Comment: [
+			"Copyright (c) 1985, 1987, 1989, 1990, 1993, 1997 Adobe Systems Incorporated.  All Rights Reserved.",
+			"Creation Date: Thu May  1 12:56:55 1997",
+			"UniqueID 43067",
+			"VMusage 47727 58752"
+		],
+		FontName: "Times-Italic",
+		FullName: "Times Italic",
+		FamilyName: "Times",
+		Weight: "Medium",
+		ItalicAngle: "-15.5",
+		IsFixedPitch: "false",
+		CharacterSet: "ExtendedRoman",
+		FontBBox: "-169 -217 1010 883 ",
+		UnderlinePosition: "-100",
+		UnderlineThickness: "50",
+		Version: "002.000",
+		Notice: "Copyright (c) 1985, 1987, 1989, 1990, 1993, 1997 Adobe Systems Incorporated.  All Rights Reserved.Times is a trademark of Linotype-Hell AG and/or its subsidiaries.",
+		EncodingScheme: "AdobeStandardEncoding",
+		CapHeight: "653",
+		XHeight: "441",
+		Ascender: "683",
+		Descender: "-217",
+		StdHW: "32",
+		StdVW: "76"
+	},
+	{
+		Comment: [
+			"Copyright (c) 1985, 1987, 1989, 1990, 1993, 1997 Adobe Systems Incorporated.  All Rights Reserved.",
+			"Creation Date: Thu May  1 12:49:17 1997",
+			"UniqueID 43068",
+			"VMusage 43909 54934"
+		],
+		FontName: "Times-Roman",
+		FullName: "Times Roman",
+		FamilyName: "Times",
+		Weight: "Roman",
+		ItalicAngle: "0",
+		IsFixedPitch: "false",
+		CharacterSet: "ExtendedRoman",
+		FontBBox: "-168 -218 1000 898 ",
+		UnderlinePosition: "-100",
+		UnderlineThickness: "50",
+		Version: "002.000",
+		Notice: "Copyright (c) 1985, 1987, 1989, 1990, 1993, 1997 Adobe Systems Incorporated.  All Rights Reserved.Times is a trademark of Linotype-Hell AG and/or its subsidiaries.",
+		EncodingScheme: "AdobeStandardEncoding",
+		CapHeight: "662",
+		XHeight: "450",
+		Ascender: "683",
+		Descender: "-217",
+		StdHW: "28",
+		StdVW: "84"
+	},
+	{
+		Comment: [
+			"Copyright (c) 1989, 1990, 1991, 1993, 1997 Adobe Systems Incorporated.  All Rights Reserved.",
+			"Creation Date: Mon Jun 23 16:28:00 1997",
+			"UniqueID 43048",
+			"VMusage 41139 52164"
+		],
+		FontName: "Courier-Bold",
+		FullName: "Courier Bold",
+		FamilyName: "Courier",
+		Weight: "Bold",
+		ItalicAngle: "0",
+		IsFixedPitch: "true",
+		CharacterSet: "ExtendedRoman",
+		FontBBox: "-113 -250 749 801 ",
+		UnderlinePosition: "-100",
+		UnderlineThickness: "50",
+		Version: "003.000",
+		Notice: "Copyright (c) 1989, 1990, 1991, 1993, 1997 Adobe Systems Incorporated.  All Rights Reserved.",
+		EncodingScheme: "AdobeStandardEncoding",
+		CapHeight: "562",
+		XHeight: "439",
+		Ascender: "629",
+		Descender: "-157",
+		StdHW: "84",
+		StdVW: "106"
+	},
+	{
+		Comment: [
+			"Copyright (c) 1989, 1990, 1991, 1993, 1997 Adobe Systems Incorporated.  All Rights Reserved.",
+			"Creation Date: Mon Jun 23 16:28:46 1997",
+			"UniqueID 43049",
+			"VMusage 17529 79244"
+		],
+		FontName: "Courier-BoldOblique",
+		FullName: "Courier Bold Oblique",
+		FamilyName: "Courier",
+		Weight: "Bold",
+		ItalicAngle: "-12",
+		IsFixedPitch: "true",
+		CharacterSet: "ExtendedRoman",
+		FontBBox: "-57 -250 869 801",
+		UnderlinePosition: "-100",
+		UnderlineThickness: "50",
+		Version: "003.000",
+		Notice: "Copyright (c) 1989, 1990, 1991, 1993, 1997 Adobe Systems Incorporated.  All Rights Reserved.",
+		EncodingScheme: "AdobeStandardEncoding",
+		CapHeight: "562",
+		XHeight: "439",
+		Ascender: "629",
+		Descender: "-157",
+		StdHW: "84",
+		StdVW: "106"
+	},
+	{
+		Comment: [
+			"Copyright (c) 1989, 1990, 1991, 1992, 1993, 1997 Adobe Systems Incorporated.  All Rights Reserved.",
+			"Creation Date: Thu May  1 17:37:52 1997",
+			"UniqueID 43051",
+			"VMusage 16248 75829"
+		],
+		FontName: "Courier-Oblique",
+		FullName: "Courier Oblique",
+		FamilyName: "Courier",
+		Weight: "Medium",
+		ItalicAngle: "-12",
+		IsFixedPitch: "true",
+		CharacterSet: "ExtendedRoman",
+		FontBBox: "-27 -250 849 805 ",
+		UnderlinePosition: "-100",
+		UnderlineThickness: "50",
+		Version: "003.000",
+		Notice: "Copyright (c) 1989, 1990, 1991, 1992, 1993, 1997 Adobe Systems Incorporated.  All Rights Reserved.",
+		EncodingScheme: "AdobeStandardEncoding",
+		CapHeight: "562",
+		XHeight: "426",
+		Ascender: "629",
+		Descender: "-157",
+		StdHW: "51",
+		StdVW: "51"
+	},
+	{
+		Comment: [
+			"Copyright (c) 1989, 1990, 1991, 1992, 1993, 1997 Adobe Systems Incorporated.  All Rights Reserved.",
+			"Creation Date: Thu May  1 17:27:09 1997",
+			"UniqueID 43050",
+			"VMusage 39754 50779"
+		],
+		FontName: "Courier",
+		FullName: "Courier",
+		FamilyName: "Courier",
+		Weight: "Medium",
+		ItalicAngle: "0",
+		IsFixedPitch: "true",
+		CharacterSet: "ExtendedRoman",
+		FontBBox: "-23 -250 715 805 ",
+		UnderlinePosition: "-100",
+		UnderlineThickness: "50",
+		Version: "003.000",
+		Notice: "Copyright (c) 1989, 1990, 1991, 1992, 1993, 1997 Adobe Systems Incorporated.  All Rights Reserved.",
+		EncodingScheme: "AdobeStandardEncoding",
+		CapHeight: "562",
+		XHeight: "426",
+		Ascender: "629",
+		Descender: "-157",
+		StdHW: "51",
+		StdVW: "51"
+	}
 ];
 var glyphWidths = {
-  space: [278, 278, 278, 278, 250, 250, 250, 250, 600, 600, 600, 600],
-  exclam: [333, 333, 278, 278, 333, 389, 333, 333, 600, 600, 600, 600],
-  quotedbl: [474, 474, 355, 355, 555, 555, 420, 408, 600, 600, 600, 600],
-  numbersign: [556, 556, 556, 556, 500, 500, 500, 500, 600, 600, 600, 600],
-  dollar: [556, 556, 556, 556, 500, 500, 500, 500, 600, 600, 600, 600],
-  percent: [889, 889, 889, 889, 1000, 833, 833, 833, 600, 600, 600, 600],
-  ampersand: [722, 722, 667, 667, 833, 778, 778, 778, 600, 600, 600, 600],
-  quoteright: [278, 278, 222, 222, 333, 333, 333, 333, 600, 600, 600, 600],
-  parenleft: [333, 333, 333, 333, 333, 333, 333, 333, 600, 600, 600, 600],
-  parenright: [333, 333, 333, 333, 333, 333, 333, 333, 600, 600, 600, 600],
-  asterisk: [389, 389, 389, 389, 500, 500, 500, 500, 600, 600, 600, 600],
-  plus: [584, 584, 584, 584, 570, 570, 675, 564, 600, 600, 600, 600],
-  comma: [278, 278, 278, 278, 250, 250, 250, 250, 600, 600, 600, 600],
-  hyphen: [333, 333, 333, 333, 333, 333, 333, 333, 600, 600, 600, 600],
-  period: [278, 278, 278, 278, 250, 250, 250, 250, 600, 600, 600, 600],
-  slash: [278, 278, 278, 278, 278, 278, 278, 278, 600, 600, 600, 600],
-  zero: [556, 556, 556, 556, 500, 500, 500, 500, 600, 600, 600, 600],
-  one: [556, 556, 556, 556, 500, 500, 500, 500, 600, 600, 600, 600],
-  two: [556, 556, 556, 556, 500, 500, 500, 500, 600, 600, 600, 600],
-  three: [556, 556, 556, 556, 500, 500, 500, 500, 600, 600, 600, 600],
-  four: [556, 556, 556, 556, 500, 500, 500, 500, 600, 600, 600, 600],
-  five: [556, 556, 556, 556, 500, 500, 500, 500, 600, 600, 600, 600],
-  six: [556, 556, 556, 556, 500, 500, 500, 500, 600, 600, 600, 600],
-  seven: [556, 556, 556, 556, 500, 500, 500, 500, 600, 600, 600, 600],
-  eight: [556, 556, 556, 556, 500, 500, 500, 500, 600, 600, 600, 600],
-  nine: [556, 556, 556, 556, 500, 500, 500, 500, 600, 600, 600, 600],
-  colon: [333, 333, 278, 278, 333, 333, 333, 278, 600, 600, 600, 600],
-  semicolon: [333, 333, 278, 278, 333, 333, 333, 278, 600, 600, 600, 600],
-  less: [584, 584, 584, 584, 570, 570, 675, 564, 600, 600, 600, 600],
-  equal: [584, 584, 584, 584, 570, 570, 675, 564, 600, 600, 600, 600],
-  greater: [584, 584, 584, 584, 570, 570, 675, 564, 600, 600, 600, 600],
-  question: [611, 611, 556, 556, 500, 500, 500, 444, 600, 600, 600, 600],
-  at: [975, 975, 1015, 1015, 930, 832, 920, 921, 600, 600, 600, 600],
-  A: [722, 722, 667, 667, 722, 667, 611, 722, 600, 600, 600, 600],
-  B: [722, 722, 667, 667, 667, 667, 611, 667, 600, 600, 600, 600],
-  C: [722, 722, 722, 722, 722, 667, 667, 667, 600, 600, 600, 600],
-  D: [722, 722, 722, 722, 722, 722, 722, 722, 600, 600, 600, 600],
-  E: [667, 667, 667, 667, 667, 667, 611, 611, 600, 600, 600, 600],
-  F: [611, 611, 611, 611, 611, 667, 611, 556, 600, 600, 600, 600],
-  G: [778, 778, 778, 778, 778, 722, 722, 722, 600, 600, 600, 600],
-  H: [722, 722, 722, 722, 778, 778, 722, 722, 600, 600, 600, 600],
-  I: [278, 278, 278, 278, 389, 389, 333, 333, 600, 600, 600, 600],
-  J: [556, 556, 500, 500, 500, 500, 444, 389, 600, 600, 600, 600],
-  K: [722, 722, 667, 667, 778, 667, 667, 722, 600, 600, 600, 600],
-  L: [611, 611, 556, 556, 667, 611, 556, 611, 600, 600, 600, 600],
-  M: [833, 833, 833, 833, 944, 889, 833, 889, 600, 600, 600, 600],
-  N: [722, 722, 722, 722, 722, 722, 667, 722, 600, 600, 600, 600],
-  O: [778, 778, 778, 778, 778, 722, 722, 722, 600, 600, 600, 600],
-  P: [667, 667, 667, 667, 611, 611, 611, 556, 600, 600, 600, 600],
-  Q: [778, 778, 778, 778, 778, 722, 722, 722, 600, 600, 600, 600],
-  R: [722, 722, 722, 722, 722, 667, 611, 667, 600, 600, 600, 600],
-  S: [667, 667, 667, 667, 556, 556, 500, 556, 600, 600, 600, 600],
-  T: [611, 611, 611, 611, 667, 611, 556, 611, 600, 600, 600, 600],
-  U: [722, 722, 722, 722, 722, 722, 722, 722, 600, 600, 600, 600],
-  V: [667, 667, 667, 667, 722, 667, 611, 722, 600, 600, 600, 600],
-  W: [944, 944, 944, 944, 1000, 889, 833, 944, 600, 600, 600, 600],
-  X: [667, 667, 667, 667, 722, 667, 611, 722, 600, 600, 600, 600],
-  Y: [667, 667, 667, 667, 722, 611, 556, 722, 600, 600, 600, 600],
-  Z: [611, 611, 611, 611, 667, 611, 556, 611, 600, 600, 600, 600],
-  bracketleft: [333, 333, 278, 278, 333, 333, 389, 333, 600, 600, 600, 600],
-  backslash: [278, 278, 278, 278, 278, 278, 278, 278, 600, 600, 600, 600],
-  bracketright: [333, 333, 278, 278, 333, 333, 389, 333, 600, 600, 600, 600],
-  asciicircum: [584, 584, 469, 469, 581, 570, 422, 469, 600, 600, 600, 600],
-  underscore: [556, 556, 556, 556, 500, 500, 500, 500, 600, 600, 600, 600],
-  quoteleft: [278, 278, 222, 222, 333, 333, 333, 333, 600, 600, 600, 600],
-  a: [556, 556, 556, 556, 500, 500, 500, 444, 600, 600, 600, 600],
-  b: [611, 611, 556, 556, 556, 500, 500, 500, 600, 600, 600, 600],
-  c: [556, 556, 500, 500, 444, 444, 444, 444, 600, 600, 600, 600],
-  d: [611, 611, 556, 556, 556, 500, 500, 500, 600, 600, 600, 600],
-  e: [556, 556, 556, 556, 444, 444, 444, 444, 600, 600, 600, 600],
-  f: [333, 333, 278, 278, 333, 333, 278, 333, 600, 600, 600, 600],
-  g: [611, 611, 556, 556, 500, 500, 500, 500, 600, 600, 600, 600],
-  h: [611, 611, 556, 556, 556, 556, 500, 500, 600, 600, 600, 600],
-  i: [278, 278, 222, 222, 278, 278, 278, 278, 600, 600, 600, 600],
-  j: [278, 278, 222, 222, 333, 278, 278, 278, 600, 600, 600, 600],
-  k: [556, 556, 500, 500, 556, 500, 444, 500, 600, 600, 600, 600],
-  l: [278, 278, 222, 222, 278, 278, 278, 278, 600, 600, 600, 600],
-  m: [889, 889, 833, 833, 833, 778, 722, 778, 600, 600, 600, 600],
-  n: [611, 611, 556, 556, 556, 556, 500, 500, 600, 600, 600, 600],
-  o: [611, 611, 556, 556, 500, 500, 500, 500, 600, 600, 600, 600],
-  p: [611, 611, 556, 556, 556, 500, 500, 500, 600, 600, 600, 600],
-  q: [611, 611, 556, 556, 556, 500, 500, 500, 600, 600, 600, 600],
-  r: [389, 389, 333, 333, 444, 389, 389, 333, 600, 600, 600, 600],
-  s: [556, 556, 500, 500, 389, 389, 389, 389, 600, 600, 600, 600],
-  t: [333, 333, 278, 278, 333, 278, 278, 278, 600, 600, 600, 600],
-  u: [611, 611, 556, 556, 556, 556, 500, 500, 600, 600, 600, 600],
-  v: [556, 556, 500, 500, 500, 444, 444, 500, 600, 600, 600, 600],
-  w: [778, 778, 722, 722, 722, 667, 667, 722, 600, 600, 600, 600],
-  x: [556, 556, 500, 500, 500, 500, 444, 500, 600, 600, 600, 600],
-  y: [556, 556, 500, 500, 500, 444, 444, 500, 600, 600, 600, 600],
-  z: [500, 500, 500, 500, 444, 389, 389, 444, 600, 600, 600, 600],
-  braceleft: [389, 389, 334, 334, 394, 348, 400, 480, 600, 600, 600, 600],
-  bar: [280, 280, 260, 260, 220, 220, 275, 200, 600, 600, 600, 600],
-  braceright: [389, 389, 334, 334, 394, 348, 400, 480, 600, 600, 600, 600],
-  asciitilde: [584, 584, 584, 584, 520, 570, 541, 541, 600, 600, 600, 600],
-  exclamdown: [333, 333, 333, 333, 333, 389, 389, 333, 600, 600, 600, 600],
-  cent: [556, 556, 556, 556, 500, 500, 500, 500, 600, 600, 600, 600],
-  sterling: [556, 556, 556, 556, 500, 500, 500, 500, 600, 600, 600, 600],
-  fraction: [167, 167, 167, 167, 167, 167, 167, 167, 600, 600, 600, 600],
-  yen: [556, 556, 556, 556, 500, 500, 500, 500, 600, 600, 600, 600],
-  florin: [556, 556, 556, 556, 500, 500, 500, 500, 600, 600, 600, 600],
-  section: [556, 556, 556, 556, 500, 500, 500, 500, 600, 600, 600, 600],
-  currency: [556, 556, 556, 556, 500, 500, 500, 500, 600, 600, 600, 600],
-  quotesingle: [238, 238, 191, 191, 278, 278, 214, 180, 600, 600, 600, 600],
-  quotedblleft: [500, 500, 333, 333, 500, 500, 556, 444, 600, 600, 600, 600],
-  guillemotleft: [556, 556, 556, 556, 500, 500, 500, 500, 600, 600, 600, 600],
-  guilsinglleft: [333, 333, 333, 333, 333, 333, 333, 333, 600, 600, 600, 600],
-  guilsinglright: [333, 333, 333, 333, 333, 333, 333, 333, 600, 600, 600, 600],
-  fi: [611, 611, 500, 500, 556, 556, 500, 556, 600, 600, 600, 600],
-  fl: [611, 611, 500, 500, 556, 556, 500, 556, 600, 600, 600, 600],
-  endash: [556, 556, 556, 556, 500, 500, 500, 500, 600, 600, 600, 600],
-  dagger: [556, 556, 556, 556, 500, 500, 500, 500, 600, 600, 600, 600],
-  daggerdbl: [556, 556, 556, 556, 500, 500, 500, 500, 600, 600, 600, 600],
-  periodcentered: [278, 278, 278, 278, 250, 250, 250, 250, 600, 600, 600, 600],
-  paragraph: [556, 556, 537, 537, 540, 500, 523, 453, 600, 600, 600, 600],
-  bullet: [350, 350, 350, 350, 350, 350, 350, 350, 600, 600, 600, 600],
-  quotesinglbase: [278, 278, 222, 222, 333, 333, 333, 333, 600, 600, 600, 600],
-  quotedblbase: [500, 500, 333, 333, 500, 500, 556, 444, 600, 600, 600, 600],
-  quotedblright: [500, 500, 333, 333, 500, 500, 556, 444, 600, 600, 600, 600],
-  guillemotright: [556, 556, 556, 556, 500, 500, 500, 500, 600, 600, 600, 600],
-  ellipsis: [1000, 1000, 1000, 1000, 1000, 1000, 889, 1000, 600, 600, 600, 600],
-  perthousand: [
-    1000,
-    1000,
-    1000,
-    1000,
-    1000,
-    1000,
-    1000,
-    1000,
-    600,
-    600,
-    600,
-    600
-  ],
-  questiondown: [611, 611, 611, 611, 500, 500, 500, 444, 600, 600, 600, 600],
-  grave: [333, 333, 333, 333, 333, 333, 333, 333, 600, 600, 600, 600],
-  acute: [333, 333, 333, 333, 333, 333, 333, 333, 600, 600, 600, 600],
-  circumflex: [333, 333, 333, 333, 333, 333, 333, 333, 600, 600, 600, 600],
-  tilde: [333, 333, 333, 333, 333, 333, 333, 333, 600, 600, 600, 600],
-  macron: [333, 333, 333, 333, 333, 333, 333, 333, 600, 600, 600, 600],
-  breve: [333, 333, 333, 333, 333, 333, 333, 333, 600, 600, 600, 600],
-  dotaccent: [333, 333, 333, 333, 333, 333, 333, 333, 600, 600, 600, 600],
-  dieresis: [333, 333, 333, 333, 333, 333, 333, 333, 600, 600, 600, 600],
-  ring: [333, 333, 333, 333, 333, 333, 333, 333, 600, 600, 600, 600],
-  cedilla: [333, 333, 333, 333, 333, 333, 333, 333, 600, 600, 600, 600],
-  hungarumlaut: [333, 333, 333, 333, 333, 333, 333, 333, 600, 600, 600, 600],
-  ogonek: [333, 333, 333, 333, 333, 333, 333, 333, 600, 600, 600, 600],
-  caron: [333, 333, 333, 333, 333, 333, 333, 333, 600, 600, 600, 600],
-  emdash: [1000, 1000, 1000, 1000, 1000, 1000, 889, 1000, 600, 600, 600, 600],
-  AE: [1000, 1000, 1000, 1000, 1000, 944, 889, 889, 600, 600, 600, 600],
-  ordfeminine: [370, 370, 370, 370, 300, 266, 276, 276, 600, 600, 600, 600],
-  Lslash: [611, 611, 556, 556, 667, 611, 556, 611, 600, 600, 600, 600],
-  Oslash: [778, 778, 778, 778, 778, 722, 722, 722, 600, 600, 600, 600],
-  OE: [1000, 1000, 1000, 1000, 1000, 944, 944, 889, 600, 600, 600, 600],
-  ordmasculine: [365, 365, 365, 365, 330, 300, 310, 310, 600, 600, 600, 600],
-  ae: [889, 889, 889, 889, 722, 722, 667, 667, 600, 600, 600, 600],
-  dotlessi: [278, 278, 278, 278, 278, 278, 278, 278, 600, 600, 600, 600],
-  lslash: [278, 278, 222, 222, 278, 278, 278, 278, 600, 600, 600, 600],
-  oslash: [611, 611, 611, 611, 500, 500, 500, 500, 600, 600, 600, 600],
-  oe: [944, 944, 944, 944, 722, 722, 667, 722, 600, 600, 600, 600],
-  germandbls: [611, 611, 611, 611, 556, 500, 500, 500, 600, 600, 600, 600],
-  Idieresis: [278, 278, 278, 278, 389, 389, 333, 333, 600, 600, 600, 600],
-  eacute: [556, 556, 556, 556, 444, 444, 444, 444, 600, 600, 600, 600],
-  abreve: [556, 556, 556, 556, 500, 500, 500, 444, 600, 600, 600, 600],
-  uhungarumlaut: [611, 611, 556, 556, 556, 556, 500, 500, 600, 600, 600, 600],
-  ecaron: [556, 556, 556, 556, 444, 444, 444, 444, 600, 600, 600, 600],
-  Ydieresis: [667, 667, 667, 667, 722, 611, 556, 722, 600, 600, 600, 600],
-  divide: [584, 584, 584, 584, 570, 570, 675, 564, 600, 600, 600, 600],
-  Yacute: [667, 667, 667, 667, 722, 611, 556, 722, 600, 600, 600, 600],
-  Acircumflex: [722, 722, 667, 667, 722, 667, 611, 722, 600, 600, 600, 600],
-  aacute: [556, 556, 556, 556, 500, 500, 500, 444, 600, 600, 600, 600],
-  Ucircumflex: [722, 722, 722, 722, 722, 722, 722, 722, 600, 600, 600, 600],
-  yacute: [556, 556, 500, 500, 500, 444, 444, 500, 600, 600, 600, 600],
-  scommaaccent: [556, 556, 500, 500, 389, 389, 389, 389, 600, 600, 600, 600],
-  ecircumflex: [556, 556, 556, 556, 444, 444, 444, 444, 600, 600, 600, 600],
-  Uring: [722, 722, 722, 722, 722, 722, 722, 722, 600, 600, 600, 600],
-  Udieresis: [722, 722, 722, 722, 722, 722, 722, 722, 600, 600, 600, 600],
-  aogonek: [556, 556, 556, 556, 500, 500, 500, 444, 600, 600, 600, 600],
-  Uacute: [722, 722, 722, 722, 722, 722, 722, 722, 600, 600, 600, 600],
-  uogonek: [611, 611, 556, 556, 556, 556, 500, 500, 600, 600, 600, 600],
-  Edieresis: [667, 667, 667, 667, 667, 667, 611, 611, 600, 600, 600, 600],
-  Dcroat: [722, 722, 722, 722, 722, 722, 722, 722, 600, 600, 600, 600],
-  commaaccent: [250, 250, 250, 250, 250, 250, 250, 250, 600, 600, 600, 600],
-  copyright: [737, 737, 737, 737, 747, 747, 760, 760, 600, 600, 600, 600],
-  Emacron: [667, 667, 667, 667, 667, 667, 611, 611, 600, 600, 600, 600],
-  ccaron: [556, 556, 500, 500, 444, 444, 444, 444, 600, 600, 600, 600],
-  aring: [556, 556, 556, 556, 500, 500, 500, 444, 600, 600, 600, 600],
-  Ncommaaccent: [722, 722, 722, 722, 722, 722, 667, 722, 600, 600, 600, 600],
-  lacute: [278, 278, 222, 222, 278, 278, 278, 278, 600, 600, 600, 600],
-  agrave: [556, 556, 556, 556, 500, 500, 500, 444, 600, 600, 600, 600],
-  Tcommaaccent: [611, 611, 611, 611, 667, 611, 556, 611, 600, 600, 600, 600],
-  Cacute: [722, 722, 722, 722, 722, 667, 667, 667, 600, 600, 600, 600],
-  atilde: [556, 556, 556, 556, 500, 500, 500, 444, 600, 600, 600, 600],
-  Edotaccent: [667, 667, 667, 667, 667, 667, 611, 611, 600, 600, 600, 600],
-  scaron: [556, 556, 500, 500, 389, 389, 389, 389, 600, 600, 600, 600],
-  scedilla: [556, 556, 500, 500, 389, 389, 389, 389, 600, 600, 600, 600],
-  iacute: [278, 278, 278, 278, 278, 278, 278, 278, 600, 600, 600, 600],
-  lozenge: [494, 494, 471, 471, 494, 494, 471, 471, 600, 600, 600, 600],
-  Rcaron: [722, 722, 722, 722, 722, 667, 611, 667, 600, 600, 600, 600],
-  Gcommaaccent: [778, 778, 778, 778, 778, 722, 722, 722, 600, 600, 600, 600],
-  ucircumflex: [611, 611, 556, 556, 556, 556, 500, 500, 600, 600, 600, 600],
-  acircumflex: [556, 556, 556, 556, 500, 500, 500, 444, 600, 600, 600, 600],
-  Amacron: [722, 722, 667, 667, 722, 667, 611, 722, 600, 600, 600, 600],
-  rcaron: [389, 389, 333, 333, 444, 389, 389, 333, 600, 600, 600, 600],
-  ccedilla: [556, 556, 500, 500, 444, 444, 444, 444, 600, 600, 600, 600],
-  Zdotaccent: [611, 611, 611, 611, 667, 611, 556, 611, 600, 600, 600, 600],
-  Thorn: [667, 667, 667, 667, 611, 611, 611, 556, 600, 600, 600, 600],
-  Omacron: [778, 778, 778, 778, 778, 722, 722, 722, 600, 600, 600, 600],
-  Racute: [722, 722, 722, 722, 722, 667, 611, 667, 600, 600, 600, 600],
-  Sacute: [667, 667, 667, 667, 556, 556, 500, 556, 600, 600, 600, 600],
-  dcaron: [743, 743, 643, 643, 672, 608, 544, 588, 600, 600, 600, 600],
-  Umacron: [722, 722, 722, 722, 722, 722, 722, 722, 600, 600, 600, 600],
-  uring: [611, 611, 556, 556, 556, 556, 500, 500, 600, 600, 600, 600],
-  threesuperior: [333, 333, 333, 333, 300, 300, 300, 300, 600, 600, 600, 600],
-  Ograve: [778, 778, 778, 778, 778, 722, 722, 722, 600, 600, 600, 600],
-  Agrave: [722, 722, 667, 667, 722, 667, 611, 722, 600, 600, 600, 600],
-  Abreve: [722, 722, 667, 667, 722, 667, 611, 722, 600, 600, 600, 600],
-  multiply: [584, 584, 584, 584, 570, 570, 675, 564, 600, 600, 600, 600],
-  uacute: [611, 611, 556, 556, 556, 556, 500, 500, 600, 600, 600, 600],
-  Tcaron: [611, 611, 611, 611, 667, 611, 556, 611, 600, 600, 600, 600],
-  partialdiff: [494, 494, 476, 476, 494, 494, 476, 476, 600, 600, 600, 600],
-  ydieresis: [556, 556, 500, 500, 500, 444, 444, 500, 600, 600, 600, 600],
-  Nacute: [722, 722, 722, 722, 722, 722, 667, 722, 600, 600, 600, 600],
-  icircumflex: [278, 278, 278, 278, 278, 278, 278, 278, 600, 600, 600, 600],
-  Ecircumflex: [667, 667, 667, 667, 667, 667, 611, 611, 600, 600, 600, 600],
-  adieresis: [556, 556, 556, 556, 500, 500, 500, 444, 600, 600, 600, 600],
-  edieresis: [556, 556, 556, 556, 444, 444, 444, 444, 600, 600, 600, 600],
-  cacute: [556, 556, 500, 500, 444, 444, 444, 444, 600, 600, 600, 600],
-  nacute: [611, 611, 556, 556, 556, 556, 500, 500, 600, 600, 600, 600],
-  umacron: [611, 611, 556, 556, 556, 556, 500, 500, 600, 600, 600, 600],
-  Ncaron: [722, 722, 722, 722, 722, 722, 667, 722, 600, 600, 600, 600],
-  Iacute: [278, 278, 278, 278, 389, 389, 333, 333, 600, 600, 600, 600],
-  plusminus: [584, 584, 584, 584, 570, 570, 675, 564, 600, 600, 600, 600],
-  brokenbar: [280, 280, 260, 260, 220, 220, 275, 200, 600, 600, 600, 600],
-  registered: [737, 737, 737, 737, 747, 747, 760, 760, 600, 600, 600, 600],
-  Gbreve: [778, 778, 778, 778, 778, 722, 722, 722, 600, 600, 600, 600],
-  Idotaccent: [278, 278, 278, 278, 389, 389, 333, 333, 600, 600, 600, 600],
-  summation: [600, 600, 600, 600, 600, 600, 600, 600, 600, 600, 600, 600],
-  Egrave: [667, 667, 667, 667, 667, 667, 611, 611, 600, 600, 600, 600],
-  racute: [389, 389, 333, 333, 444, 389, 389, 333, 600, 600, 600, 600],
-  omacron: [611, 611, 556, 556, 500, 500, 500, 500, 600, 600, 600, 600],
-  Zacute: [611, 611, 611, 611, 667, 611, 556, 611, 600, 600, 600, 600],
-  Zcaron: [611, 611, 611, 611, 667, 611, 556, 611, 600, 600, 600, 600],
-  greaterequal: [549, 549, 549, 549, 549, 549, 549, 549, 600, 600, 600, 600],
-  Eth: [722, 722, 722, 722, 722, 722, 722, 722, 600, 600, 600, 600],
-  Ccedilla: [722, 722, 722, 722, 722, 667, 667, 667, 600, 600, 600, 600],
-  lcommaaccent: [278, 278, 222, 222, 278, 278, 278, 278, 600, 600, 600, 600],
-  tcaron: [389, 389, 317, 317, 416, 366, 300, 326, 600, 600, 600, 600],
-  eogonek: [556, 556, 556, 556, 444, 444, 444, 444, 600, 600, 600, 600],
-  Uogonek: [722, 722, 722, 722, 722, 722, 722, 722, 600, 600, 600, 600],
-  Aacute: [722, 722, 667, 667, 722, 667, 611, 722, 600, 600, 600, 600],
-  Adieresis: [722, 722, 667, 667, 722, 667, 611, 722, 600, 600, 600, 600],
-  egrave: [556, 556, 556, 556, 444, 444, 444, 444, 600, 600, 600, 600],
-  zacute: [500, 500, 500, 500, 444, 389, 389, 444, 600, 600, 600, 600],
-  iogonek: [278, 278, 222, 222, 278, 278, 278, 278, 600, 600, 600, 600],
-  Oacute: [778, 778, 778, 778, 778, 722, 722, 722, 600, 600, 600, 600],
-  oacute: [611, 611, 556, 556, 500, 500, 500, 500, 600, 600, 600, 600],
-  amacron: [556, 556, 556, 556, 500, 500, 500, 444, 600, 600, 600, 600],
-  sacute: [556, 556, 500, 500, 389, 389, 389, 389, 600, 600, 600, 600],
-  idieresis: [278, 278, 278, 278, 278, 278, 278, 278, 600, 600, 600, 600],
-  Ocircumflex: [778, 778, 778, 778, 778, 722, 722, 722, 600, 600, 600, 600],
-  Ugrave: [722, 722, 722, 722, 722, 722, 722, 722, 600, 600, 600, 600],
-  Delta: [612, 612, 612, 612, 612, 612, 612, 612, 600, 600, 600, 600],
-  thorn: [611, 611, 556, 556, 556, 500, 500, 500, 600, 600, 600, 600],
-  twosuperior: [333, 333, 333, 333, 300, 300, 300, 300, 600, 600, 600, 600],
-  Odieresis: [778, 778, 778, 778, 778, 722, 722, 722, 600, 600, 600, 600],
-  mu: [611, 611, 556, 556, 556, 576, 500, 500, 600, 600, 600, 600],
-  igrave: [278, 278, 278, 278, 278, 278, 278, 278, 600, 600, 600, 600],
-  ohungarumlaut: [611, 611, 556, 556, 500, 500, 500, 500, 600, 600, 600, 600],
-  Eogonek: [667, 667, 667, 667, 667, 667, 611, 611, 600, 600, 600, 600],
-  dcroat: [611, 611, 556, 556, 556, 500, 500, 500, 600, 600, 600, 600],
-  threequarters: [834, 834, 834, 834, 750, 750, 750, 750, 600, 600, 600, 600],
-  Scedilla: [667, 667, 667, 667, 556, 556, 500, 556, 600, 600, 600, 600],
-  lcaron: [400, 400, 299, 299, 394, 382, 300, 344, 600, 600, 600, 600],
-  Kcommaaccent: [722, 722, 667, 667, 778, 667, 667, 722, 600, 600, 600, 600],
-  Lacute: [611, 611, 556, 556, 667, 611, 556, 611, 600, 600, 600, 600],
-  trademark: [1000, 1000, 1000, 1000, 1000, 1000, 980, 980, 600, 600, 600, 600],
-  edotaccent: [556, 556, 556, 556, 444, 444, 444, 444, 600, 600, 600, 600],
-  Igrave: [278, 278, 278, 278, 389, 389, 333, 333, 600, 600, 600, 600],
-  Imacron: [278, 278, 278, 278, 389, 389, 333, 333, 600, 600, 600, 600],
-  Lcaron: [611, 611, 556, 556, 667, 611, 611, 611, 600, 600, 600, 600],
-  onehalf: [834, 834, 834, 834, 750, 750, 750, 750, 600, 600, 600, 600],
-  lessequal: [549, 549, 549, 549, 549, 549, 549, 549, 600, 600, 600, 600],
-  ocircumflex: [611, 611, 556, 556, 500, 500, 500, 500, 600, 600, 600, 600],
-  ntilde: [611, 611, 556, 556, 556, 556, 500, 500, 600, 600, 600, 600],
-  Uhungarumlaut: [722, 722, 722, 722, 722, 722, 722, 722, 600, 600, 600, 600],
-  Eacute: [667, 667, 667, 667, 667, 667, 611, 611, 600, 600, 600, 600],
-  emacron: [556, 556, 556, 556, 444, 444, 444, 444, 600, 600, 600, 600],
-  gbreve: [611, 611, 556, 556, 500, 500, 500, 500, 600, 600, 600, 600],
-  onequarter: [834, 834, 834, 834, 750, 750, 750, 750, 600, 600, 600, 600],
-  Scaron: [667, 667, 667, 667, 556, 556, 500, 556, 600, 600, 600, 600],
-  Scommaaccent: [667, 667, 667, 667, 556, 556, 500, 556, 600, 600, 600, 600],
-  Ohungarumlaut: [778, 778, 778, 778, 778, 722, 722, 722, 600, 600, 600, 600],
-  degree: [400, 400, 400, 400, 400, 400, 400, 400, 600, 600, 600, 600],
-  ograve: [611, 611, 556, 556, 500, 500, 500, 500, 600, 600, 600, 600],
-  Ccaron: [722, 722, 722, 722, 722, 667, 667, 667, 600, 600, 600, 600],
-  ugrave: [611, 611, 556, 556, 556, 556, 500, 500, 600, 600, 600, 600],
-  radical: [549, 549, 453, 453, 549, 549, 453, 453, 600, 600, 600, 600],
-  Dcaron: [722, 722, 722, 722, 722, 722, 722, 722, 600, 600, 600, 600],
-  rcommaaccent: [389, 389, 333, 333, 444, 389, 389, 333, 600, 600, 600, 600],
-  Ntilde: [722, 722, 722, 722, 722, 722, 667, 722, 600, 600, 600, 600],
-  otilde: [611, 611, 556, 556, 500, 500, 500, 500, 600, 600, 600, 600],
-  Rcommaaccent: [722, 722, 722, 722, 722, 667, 611, 667, 600, 600, 600, 600],
-  Lcommaaccent: [611, 611, 556, 556, 667, 611, 556, 611, 600, 600, 600, 600],
-  Atilde: [722, 722, 667, 667, 722, 667, 611, 722, 600, 600, 600, 600],
-  Aogonek: [722, 722, 667, 667, 722, 667, 611, 722, 600, 600, 600, 600],
-  Aring: [722, 722, 667, 667, 722, 667, 611, 722, 600, 600, 600, 600],
-  Otilde: [778, 778, 778, 778, 778, 722, 722, 722, 600, 600, 600, 600],
-  zdotaccent: [500, 500, 500, 500, 444, 389, 389, 444, 600, 600, 600, 600],
-  Ecaron: [667, 667, 667, 667, 667, 667, 611, 611, 600, 600, 600, 600],
-  Iogonek: [278, 278, 278, 278, 389, 389, 333, 333, 600, 600, 600, 600],
-  kcommaaccent: [556, 556, 500, 500, 556, 500, 444, 500, 600, 600, 600, 600],
-  minus: [584, 584, 584, 584, 570, 606, 675, 564, 600, 600, 600, 600],
-  Icircumflex: [278, 278, 278, 278, 389, 389, 333, 333, 600, 600, 600, 600],
-  ncaron: [611, 611, 556, 556, 556, 556, 500, 500, 600, 600, 600, 600],
-  tcommaaccent: [333, 333, 278, 278, 333, 278, 278, 278, 600, 600, 600, 600],
-  logicalnot: [584, 584, 584, 584, 570, 606, 675, 564, 600, 600, 600, 600],
-  odieresis: [611, 611, 556, 556, 500, 500, 500, 500, 600, 600, 600, 600],
-  udieresis: [611, 611, 556, 556, 556, 556, 500, 500, 600, 600, 600, 600],
-  notequal: [549, 549, 549, 549, 549, 549, 549, 549, 600, 600, 600, 600],
-  gcommaaccent: [611, 611, 556, 556, 500, 500, 500, 500, 600, 600, 600, 600],
-  eth: [611, 611, 556, 556, 500, 500, 500, 500, 600, 600, 600, 600],
-  zcaron: [500, 500, 500, 500, 444, 389, 389, 444, 600, 600, 600, 600],
-  ncommaaccent: [611, 611, 556, 556, 556, 556, 500, 500, 600, 600, 600, 600],
-  onesuperior: [333, 333, 333, 333, 300, 300, 300, 300, 600, 600, 600, 600],
-  imacron: [278, 278, 278, 278, 278, 278, 278, 278, 600, 600, 600, 600],
-  Euro: [556, 556, 556, 556, 500, 500, 500, 500, 600, 600, 600, 600]
+	space: [
+		278,
+		278,
+		278,
+		278,
+		250,
+		250,
+		250,
+		250,
+		600,
+		600,
+		600,
+		600
+	],
+	exclam: [
+		333,
+		333,
+		278,
+		278,
+		333,
+		389,
+		333,
+		333,
+		600,
+		600,
+		600,
+		600
+	],
+	quotedbl: [
+		474,
+		474,
+		355,
+		355,
+		555,
+		555,
+		420,
+		408,
+		600,
+		600,
+		600,
+		600
+	],
+	numbersign: [
+		556,
+		556,
+		556,
+		556,
+		500,
+		500,
+		500,
+		500,
+		600,
+		600,
+		600,
+		600
+	],
+	dollar: [
+		556,
+		556,
+		556,
+		556,
+		500,
+		500,
+		500,
+		500,
+		600,
+		600,
+		600,
+		600
+	],
+	percent: [
+		889,
+		889,
+		889,
+		889,
+		1000,
+		833,
+		833,
+		833,
+		600,
+		600,
+		600,
+		600
+	],
+	ampersand: [
+		722,
+		722,
+		667,
+		667,
+		833,
+		778,
+		778,
+		778,
+		600,
+		600,
+		600,
+		600
+	],
+	quoteright: [
+		278,
+		278,
+		222,
+		222,
+		333,
+		333,
+		333,
+		333,
+		600,
+		600,
+		600,
+		600
+	],
+	parenleft: [
+		333,
+		333,
+		333,
+		333,
+		333,
+		333,
+		333,
+		333,
+		600,
+		600,
+		600,
+		600
+	],
+	parenright: [
+		333,
+		333,
+		333,
+		333,
+		333,
+		333,
+		333,
+		333,
+		600,
+		600,
+		600,
+		600
+	],
+	asterisk: [
+		389,
+		389,
+		389,
+		389,
+		500,
+		500,
+		500,
+		500,
+		600,
+		600,
+		600,
+		600
+	],
+	plus: [
+		584,
+		584,
+		584,
+		584,
+		570,
+		570,
+		675,
+		564,
+		600,
+		600,
+		600,
+		600
+	],
+	comma: [
+		278,
+		278,
+		278,
+		278,
+		250,
+		250,
+		250,
+		250,
+		600,
+		600,
+		600,
+		600
+	],
+	hyphen: [
+		333,
+		333,
+		333,
+		333,
+		333,
+		333,
+		333,
+		333,
+		600,
+		600,
+		600,
+		600
+	],
+	period: [
+		278,
+		278,
+		278,
+		278,
+		250,
+		250,
+		250,
+		250,
+		600,
+		600,
+		600,
+		600
+	],
+	slash: [
+		278,
+		278,
+		278,
+		278,
+		278,
+		278,
+		278,
+		278,
+		600,
+		600,
+		600,
+		600
+	],
+	zero: [
+		556,
+		556,
+		556,
+		556,
+		500,
+		500,
+		500,
+		500,
+		600,
+		600,
+		600,
+		600
+	],
+	one: [
+		556,
+		556,
+		556,
+		556,
+		500,
+		500,
+		500,
+		500,
+		600,
+		600,
+		600,
+		600
+	],
+	two: [
+		556,
+		556,
+		556,
+		556,
+		500,
+		500,
+		500,
+		500,
+		600,
+		600,
+		600,
+		600
+	],
+	three: [
+		556,
+		556,
+		556,
+		556,
+		500,
+		500,
+		500,
+		500,
+		600,
+		600,
+		600,
+		600
+	],
+	four: [
+		556,
+		556,
+		556,
+		556,
+		500,
+		500,
+		500,
+		500,
+		600,
+		600,
+		600,
+		600
+	],
+	five: [
+		556,
+		556,
+		556,
+		556,
+		500,
+		500,
+		500,
+		500,
+		600,
+		600,
+		600,
+		600
+	],
+	six: [
+		556,
+		556,
+		556,
+		556,
+		500,
+		500,
+		500,
+		500,
+		600,
+		600,
+		600,
+		600
+	],
+	seven: [
+		556,
+		556,
+		556,
+		556,
+		500,
+		500,
+		500,
+		500,
+		600,
+		600,
+		600,
+		600
+	],
+	eight: [
+		556,
+		556,
+		556,
+		556,
+		500,
+		500,
+		500,
+		500,
+		600,
+		600,
+		600,
+		600
+	],
+	nine: [
+		556,
+		556,
+		556,
+		556,
+		500,
+		500,
+		500,
+		500,
+		600,
+		600,
+		600,
+		600
+	],
+	colon: [
+		333,
+		333,
+		278,
+		278,
+		333,
+		333,
+		333,
+		278,
+		600,
+		600,
+		600,
+		600
+	],
+	semicolon: [
+		333,
+		333,
+		278,
+		278,
+		333,
+		333,
+		333,
+		278,
+		600,
+		600,
+		600,
+		600
+	],
+	less: [
+		584,
+		584,
+		584,
+		584,
+		570,
+		570,
+		675,
+		564,
+		600,
+		600,
+		600,
+		600
+	],
+	equal: [
+		584,
+		584,
+		584,
+		584,
+		570,
+		570,
+		675,
+		564,
+		600,
+		600,
+		600,
+		600
+	],
+	greater: [
+		584,
+		584,
+		584,
+		584,
+		570,
+		570,
+		675,
+		564,
+		600,
+		600,
+		600,
+		600
+	],
+	question: [
+		611,
+		611,
+		556,
+		556,
+		500,
+		500,
+		500,
+		444,
+		600,
+		600,
+		600,
+		600
+	],
+	at: [
+		975,
+		975,
+		1015,
+		1015,
+		930,
+		832,
+		920,
+		921,
+		600,
+		600,
+		600,
+		600
+	],
+	A: [
+		722,
+		722,
+		667,
+		667,
+		722,
+		667,
+		611,
+		722,
+		600,
+		600,
+		600,
+		600
+	],
+	B: [
+		722,
+		722,
+		667,
+		667,
+		667,
+		667,
+		611,
+		667,
+		600,
+		600,
+		600,
+		600
+	],
+	C: [
+		722,
+		722,
+		722,
+		722,
+		722,
+		667,
+		667,
+		667,
+		600,
+		600,
+		600,
+		600
+	],
+	D: [
+		722,
+		722,
+		722,
+		722,
+		722,
+		722,
+		722,
+		722,
+		600,
+		600,
+		600,
+		600
+	],
+	E: [
+		667,
+		667,
+		667,
+		667,
+		667,
+		667,
+		611,
+		611,
+		600,
+		600,
+		600,
+		600
+	],
+	F: [
+		611,
+		611,
+		611,
+		611,
+		611,
+		667,
+		611,
+		556,
+		600,
+		600,
+		600,
+		600
+	],
+	G: [
+		778,
+		778,
+		778,
+		778,
+		778,
+		722,
+		722,
+		722,
+		600,
+		600,
+		600,
+		600
+	],
+	H: [
+		722,
+		722,
+		722,
+		722,
+		778,
+		778,
+		722,
+		722,
+		600,
+		600,
+		600,
+		600
+	],
+	I: [
+		278,
+		278,
+		278,
+		278,
+		389,
+		389,
+		333,
+		333,
+		600,
+		600,
+		600,
+		600
+	],
+	J: [
+		556,
+		556,
+		500,
+		500,
+		500,
+		500,
+		444,
+		389,
+		600,
+		600,
+		600,
+		600
+	],
+	K: [
+		722,
+		722,
+		667,
+		667,
+		778,
+		667,
+		667,
+		722,
+		600,
+		600,
+		600,
+		600
+	],
+	L: [
+		611,
+		611,
+		556,
+		556,
+		667,
+		611,
+		556,
+		611,
+		600,
+		600,
+		600,
+		600
+	],
+	M: [
+		833,
+		833,
+		833,
+		833,
+		944,
+		889,
+		833,
+		889,
+		600,
+		600,
+		600,
+		600
+	],
+	N: [
+		722,
+		722,
+		722,
+		722,
+		722,
+		722,
+		667,
+		722,
+		600,
+		600,
+		600,
+		600
+	],
+	O: [
+		778,
+		778,
+		778,
+		778,
+		778,
+		722,
+		722,
+		722,
+		600,
+		600,
+		600,
+		600
+	],
+	P: [
+		667,
+		667,
+		667,
+		667,
+		611,
+		611,
+		611,
+		556,
+		600,
+		600,
+		600,
+		600
+	],
+	Q: [
+		778,
+		778,
+		778,
+		778,
+		778,
+		722,
+		722,
+		722,
+		600,
+		600,
+		600,
+		600
+	],
+	R: [
+		722,
+		722,
+		722,
+		722,
+		722,
+		667,
+		611,
+		667,
+		600,
+		600,
+		600,
+		600
+	],
+	S: [
+		667,
+		667,
+		667,
+		667,
+		556,
+		556,
+		500,
+		556,
+		600,
+		600,
+		600,
+		600
+	],
+	T: [
+		611,
+		611,
+		611,
+		611,
+		667,
+		611,
+		556,
+		611,
+		600,
+		600,
+		600,
+		600
+	],
+	U: [
+		722,
+		722,
+		722,
+		722,
+		722,
+		722,
+		722,
+		722,
+		600,
+		600,
+		600,
+		600
+	],
+	V: [
+		667,
+		667,
+		667,
+		667,
+		722,
+		667,
+		611,
+		722,
+		600,
+		600,
+		600,
+		600
+	],
+	W: [
+		944,
+		944,
+		944,
+		944,
+		1000,
+		889,
+		833,
+		944,
+		600,
+		600,
+		600,
+		600
+	],
+	X: [
+		667,
+		667,
+		667,
+		667,
+		722,
+		667,
+		611,
+		722,
+		600,
+		600,
+		600,
+		600
+	],
+	Y: [
+		667,
+		667,
+		667,
+		667,
+		722,
+		611,
+		556,
+		722,
+		600,
+		600,
+		600,
+		600
+	],
+	Z: [
+		611,
+		611,
+		611,
+		611,
+		667,
+		611,
+		556,
+		611,
+		600,
+		600,
+		600,
+		600
+	],
+	bracketleft: [
+		333,
+		333,
+		278,
+		278,
+		333,
+		333,
+		389,
+		333,
+		600,
+		600,
+		600,
+		600
+	],
+	backslash: [
+		278,
+		278,
+		278,
+		278,
+		278,
+		278,
+		278,
+		278,
+		600,
+		600,
+		600,
+		600
+	],
+	bracketright: [
+		333,
+		333,
+		278,
+		278,
+		333,
+		333,
+		389,
+		333,
+		600,
+		600,
+		600,
+		600
+	],
+	asciicircum: [
+		584,
+		584,
+		469,
+		469,
+		581,
+		570,
+		422,
+		469,
+		600,
+		600,
+		600,
+		600
+	],
+	underscore: [
+		556,
+		556,
+		556,
+		556,
+		500,
+		500,
+		500,
+		500,
+		600,
+		600,
+		600,
+		600
+	],
+	quoteleft: [
+		278,
+		278,
+		222,
+		222,
+		333,
+		333,
+		333,
+		333,
+		600,
+		600,
+		600,
+		600
+	],
+	a: [
+		556,
+		556,
+		556,
+		556,
+		500,
+		500,
+		500,
+		444,
+		600,
+		600,
+		600,
+		600
+	],
+	b: [
+		611,
+		611,
+		556,
+		556,
+		556,
+		500,
+		500,
+		500,
+		600,
+		600,
+		600,
+		600
+	],
+	c: [
+		556,
+		556,
+		500,
+		500,
+		444,
+		444,
+		444,
+		444,
+		600,
+		600,
+		600,
+		600
+	],
+	d: [
+		611,
+		611,
+		556,
+		556,
+		556,
+		500,
+		500,
+		500,
+		600,
+		600,
+		600,
+		600
+	],
+	e: [
+		556,
+		556,
+		556,
+		556,
+		444,
+		444,
+		444,
+		444,
+		600,
+		600,
+		600,
+		600
+	],
+	f: [
+		333,
+		333,
+		278,
+		278,
+		333,
+		333,
+		278,
+		333,
+		600,
+		600,
+		600,
+		600
+	],
+	g: [
+		611,
+		611,
+		556,
+		556,
+		500,
+		500,
+		500,
+		500,
+		600,
+		600,
+		600,
+		600
+	],
+	h: [
+		611,
+		611,
+		556,
+		556,
+		556,
+		556,
+		500,
+		500,
+		600,
+		600,
+		600,
+		600
+	],
+	i: [
+		278,
+		278,
+		222,
+		222,
+		278,
+		278,
+		278,
+		278,
+		600,
+		600,
+		600,
+		600
+	],
+	j: [
+		278,
+		278,
+		222,
+		222,
+		333,
+		278,
+		278,
+		278,
+		600,
+		600,
+		600,
+		600
+	],
+	k: [
+		556,
+		556,
+		500,
+		500,
+		556,
+		500,
+		444,
+		500,
+		600,
+		600,
+		600,
+		600
+	],
+	l: [
+		278,
+		278,
+		222,
+		222,
+		278,
+		278,
+		278,
+		278,
+		600,
+		600,
+		600,
+		600
+	],
+	m: [
+		889,
+		889,
+		833,
+		833,
+		833,
+		778,
+		722,
+		778,
+		600,
+		600,
+		600,
+		600
+	],
+	n: [
+		611,
+		611,
+		556,
+		556,
+		556,
+		556,
+		500,
+		500,
+		600,
+		600,
+		600,
+		600
+	],
+	o: [
+		611,
+		611,
+		556,
+		556,
+		500,
+		500,
+		500,
+		500,
+		600,
+		600,
+		600,
+		600
+	],
+	p: [
+		611,
+		611,
+		556,
+		556,
+		556,
+		500,
+		500,
+		500,
+		600,
+		600,
+		600,
+		600
+	],
+	q: [
+		611,
+		611,
+		556,
+		556,
+		556,
+		500,
+		500,
+		500,
+		600,
+		600,
+		600,
+		600
+	],
+	r: [
+		389,
+		389,
+		333,
+		333,
+		444,
+		389,
+		389,
+		333,
+		600,
+		600,
+		600,
+		600
+	],
+	s: [
+		556,
+		556,
+		500,
+		500,
+		389,
+		389,
+		389,
+		389,
+		600,
+		600,
+		600,
+		600
+	],
+	t: [
+		333,
+		333,
+		278,
+		278,
+		333,
+		278,
+		278,
+		278,
+		600,
+		600,
+		600,
+		600
+	],
+	u: [
+		611,
+		611,
+		556,
+		556,
+		556,
+		556,
+		500,
+		500,
+		600,
+		600,
+		600,
+		600
+	],
+	v: [
+		556,
+		556,
+		500,
+		500,
+		500,
+		444,
+		444,
+		500,
+		600,
+		600,
+		600,
+		600
+	],
+	w: [
+		778,
+		778,
+		722,
+		722,
+		722,
+		667,
+		667,
+		722,
+		600,
+		600,
+		600,
+		600
+	],
+	x: [
+		556,
+		556,
+		500,
+		500,
+		500,
+		500,
+		444,
+		500,
+		600,
+		600,
+		600,
+		600
+	],
+	y: [
+		556,
+		556,
+		500,
+		500,
+		500,
+		444,
+		444,
+		500,
+		600,
+		600,
+		600,
+		600
+	],
+	z: [
+		500,
+		500,
+		500,
+		500,
+		444,
+		389,
+		389,
+		444,
+		600,
+		600,
+		600,
+		600
+	],
+	braceleft: [
+		389,
+		389,
+		334,
+		334,
+		394,
+		348,
+		400,
+		480,
+		600,
+		600,
+		600,
+		600
+	],
+	bar: [
+		280,
+		280,
+		260,
+		260,
+		220,
+		220,
+		275,
+		200,
+		600,
+		600,
+		600,
+		600
+	],
+	braceright: [
+		389,
+		389,
+		334,
+		334,
+		394,
+		348,
+		400,
+		480,
+		600,
+		600,
+		600,
+		600
+	],
+	asciitilde: [
+		584,
+		584,
+		584,
+		584,
+		520,
+		570,
+		541,
+		541,
+		600,
+		600,
+		600,
+		600
+	],
+	exclamdown: [
+		333,
+		333,
+		333,
+		333,
+		333,
+		389,
+		389,
+		333,
+		600,
+		600,
+		600,
+		600
+	],
+	cent: [
+		556,
+		556,
+		556,
+		556,
+		500,
+		500,
+		500,
+		500,
+		600,
+		600,
+		600,
+		600
+	],
+	sterling: [
+		556,
+		556,
+		556,
+		556,
+		500,
+		500,
+		500,
+		500,
+		600,
+		600,
+		600,
+		600
+	],
+	fraction: [
+		167,
+		167,
+		167,
+		167,
+		167,
+		167,
+		167,
+		167,
+		600,
+		600,
+		600,
+		600
+	],
+	yen: [
+		556,
+		556,
+		556,
+		556,
+		500,
+		500,
+		500,
+		500,
+		600,
+		600,
+		600,
+		600
+	],
+	florin: [
+		556,
+		556,
+		556,
+		556,
+		500,
+		500,
+		500,
+		500,
+		600,
+		600,
+		600,
+		600
+	],
+	section: [
+		556,
+		556,
+		556,
+		556,
+		500,
+		500,
+		500,
+		500,
+		600,
+		600,
+		600,
+		600
+	],
+	currency: [
+		556,
+		556,
+		556,
+		556,
+		500,
+		500,
+		500,
+		500,
+		600,
+		600,
+		600,
+		600
+	],
+	quotesingle: [
+		238,
+		238,
+		191,
+		191,
+		278,
+		278,
+		214,
+		180,
+		600,
+		600,
+		600,
+		600
+	],
+	quotedblleft: [
+		500,
+		500,
+		333,
+		333,
+		500,
+		500,
+		556,
+		444,
+		600,
+		600,
+		600,
+		600
+	],
+	guillemotleft: [
+		556,
+		556,
+		556,
+		556,
+		500,
+		500,
+		500,
+		500,
+		600,
+		600,
+		600,
+		600
+	],
+	guilsinglleft: [
+		333,
+		333,
+		333,
+		333,
+		333,
+		333,
+		333,
+		333,
+		600,
+		600,
+		600,
+		600
+	],
+	guilsinglright: [
+		333,
+		333,
+		333,
+		333,
+		333,
+		333,
+		333,
+		333,
+		600,
+		600,
+		600,
+		600
+	],
+	fi: [
+		611,
+		611,
+		500,
+		500,
+		556,
+		556,
+		500,
+		556,
+		600,
+		600,
+		600,
+		600
+	],
+	fl: [
+		611,
+		611,
+		500,
+		500,
+		556,
+		556,
+		500,
+		556,
+		600,
+		600,
+		600,
+		600
+	],
+	endash: [
+		556,
+		556,
+		556,
+		556,
+		500,
+		500,
+		500,
+		500,
+		600,
+		600,
+		600,
+		600
+	],
+	dagger: [
+		556,
+		556,
+		556,
+		556,
+		500,
+		500,
+		500,
+		500,
+		600,
+		600,
+		600,
+		600
+	],
+	daggerdbl: [
+		556,
+		556,
+		556,
+		556,
+		500,
+		500,
+		500,
+		500,
+		600,
+		600,
+		600,
+		600
+	],
+	periodcentered: [
+		278,
+		278,
+		278,
+		278,
+		250,
+		250,
+		250,
+		250,
+		600,
+		600,
+		600,
+		600
+	],
+	paragraph: [
+		556,
+		556,
+		537,
+		537,
+		540,
+		500,
+		523,
+		453,
+		600,
+		600,
+		600,
+		600
+	],
+	bullet: [
+		350,
+		350,
+		350,
+		350,
+		350,
+		350,
+		350,
+		350,
+		600,
+		600,
+		600,
+		600
+	],
+	quotesinglbase: [
+		278,
+		278,
+		222,
+		222,
+		333,
+		333,
+		333,
+		333,
+		600,
+		600,
+		600,
+		600
+	],
+	quotedblbase: [
+		500,
+		500,
+		333,
+		333,
+		500,
+		500,
+		556,
+		444,
+		600,
+		600,
+		600,
+		600
+	],
+	quotedblright: [
+		500,
+		500,
+		333,
+		333,
+		500,
+		500,
+		556,
+		444,
+		600,
+		600,
+		600,
+		600
+	],
+	guillemotright: [
+		556,
+		556,
+		556,
+		556,
+		500,
+		500,
+		500,
+		500,
+		600,
+		600,
+		600,
+		600
+	],
+	ellipsis: [
+		1000,
+		1000,
+		1000,
+		1000,
+		1000,
+		1000,
+		889,
+		1000,
+		600,
+		600,
+		600,
+		600
+	],
+	perthousand: [
+		1000,
+		1000,
+		1000,
+		1000,
+		1000,
+		1000,
+		1000,
+		1000,
+		600,
+		600,
+		600,
+		600
+	],
+	questiondown: [
+		611,
+		611,
+		611,
+		611,
+		500,
+		500,
+		500,
+		444,
+		600,
+		600,
+		600,
+		600
+	],
+	grave: [
+		333,
+		333,
+		333,
+		333,
+		333,
+		333,
+		333,
+		333,
+		600,
+		600,
+		600,
+		600
+	],
+	acute: [
+		333,
+		333,
+		333,
+		333,
+		333,
+		333,
+		333,
+		333,
+		600,
+		600,
+		600,
+		600
+	],
+	circumflex: [
+		333,
+		333,
+		333,
+		333,
+		333,
+		333,
+		333,
+		333,
+		600,
+		600,
+		600,
+		600
+	],
+	tilde: [
+		333,
+		333,
+		333,
+		333,
+		333,
+		333,
+		333,
+		333,
+		600,
+		600,
+		600,
+		600
+	],
+	macron: [
+		333,
+		333,
+		333,
+		333,
+		333,
+		333,
+		333,
+		333,
+		600,
+		600,
+		600,
+		600
+	],
+	breve: [
+		333,
+		333,
+		333,
+		333,
+		333,
+		333,
+		333,
+		333,
+		600,
+		600,
+		600,
+		600
+	],
+	dotaccent: [
+		333,
+		333,
+		333,
+		333,
+		333,
+		333,
+		333,
+		333,
+		600,
+		600,
+		600,
+		600
+	],
+	dieresis: [
+		333,
+		333,
+		333,
+		333,
+		333,
+		333,
+		333,
+		333,
+		600,
+		600,
+		600,
+		600
+	],
+	ring: [
+		333,
+		333,
+		333,
+		333,
+		333,
+		333,
+		333,
+		333,
+		600,
+		600,
+		600,
+		600
+	],
+	cedilla: [
+		333,
+		333,
+		333,
+		333,
+		333,
+		333,
+		333,
+		333,
+		600,
+		600,
+		600,
+		600
+	],
+	hungarumlaut: [
+		333,
+		333,
+		333,
+		333,
+		333,
+		333,
+		333,
+		333,
+		600,
+		600,
+		600,
+		600
+	],
+	ogonek: [
+		333,
+		333,
+		333,
+		333,
+		333,
+		333,
+		333,
+		333,
+		600,
+		600,
+		600,
+		600
+	],
+	caron: [
+		333,
+		333,
+		333,
+		333,
+		333,
+		333,
+		333,
+		333,
+		600,
+		600,
+		600,
+		600
+	],
+	emdash: [
+		1000,
+		1000,
+		1000,
+		1000,
+		1000,
+		1000,
+		889,
+		1000,
+		600,
+		600,
+		600,
+		600
+	],
+	AE: [
+		1000,
+		1000,
+		1000,
+		1000,
+		1000,
+		944,
+		889,
+		889,
+		600,
+		600,
+		600,
+		600
+	],
+	ordfeminine: [
+		370,
+		370,
+		370,
+		370,
+		300,
+		266,
+		276,
+		276,
+		600,
+		600,
+		600,
+		600
+	],
+	Lslash: [
+		611,
+		611,
+		556,
+		556,
+		667,
+		611,
+		556,
+		611,
+		600,
+		600,
+		600,
+		600
+	],
+	Oslash: [
+		778,
+		778,
+		778,
+		778,
+		778,
+		722,
+		722,
+		722,
+		600,
+		600,
+		600,
+		600
+	],
+	OE: [
+		1000,
+		1000,
+		1000,
+		1000,
+		1000,
+		944,
+		944,
+		889,
+		600,
+		600,
+		600,
+		600
+	],
+	ordmasculine: [
+		365,
+		365,
+		365,
+		365,
+		330,
+		300,
+		310,
+		310,
+		600,
+		600,
+		600,
+		600
+	],
+	ae: [
+		889,
+		889,
+		889,
+		889,
+		722,
+		722,
+		667,
+		667,
+		600,
+		600,
+		600,
+		600
+	],
+	dotlessi: [
+		278,
+		278,
+		278,
+		278,
+		278,
+		278,
+		278,
+		278,
+		600,
+		600,
+		600,
+		600
+	],
+	lslash: [
+		278,
+		278,
+		222,
+		222,
+		278,
+		278,
+		278,
+		278,
+		600,
+		600,
+		600,
+		600
+	],
+	oslash: [
+		611,
+		611,
+		611,
+		611,
+		500,
+		500,
+		500,
+		500,
+		600,
+		600,
+		600,
+		600
+	],
+	oe: [
+		944,
+		944,
+		944,
+		944,
+		722,
+		722,
+		667,
+		722,
+		600,
+		600,
+		600,
+		600
+	],
+	germandbls: [
+		611,
+		611,
+		611,
+		611,
+		556,
+		500,
+		500,
+		500,
+		600,
+		600,
+		600,
+		600
+	],
+	Idieresis: [
+		278,
+		278,
+		278,
+		278,
+		389,
+		389,
+		333,
+		333,
+		600,
+		600,
+		600,
+		600
+	],
+	eacute: [
+		556,
+		556,
+		556,
+		556,
+		444,
+		444,
+		444,
+		444,
+		600,
+		600,
+		600,
+		600
+	],
+	abreve: [
+		556,
+		556,
+		556,
+		556,
+		500,
+		500,
+		500,
+		444,
+		600,
+		600,
+		600,
+		600
+	],
+	uhungarumlaut: [
+		611,
+		611,
+		556,
+		556,
+		556,
+		556,
+		500,
+		500,
+		600,
+		600,
+		600,
+		600
+	],
+	ecaron: [
+		556,
+		556,
+		556,
+		556,
+		444,
+		444,
+		444,
+		444,
+		600,
+		600,
+		600,
+		600
+	],
+	Ydieresis: [
+		667,
+		667,
+		667,
+		667,
+		722,
+		611,
+		556,
+		722,
+		600,
+		600,
+		600,
+		600
+	],
+	divide: [
+		584,
+		584,
+		584,
+		584,
+		570,
+		570,
+		675,
+		564,
+		600,
+		600,
+		600,
+		600
+	],
+	Yacute: [
+		667,
+		667,
+		667,
+		667,
+		722,
+		611,
+		556,
+		722,
+		600,
+		600,
+		600,
+		600
+	],
+	Acircumflex: [
+		722,
+		722,
+		667,
+		667,
+		722,
+		667,
+		611,
+		722,
+		600,
+		600,
+		600,
+		600
+	],
+	aacute: [
+		556,
+		556,
+		556,
+		556,
+		500,
+		500,
+		500,
+		444,
+		600,
+		600,
+		600,
+		600
+	],
+	Ucircumflex: [
+		722,
+		722,
+		722,
+		722,
+		722,
+		722,
+		722,
+		722,
+		600,
+		600,
+		600,
+		600
+	],
+	yacute: [
+		556,
+		556,
+		500,
+		500,
+		500,
+		444,
+		444,
+		500,
+		600,
+		600,
+		600,
+		600
+	],
+	scommaaccent: [
+		556,
+		556,
+		500,
+		500,
+		389,
+		389,
+		389,
+		389,
+		600,
+		600,
+		600,
+		600
+	],
+	ecircumflex: [
+		556,
+		556,
+		556,
+		556,
+		444,
+		444,
+		444,
+		444,
+		600,
+		600,
+		600,
+		600
+	],
+	Uring: [
+		722,
+		722,
+		722,
+		722,
+		722,
+		722,
+		722,
+		722,
+		600,
+		600,
+		600,
+		600
+	],
+	Udieresis: [
+		722,
+		722,
+		722,
+		722,
+		722,
+		722,
+		722,
+		722,
+		600,
+		600,
+		600,
+		600
+	],
+	aogonek: [
+		556,
+		556,
+		556,
+		556,
+		500,
+		500,
+		500,
+		444,
+		600,
+		600,
+		600,
+		600
+	],
+	Uacute: [
+		722,
+		722,
+		722,
+		722,
+		722,
+		722,
+		722,
+		722,
+		600,
+		600,
+		600,
+		600
+	],
+	uogonek: [
+		611,
+		611,
+		556,
+		556,
+		556,
+		556,
+		500,
+		500,
+		600,
+		600,
+		600,
+		600
+	],
+	Edieresis: [
+		667,
+		667,
+		667,
+		667,
+		667,
+		667,
+		611,
+		611,
+		600,
+		600,
+		600,
+		600
+	],
+	Dcroat: [
+		722,
+		722,
+		722,
+		722,
+		722,
+		722,
+		722,
+		722,
+		600,
+		600,
+		600,
+		600
+	],
+	commaaccent: [
+		250,
+		250,
+		250,
+		250,
+		250,
+		250,
+		250,
+		250,
+		600,
+		600,
+		600,
+		600
+	],
+	copyright: [
+		737,
+		737,
+		737,
+		737,
+		747,
+		747,
+		760,
+		760,
+		600,
+		600,
+		600,
+		600
+	],
+	Emacron: [
+		667,
+		667,
+		667,
+		667,
+		667,
+		667,
+		611,
+		611,
+		600,
+		600,
+		600,
+		600
+	],
+	ccaron: [
+		556,
+		556,
+		500,
+		500,
+		444,
+		444,
+		444,
+		444,
+		600,
+		600,
+		600,
+		600
+	],
+	aring: [
+		556,
+		556,
+		556,
+		556,
+		500,
+		500,
+		500,
+		444,
+		600,
+		600,
+		600,
+		600
+	],
+	Ncommaaccent: [
+		722,
+		722,
+		722,
+		722,
+		722,
+		722,
+		667,
+		722,
+		600,
+		600,
+		600,
+		600
+	],
+	lacute: [
+		278,
+		278,
+		222,
+		222,
+		278,
+		278,
+		278,
+		278,
+		600,
+		600,
+		600,
+		600
+	],
+	agrave: [
+		556,
+		556,
+		556,
+		556,
+		500,
+		500,
+		500,
+		444,
+		600,
+		600,
+		600,
+		600
+	],
+	Tcommaaccent: [
+		611,
+		611,
+		611,
+		611,
+		667,
+		611,
+		556,
+		611,
+		600,
+		600,
+		600,
+		600
+	],
+	Cacute: [
+		722,
+		722,
+		722,
+		722,
+		722,
+		667,
+		667,
+		667,
+		600,
+		600,
+		600,
+		600
+	],
+	atilde: [
+		556,
+		556,
+		556,
+		556,
+		500,
+		500,
+		500,
+		444,
+		600,
+		600,
+		600,
+		600
+	],
+	Edotaccent: [
+		667,
+		667,
+		667,
+		667,
+		667,
+		667,
+		611,
+		611,
+		600,
+		600,
+		600,
+		600
+	],
+	scaron: [
+		556,
+		556,
+		500,
+		500,
+		389,
+		389,
+		389,
+		389,
+		600,
+		600,
+		600,
+		600
+	],
+	scedilla: [
+		556,
+		556,
+		500,
+		500,
+		389,
+		389,
+		389,
+		389,
+		600,
+		600,
+		600,
+		600
+	],
+	iacute: [
+		278,
+		278,
+		278,
+		278,
+		278,
+		278,
+		278,
+		278,
+		600,
+		600,
+		600,
+		600
+	],
+	lozenge: [
+		494,
+		494,
+		471,
+		471,
+		494,
+		494,
+		471,
+		471,
+		600,
+		600,
+		600,
+		600
+	],
+	Rcaron: [
+		722,
+		722,
+		722,
+		722,
+		722,
+		667,
+		611,
+		667,
+		600,
+		600,
+		600,
+		600
+	],
+	Gcommaaccent: [
+		778,
+		778,
+		778,
+		778,
+		778,
+		722,
+		722,
+		722,
+		600,
+		600,
+		600,
+		600
+	],
+	ucircumflex: [
+		611,
+		611,
+		556,
+		556,
+		556,
+		556,
+		500,
+		500,
+		600,
+		600,
+		600,
+		600
+	],
+	acircumflex: [
+		556,
+		556,
+		556,
+		556,
+		500,
+		500,
+		500,
+		444,
+		600,
+		600,
+		600,
+		600
+	],
+	Amacron: [
+		722,
+		722,
+		667,
+		667,
+		722,
+		667,
+		611,
+		722,
+		600,
+		600,
+		600,
+		600
+	],
+	rcaron: [
+		389,
+		389,
+		333,
+		333,
+		444,
+		389,
+		389,
+		333,
+		600,
+		600,
+		600,
+		600
+	],
+	ccedilla: [
+		556,
+		556,
+		500,
+		500,
+		444,
+		444,
+		444,
+		444,
+		600,
+		600,
+		600,
+		600
+	],
+	Zdotaccent: [
+		611,
+		611,
+		611,
+		611,
+		667,
+		611,
+		556,
+		611,
+		600,
+		600,
+		600,
+		600
+	],
+	Thorn: [
+		667,
+		667,
+		667,
+		667,
+		611,
+		611,
+		611,
+		556,
+		600,
+		600,
+		600,
+		600
+	],
+	Omacron: [
+		778,
+		778,
+		778,
+		778,
+		778,
+		722,
+		722,
+		722,
+		600,
+		600,
+		600,
+		600
+	],
+	Racute: [
+		722,
+		722,
+		722,
+		722,
+		722,
+		667,
+		611,
+		667,
+		600,
+		600,
+		600,
+		600
+	],
+	Sacute: [
+		667,
+		667,
+		667,
+		667,
+		556,
+		556,
+		500,
+		556,
+		600,
+		600,
+		600,
+		600
+	],
+	dcaron: [
+		743,
+		743,
+		643,
+		643,
+		672,
+		608,
+		544,
+		588,
+		600,
+		600,
+		600,
+		600
+	],
+	Umacron: [
+		722,
+		722,
+		722,
+		722,
+		722,
+		722,
+		722,
+		722,
+		600,
+		600,
+		600,
+		600
+	],
+	uring: [
+		611,
+		611,
+		556,
+		556,
+		556,
+		556,
+		500,
+		500,
+		600,
+		600,
+		600,
+		600
+	],
+	threesuperior: [
+		333,
+		333,
+		333,
+		333,
+		300,
+		300,
+		300,
+		300,
+		600,
+		600,
+		600,
+		600
+	],
+	Ograve: [
+		778,
+		778,
+		778,
+		778,
+		778,
+		722,
+		722,
+		722,
+		600,
+		600,
+		600,
+		600
+	],
+	Agrave: [
+		722,
+		722,
+		667,
+		667,
+		722,
+		667,
+		611,
+		722,
+		600,
+		600,
+		600,
+		600
+	],
+	Abreve: [
+		722,
+		722,
+		667,
+		667,
+		722,
+		667,
+		611,
+		722,
+		600,
+		600,
+		600,
+		600
+	],
+	multiply: [
+		584,
+		584,
+		584,
+		584,
+		570,
+		570,
+		675,
+		564,
+		600,
+		600,
+		600,
+		600
+	],
+	uacute: [
+		611,
+		611,
+		556,
+		556,
+		556,
+		556,
+		500,
+		500,
+		600,
+		600,
+		600,
+		600
+	],
+	Tcaron: [
+		611,
+		611,
+		611,
+		611,
+		667,
+		611,
+		556,
+		611,
+		600,
+		600,
+		600,
+		600
+	],
+	partialdiff: [
+		494,
+		494,
+		476,
+		476,
+		494,
+		494,
+		476,
+		476,
+		600,
+		600,
+		600,
+		600
+	],
+	ydieresis: [
+		556,
+		556,
+		500,
+		500,
+		500,
+		444,
+		444,
+		500,
+		600,
+		600,
+		600,
+		600
+	],
+	Nacute: [
+		722,
+		722,
+		722,
+		722,
+		722,
+		722,
+		667,
+		722,
+		600,
+		600,
+		600,
+		600
+	],
+	icircumflex: [
+		278,
+		278,
+		278,
+		278,
+		278,
+		278,
+		278,
+		278,
+		600,
+		600,
+		600,
+		600
+	],
+	Ecircumflex: [
+		667,
+		667,
+		667,
+		667,
+		667,
+		667,
+		611,
+		611,
+		600,
+		600,
+		600,
+		600
+	],
+	adieresis: [
+		556,
+		556,
+		556,
+		556,
+		500,
+		500,
+		500,
+		444,
+		600,
+		600,
+		600,
+		600
+	],
+	edieresis: [
+		556,
+		556,
+		556,
+		556,
+		444,
+		444,
+		444,
+		444,
+		600,
+		600,
+		600,
+		600
+	],
+	cacute: [
+		556,
+		556,
+		500,
+		500,
+		444,
+		444,
+		444,
+		444,
+		600,
+		600,
+		600,
+		600
+	],
+	nacute: [
+		611,
+		611,
+		556,
+		556,
+		556,
+		556,
+		500,
+		500,
+		600,
+		600,
+		600,
+		600
+	],
+	umacron: [
+		611,
+		611,
+		556,
+		556,
+		556,
+		556,
+		500,
+		500,
+		600,
+		600,
+		600,
+		600
+	],
+	Ncaron: [
+		722,
+		722,
+		722,
+		722,
+		722,
+		722,
+		667,
+		722,
+		600,
+		600,
+		600,
+		600
+	],
+	Iacute: [
+		278,
+		278,
+		278,
+		278,
+		389,
+		389,
+		333,
+		333,
+		600,
+		600,
+		600,
+		600
+	],
+	plusminus: [
+		584,
+		584,
+		584,
+		584,
+		570,
+		570,
+		675,
+		564,
+		600,
+		600,
+		600,
+		600
+	],
+	brokenbar: [
+		280,
+		280,
+		260,
+		260,
+		220,
+		220,
+		275,
+		200,
+		600,
+		600,
+		600,
+		600
+	],
+	registered: [
+		737,
+		737,
+		737,
+		737,
+		747,
+		747,
+		760,
+		760,
+		600,
+		600,
+		600,
+		600
+	],
+	Gbreve: [
+		778,
+		778,
+		778,
+		778,
+		778,
+		722,
+		722,
+		722,
+		600,
+		600,
+		600,
+		600
+	],
+	Idotaccent: [
+		278,
+		278,
+		278,
+		278,
+		389,
+		389,
+		333,
+		333,
+		600,
+		600,
+		600,
+		600
+	],
+	summation: [
+		600,
+		600,
+		600,
+		600,
+		600,
+		600,
+		600,
+		600,
+		600,
+		600,
+		600,
+		600
+	],
+	Egrave: [
+		667,
+		667,
+		667,
+		667,
+		667,
+		667,
+		611,
+		611,
+		600,
+		600,
+		600,
+		600
+	],
+	racute: [
+		389,
+		389,
+		333,
+		333,
+		444,
+		389,
+		389,
+		333,
+		600,
+		600,
+		600,
+		600
+	],
+	omacron: [
+		611,
+		611,
+		556,
+		556,
+		500,
+		500,
+		500,
+		500,
+		600,
+		600,
+		600,
+		600
+	],
+	Zacute: [
+		611,
+		611,
+		611,
+		611,
+		667,
+		611,
+		556,
+		611,
+		600,
+		600,
+		600,
+		600
+	],
+	Zcaron: [
+		611,
+		611,
+		611,
+		611,
+		667,
+		611,
+		556,
+		611,
+		600,
+		600,
+		600,
+		600
+	],
+	greaterequal: [
+		549,
+		549,
+		549,
+		549,
+		549,
+		549,
+		549,
+		549,
+		600,
+		600,
+		600,
+		600
+	],
+	Eth: [
+		722,
+		722,
+		722,
+		722,
+		722,
+		722,
+		722,
+		722,
+		600,
+		600,
+		600,
+		600
+	],
+	Ccedilla: [
+		722,
+		722,
+		722,
+		722,
+		722,
+		667,
+		667,
+		667,
+		600,
+		600,
+		600,
+		600
+	],
+	lcommaaccent: [
+		278,
+		278,
+		222,
+		222,
+		278,
+		278,
+		278,
+		278,
+		600,
+		600,
+		600,
+		600
+	],
+	tcaron: [
+		389,
+		389,
+		317,
+		317,
+		416,
+		366,
+		300,
+		326,
+		600,
+		600,
+		600,
+		600
+	],
+	eogonek: [
+		556,
+		556,
+		556,
+		556,
+		444,
+		444,
+		444,
+		444,
+		600,
+		600,
+		600,
+		600
+	],
+	Uogonek: [
+		722,
+		722,
+		722,
+		722,
+		722,
+		722,
+		722,
+		722,
+		600,
+		600,
+		600,
+		600
+	],
+	Aacute: [
+		722,
+		722,
+		667,
+		667,
+		722,
+		667,
+		611,
+		722,
+		600,
+		600,
+		600,
+		600
+	],
+	Adieresis: [
+		722,
+		722,
+		667,
+		667,
+		722,
+		667,
+		611,
+		722,
+		600,
+		600,
+		600,
+		600
+	],
+	egrave: [
+		556,
+		556,
+		556,
+		556,
+		444,
+		444,
+		444,
+		444,
+		600,
+		600,
+		600,
+		600
+	],
+	zacute: [
+		500,
+		500,
+		500,
+		500,
+		444,
+		389,
+		389,
+		444,
+		600,
+		600,
+		600,
+		600
+	],
+	iogonek: [
+		278,
+		278,
+		222,
+		222,
+		278,
+		278,
+		278,
+		278,
+		600,
+		600,
+		600,
+		600
+	],
+	Oacute: [
+		778,
+		778,
+		778,
+		778,
+		778,
+		722,
+		722,
+		722,
+		600,
+		600,
+		600,
+		600
+	],
+	oacute: [
+		611,
+		611,
+		556,
+		556,
+		500,
+		500,
+		500,
+		500,
+		600,
+		600,
+		600,
+		600
+	],
+	amacron: [
+		556,
+		556,
+		556,
+		556,
+		500,
+		500,
+		500,
+		444,
+		600,
+		600,
+		600,
+		600
+	],
+	sacute: [
+		556,
+		556,
+		500,
+		500,
+		389,
+		389,
+		389,
+		389,
+		600,
+		600,
+		600,
+		600
+	],
+	idieresis: [
+		278,
+		278,
+		278,
+		278,
+		278,
+		278,
+		278,
+		278,
+		600,
+		600,
+		600,
+		600
+	],
+	Ocircumflex: [
+		778,
+		778,
+		778,
+		778,
+		778,
+		722,
+		722,
+		722,
+		600,
+		600,
+		600,
+		600
+	],
+	Ugrave: [
+		722,
+		722,
+		722,
+		722,
+		722,
+		722,
+		722,
+		722,
+		600,
+		600,
+		600,
+		600
+	],
+	Delta: [
+		612,
+		612,
+		612,
+		612,
+		612,
+		612,
+		612,
+		612,
+		600,
+		600,
+		600,
+		600
+	],
+	thorn: [
+		611,
+		611,
+		556,
+		556,
+		556,
+		500,
+		500,
+		500,
+		600,
+		600,
+		600,
+		600
+	],
+	twosuperior: [
+		333,
+		333,
+		333,
+		333,
+		300,
+		300,
+		300,
+		300,
+		600,
+		600,
+		600,
+		600
+	],
+	Odieresis: [
+		778,
+		778,
+		778,
+		778,
+		778,
+		722,
+		722,
+		722,
+		600,
+		600,
+		600,
+		600
+	],
+	mu: [
+		611,
+		611,
+		556,
+		556,
+		556,
+		576,
+		500,
+		500,
+		600,
+		600,
+		600,
+		600
+	],
+	igrave: [
+		278,
+		278,
+		278,
+		278,
+		278,
+		278,
+		278,
+		278,
+		600,
+		600,
+		600,
+		600
+	],
+	ohungarumlaut: [
+		611,
+		611,
+		556,
+		556,
+		500,
+		500,
+		500,
+		500,
+		600,
+		600,
+		600,
+		600
+	],
+	Eogonek: [
+		667,
+		667,
+		667,
+		667,
+		667,
+		667,
+		611,
+		611,
+		600,
+		600,
+		600,
+		600
+	],
+	dcroat: [
+		611,
+		611,
+		556,
+		556,
+		556,
+		500,
+		500,
+		500,
+		600,
+		600,
+		600,
+		600
+	],
+	threequarters: [
+		834,
+		834,
+		834,
+		834,
+		750,
+		750,
+		750,
+		750,
+		600,
+		600,
+		600,
+		600
+	],
+	Scedilla: [
+		667,
+		667,
+		667,
+		667,
+		556,
+		556,
+		500,
+		556,
+		600,
+		600,
+		600,
+		600
+	],
+	lcaron: [
+		400,
+		400,
+		299,
+		299,
+		394,
+		382,
+		300,
+		344,
+		600,
+		600,
+		600,
+		600
+	],
+	Kcommaaccent: [
+		722,
+		722,
+		667,
+		667,
+		778,
+		667,
+		667,
+		722,
+		600,
+		600,
+		600,
+		600
+	],
+	Lacute: [
+		611,
+		611,
+		556,
+		556,
+		667,
+		611,
+		556,
+		611,
+		600,
+		600,
+		600,
+		600
+	],
+	trademark: [
+		1000,
+		1000,
+		1000,
+		1000,
+		1000,
+		1000,
+		980,
+		980,
+		600,
+		600,
+		600,
+		600
+	],
+	edotaccent: [
+		556,
+		556,
+		556,
+		556,
+		444,
+		444,
+		444,
+		444,
+		600,
+		600,
+		600,
+		600
+	],
+	Igrave: [
+		278,
+		278,
+		278,
+		278,
+		389,
+		389,
+		333,
+		333,
+		600,
+		600,
+		600,
+		600
+	],
+	Imacron: [
+		278,
+		278,
+		278,
+		278,
+		389,
+		389,
+		333,
+		333,
+		600,
+		600,
+		600,
+		600
+	],
+	Lcaron: [
+		611,
+		611,
+		556,
+		556,
+		667,
+		611,
+		611,
+		611,
+		600,
+		600,
+		600,
+		600
+	],
+	onehalf: [
+		834,
+		834,
+		834,
+		834,
+		750,
+		750,
+		750,
+		750,
+		600,
+		600,
+		600,
+		600
+	],
+	lessequal: [
+		549,
+		549,
+		549,
+		549,
+		549,
+		549,
+		549,
+		549,
+		600,
+		600,
+		600,
+		600
+	],
+	ocircumflex: [
+		611,
+		611,
+		556,
+		556,
+		500,
+		500,
+		500,
+		500,
+		600,
+		600,
+		600,
+		600
+	],
+	ntilde: [
+		611,
+		611,
+		556,
+		556,
+		556,
+		556,
+		500,
+		500,
+		600,
+		600,
+		600,
+		600
+	],
+	Uhungarumlaut: [
+		722,
+		722,
+		722,
+		722,
+		722,
+		722,
+		722,
+		722,
+		600,
+		600,
+		600,
+		600
+	],
+	Eacute: [
+		667,
+		667,
+		667,
+		667,
+		667,
+		667,
+		611,
+		611,
+		600,
+		600,
+		600,
+		600
+	],
+	emacron: [
+		556,
+		556,
+		556,
+		556,
+		444,
+		444,
+		444,
+		444,
+		600,
+		600,
+		600,
+		600
+	],
+	gbreve: [
+		611,
+		611,
+		556,
+		556,
+		500,
+		500,
+		500,
+		500,
+		600,
+		600,
+		600,
+		600
+	],
+	onequarter: [
+		834,
+		834,
+		834,
+		834,
+		750,
+		750,
+		750,
+		750,
+		600,
+		600,
+		600,
+		600
+	],
+	Scaron: [
+		667,
+		667,
+		667,
+		667,
+		556,
+		556,
+		500,
+		556,
+		600,
+		600,
+		600,
+		600
+	],
+	Scommaaccent: [
+		667,
+		667,
+		667,
+		667,
+		556,
+		556,
+		500,
+		556,
+		600,
+		600,
+		600,
+		600
+	],
+	Ohungarumlaut: [
+		778,
+		778,
+		778,
+		778,
+		778,
+		722,
+		722,
+		722,
+		600,
+		600,
+		600,
+		600
+	],
+	degree: [
+		400,
+		400,
+		400,
+		400,
+		400,
+		400,
+		400,
+		400,
+		600,
+		600,
+		600,
+		600
+	],
+	ograve: [
+		611,
+		611,
+		556,
+		556,
+		500,
+		500,
+		500,
+		500,
+		600,
+		600,
+		600,
+		600
+	],
+	Ccaron: [
+		722,
+		722,
+		722,
+		722,
+		722,
+		667,
+		667,
+		667,
+		600,
+		600,
+		600,
+		600
+	],
+	ugrave: [
+		611,
+		611,
+		556,
+		556,
+		556,
+		556,
+		500,
+		500,
+		600,
+		600,
+		600,
+		600
+	],
+	radical: [
+		549,
+		549,
+		453,
+		453,
+		549,
+		549,
+		453,
+		453,
+		600,
+		600,
+		600,
+		600
+	],
+	Dcaron: [
+		722,
+		722,
+		722,
+		722,
+		722,
+		722,
+		722,
+		722,
+		600,
+		600,
+		600,
+		600
+	],
+	rcommaaccent: [
+		389,
+		389,
+		333,
+		333,
+		444,
+		389,
+		389,
+		333,
+		600,
+		600,
+		600,
+		600
+	],
+	Ntilde: [
+		722,
+		722,
+		722,
+		722,
+		722,
+		722,
+		667,
+		722,
+		600,
+		600,
+		600,
+		600
+	],
+	otilde: [
+		611,
+		611,
+		556,
+		556,
+		500,
+		500,
+		500,
+		500,
+		600,
+		600,
+		600,
+		600
+	],
+	Rcommaaccent: [
+		722,
+		722,
+		722,
+		722,
+		722,
+		667,
+		611,
+		667,
+		600,
+		600,
+		600,
+		600
+	],
+	Lcommaaccent: [
+		611,
+		611,
+		556,
+		556,
+		667,
+		611,
+		556,
+		611,
+		600,
+		600,
+		600,
+		600
+	],
+	Atilde: [
+		722,
+		722,
+		667,
+		667,
+		722,
+		667,
+		611,
+		722,
+		600,
+		600,
+		600,
+		600
+	],
+	Aogonek: [
+		722,
+		722,
+		667,
+		667,
+		722,
+		667,
+		611,
+		722,
+		600,
+		600,
+		600,
+		600
+	],
+	Aring: [
+		722,
+		722,
+		667,
+		667,
+		722,
+		667,
+		611,
+		722,
+		600,
+		600,
+		600,
+		600
+	],
+	Otilde: [
+		778,
+		778,
+		778,
+		778,
+		778,
+		722,
+		722,
+		722,
+		600,
+		600,
+		600,
+		600
+	],
+	zdotaccent: [
+		500,
+		500,
+		500,
+		500,
+		444,
+		389,
+		389,
+		444,
+		600,
+		600,
+		600,
+		600
+	],
+	Ecaron: [
+		667,
+		667,
+		667,
+		667,
+		667,
+		667,
+		611,
+		611,
+		600,
+		600,
+		600,
+		600
+	],
+	Iogonek: [
+		278,
+		278,
+		278,
+		278,
+		389,
+		389,
+		333,
+		333,
+		600,
+		600,
+		600,
+		600
+	],
+	kcommaaccent: [
+		556,
+		556,
+		500,
+		500,
+		556,
+		500,
+		444,
+		500,
+		600,
+		600,
+		600,
+		600
+	],
+	minus: [
+		584,
+		584,
+		584,
+		584,
+		570,
+		606,
+		675,
+		564,
+		600,
+		600,
+		600,
+		600
+	],
+	Icircumflex: [
+		278,
+		278,
+		278,
+		278,
+		389,
+		389,
+		333,
+		333,
+		600,
+		600,
+		600,
+		600
+	],
+	ncaron: [
+		611,
+		611,
+		556,
+		556,
+		556,
+		556,
+		500,
+		500,
+		600,
+		600,
+		600,
+		600
+	],
+	tcommaaccent: [
+		333,
+		333,
+		278,
+		278,
+		333,
+		278,
+		278,
+		278,
+		600,
+		600,
+		600,
+		600
+	],
+	logicalnot: [
+		584,
+		584,
+		584,
+		584,
+		570,
+		606,
+		675,
+		564,
+		600,
+		600,
+		600,
+		600
+	],
+	odieresis: [
+		611,
+		611,
+		556,
+		556,
+		500,
+		500,
+		500,
+		500,
+		600,
+		600,
+		600,
+		600
+	],
+	udieresis: [
+		611,
+		611,
+		556,
+		556,
+		556,
+		556,
+		500,
+		500,
+		600,
+		600,
+		600,
+		600
+	],
+	notequal: [
+		549,
+		549,
+		549,
+		549,
+		549,
+		549,
+		549,
+		549,
+		600,
+		600,
+		600,
+		600
+	],
+	gcommaaccent: [
+		611,
+		611,
+		556,
+		556,
+		500,
+		500,
+		500,
+		500,
+		600,
+		600,
+		600,
+		600
+	],
+	eth: [
+		611,
+		611,
+		556,
+		556,
+		500,
+		500,
+		500,
+		500,
+		600,
+		600,
+		600,
+		600
+	],
+	zcaron: [
+		500,
+		500,
+		500,
+		500,
+		444,
+		389,
+		389,
+		444,
+		600,
+		600,
+		600,
+		600
+	],
+	ncommaaccent: [
+		611,
+		611,
+		556,
+		556,
+		556,
+		556,
+		500,
+		500,
+		600,
+		600,
+		600,
+		600
+	],
+	onesuperior: [
+		333,
+		333,
+		333,
+		333,
+		300,
+		300,
+		300,
+		300,
+		600,
+		600,
+		600,
+		600
+	],
+	imacron: [
+		278,
+		278,
+		278,
+		278,
+		278,
+		278,
+		278,
+		278,
+		600,
+		600,
+		600,
+		600
+	],
+	Euro: [
+		556,
+		556,
+		556,
+		556,
+		500,
+		500,
+		500,
+		500,
+		600,
+		600,
+		600,
+		600
+	]
 };
 var kernPairs = {
-  AC: [-40, -40, -30, -30, -55, -65, -30, -40],
-  ACacute: [-40, -40, -30, -30, -55, -65, -30, -40],
-  ACcaron: [-40, -40, -30, -30, -55, -65, -30, -40],
-  ACcedilla: [-40, -40, -30, -30, -55, -65, -30, -40],
-  AG: [-50, -50, -30, -30, -55, -60, -35, -40],
-  AGbreve: [-50, -50, -30, -30, -55, -60, -35, -40],
-  AGcommaaccent: [-50, -50, -30, -30, -55, -60, -35, -40],
-  AO: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AOacute: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AOcircumflex: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AOdieresis: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AOgrave: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AOhungarumlaut: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AOmacron: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AOslash: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AOtilde: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AQ: [-40, -40, -30, -30, -45, -55, -40, -55],
-  AT: [-90, -90, -120, -120, -95, -55, -37, -111],
-  ATcaron: [-90, -90, -120, -120, -95, -55, -37, -111],
-  ATcommaaccent: [-90, -90, -120, -120, -95, -55, -37, -111],
-  AU: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AUacute: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AUcircumflex: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AUdieresis: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AUgrave: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AUhungarumlaut: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AUmacron: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AUogonek: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AUring: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AV: [-80, -80, -70, -70, -145, -95, -105, -135],
-  AW: [-60, -60, -50, -50, -130, -100, -95, -90],
-  AY: [-110, -110, -100, -100, -100, -70, -55, -105],
-  AYacute: [-110, -110, -100, -100, -100, -70, -55, -105],
-  AYdieresis: [-110, -110, -100, -100, -100, -70, -55, -105],
-  Au: [-30, -30, -30, -30, -50, -30, -20],
-  Auacute: [-30, -30, -30, -30, -50, -30, -20],
-  Aucircumflex: [-30, -30, -30, -30, -50, -30, -20],
-  Audieresis: [-30, -30, -30, -30, -50, -30, -20],
-  Augrave: [-30, -30, -30, -30, -50, -30, -20],
-  Auhungarumlaut: [-30, -30, -30, -30, -50, -30, -20],
-  Aumacron: [-30, -30, -30, -30, -50, -30, -20],
-  Auogonek: [-30, -30, -30, -30, -50, -30, -20],
-  Auring: [-30, -30, -30, -30, -50, -30, -20],
-  Av: [-40, -40, -40, -40, -100, -74, -55, -74],
-  Aw: [-30, -30, -40, -40, -90, -74, -55, -92],
-  Ay: [-30, -30, -40, -40, -74, -74, -55, -92],
-  Ayacute: [-30, -30, -40, -40, -74, -74, -55, -92],
-  Aydieresis: [-30, -30, -40, -40, -74, -74, -55, -92],
-  AacuteC: [-40, -40, -30, -30, -55, -65, -30, -40],
-  AacuteCacute: [-40, -40, -30, -30, -55, -65, -30, -40],
-  AacuteCcaron: [-40, -40, -30, -30, -55, -65, -30, -40],
-  AacuteCcedilla: [-40, -40, -30, -30, -55, -65, -30, -40],
-  AacuteG: [-50, -50, -30, -30, -55, -60, -35, -40],
-  AacuteGbreve: [-50, -50, -30, -30, -55, -60, -35, -40],
-  AacuteGcommaaccent: [-50, -50, -30, -30, -55, -60, -35, -40],
-  AacuteO: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AacuteOacute: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AacuteOcircumflex: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AacuteOdieresis: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AacuteOgrave: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AacuteOhungarumlaut: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AacuteOmacron: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AacuteOslash: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AacuteOtilde: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AacuteQ: [-40, -40, -30, -30, -45, -55, -40, -55],
-  AacuteT: [-90, -90, -120, -120, -95, -55, -37, -111],
-  AacuteTcaron: [-90, -90, -120, -120, -95, -55, -37, -111],
-  AacuteTcommaaccent: [-90, -90, -120, -120, -95, -55, -37, -111],
-  AacuteU: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AacuteUacute: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AacuteUcircumflex: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AacuteUdieresis: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AacuteUgrave: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AacuteUhungarumlaut: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AacuteUmacron: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AacuteUogonek: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AacuteUring: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AacuteV: [-80, -80, -70, -70, -145, -95, -105, -135],
-  AacuteW: [-60, -60, -50, -50, -130, -100, -95, -90],
-  AacuteY: [-110, -110, -100, -100, -100, -70, -55, -105],
-  AacuteYacute: [-110, -110, -100, -100, -100, -70, -55, -105],
-  AacuteYdieresis: [-110, -110, -100, -100, -100, -70, -55, -105],
-  Aacuteu: [-30, -30, -30, -30, -50, -30, -20],
-  Aacuteuacute: [-30, -30, -30, -30, -50, -30, -20],
-  Aacuteucircumflex: [-30, -30, -30, -30, -50, -30, -20],
-  Aacuteudieresis: [-30, -30, -30, -30, -50, -30, -20],
-  Aacuteugrave: [-30, -30, -30, -30, -50, -30, -20],
-  Aacuteuhungarumlaut: [-30, -30, -30, -30, -50, -30, -20],
-  Aacuteumacron: [-30, -30, -30, -30, -50, -30, -20],
-  Aacuteuogonek: [-30, -30, -30, -30, -50, -30, -20],
-  Aacuteuring: [-30, -30, -30, -30, -50, -30, -20],
-  Aacutev: [-40, -40, -40, -40, -100, -74, -55, -74],
-  Aacutew: [-30, -30, -40, -40, -90, -74, -55, -92],
-  Aacutey: [-30, -30, -40, -40, -74, -74, -55, -92],
-  Aacuteyacute: [-30, -30, -40, -40, -74, -74, -55, -92],
-  Aacuteydieresis: [-30, -30, -40, -40, -74, -74, -55, -92],
-  AbreveC: [-40, -40, -30, -30, -55, -65, -30, -40],
-  AbreveCacute: [-40, -40, -30, -30, -55, -65, -30, -40],
-  AbreveCcaron: [-40, -40, -30, -30, -55, -65, -30, -40],
-  AbreveCcedilla: [-40, -40, -30, -30, -55, -65, -30, -40],
-  AbreveG: [-50, -50, -30, -30, -55, -60, -35, -40],
-  AbreveGbreve: [-50, -50, -30, -30, -55, -60, -35, -40],
-  AbreveGcommaaccent: [-50, -50, -30, -30, -55, -60, -35, -40],
-  AbreveO: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AbreveOacute: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AbreveOcircumflex: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AbreveOdieresis: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AbreveOgrave: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AbreveOhungarumlaut: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AbreveOmacron: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AbreveOslash: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AbreveOtilde: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AbreveQ: [-40, -40, -30, -30, -45, -55, -40, -55],
-  AbreveT: [-90, -90, -120, -120, -95, -55, -37, -111],
-  AbreveTcaron: [-90, -90, -120, -120, -95, -55, -37, -111],
-  AbreveTcommaaccent: [-90, -90, -120, -120, -95, -55, -37, -111],
-  AbreveU: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AbreveUacute: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AbreveUcircumflex: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AbreveUdieresis: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AbreveUgrave: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AbreveUhungarumlaut: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AbreveUmacron: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AbreveUogonek: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AbreveUring: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AbreveV: [-80, -80, -70, -70, -145, -95, -105, -135],
-  AbreveW: [-60, -60, -50, -50, -130, -100, -95, -90],
-  AbreveY: [-110, -110, -100, -100, -100, -70, -55, -105],
-  AbreveYacute: [-110, -110, -100, -100, -100, -70, -55, -105],
-  AbreveYdieresis: [-110, -110, -100, -100, -100, -70, -55, -105],
-  Abreveu: [-30, -30, -30, -30, -50, -30, -20],
-  Abreveuacute: [-30, -30, -30, -30, -50, -30, -20],
-  Abreveucircumflex: [-30, -30, -30, -30, -50, -30, -20],
-  Abreveudieresis: [-30, -30, -30, -30, -50, -30, -20],
-  Abreveugrave: [-30, -30, -30, -30, -50, -30, -20],
-  Abreveuhungarumlaut: [-30, -30, -30, -30, -50, -30, -20],
-  Abreveumacron: [-30, -30, -30, -30, -50, -30, -20],
-  Abreveuogonek: [-30, -30, -30, -30, -50, -30, -20],
-  Abreveuring: [-30, -30, -30, -30, -50, -30, -20],
-  Abrevev: [-40, -40, -40, -40, -100, -74, -55, -74],
-  Abrevew: [-30, -30, -40, -40, -90, -74, -55, -92],
-  Abrevey: [-30, -30, -40, -40, -74, -74, -55, -92],
-  Abreveyacute: [-30, -30, -40, -40, -74, -74, -55, -92],
-  Abreveydieresis: [-30, -30, -40, -40, -74, -74, -55, -92],
-  AcircumflexC: [-40, -40, -30, -30, -55, -65, -30, -40],
-  AcircumflexCacute: [-40, -40, -30, -30, -55, -65, -30, -40],
-  AcircumflexCcaron: [-40, -40, -30, -30, -55, -65, -30, -40],
-  AcircumflexCcedilla: [-40, -40, -30, -30, -55, -65, -30, -40],
-  AcircumflexG: [-50, -50, -30, -30, -55, -60, -35, -40],
-  AcircumflexGbreve: [-50, -50, -30, -30, -55, -60, -35, -40],
-  AcircumflexGcommaaccent: [-50, -50, -30, -30, -55, -60, -35, -40],
-  AcircumflexO: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AcircumflexOacute: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AcircumflexOcircumflex: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AcircumflexOdieresis: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AcircumflexOgrave: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AcircumflexOhungarumlaut: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AcircumflexOmacron: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AcircumflexOslash: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AcircumflexOtilde: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AcircumflexQ: [-40, -40, -30, -30, -45, -55, -40, -55],
-  AcircumflexT: [-90, -90, -120, -120, -95, -55, -37, -111],
-  AcircumflexTcaron: [-90, -90, -120, -120, -95, -55, -37, -111],
-  AcircumflexTcommaaccent: [-90, -90, -120, -120, -95, -55, -37, -111],
-  AcircumflexU: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AcircumflexUacute: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AcircumflexUcircumflex: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AcircumflexUdieresis: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AcircumflexUgrave: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AcircumflexUhungarumlaut: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AcircumflexUmacron: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AcircumflexUogonek: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AcircumflexUring: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AcircumflexV: [-80, -80, -70, -70, -145, -95, -105, -135],
-  AcircumflexW: [-60, -60, -50, -50, -130, -100, -95, -90],
-  AcircumflexY: [-110, -110, -100, -100, -100, -70, -55, -105],
-  AcircumflexYacute: [-110, -110, -100, -100, -100, -70, -55, -105],
-  AcircumflexYdieresis: [-110, -110, -100, -100, -100, -70, -55, -105],
-  Acircumflexu: [-30, -30, -30, -30, -50, -30, -20],
-  Acircumflexuacute: [-30, -30, -30, -30, -50, -30, -20],
-  Acircumflexucircumflex: [-30, -30, -30, -30, -50, -30, -20],
-  Acircumflexudieresis: [-30, -30, -30, -30, -50, -30, -20],
-  Acircumflexugrave: [-30, -30, -30, -30, -50, -30, -20],
-  Acircumflexuhungarumlaut: [-30, -30, -30, -30, -50, -30, -20],
-  Acircumflexumacron: [-30, -30, -30, -30, -50, -30, -20],
-  Acircumflexuogonek: [-30, -30, -30, -30, -50, -30, -20],
-  Acircumflexuring: [-30, -30, -30, -30, -50, -30, -20],
-  Acircumflexv: [-40, -40, -40, -40, -100, -74, -55, -74],
-  Acircumflexw: [-30, -30, -40, -40, -90, -74, -55, -92],
-  Acircumflexy: [-30, -30, -40, -40, -74, -74, -55, -92],
-  Acircumflexyacute: [-30, -30, -40, -40, -74, -74, -55, -92],
-  Acircumflexydieresis: [-30, -30, -40, -40, -74, -74, -55, -92],
-  AdieresisC: [-40, -40, -30, -30, -55, -65, -30, -40],
-  AdieresisCacute: [-40, -40, -30, -30, -55, -65, -30, -40],
-  AdieresisCcaron: [-40, -40, -30, -30, -55, -65, -30, -40],
-  AdieresisCcedilla: [-40, -40, -30, -30, -55, -65, -30, -40],
-  AdieresisG: [-50, -50, -30, -30, -55, -60, -35, -40],
-  AdieresisGbreve: [-50, -50, -30, -30, -55, -60, -35, -40],
-  AdieresisGcommaaccent: [-50, -50, -30, -30, -55, -60, -35, -40],
-  AdieresisO: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AdieresisOacute: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AdieresisOcircumflex: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AdieresisOdieresis: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AdieresisOgrave: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AdieresisOhungarumlaut: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AdieresisOmacron: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AdieresisOslash: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AdieresisOtilde: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AdieresisQ: [-40, -40, -30, -30, -45, -55, -40, -55],
-  AdieresisT: [-90, -90, -120, -120, -95, -55, -37, -111],
-  AdieresisTcaron: [-90, -90, -120, -120, -95, -55, -37, -111],
-  AdieresisTcommaaccent: [-90, -90, -120, -120, -95, -55, -37, -111],
-  AdieresisU: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AdieresisUacute: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AdieresisUcircumflex: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AdieresisUdieresis: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AdieresisUgrave: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AdieresisUhungarumlaut: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AdieresisUmacron: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AdieresisUogonek: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AdieresisUring: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AdieresisV: [-80, -80, -70, -70, -145, -95, -105, -135],
-  AdieresisW: [-60, -60, -50, -50, -130, -100, -95, -90],
-  AdieresisY: [-110, -110, -100, -100, -100, -70, -55, -105],
-  AdieresisYacute: [-110, -110, -100, -100, -100, -70, -55, -105],
-  AdieresisYdieresis: [-110, -110, -100, -100, -100, -70, -55, -105],
-  Adieresisu: [-30, -30, -30, -30, -50, -30, -20],
-  Adieresisuacute: [-30, -30, -30, -30, -50, -30, -20],
-  Adieresisucircumflex: [-30, -30, -30, -30, -50, -30, -20],
-  Adieresisudieresis: [-30, -30, -30, -30, -50, -30, -20],
-  Adieresisugrave: [-30, -30, -30, -30, -50, -30, -20],
-  Adieresisuhungarumlaut: [-30, -30, -30, -30, -50, -30, -20],
-  Adieresisumacron: [-30, -30, -30, -30, -50, -30, -20],
-  Adieresisuogonek: [-30, -30, -30, -30, -50, -30, -20],
-  Adieresisuring: [-30, -30, -30, -30, -50, -30, -20],
-  Adieresisv: [-40, -40, -40, -40, -100, -74, -55, -74],
-  Adieresisw: [-30, -30, -40, -40, -90, -74, -55, -92],
-  Adieresisy: [-30, -30, -40, -40, -74, -74, -55, -92],
-  Adieresisyacute: [-30, -30, -40, -40, -74, -74, -55, -92],
-  Adieresisydieresis: [-30, -30, -40, -40, -74, -74, -55, -92],
-  AgraveC: [-40, -40, -30, -30, -55, -65, -30, -40],
-  AgraveCacute: [-40, -40, -30, -30, -55, -65, -30, -40],
-  AgraveCcaron: [-40, -40, -30, -30, -55, -65, -30, -40],
-  AgraveCcedilla: [-40, -40, -30, -30, -55, -65, -30, -40],
-  AgraveG: [-50, -50, -30, -30, -55, -60, -35, -40],
-  AgraveGbreve: [-50, -50, -30, -30, -55, -60, -35, -40],
-  AgraveGcommaaccent: [-50, -50, -30, -30, -55, -60, -35, -40],
-  AgraveO: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AgraveOacute: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AgraveOcircumflex: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AgraveOdieresis: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AgraveOgrave: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AgraveOhungarumlaut: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AgraveOmacron: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AgraveOslash: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AgraveOtilde: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AgraveQ: [-40, -40, -30, -30, -45, -55, -40, -55],
-  AgraveT: [-90, -90, -120, -120, -95, -55, -37, -111],
-  AgraveTcaron: [-90, -90, -120, -120, -95, -55, -37, -111],
-  AgraveTcommaaccent: [-90, -90, -120, -120, -95, -55, -37, -111],
-  AgraveU: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AgraveUacute: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AgraveUcircumflex: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AgraveUdieresis: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AgraveUgrave: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AgraveUhungarumlaut: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AgraveUmacron: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AgraveUogonek: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AgraveUring: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AgraveV: [-80, -80, -70, -70, -145, -95, -105, -135],
-  AgraveW: [-60, -60, -50, -50, -130, -100, -95, -90],
-  AgraveY: [-110, -110, -100, -100, -100, -70, -55, -105],
-  AgraveYacute: [-110, -110, -100, -100, -100, -70, -55, -105],
-  AgraveYdieresis: [-110, -110, -100, -100, -100, -70, -55, -105],
-  Agraveu: [-30, -30, -30, -30, -50, -30, -20],
-  Agraveuacute: [-30, -30, -30, -30, -50, -30, -20],
-  Agraveucircumflex: [-30, -30, -30, -30, -50, -30, -20],
-  Agraveudieresis: [-30, -30, -30, -30, -50, -30, -20],
-  Agraveugrave: [-30, -30, -30, -30, -50, -30, -20],
-  Agraveuhungarumlaut: [-30, -30, -30, -30, -50, -30, -20],
-  Agraveumacron: [-30, -30, -30, -30, -50, -30, -20],
-  Agraveuogonek: [-30, -30, -30, -30, -50, -30, -20],
-  Agraveuring: [-30, -30, -30, -30, -50, -30, -20],
-  Agravev: [-40, -40, -40, -40, -100, -74, -55, -74],
-  Agravew: [-30, -30, -40, -40, -90, -74, -55, -92],
-  Agravey: [-30, -30, -40, -40, -74, -74, -55, -92],
-  Agraveyacute: [-30, -30, -40, -40, -74, -74, -55, -92],
-  Agraveydieresis: [-30, -30, -40, -40, -74, -74, -55, -92],
-  AmacronC: [-40, -40, -30, -30, -55, -65, -30, -40],
-  AmacronCacute: [-40, -40, -30, -30, -55, -65, -30, -40],
-  AmacronCcaron: [-40, -40, -30, -30, -55, -65, -30, -40],
-  AmacronCcedilla: [-40, -40, -30, -30, -55, -65, -30, -40],
-  AmacronG: [-50, -50, -30, -30, -55, -60, -35, -40],
-  AmacronGbreve: [-50, -50, -30, -30, -55, -60, -35, -40],
-  AmacronGcommaaccent: [-50, -50, -30, -30, -55, -60, -35, -40],
-  AmacronO: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AmacronOacute: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AmacronOcircumflex: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AmacronOdieresis: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AmacronOgrave: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AmacronOhungarumlaut: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AmacronOmacron: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AmacronOslash: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AmacronOtilde: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AmacronQ: [-40, -40, -30, -30, -45, -55, -40, -55],
-  AmacronT: [-90, -90, -120, -120, -95, -55, -37, -111],
-  AmacronTcaron: [-90, -90, -120, -120, -95, -55, -37, -111],
-  AmacronTcommaaccent: [-90, -90, -120, -120, -95, -55, -37, -111],
-  AmacronU: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AmacronUacute: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AmacronUcircumflex: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AmacronUdieresis: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AmacronUgrave: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AmacronUhungarumlaut: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AmacronUmacron: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AmacronUogonek: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AmacronUring: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AmacronV: [-80, -80, -70, -70, -145, -95, -105, -135],
-  AmacronW: [-60, -60, -50, -50, -130, -100, -95, -90],
-  AmacronY: [-110, -110, -100, -100, -100, -70, -55, -105],
-  AmacronYacute: [-110, -110, -100, -100, -100, -70, -55, -105],
-  AmacronYdieresis: [-110, -110, -100, -100, -100, -70, -55, -105],
-  Amacronu: [-30, -30, -30, -30, -50, -30, -20],
-  Amacronuacute: [-30, -30, -30, -30, -50, -30, -20],
-  Amacronucircumflex: [-30, -30, -30, -30, -50, -30, -20],
-  Amacronudieresis: [-30, -30, -30, -30, -50, -30, -20],
-  Amacronugrave: [-30, -30, -30, -30, -50, -30, -20],
-  Amacronuhungarumlaut: [-30, -30, -30, -30, -50, -30, -20],
-  Amacronumacron: [-30, -30, -30, -30, -50, -30, -20],
-  Amacronuogonek: [-30, -30, -30, -30, -50, -30, -20],
-  Amacronuring: [-30, -30, -30, -30, -50, -30, -20],
-  Amacronv: [-40, -40, -40, -40, -100, -74, -55, -74],
-  Amacronw: [-30, -30, -40, -40, -90, -74, -55, -92],
-  Amacrony: [-30, -30, -40, -40, -74, -74, -55, -92],
-  Amacronyacute: [-30, -30, -40, -40, -74, -74, -55, -92],
-  Amacronydieresis: [-30, -30, -40, -40, -74, -74, -55, -92],
-  AogonekC: [-40, -40, -30, -30, -55, -65, -30, -40],
-  AogonekCacute: [-40, -40, -30, -30, -55, -65, -30, -40],
-  AogonekCcaron: [-40, -40, -30, -30, -55, -65, -30, -40],
-  AogonekCcedilla: [-40, -40, -30, -30, -55, -65, -30, -40],
-  AogonekG: [-50, -50, -30, -30, -55, -60, -35, -40],
-  AogonekGbreve: [-50, -50, -30, -30, -55, -60, -35, -40],
-  AogonekGcommaaccent: [-50, -50, -30, -30, -55, -60, -35, -40],
-  AogonekO: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AogonekOacute: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AogonekOcircumflex: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AogonekOdieresis: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AogonekOgrave: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AogonekOhungarumlaut: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AogonekOmacron: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AogonekOslash: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AogonekOtilde: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AogonekQ: [-40, -40, -30, -30, -45, -55, -40, -55],
-  AogonekT: [-90, -90, -120, -120, -95, -55, -37, -111],
-  AogonekTcaron: [-90, -90, -120, -120, -95, -55, -37, -111],
-  AogonekTcommaaccent: [-90, -90, -120, -120, -95, -55, -37, -111],
-  AogonekU: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AogonekUacute: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AogonekUcircumflex: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AogonekUdieresis: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AogonekUgrave: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AogonekUhungarumlaut: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AogonekUmacron: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AogonekUogonek: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AogonekUring: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AogonekV: [-80, -80, -70, -70, -145, -95, -105, -135],
-  AogonekW: [-60, -60, -50, -50, -130, -100, -95, -90],
-  AogonekY: [-110, -110, -100, -100, -100, -70, -55, -105],
-  AogonekYacute: [-110, -110, -100, -100, -100, -70, -55, -105],
-  AogonekYdieresis: [-110, -110, -100, -100, -100, -70, -55, -105],
-  Aogoneku: [-30, -30, -30, -30, -50, -30, -20],
-  Aogonekuacute: [-30, -30, -30, -30, -50, -30, -20],
-  Aogonekucircumflex: [-30, -30, -30, -30, -50, -30, -20],
-  Aogonekudieresis: [-30, -30, -30, -30, -50, -30, -20],
-  Aogonekugrave: [-30, -30, -30, -30, -50, -30, -20],
-  Aogonekuhungarumlaut: [-30, -30, -30, -30, -50, -30, -20],
-  Aogonekumacron: [-30, -30, -30, -30, -50, -30, -20],
-  Aogonekuogonek: [-30, -30, -30, -30, -50, -30, -20],
-  Aogonekuring: [-30, -30, -30, -30, -50, -30, -20],
-  Aogonekv: [-40, -40, -40, -40, -100, -74, -55, -74],
-  Aogonekw: [-30, -30, -40, -40, -90, -74, -55, -52],
-  Aogoneky: [-30, -30, -40, -40, -34, -34, -55, -52],
-  Aogonekyacute: [-30, -30, -40, -40, -34, -34, -55, -52],
-  Aogonekydieresis: [-30, -30, -40, -40, -34, -34, -55, -52],
-  AringC: [-40, -40, -30, -30, -55, -65, -30, -40],
-  AringCacute: [-40, -40, -30, -30, -55, -65, -30, -40],
-  AringCcaron: [-40, -40, -30, -30, -55, -65, -30, -40],
-  AringCcedilla: [-40, -40, -30, -30, -55, -65, -30, -40],
-  AringG: [-50, -50, -30, -30, -55, -60, -35, -40],
-  AringGbreve: [-50, -50, -30, -30, -55, -60, -35, -40],
-  AringGcommaaccent: [-50, -50, -30, -30, -55, -60, -35, -40],
-  AringO: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AringOacute: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AringOcircumflex: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AringOdieresis: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AringOgrave: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AringOhungarumlaut: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AringOmacron: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AringOslash: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AringOtilde: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AringQ: [-40, -40, -30, -30, -45, -55, -40, -55],
-  AringT: [-90, -90, -120, -120, -95, -55, -37, -111],
-  AringTcaron: [-90, -90, -120, -120, -95, -55, -37, -111],
-  AringTcommaaccent: [-90, -90, -120, -120, -95, -55, -37, -111],
-  AringU: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AringUacute: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AringUcircumflex: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AringUdieresis: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AringUgrave: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AringUhungarumlaut: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AringUmacron: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AringUogonek: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AringUring: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AringV: [-80, -80, -70, -70, -145, -95, -105, -135],
-  AringW: [-60, -60, -50, -50, -130, -100, -95, -90],
-  AringY: [-110, -110, -100, -100, -100, -70, -55, -105],
-  AringYacute: [-110, -110, -100, -100, -100, -70, -55, -105],
-  AringYdieresis: [-110, -110, -100, -100, -100, -70, -55, -105],
-  Aringu: [-30, -30, -30, -30, -50, -30, -20],
-  Aringuacute: [-30, -30, -30, -30, -50, -30, -20],
-  Aringucircumflex: [-30, -30, -30, -30, -50, -30, -20],
-  Aringudieresis: [-30, -30, -30, -30, -50, -30, -20],
-  Aringugrave: [-30, -30, -30, -30, -50, -30, -20],
-  Aringuhungarumlaut: [-30, -30, -30, -30, -50, -30, -20],
-  Aringumacron: [-30, -30, -30, -30, -50, -30, -20],
-  Aringuogonek: [-30, -30, -30, -30, -50, -30, -20],
-  Aringuring: [-30, -30, -30, -30, -50, -30, -20],
-  Aringv: [-40, -40, -40, -40, -100, -74, -55, -74],
-  Aringw: [-30, -30, -40, -40, -90, -74, -55, -92],
-  Aringy: [-30, -30, -40, -40, -74, -74, -55, -92],
-  Aringyacute: [-30, -30, -40, -40, -74, -74, -55, -92],
-  Aringydieresis: [-30, -30, -40, -40, -74, -74, -55, -92],
-  AtildeC: [-40, -40, -30, -30, -55, -65, -30, -40],
-  AtildeCacute: [-40, -40, -30, -30, -55, -65, -30, -40],
-  AtildeCcaron: [-40, -40, -30, -30, -55, -65, -30, -40],
-  AtildeCcedilla: [-40, -40, -30, -30, -55, -65, -30, -40],
-  AtildeG: [-50, -50, -30, -30, -55, -60, -35, -40],
-  AtildeGbreve: [-50, -50, -30, -30, -55, -60, -35, -40],
-  AtildeGcommaaccent: [-50, -50, -30, -30, -55, -60, -35, -40],
-  AtildeO: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AtildeOacute: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AtildeOcircumflex: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AtildeOdieresis: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AtildeOgrave: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AtildeOhungarumlaut: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AtildeOmacron: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AtildeOslash: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AtildeOtilde: [-40, -40, -30, -30, -45, -50, -40, -55],
-  AtildeQ: [-40, -40, -30, -30, -45, -55, -40, -55],
-  AtildeT: [-90, -90, -120, -120, -95, -55, -37, -111],
-  AtildeTcaron: [-90, -90, -120, -120, -95, -55, -37, -111],
-  AtildeTcommaaccent: [-90, -90, -120, -120, -95, -55, -37, -111],
-  AtildeU: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AtildeUacute: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AtildeUcircumflex: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AtildeUdieresis: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AtildeUgrave: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AtildeUhungarumlaut: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AtildeUmacron: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AtildeUogonek: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AtildeUring: [-50, -50, -50, -50, -50, -50, -50, -55],
-  AtildeV: [-80, -80, -70, -70, -145, -95, -105, -135],
-  AtildeW: [-60, -60, -50, -50, -130, -100, -95, -90],
-  AtildeY: [-110, -110, -100, -100, -100, -70, -55, -105],
-  AtildeYacute: [-110, -110, -100, -100, -100, -70, -55, -105],
-  AtildeYdieresis: [-110, -110, -100, -100, -100, -70, -55, -105],
-  Atildeu: [-30, -30, -30, -30, -50, -30, -20],
-  Atildeuacute: [-30, -30, -30, -30, -50, -30, -20],
-  Atildeucircumflex: [-30, -30, -30, -30, -50, -30, -20],
-  Atildeudieresis: [-30, -30, -30, -30, -50, -30, -20],
-  Atildeugrave: [-30, -30, -30, -30, -50, -30, -20],
-  Atildeuhungarumlaut: [-30, -30, -30, -30, -50, -30, -20],
-  Atildeumacron: [-30, -30, -30, -30, -50, -30, -20],
-  Atildeuogonek: [-30, -30, -30, -30, -50, -30, -20],
-  Atildeuring: [-30, -30, -30, -30, -50, -30, -20],
-  Atildev: [-40, -40, -40, -40, -100, -74, -55, -74],
-  Atildew: [-30, -30, -40, -40, -90, -74, -55, -92],
-  Atildey: [-30, -30, -40, -40, -74, -74, -55, -92],
-  Atildeyacute: [-30, -30, -40, -40, -74, -74, -55, -92],
-  Atildeydieresis: [-30, -30, -40, -40, -74, -74, -55, -92],
-  BA: [-30, -30, 0, 0, -30, -25, -25, -35],
-  BAacute: [-30, -30, 0, 0, -30, -25, -25, -35],
-  BAbreve: [-30, -30, 0, 0, -30, -25, -25, -35],
-  BAcircumflex: [-30, -30, 0, 0, -30, -25, -25, -35],
-  BAdieresis: [-30, -30, 0, 0, -30, -25, -25, -35],
-  BAgrave: [-30, -30, 0, 0, -30, -25, -25, -35],
-  BAmacron: [-30, -30, 0, 0, -30, -25, -25, -35],
-  BAogonek: [-30, -30, 0, 0, -30, -25, -25, -35],
-  BAring: [-30, -30, 0, 0, -30, -25, -25, -35],
-  BAtilde: [-30, -30, 0, 0, -30, -25, -25, -35],
-  BU: [-10, -10, -10, -10, -10, -10, -10, -10],
-  BUacute: [-10, -10, -10, -10, -10, -10, -10, -10],
-  BUcircumflex: [-10, -10, -10, -10, -10, -10, -10, -10],
-  BUdieresis: [-10, -10, -10, -10, -10, -10, -10, -10],
-  BUgrave: [-10, -10, -10, -10, -10, -10, -10, -10],
-  BUhungarumlaut: [-10, -10, -10, -10, -10, -10, -10, -10],
-  BUmacron: [-10, -10, -10, -10, -10, -10, -10, -10],
-  BUogonek: [-10, -10, -10, -10, -10, -10, -10, -10],
-  BUring: [-10, -10, -10, -10, -10, -10, -10, -10],
-  DA: [-40, -40, -40, -40, -35, -25, -35, -40],
-  DAacute: [-40, -40, -40, -40, -35, -25, -35, -40],
-  DAbreve: [-40, -40, -40, -40, -35, -25, -35, -40],
-  DAcircumflex: [-40, -40, -40, -40, -35, -25, -35, -40],
-  DAdieresis: [-40, -40, -40, -40, -35, -25, -35, -40],
-  DAgrave: [-40, -40, -40, -40, -35, -25, -35, -40],
-  DAmacron: [-40, -40, -40, -40, -35, -25, -35, -40],
-  DAogonek: [-40, -40, -40, -40, -35, -25, -35, -40],
-  DAring: [-40, -40, -40, -40, -35, -25, -35, -40],
-  DAtilde: [-40, -40, -40, -40, -35, -25, -35, -40],
-  DV: [-40, -40, -70, -70, -40, -50, -40, -40],
-  DW: [-40, -40, -40, -40, -40, -40, -40, -30],
-  DY: [-70, -70, -90, -90, -40, -50, -40, -55],
-  DYacute: [-70, -70, -90, -90, -40, -50, -40, -55],
-  DYdieresis: [-70, -70, -90, -90, -40, -50, -40, -55],
-  Dcomma: [-30, -30, -70, -70],
-  Dperiod: [-30, -30, -70, -70, -20],
-  DcaronA: [-40, -40, -40, -40, -35, -25, -35, -40],
-  DcaronAacute: [-40, -40, -40, -40, -35, -25, -35, -40],
-  DcaronAbreve: [-40, -40, -40, -40, -35, -25, -35, -40],
-  DcaronAcircumflex: [-40, -40, -40, -40, -35, -25, -35, -40],
-  DcaronAdieresis: [-40, -40, -40, -40, -35, -25, -35, -40],
-  DcaronAgrave: [-40, -40, -40, -40, -35, -25, -35, -40],
-  DcaronAmacron: [-40, -40, -40, -40, -35, -25, -35, -40],
-  DcaronAogonek: [-40, -40, -40, -40, -35, -25, -35, -40],
-  DcaronAring: [-40, -40, -40, -40, -35, -25, -35, -40],
-  DcaronAtilde: [-40, -40, -40, -40, -35, -25, -35, -40],
-  DcaronV: [-40, -40, -70, -70, -40, -50, -40, -40],
-  DcaronW: [-40, -40, -40, -40, -40, -40, -40, -30],
-  DcaronY: [-70, -70, -90, -90, -40, -50, -40, -55],
-  DcaronYacute: [-70, -70, -90, -90, -40, -50, -40, -55],
-  DcaronYdieresis: [-70, -70, -90, -90, -40, -50, -40, -55],
-  Dcaroncomma: [-30, -30, -70, -70],
-  Dcaronperiod: [-30, -30, -70, -70, -20],
-  DcroatA: [-40, -40, -40, -40, -35, -25, -35, -40],
-  DcroatAacute: [-40, -40, -40, -40, -35, -25, -35, -40],
-  DcroatAbreve: [-40, -40, -40, -40, -35, -25, -35, -40],
-  DcroatAcircumflex: [-40, -40, -40, -40, -35, -25, -35, -40],
-  DcroatAdieresis: [-40, -40, -40, -40, -35, -25, -35, -40],
-  DcroatAgrave: [-40, -40, -40, -40, -35, -25, -35, -40],
-  DcroatAmacron: [-40, -40, -40, -40, -35, -25, -35, -40],
-  DcroatAogonek: [-40, -40, -40, -40, -35, -25, -35, -40],
-  DcroatAring: [-40, -40, -40, -40, -35, -25, -35, -40],
-  DcroatAtilde: [-40, -40, -40, -40, -35, -25, -35, -40],
-  DcroatV: [-40, -40, -70, -70, -40, -50, -40, -40],
-  DcroatW: [-40, -40, -40, -40, -40, -40, -40, -30],
-  DcroatY: [-70, -70, -90, -90, -40, -50, -40, -55],
-  DcroatYacute: [-70, -70, -90, -90, -40, -50, -40, -55],
-  DcroatYdieresis: [-70, -70, -90, -90, -40, -50, -40, -55],
-  Dcroatcomma: [-30, -30, -70, -70],
-  Dcroatperiod: [-30, -30, -70, -70, -20],
-  FA: [-80, -80, -80, -80, -90, -100, -115, -74],
-  FAacute: [-80, -80, -80, -80, -90, -100, -115, -74],
-  FAbreve: [-80, -80, -80, -80, -90, -100, -115, -74],
-  FAcircumflex: [-80, -80, -80, -80, -90, -100, -115, -74],
-  FAdieresis: [-80, -80, -80, -80, -90, -100, -115, -74],
-  FAgrave: [-80, -80, -80, -80, -90, -100, -115, -74],
-  FAmacron: [-80, -80, -80, -80, -90, -100, -115, -74],
-  FAogonek: [-80, -80, -80, -80, -90, -100, -115, -74],
-  FAring: [-80, -80, -80, -80, -90, -100, -115, -74],
-  FAtilde: [-80, -80, -80, -80, -90, -100, -115, -74],
-  Fa: [-20, -20, -50, -50, -25, -95, -75, -15],
-  Faacute: [-20, -20, -50, -50, -25, -95, -75, -15],
-  Fabreve: [-20, -20, -50, -50, -25, -95, -75, -15],
-  Facircumflex: [-20, -20, -50, -50, -25, -95, -75, -15],
-  Fadieresis: [-20, -20, -50, -50, -25, -95, -75, -15],
-  Fagrave: [-20, -20, -50, -50, -25, -95, -75, -15],
-  Famacron: [-20, -20, -50, -50, -25, -95, -75, -15],
-  Faogonek: [-20, -20, -50, -50, -25, -95, -75, -15],
-  Faring: [-20, -20, -50, -50, -25, -95, -75, -15],
-  Fatilde: [-20, -20, -50, -50, -25, -95, -75, -15],
-  Fcomma: [-100, -100, -150, -150, -92, -129, -135, -80],
-  Fperiod: [-100, -100, -150, -150, -110, -129, -135, -80],
-  JA: [-20, -20, -20, -20, -30, -25, -40, -60],
-  JAacute: [-20, -20, -20, -20, -30, -25, -40, -60],
-  JAbreve: [-20, -20, -20, -20, -30, -25, -40, -60],
-  JAcircumflex: [-20, -20, -20, -20, -30, -25, -40, -60],
-  JAdieresis: [-20, -20, -20, -20, -30, -25, -40, -60],
-  JAgrave: [-20, -20, -20, -20, -30, -25, -40, -60],
-  JAmacron: [-20, -20, -20, -20, -30, -25, -40, -60],
-  JAogonek: [-20, -20, -20, -20, -30, -25, -40, -60],
-  JAring: [-20, -20, -20, -20, -30, -25, -40, -60],
-  JAtilde: [-20, -20, -20, -20, -30, -25, -40, -60],
-  Jcomma: [-20, -20, -30, -30, 0, -10, -25],
-  Jperiod: [-20, -20, -30, -30, -20, -10, -25],
-  Ju: [-20, -20, -20, -20, -15, -40, -35],
-  Juacute: [-20, -20, -20, -20, -15, -40, -35],
-  Jucircumflex: [-20, -20, -20, -20, -15, -40, -35],
-  Judieresis: [-20, -20, -20, -20, -15, -40, -35],
-  Jugrave: [-20, -20, -20, -20, -15, -40, -35],
-  Juhungarumlaut: [-20, -20, -20, -20, -15, -40, -35],
-  Jumacron: [-20, -20, -20, -20, -15, -40, -35],
-  Juogonek: [-20, -20, -20, -20, -15, -40, -35],
-  Juring: [-20, -20, -20, -20, -15, -40, -35],
-  KO: [-30, -30, -50, -50, -30, -30, -50, -30],
-  KOacute: [-30, -30, -50, -50, -30, -30, -50, -30],
-  KOcircumflex: [-30, -30, -50, -50, -30, -30, -50, -30],
-  KOdieresis: [-30, -30, -50, -50, -30, -30, -50, -30],
-  KOgrave: [-30, -30, -50, -50, -30, -30, -50, -30],
-  KOhungarumlaut: [-30, -30, -50, -50, -30, -30, -50, -30],
-  KOmacron: [-30, -30, -50, -50, -30, -30, -50, -30],
-  KOslash: [-30, -30, -50, -50, -30, -30, -50, -30],
-  KOtilde: [-30, -30, -50, -50, -30, -30, -50, -30],
-  Ke: [-15, -15, -40, -40, -25, -25, -35, -25],
-  Keacute: [-15, -15, -40, -40, -25, -25, -35, -25],
-  Kecaron: [-15, -15, -40, -40, -25, -25, -35, -25],
-  Kecircumflex: [-15, -15, -40, -40, -25, -25, -35, -25],
-  Kedieresis: [-15, -15, -40, -40, -25, -25, -35, -25],
-  Kedotaccent: [-15, -15, -40, -40, -25, -25, -35, -25],
-  Kegrave: [-15, -15, -40, -40, -25, -25, -35, -25],
-  Kemacron: [-15, -15, -40, -40, -25, -25, -35, -25],
-  Keogonek: [-15, -15, -40, -40, -25, -25, -35, -25],
-  Ko: [-35, -35, -40, -40, -25, -25, -40, -35],
-  Koacute: [-35, -35, -40, -40, -25, -25, -40, -35],
-  Kocircumflex: [-35, -35, -40, -40, -25, -25, -40, -35],
-  Kodieresis: [-35, -35, -40, -40, -25, -25, -40, -35],
-  Kograve: [-35, -35, -40, -40, -25, -25, -40, -35],
-  Kohungarumlaut: [-35, -35, -40, -40, -25, -25, -40, -35],
-  Komacron: [-35, -35, -40, -40, -25, -25, -40, -35],
-  Koslash: [-35, -35, -40, -40, -25, -25, -40, -35],
-  Kotilde: [-35, -35, -40, -40, -25, -25, -40, -35],
-  Ku: [-30, -30, -30, -30, -15, -20, -40, -15],
-  Kuacute: [-30, -30, -30, -30, -15, -20, -40, -15],
-  Kucircumflex: [-30, -30, -30, -30, -15, -20, -40, -15],
-  Kudieresis: [-30, -30, -30, -30, -15, -20, -40, -15],
-  Kugrave: [-30, -30, -30, -30, -15, -20, -40, -15],
-  Kuhungarumlaut: [-30, -30, -30, -30, -15, -20, -40, -15],
-  Kumacron: [-30, -30, -30, -30, -15, -20, -40, -15],
-  Kuogonek: [-30, -30, -30, -30, -15, -20, -40, -15],
-  Kuring: [-30, -30, -30, -30, -15, -20, -40, -15],
-  Ky: [-40, -40, -50, -50, -45, -20, -40, -25],
-  Kyacute: [-40, -40, -50, -50, -45, -20, -40, -25],
-  Kydieresis: [-40, -40, -50, -50, -45, -20, -40, -25],
-  KcommaaccentO: [-30, -30, -50, -50, -30, -30, -50, -30],
-  KcommaaccentOacute: [-30, -30, -50, -50, -30, -30, -50, -30],
-  KcommaaccentOcircumflex: [-30, -30, -50, -50, -30, -30, -50, -30],
-  KcommaaccentOdieresis: [-30, -30, -50, -50, -30, -30, -50, -30],
-  KcommaaccentOgrave: [-30, -30, -50, -50, -30, -30, -50, -30],
-  KcommaaccentOhungarumlaut: [-30, -30, -50, -50, -30, -30, -50, -30],
-  KcommaaccentOmacron: [-30, -30, -50, -50, -30, -30, -50, -30],
-  KcommaaccentOslash: [-30, -30, -50, -50, -30, -30, -50, -30],
-  KcommaaccentOtilde: [-30, -30, -50, -50, -30, -30, -50, -30],
-  Kcommaaccente: [-15, -15, -40, -40, -25, -25, -35, -25],
-  Kcommaaccenteacute: [-15, -15, -40, -40, -25, -25, -35, -25],
-  Kcommaaccentecaron: [-15, -15, -40, -40, -25, -25, -35, -25],
-  Kcommaaccentecircumflex: [-15, -15, -40, -40, -25, -25, -35, -25],
-  Kcommaaccentedieresis: [-15, -15, -40, -40, -25, -25, -35, -25],
-  Kcommaaccentedotaccent: [-15, -15, -40, -40, -25, -25, -35, -25],
-  Kcommaaccentegrave: [-15, -15, -40, -40, -25, -25, -35, -25],
-  Kcommaaccentemacron: [-15, -15, -40, -40, -25, -25, -35, -25],
-  Kcommaaccenteogonek: [-15, -15, -40, -40, -25, -25, -35, -25],
-  Kcommaaccento: [-35, -35, -40, -40, -25, -25, -40, -35],
-  Kcommaaccentoacute: [-35, -35, -40, -40, -25, -25, -40, -35],
-  Kcommaaccentocircumflex: [-35, -35, -40, -40, -25, -25, -40, -35],
-  Kcommaaccentodieresis: [-35, -35, -40, -40, -25, -25, -40, -35],
-  Kcommaaccentograve: [-35, -35, -40, -40, -25, -25, -40, -35],
-  Kcommaaccentohungarumlaut: [-35, -35, -40, -40, -25, -25, -40, -35],
-  Kcommaaccentomacron: [-35, -35, -40, -40, -25, -25, -40, -35],
-  Kcommaaccentoslash: [-35, -35, -40, -40, -25, -25, -40, -35],
-  Kcommaaccentotilde: [-35, -35, -40, -40, -25, -25, -40, -35],
-  Kcommaaccentu: [-30, -30, -30, -30, -15, -20, -40, -15],
-  Kcommaaccentuacute: [-30, -30, -30, -30, -15, -20, -40, -15],
-  Kcommaaccentucircumflex: [-30, -30, -30, -30, -15, -20, -40, -15],
-  Kcommaaccentudieresis: [-30, -30, -30, -30, -15, -20, -40, -15],
-  Kcommaaccentugrave: [-30, -30, -30, -30, -15, -20, -40, -15],
-  Kcommaaccentuhungarumlaut: [-30, -30, -30, -30, -15, -20, -40, -15],
-  Kcommaaccentumacron: [-30, -30, -30, -30, -15, -20, -40, -15],
-  Kcommaaccentuogonek: [-30, -30, -30, -30, -15, -20, -40, -15],
-  Kcommaaccenturing: [-30, -30, -30, -30, -15, -20, -40, -15],
-  Kcommaaccenty: [-40, -40, -50, -50, -45, -20, -40, -25],
-  Kcommaaccentyacute: [-40, -40, -50, -50, -45, -20, -40, -25],
-  Kcommaaccentydieresis: [-40, -40, -50, -50, -45, -20, -40, -25],
-  LT: [-90, -90, -110, -110, -92, -18, -20, -92],
-  LTcaron: [-90, -90, -110, -110, -92, -18, -20, -92],
-  LTcommaaccent: [-90, -90, -110, -110, -92, -18, -20, -92],
-  LV: [-110, -110, -110, -110, -92, -37, -55, -100],
-  LW: [-80, -80, -70, -70, -92, -37, -55, -74],
-  LY: [-120, -120, -140, -140, -92, -37, -20, -100],
-  LYacute: [-120, -120, -140, -140, -92, -37, -20, -100],
-  LYdieresis: [-120, -120, -140, -140, -92, -37, -20, -100],
-  Lquotedblright: [-140, -140, -140, -140, -20],
-  Lquoteright: [-140, -140, -160, -160, -110, -55, -37, -92],
-  Ly: [-30, -30, -30, -30, -55, -37, -30, -55],
-  Lyacute: [-30, -30, -30, -30, -55, -37, -30, -55],
-  Lydieresis: [-30, -30, -30, -30, -55, -37, -30, -55],
-  LacuteT: [-90, -90, -110, -110, -92, -18, -20, -92],
-  LacuteTcaron: [-90, -90, -110, -110, -92, -18, -20, -92],
-  LacuteTcommaaccent: [-90, -90, -110, -110, -92, -18, -20, -92],
-  LacuteV: [-110, -110, -110, -110, -92, -37, -55, -100],
-  LacuteW: [-80, -80, -70, -70, -92, -37, -55, -74],
-  LacuteY: [-120, -120, -140, -140, -92, -37, -20, -100],
-  LacuteYacute: [-120, -120, -140, -140, -92, -37, -20, -100],
-  LacuteYdieresis: [-120, -120, -140, -140, -92, -37, -20, -100],
-  Lacutequotedblright: [-140, -140, -140, -140, -20],
-  Lacutequoteright: [-140, -140, -160, -160, -110, -55, -37, -92],
-  Lacutey: [-30, -30, -30, -30, -55, -37, -30, -55],
-  Lacuteyacute: [-30, -30, -30, -30, -55, -37, -30, -55],
-  Lacuteydieresis: [-30, -30, -30, -30, -55, -37, -30, -55],
-  LcommaaccentT: [-90, -90, -110, -110, -92, -18, -20, -92],
-  LcommaaccentTcaron: [-90, -90, -110, -110, -92, -18, -20, -92],
-  LcommaaccentTcommaaccent: [-90, -90, -110, -110, -92, -18, -20, -92],
-  LcommaaccentV: [-110, -110, -110, -110, -92, -37, -55, -100],
-  LcommaaccentW: [-80, -80, -70, -70, -92, -37, -55, -74],
-  LcommaaccentY: [-120, -120, -140, -140, -92, -37, -20, -100],
-  LcommaaccentYacute: [-120, -120, -140, -140, -92, -37, -20, -100],
-  LcommaaccentYdieresis: [-120, -120, -140, -140, -92, -37, -20, -100],
-  Lcommaaccentquotedblright: [-140, -140, -140, -140, -20],
-  Lcommaaccentquoteright: [-140, -140, -160, -160, -110, -55, -37, -92],
-  Lcommaaccenty: [-30, -30, -30, -30, -55, -37, -30, -55],
-  Lcommaaccentyacute: [-30, -30, -30, -30, -55, -37, -30, -55],
-  Lcommaaccentydieresis: [-30, -30, -30, -30, -55, -37, -30, -55],
-  LslashT: [-90, -90, -110, -110, -92, -18, -20, -92],
-  LslashTcaron: [-90, -90, -110, -110, -92, -18, -20, -92],
-  LslashTcommaaccent: [-90, -90, -110, -110, -92, -18, -20, -92],
-  LslashV: [-110, -110, -110, -110, -92, -37, -55, -100],
-  LslashW: [-80, -80, -70, -70, -92, -37, -55, -74],
-  LslashY: [-120, -120, -140, -140, -92, -37, -20, -100],
-  LslashYacute: [-120, -120, -140, -140, -92, -37, -20, -100],
-  LslashYdieresis: [-120, -120, -140, -140, -92, -37, -20, -100],
-  Lslashquotedblright: [-140, -140, -140, -140, -20],
-  Lslashquoteright: [-140, -140, -160, -160, -110, -55, -37, -92],
-  Lslashy: [-30, -30, -30, -30, -55, -37, -30, -55],
-  Lslashyacute: [-30, -30, -30, -30, -55, -37, -30, -55],
-  Lslashydieresis: [-30, -30, -30, -30, -55, -37, -30, -55],
-  OA: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OAacute: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OAbreve: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OAcircumflex: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OAdieresis: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OAgrave: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OAmacron: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OAogonek: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OAring: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OAtilde: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OT: [-40, -40, -40, -40, -40, -40, -40, -40],
-  OTcaron: [-40, -40, -40, -40, -40, -40, -40, -40],
-  OTcommaaccent: [-40, -40, -40, -40, -40, -40, -40, -40],
-  OV: [-50, -50, -50, -50, -50, -50, -50, -50],
-  OW: [-50, -50, -30, -30, -50, -50, -50, -35],
-  OX: [-50, -50, -60, -60, -40, -40, -40, -40],
-  OY: [-70, -70, -70, -70, -50, -50, -50, -50],
-  OYacute: [-70, -70, -70, -70, -50, -50, -50, -50],
-  OYdieresis: [-70, -70, -70, -70, -50, -50, -50, -50],
-  Ocomma: [-40, -40, -40, -40],
-  Operiod: [-40, -40, -40, -40],
-  OacuteA: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OacuteAacute: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OacuteAbreve: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OacuteAcircumflex: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OacuteAdieresis: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OacuteAgrave: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OacuteAmacron: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OacuteAogonek: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OacuteAring: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OacuteAtilde: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OacuteT: [-40, -40, -40, -40, -40, -40, -40, -40],
-  OacuteTcaron: [-40, -40, -40, -40, -40, -40, -40, -40],
-  OacuteTcommaaccent: [-40, -40, -40, -40, -40, -40, -40, -40],
-  OacuteV: [-50, -50, -50, -50, -50, -50, -50, -50],
-  OacuteW: [-50, -50, -30, -30, -50, -50, -50, -35],
-  OacuteX: [-50, -50, -60, -60, -40, -40, -40, -40],
-  OacuteY: [-70, -70, -70, -70, -50, -50, -50, -50],
-  OacuteYacute: [-70, -70, -70, -70, -50, -50, -50, -50],
-  OacuteYdieresis: [-70, -70, -70, -70, -50, -50, -50, -50],
-  Oacutecomma: [-40, -40, -40, -40],
-  Oacuteperiod: [-40, -40, -40, -40],
-  OcircumflexA: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OcircumflexAacute: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OcircumflexAbreve: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OcircumflexAcircumflex: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OcircumflexAdieresis: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OcircumflexAgrave: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OcircumflexAmacron: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OcircumflexAogonek: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OcircumflexAring: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OcircumflexAtilde: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OcircumflexT: [-40, -40, -40, -40, -40, -40, -40, -40],
-  OcircumflexTcaron: [-40, -40, -40, -40, -40, -40, -40, -40],
-  OcircumflexTcommaaccent: [-40, -40, -40, -40, -40, -40, -40, -40],
-  OcircumflexV: [-50, -50, -50, -50, -50, -50, -50, -50],
-  OcircumflexW: [-50, -50, -30, -30, -50, -50, -50, -35],
-  OcircumflexX: [-50, -50, -60, -60, -40, -40, -40, -40],
-  OcircumflexY: [-70, -70, -70, -70, -50, -50, -50, -50],
-  OcircumflexYacute: [-70, -70, -70, -70, -50, -50, -50, -50],
-  OcircumflexYdieresis: [-70, -70, -70, -70, -50, -50, -50, -50],
-  Ocircumflexcomma: [-40, -40, -40, -40],
-  Ocircumflexperiod: [-40, -40, -40, -40],
-  OdieresisA: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OdieresisAacute: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OdieresisAbreve: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OdieresisAcircumflex: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OdieresisAdieresis: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OdieresisAgrave: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OdieresisAmacron: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OdieresisAogonek: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OdieresisAring: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OdieresisAtilde: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OdieresisT: [-40, -40, -40, -40, -40, -40, -40, -40],
-  OdieresisTcaron: [-40, -40, -40, -40, -40, -40, -40, -40],
-  OdieresisTcommaaccent: [-40, -40, -40, -40, -40, -40, -40, -40],
-  OdieresisV: [-50, -50, -50, -50, -50, -50, -50, -50],
-  OdieresisW: [-50, -50, -30, -30, -50, -50, -50, -35],
-  OdieresisX: [-50, -50, -60, -60, -40, -40, -40, -40],
-  OdieresisY: [-70, -70, -70, -70, -50, -50, -50, -50],
-  OdieresisYacute: [-70, -70, -70, -70, -50, -50, -50, -50],
-  OdieresisYdieresis: [-70, -70, -70, -70, -50, -50, -50, -50],
-  Odieresiscomma: [-40, -40, -40, -40],
-  Odieresisperiod: [-40, -40, -40, -40],
-  OgraveA: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OgraveAacute: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OgraveAbreve: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OgraveAcircumflex: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OgraveAdieresis: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OgraveAgrave: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OgraveAmacron: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OgraveAogonek: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OgraveAring: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OgraveAtilde: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OgraveT: [-40, -40, -40, -40, -40, -40, -40, -40],
-  OgraveTcaron: [-40, -40, -40, -40, -40, -40, -40, -40],
-  OgraveTcommaaccent: [-40, -40, -40, -40, -40, -40, -40, -40],
-  OgraveV: [-50, -50, -50, -50, -50, -50, -50, -50],
-  OgraveW: [-50, -50, -30, -30, -50, -50, -50, -35],
-  OgraveX: [-50, -50, -60, -60, -40, -40, -40, -40],
-  OgraveY: [-70, -70, -70, -70, -50, -50, -50, -50],
-  OgraveYacute: [-70, -70, -70, -70, -50, -50, -50, -50],
-  OgraveYdieresis: [-70, -70, -70, -70, -50, -50, -50, -50],
-  Ogravecomma: [-40, -40, -40, -40],
-  Ograveperiod: [-40, -40, -40, -40],
-  OhungarumlautA: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OhungarumlautAacute: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OhungarumlautAbreve: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OhungarumlautAcircumflex: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OhungarumlautAdieresis: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OhungarumlautAgrave: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OhungarumlautAmacron: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OhungarumlautAogonek: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OhungarumlautAring: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OhungarumlautAtilde: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OhungarumlautT: [-40, -40, -40, -40, -40, -40, -40, -40],
-  OhungarumlautTcaron: [-40, -40, -40, -40, -40, -40, -40, -40],
-  OhungarumlautTcommaaccent: [-40, -40, -40, -40, -40, -40, -40, -40],
-  OhungarumlautV: [-50, -50, -50, -50, -50, -50, -50, -50],
-  OhungarumlautW: [-50, -50, -30, -30, -50, -50, -50, -35],
-  OhungarumlautX: [-50, -50, -60, -60, -40, -40, -40, -40],
-  OhungarumlautY: [-70, -70, -70, -70, -50, -50, -50, -50],
-  OhungarumlautYacute: [-70, -70, -70, -70, -50, -50, -50, -50],
-  OhungarumlautYdieresis: [-70, -70, -70, -70, -50, -50, -50, -50],
-  Ohungarumlautcomma: [-40, -40, -40, -40],
-  Ohungarumlautperiod: [-40, -40, -40, -40],
-  OmacronA: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OmacronAacute: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OmacronAbreve: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OmacronAcircumflex: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OmacronAdieresis: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OmacronAgrave: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OmacronAmacron: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OmacronAogonek: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OmacronAring: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OmacronAtilde: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OmacronT: [-40, -40, -40, -40, -40, -40, -40, -40],
-  OmacronTcaron: [-40, -40, -40, -40, -40, -40, -40, -40],
-  OmacronTcommaaccent: [-40, -40, -40, -40, -40, -40, -40, -40],
-  OmacronV: [-50, -50, -50, -50, -50, -50, -50, -50],
-  OmacronW: [-50, -50, -30, -30, -50, -50, -50, -35],
-  OmacronX: [-50, -50, -60, -60, -40, -40, -40, -40],
-  OmacronY: [-70, -70, -70, -70, -50, -50, -50, -50],
-  OmacronYacute: [-70, -70, -70, -70, -50, -50, -50, -50],
-  OmacronYdieresis: [-70, -70, -70, -70, -50, -50, -50, -50],
-  Omacroncomma: [-40, -40, -40, -40],
-  Omacronperiod: [-40, -40, -40, -40],
-  OslashA: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OslashAacute: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OslashAbreve: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OslashAcircumflex: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OslashAdieresis: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OslashAgrave: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OslashAmacron: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OslashAogonek: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OslashAring: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OslashAtilde: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OslashT: [-40, -40, -40, -40, -40, -40, -40, -40],
-  OslashTcaron: [-40, -40, -40, -40, -40, -40, -40, -40],
-  OslashTcommaaccent: [-40, -40, -40, -40, -40, -40, -40, -40],
-  OslashV: [-50, -50, -50, -50, -50, -50, -50, -50],
-  OslashW: [-50, -50, -30, -30, -50, -50, -50, -35],
-  OslashX: [-50, -50, -60, -60, -40, -40, -40, -40],
-  OslashY: [-70, -70, -70, -70, -50, -50, -50, -50],
-  OslashYacute: [-70, -70, -70, -70, -50, -50, -50, -50],
-  OslashYdieresis: [-70, -70, -70, -70, -50, -50, -50, -50],
-  Oslashcomma: [-40, -40, -40, -40],
-  Oslashperiod: [-40, -40, -40, -40],
-  OtildeA: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OtildeAacute: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OtildeAbreve: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OtildeAcircumflex: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OtildeAdieresis: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OtildeAgrave: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OtildeAmacron: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OtildeAogonek: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OtildeAring: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OtildeAtilde: [-50, -50, -20, -20, -40, -40, -55, -35],
-  OtildeT: [-40, -40, -40, -40, -40, -40, -40, -40],
-  OtildeTcaron: [-40, -40, -40, -40, -40, -40, -40, -40],
-  OtildeTcommaaccent: [-40, -40, -40, -40, -40, -40, -40, -40],
-  OtildeV: [-50, -50, -50, -50, -50, -50, -50, -50],
-  OtildeW: [-50, -50, -30, -30, -50, -50, -50, -35],
-  OtildeX: [-50, -50, -60, -60, -40, -40, -40, -40],
-  OtildeY: [-70, -70, -70, -70, -50, -50, -50, -50],
-  OtildeYacute: [-70, -70, -70, -70, -50, -50, -50, -50],
-  OtildeYdieresis: [-70, -70, -70, -70, -50, -50, -50, -50],
-  Otildecomma: [-40, -40, -40, -40],
-  Otildeperiod: [-40, -40, -40, -40],
-  PA: [-100, -100, -120, -120, -74, -85, -90, -92],
-  PAacute: [-100, -100, -120, -120, -74, -85, -90, -92],
-  PAbreve: [-100, -100, -120, -120, -74, -85, -90, -92],
-  PAcircumflex: [-100, -100, -120, -120, -74, -85, -90, -92],
-  PAdieresis: [-100, -100, -120, -120, -74, -85, -90, -92],
-  PAgrave: [-100, -100, -120, -120, -74, -85, -90, -92],
-  PAmacron: [-100, -100, -120, -120, -74, -85, -90, -92],
-  PAogonek: [-100, -100, -120, -120, -74, -85, -90, -92],
-  PAring: [-100, -100, -120, -120, -74, -85, -90, -92],
-  PAtilde: [-100, -100, -120, -120, -74, -85, -90, -92],
-  Pa: [-30, -30, -40, -40, -10, -40, -80, -15],
-  Paacute: [-30, -30, -40, -40, -10, -40, -80, -15],
-  Pabreve: [-30, -30, -40, -40, -10, -40, -80, -15],
-  Pacircumflex: [-30, -30, -40, -40, -10, -40, -80, -15],
-  Padieresis: [-30, -30, -40, -40, -10, -40, -80, -15],
-  Pagrave: [-30, -30, -40, -40, -10, -40, -80, -15],
-  Pamacron: [-30, -30, -40, -40, -10, -40, -80, -15],
-  Paogonek: [-30, -30, -40, -40, -10, -40, -80, -15],
-  Paring: [-30, -30, -40, -40, -10, -40, -80, -15],
-  Patilde: [-30, -30, -40, -40, -10, -40, -80, -15],
-  Pcomma: [-120, -120, -180, -180, -92, -129, -135, -111],
-  Pe: [-30, -30, -50, -50, -20, -50, -80],
-  Peacute: [-30, -30, -50, -50, -20, -50, -80],
-  Pecaron: [-30, -30, -50, -50, -20, -50, -80],
-  Pecircumflex: [-30, -30, -50, -50, -20, -50, -80],
-  Pedieresis: [-30, -30, -50, -50, -20, -50, -80],
-  Pedotaccent: [-30, -30, -50, -50, -20, -50, -80],
-  Pegrave: [-30, -30, -50, -50, -20, -50, -80],
-  Pemacron: [-30, -30, -50, -50, -20, -50, -80],
-  Peogonek: [-30, -30, -50, -50, -20, -50, -80],
-  Po: [-40, -40, -50, -50, -20, -55, -80],
-  Poacute: [-40, -40, -50, -50, -20, -55, -80],
-  Pocircumflex: [-40, -40, -50, -50, -20, -55, -80],
-  Podieresis: [-40, -40, -50, -50, -20, -55, -80],
-  Pograve: [-40, -40, -50, -50, -20, -55, -80],
-  Pohungarumlaut: [-40, -40, -50, -50, -20, -55, -80],
-  Pomacron: [-40, -40, -50, -50, -20, -55, -80],
-  Poslash: [-40, -40, -50, -50, -20, -55, -80],
-  Potilde: [-40, -40, -50, -50, -20, -55, -80],
-  Pperiod: [-120, -120, -180, -180, -110, -129, -135, -111],
-  QU: [-10, -10, -10, -10, -10, -10, -10, -10],
-  QUacute: [-10, -10, -10, -10, -10, -10, -10, -10],
-  QUcircumflex: [-10, -10, -10, -10, -10, -10, -10, -10],
-  QUdieresis: [-10, -10, -10, -10, -10, -10, -10, -10],
-  QUgrave: [-10, -10, -10, -10, -10, -10, -10, -10],
-  QUhungarumlaut: [-10, -10, -10, -10, -10, -10, -10, -10],
-  QUmacron: [-10, -10, -10, -10, -10, -10, -10, -10],
-  QUogonek: [-10, -10, -10, -10, -10, -10, -10, -10],
-  QUring: [-10, -10, -10, -10, -10, -10, -10, -10],
-  Qcomma: [20, 20],
-  Qperiod: [20, 20, 0, 0, -20],
-  RO: [-20, -20, -20, -20, -30, -40, -40, -40],
-  ROacute: [-20, -20, -20, -20, -30, -40, -40, -40],
-  ROcircumflex: [-20, -20, -20, -20, -30, -40, -40, -40],
-  ROdieresis: [-20, -20, -20, -20, -30, -40, -40, -40],
-  ROgrave: [-20, -20, -20, -20, -30, -40, -40, -40],
-  ROhungarumlaut: [-20, -20, -20, -20, -30, -40, -40, -40],
-  ROmacron: [-20, -20, -20, -20, -30, -40, -40, -40],
-  ROslash: [-20, -20, -20, -20, -30, -40, -40, -40],
-  ROtilde: [-20, -20, -20, -20, -30, -40, -40, -40],
-  RT: [-20, -20, -30, -30, -40, -30, 0, -60],
-  RTcaron: [-20, -20, -30, -30, -40, -30, 0, -60],
-  RTcommaaccent: [-20, -20, -30, -30, -40, -30, 0, -60],
-  RU: [-20, -20, -40, -40, -30, -40, -40, -40],
-  RUacute: [-20, -20, -40, -40, -30, -40, -40, -40],
-  RUcircumflex: [-20, -20, -40, -40, -30, -40, -40, -40],
-  RUdieresis: [-20, -20, -40, -40, -30, -40, -40, -40],
-  RUgrave: [-20, -20, -40, -40, -30, -40, -40, -40],
-  RUhungarumlaut: [-20, -20, -40, -40, -30, -40, -40, -40],
-  RUmacron: [-20, -20, -40, -40, -30, -40, -40, -40],
-  RUogonek: [-20, -20, -40, -40, -30, -40, -40, -40],
-  RUring: [-20, -20, -40, -40, -30, -40, -40, -40],
-  RV: [-50, -50, -50, -50, -55, -18, -18, -80],
-  RW: [-40, -40, -30, -30, -35, -18, -18, -55],
-  RY: [-50, -50, -50, -50, -35, -18, -18, -65],
-  RYacute: [-50, -50, -50, -50, -35, -18, -18, -65],
-  RYdieresis: [-50, -50, -50, -50, -35, -18, -18, -65],
-  RacuteO: [-20, -20, -20, -20, -30, -40, -40, -40],
-  RacuteOacute: [-20, -20, -20, -20, -30, -40, -40, -40],
-  RacuteOcircumflex: [-20, -20, -20, -20, -30, -40, -40, -40],
-  RacuteOdieresis: [-20, -20, -20, -20, -30, -40, -40, -40],
-  RacuteOgrave: [-20, -20, -20, -20, -30, -40, -40, -40],
-  RacuteOhungarumlaut: [-20, -20, -20, -20, -30, -40, -40, -40],
-  RacuteOmacron: [-20, -20, -20, -20, -30, -40, -40, -40],
-  RacuteOslash: [-20, -20, -20, -20, -30, -40, -40, -40],
-  RacuteOtilde: [-20, -20, -20, -20, -30, -40, -40, -40],
-  RacuteT: [-20, -20, -30, -30, -40, -30, 0, -60],
-  RacuteTcaron: [-20, -20, -30, -30, -40, -30, 0, -60],
-  RacuteTcommaaccent: [-20, -20, -30, -30, -40, -30, 0, -60],
-  RacuteU: [-20, -20, -40, -40, -30, -40, -40, -40],
-  RacuteUacute: [-20, -20, -40, -40, -30, -40, -40, -40],
-  RacuteUcircumflex: [-20, -20, -40, -40, -30, -40, -40, -40],
-  RacuteUdieresis: [-20, -20, -40, -40, -30, -40, -40, -40],
-  RacuteUgrave: [-20, -20, -40, -40, -30, -40, -40, -40],
-  RacuteUhungarumlaut: [-20, -20, -40, -40, -30, -40, -40, -40],
-  RacuteUmacron: [-20, -20, -40, -40, -30, -40, -40, -40],
-  RacuteUogonek: [-20, -20, -40, -40, -30, -40, -40, -40],
-  RacuteUring: [-20, -20, -40, -40, -30, -40, -40, -40],
-  RacuteV: [-50, -50, -50, -50, -55, -18, -18, -80],
-  RacuteW: [-40, -40, -30, -30, -35, -18, -18, -55],
-  RacuteY: [-50, -50, -50, -50, -35, -18, -18, -65],
-  RacuteYacute: [-50, -50, -50, -50, -35, -18, -18, -65],
-  RacuteYdieresis: [-50, -50, -50, -50, -35, -18, -18, -65],
-  RcaronO: [-20, -20, -20, -20, -30, -40, -40, -40],
-  RcaronOacute: [-20, -20, -20, -20, -30, -40, -40, -40],
-  RcaronOcircumflex: [-20, -20, -20, -20, -30, -40, -40, -40],
-  RcaronOdieresis: [-20, -20, -20, -20, -30, -40, -40, -40],
-  RcaronOgrave: [-20, -20, -20, -20, -30, -40, -40, -40],
-  RcaronOhungarumlaut: [-20, -20, -20, -20, -30, -40, -40, -40],
-  RcaronOmacron: [-20, -20, -20, -20, -30, -40, -40, -40],
-  RcaronOslash: [-20, -20, -20, -20, -30, -40, -40, -40],
-  RcaronOtilde: [-20, -20, -20, -20, -30, -40, -40, -40],
-  RcaronT: [-20, -20, -30, -30, -40, -30, 0, -60],
-  RcaronTcaron: [-20, -20, -30, -30, -40, -30, 0, -60],
-  RcaronTcommaaccent: [-20, -20, -30, -30, -40, -30, 0, -60],
-  RcaronU: [-20, -20, -40, -40, -30, -40, -40, -40],
-  RcaronUacute: [-20, -20, -40, -40, -30, -40, -40, -40],
-  RcaronUcircumflex: [-20, -20, -40, -40, -30, -40, -40, -40],
-  RcaronUdieresis: [-20, -20, -40, -40, -30, -40, -40, -40],
-  RcaronUgrave: [-20, -20, -40, -40, -30, -40, -40, -40],
-  RcaronUhungarumlaut: [-20, -20, -40, -40, -30, -40, -40, -40],
-  RcaronUmacron: [-20, -20, -40, -40, -30, -40, -40, -40],
-  RcaronUogonek: [-20, -20, -40, -40, -30, -40, -40, -40],
-  RcaronUring: [-20, -20, -40, -40, -30, -40, -40, -40],
-  RcaronV: [-50, -50, -50, -50, -55, -18, -18, -80],
-  RcaronW: [-40, -40, -30, -30, -35, -18, -18, -55],
-  RcaronY: [-50, -50, -50, -50, -35, -18, -18, -65],
-  RcaronYacute: [-50, -50, -50, -50, -35, -18, -18, -65],
-  RcaronYdieresis: [-50, -50, -50, -50, -35, -18, -18, -65],
-  RcommaaccentO: [-20, -20, -20, -20, -30, -40, -40, -40],
-  RcommaaccentOacute: [-20, -20, -20, -20, -30, -40, -40, -40],
-  RcommaaccentOcircumflex: [-20, -20, -20, -20, -30, -40, -40, -40],
-  RcommaaccentOdieresis: [-20, -20, -20, -20, -30, -40, -40, -40],
-  RcommaaccentOgrave: [-20, -20, -20, -20, -30, -40, -40, -40],
-  RcommaaccentOhungarumlaut: [-20, -20, -20, -20, -30, -40, -40, -40],
-  RcommaaccentOmacron: [-20, -20, -20, -20, -30, -40, -40, -40],
-  RcommaaccentOslash: [-20, -20, -20, -20, -30, -40, -40, -40],
-  RcommaaccentOtilde: [-20, -20, -20, -20, -30, -40, -40, -40],
-  RcommaaccentT: [-20, -20, -30, -30, -40, -30, 0, -60],
-  RcommaaccentTcaron: [-20, -20, -30, -30, -40, -30, 0, -60],
-  RcommaaccentTcommaaccent: [-20, -20, -30, -30, -40, -30, 0, -60],
-  RcommaaccentU: [-20, -20, -40, -40, -30, -40, -40, -40],
-  RcommaaccentUacute: [-20, -20, -40, -40, -30, -40, -40, -40],
-  RcommaaccentUcircumflex: [-20, -20, -40, -40, -30, -40, -40, -40],
-  RcommaaccentUdieresis: [-20, -20, -40, -40, -30, -40, -40, -40],
-  RcommaaccentUgrave: [-20, -20, -40, -40, -30, -40, -40, -40],
-  RcommaaccentUhungarumlaut: [-20, -20, -40, -40, -30, -40, -40, -40],
-  RcommaaccentUmacron: [-20, -20, -40, -40, -30, -40, -40, -40],
-  RcommaaccentUogonek: [-20, -20, -40, -40, -30, -40, -40, -40],
-  RcommaaccentUring: [-20, -20, -40, -40, -30, -40, -40, -40],
-  RcommaaccentV: [-50, -50, -50, -50, -55, -18, -18, -80],
-  RcommaaccentW: [-40, -40, -30, -30, -35, -18, -18, -55],
-  RcommaaccentY: [-50, -50, -50, -50, -35, -18, -18, -65],
-  RcommaaccentYacute: [-50, -50, -50, -50, -35, -18, -18, -65],
-  RcommaaccentYdieresis: [-50, -50, -50, -50, -35, -18, -18, -65],
-  TA: [-90, -90, -120, -120, -90, -55, -50, -93],
-  TAacute: [-90, -90, -120, -120, -90, -55, -50, -93],
-  TAbreve: [-90, -90, -120, -120, -90, -55, -50, -93],
-  TAcircumflex: [-90, -90, -120, -120, -90, -55, -50, -93],
-  TAdieresis: [-90, -90, -120, -120, -90, -55, -50, -93],
-  TAgrave: [-90, -90, -120, -120, -90, -55, -50, -93],
-  TAmacron: [-90, -90, -120, -120, -90, -55, -50, -93],
-  TAogonek: [-90, -90, -120, -120, -90, -55, -50, -93],
-  TAring: [-90, -90, -120, -120, -90, -55, -50, -93],
-  TAtilde: [-90, -90, -120, -120, -90, -55, -50, -93],
-  TO: [-40, -40, -40, -40, -18, -18, -18, -18],
-  TOacute: [-40, -40, -40, -40, -18, -18, -18, -18],
-  TOcircumflex: [-40, -40, -40, -40, -18, -18, -18, -18],
-  TOdieresis: [-40, -40, -40, -40, -18, -18, -18, -18],
-  TOgrave: [-40, -40, -40, -40, -18, -18, -18, -18],
-  TOhungarumlaut: [-40, -40, -40, -40, -18, -18, -18, -18],
-  TOmacron: [-40, -40, -40, -40, -18, -18, -18, -18],
-  TOslash: [-40, -40, -40, -40, -18, -18, -18, -18],
-  TOtilde: [-40, -40, -40, -40, -18, -18, -18, -18],
-  Ta: [-80, -80, -120, -120, -92, -92, -92, -80],
-  Taacute: [-80, -80, -120, -120, -92, -92, -92, -80],
-  Tabreve: [-80, -80, -60, -60, -52, -92, -92, -80],
-  Tacircumflex: [-80, -80, -120, -120, -52, -92, -92, -80],
-  Tadieresis: [-80, -80, -120, -120, -52, -92, -92, -40],
-  Tagrave: [-80, -80, -120, -120, -52, -92, -92, -40],
-  Tamacron: [-80, -80, -60, -60, -52, -92, -92, -40],
-  Taogonek: [-80, -80, -120, -120, -92, -92, -92, -80],
-  Taring: [-80, -80, -120, -120, -92, -92, -92, -80],
-  Tatilde: [-80, -80, -60, -60, -52, -92, -92, -40],
-  Tcolon: [-40, -40, -20, -20, -74, -74, -55, -50],
-  Tcomma: [-80, -80, -120, -120, -74, -92, -74, -74],
-  Te: [-60, -60, -120, -120, -92, -92, -92, -70],
-  Teacute: [-60, -60, -120, -120, -92, -92, -92, -70],
-  Tecaron: [-60, -60, -120, -120, -92, -92, -92, -70],
-  Tecircumflex: [-60, -60, -120, -120, -92, -92, -52, -70],
-  Tedieresis: [-60, -60, -120, -120, -52, -52, -52, -30],
-  Tedotaccent: [-60, -60, -120, -120, -92, -92, -92, -70],
-  Tegrave: [-60, -60, -60, -60, -52, -52, -52, -70],
-  Temacron: [-60, -60, -60, -60, -52, -52, -52, -30],
-  Teogonek: [-60, -60, -120, -120, -92, -92, -92, -70],
-  Thyphen: [-120, -120, -140, -140, -92, -92, -74, -92],
-  To: [-80, -80, -120, -120, -92, -95, -92, -80],
-  Toacute: [-80, -80, -120, -120, -92, -95, -92, -80],
-  Tocircumflex: [-80, -80, -120, -120, -92, -95, -92, -80],
-  Todieresis: [-80, -80, -120, -120, -92, -95, -92, -80],
-  Tograve: [-80, -80, -120, -120, -92, -95, -92, -80],
-  Tohungarumlaut: [-80, -80, -120, -120, -92, -95, -92, -80],
-  Tomacron: [-80, -80, -60, -60, -92, -95, -92, -80],
-  Toslash: [-80, -80, -120, -120, -92, -95, -92, -80],
-  Totilde: [-80, -80, -60, -60, -92, -95, -92, -80],
-  Tperiod: [-80, -80, -120, -120, -90, -92, -74, -74],
-  Tr: [-80, -80, -120, -120, -74, -37, -55, -35],
-  Tracute: [-80, -80, -120, -120, -74, -37, -55, -35],
-  Trcommaaccent: [-80, -80, -120, -120, -74, -37, -55, -35],
-  Tsemicolon: [-40, -40, -20, -20, -74, -74, -65, -55],
-  Tu: [-90, -90, -120, -120, -92, -37, -55, -45],
-  Tuacute: [-90, -90, -120, -120, -92, -37, -55, -45],
-  Tucircumflex: [-90, -90, -120, -120, -92, -37, -55, -45],
-  Tudieresis: [-90, -90, -120, -120, -92, -37, -55, -45],
-  Tugrave: [-90, -90, -120, -120, -92, -37, -55, -45],
-  Tuhungarumlaut: [-90, -90, -120, -120, -92, -37, -55, -45],
-  Tumacron: [-90, -90, -60, -60, -92, -37, -55, -45],
-  Tuogonek: [-90, -90, -120, -120, -92, -37, -55, -45],
-  Turing: [-90, -90, -120, -120, -92, -37, -55, -45],
-  Tw: [-60, -60, -120, -120, -74, -37, -74, -80],
-  Ty: [-60, -60, -120, -120, -34, -37, -74, -80],
-  Tyacute: [-60, -60, -120, -120, -34, -37, -74, -80],
-  Tydieresis: [-60, -60, -60, -60, -34, -37, -34, -80],
-  TcaronA: [-90, -90, -120, -120, -90, -55, -50, -93],
-  TcaronAacute: [-90, -90, -120, -120, -90, -55, -50, -93],
-  TcaronAbreve: [-90, -90, -120, -120, -90, -55, -50, -93],
-  TcaronAcircumflex: [-90, -90, -120, -120, -90, -55, -50, -93],
-  TcaronAdieresis: [-90, -90, -120, -120, -90, -55, -50, -93],
-  TcaronAgrave: [-90, -90, -120, -120, -90, -55, -50, -93],
-  TcaronAmacron: [-90, -90, -120, -120, -90, -55, -50, -93],
-  TcaronAogonek: [-90, -90, -120, -120, -90, -55, -50, -93],
-  TcaronAring: [-90, -90, -120, -120, -90, -55, -50, -93],
-  TcaronAtilde: [-90, -90, -120, -120, -90, -55, -50, -93],
-  TcaronO: [-40, -40, -40, -40, -18, -18, -18, -18],
-  TcaronOacute: [-40, -40, -40, -40, -18, -18, -18, -18],
-  TcaronOcircumflex: [-40, -40, -40, -40, -18, -18, -18, -18],
-  TcaronOdieresis: [-40, -40, -40, -40, -18, -18, -18, -18],
-  TcaronOgrave: [-40, -40, -40, -40, -18, -18, -18, -18],
-  TcaronOhungarumlaut: [-40, -40, -40, -40, -18, -18, -18, -18],
-  TcaronOmacron: [-40, -40, -40, -40, -18, -18, -18, -18],
-  TcaronOslash: [-40, -40, -40, -40, -18, -18, -18, -18],
-  TcaronOtilde: [-40, -40, -40, -40, -18, -18, -18, -18],
-  Tcarona: [-80, -80, -120, -120, -92, -92, -92, -80],
-  Tcaronaacute: [-80, -80, -120, -120, -92, -92, -92, -80],
-  Tcaronabreve: [-80, -80, -60, -60, -52, -92, -92, -80],
-  Tcaronacircumflex: [-80, -80, -120, -120, -52, -92, -92, -80],
-  Tcaronadieresis: [-80, -80, -120, -120, -52, -92, -92, -40],
-  Tcaronagrave: [-80, -80, -120, -120, -52, -92, -92, -40],
-  Tcaronamacron: [-80, -80, -60, -60, -52, -92, -92, -40],
-  Tcaronaogonek: [-80, -80, -120, -120, -92, -92, -92, -80],
-  Tcaronaring: [-80, -80, -120, -120, -92, -92, -92, -80],
-  Tcaronatilde: [-80, -80, -60, -60, -52, -92, -92, -40],
-  Tcaroncolon: [-40, -40, -20, -20, -74, -74, -55, -50],
-  Tcaroncomma: [-80, -80, -120, -120, -74, -92, -74, -74],
-  Tcarone: [-60, -60, -120, -120, -92, -92, -92, -70],
-  Tcaroneacute: [-60, -60, -120, -120, -92, -92, -92, -70],
-  Tcaronecaron: [-60, -60, -120, -120, -92, -92, -92, -70],
-  Tcaronecircumflex: [-60, -60, -120, -120, -92, -92, -52, -30],
-  Tcaronedieresis: [-60, -60, -120, -120, -52, -52, -52, -30],
-  Tcaronedotaccent: [-60, -60, -120, -120, -92, -92, -92, -70],
-  Tcaronegrave: [-60, -60, -60, -60, -52, -52, -52, -70],
-  Tcaronemacron: [-60, -60, -60, -60, -52, -52, -52, -30],
-  Tcaroneogonek: [-60, -60, -120, -120, -92, -92, -92, -70],
-  Tcaronhyphen: [-120, -120, -140, -140, -92, -92, -74, -92],
-  Tcarono: [-80, -80, -120, -120, -92, -95, -92, -80],
-  Tcaronoacute: [-80, -80, -120, -120, -92, -95, -92, -80],
-  Tcaronocircumflex: [-80, -80, -120, -120, -92, -95, -92, -80],
-  Tcaronodieresis: [-80, -80, -120, -120, -92, -95, -92, -80],
-  Tcaronograve: [-80, -80, -120, -120, -92, -95, -92, -80],
-  Tcaronohungarumlaut: [-80, -80, -120, -120, -92, -95, -92, -80],
-  Tcaronomacron: [-80, -80, -60, -60, -92, -95, -92, -80],
-  Tcaronoslash: [-80, -80, -120, -120, -92, -95, -92, -80],
-  Tcaronotilde: [-80, -80, -60, -60, -92, -95, -92, -80],
-  Tcaronperiod: [-80, -80, -120, -120, -90, -92, -74, -74],
-  Tcaronr: [-80, -80, -120, -120, -74, -37, -55, -35],
-  Tcaronracute: [-80, -80, -120, -120, -74, -37, -55, -35],
-  Tcaronrcommaaccent: [-80, -80, -120, -120, -74, -37, -55, -35],
-  Tcaronsemicolon: [-40, -40, -20, -20, -74, -74, -65, -55],
-  Tcaronu: [-90, -90, -120, -120, -92, -37, -55, -45],
-  Tcaronuacute: [-90, -90, -120, -120, -92, -37, -55, -45],
-  Tcaronucircumflex: [-90, -90, -120, -120, -92, -37, -55, -45],
-  Tcaronudieresis: [-90, -90, -120, -120, -92, -37, -55, -45],
-  Tcaronugrave: [-90, -90, -120, -120, -92, -37, -55, -45],
-  Tcaronuhungarumlaut: [-90, -90, -120, -120, -92, -37, -55, -45],
-  Tcaronumacron: [-90, -90, -60, -60, -92, -37, -55, -45],
-  Tcaronuogonek: [-90, -90, -120, -120, -92, -37, -55, -45],
-  Tcaronuring: [-90, -90, -120, -120, -92, -37, -55, -45],
-  Tcaronw: [-60, -60, -120, -120, -74, -37, -74, -80],
-  Tcarony: [-60, -60, -120, -120, -34, -37, -74, -80],
-  Tcaronyacute: [-60, -60, -120, -120, -34, -37, -74, -80],
-  Tcaronydieresis: [-60, -60, -60, -60, -34, -37, -34, -80],
-  TcommaaccentA: [-90, -90, -120, -120, -90, -55, -50, -93],
-  TcommaaccentAacute: [-90, -90, -120, -120, -90, -55, -50, -93],
-  TcommaaccentAbreve: [-90, -90, -120, -120, -90, -55, -50, -93],
-  TcommaaccentAcircumflex: [-90, -90, -120, -120, -90, -55, -50, -93],
-  TcommaaccentAdieresis: [-90, -90, -120, -120, -90, -55, -50, -93],
-  TcommaaccentAgrave: [-90, -90, -120, -120, -90, -55, -50, -93],
-  TcommaaccentAmacron: [-90, -90, -120, -120, -90, -55, -50, -93],
-  TcommaaccentAogonek: [-90, -90, -120, -120, -90, -55, -50, -93],
-  TcommaaccentAring: [-90, -90, -120, -120, -90, -55, -50, -93],
-  TcommaaccentAtilde: [-90, -90, -120, -120, -90, -55, -50, -93],
-  TcommaaccentO: [-40, -40, -40, -40, -18, -18, -18, -18],
-  TcommaaccentOacute: [-40, -40, -40, -40, -18, -18, -18, -18],
-  TcommaaccentOcircumflex: [-40, -40, -40, -40, -18, -18, -18, -18],
-  TcommaaccentOdieresis: [-40, -40, -40, -40, -18, -18, -18, -18],
-  TcommaaccentOgrave: [-40, -40, -40, -40, -18, -18, -18, -18],
-  TcommaaccentOhungarumlaut: [-40, -40, -40, -40, -18, -18, -18, -18],
-  TcommaaccentOmacron: [-40, -40, -40, -40, -18, -18, -18, -18],
-  TcommaaccentOslash: [-40, -40, -40, -40, -18, -18, -18, -18],
-  TcommaaccentOtilde: [-40, -40, -40, -40, -18, -18, -18, -18],
-  Tcommaaccenta: [-80, -80, -120, -120, -92, -92, -92, -80],
-  Tcommaaccentaacute: [-80, -80, -120, -120, -92, -92, -92, -80],
-  Tcommaaccentabreve: [-80, -80, -60, -60, -52, -92, -92, -80],
-  Tcommaaccentacircumflex: [-80, -80, -120, -120, -52, -92, -92, -80],
-  Tcommaaccentadieresis: [-80, -80, -120, -120, -52, -92, -92, -40],
-  Tcommaaccentagrave: [-80, -80, -120, -120, -52, -92, -92, -40],
-  Tcommaaccentamacron: [-80, -80, -60, -60, -52, -92, -92, -40],
-  Tcommaaccentaogonek: [-80, -80, -120, -120, -92, -92, -92, -80],
-  Tcommaaccentaring: [-80, -80, -120, -120, -92, -92, -92, -80],
-  Tcommaaccentatilde: [-80, -80, -60, -60, -52, -92, -92, -40],
-  Tcommaaccentcolon: [-40, -40, -20, -20, -74, -74, -55, -50],
-  Tcommaaccentcomma: [-80, -80, -120, -120, -74, -92, -74, -74],
-  Tcommaaccente: [-60, -60, -120, -120, -92, -92, -92, -70],
-  Tcommaaccenteacute: [-60, -60, -120, -120, -92, -92, -92, -70],
-  Tcommaaccentecaron: [-60, -60, -120, -120, -92, -92, -92, -70],
-  Tcommaaccentecircumflex: [-60, -60, -120, -120, -92, -92, -52, -30],
-  Tcommaaccentedieresis: [-60, -60, -120, -120, -52, -52, -52, -30],
-  Tcommaaccentedotaccent: [-60, -60, -120, -120, -92, -92, -92, -70],
-  Tcommaaccentegrave: [-60, -60, -60, -60, -52, -52, -52, -30],
-  Tcommaaccentemacron: [-60, -60, -60, -60, -52, -52, -52, -70],
-  Tcommaaccenteogonek: [-60, -60, -120, -120, -92, -92, -92, -70],
-  Tcommaaccenthyphen: [-120, -120, -140, -140, -92, -92, -74, -92],
-  Tcommaaccento: [-80, -80, -120, -120, -92, -95, -92, -80],
-  Tcommaaccentoacute: [-80, -80, -120, -120, -92, -95, -92, -80],
-  Tcommaaccentocircumflex: [-80, -80, -120, -120, -92, -95, -92, -80],
-  Tcommaaccentodieresis: [-80, -80, -120, -120, -92, -95, -92, -80],
-  Tcommaaccentograve: [-80, -80, -120, -120, -92, -95, -92, -80],
-  Tcommaaccentohungarumlaut: [-80, -80, -120, -120, -92, -95, -92, -80],
-  Tcommaaccentomacron: [-80, -80, -60, -60, -92, -95, -92, -80],
-  Tcommaaccentoslash: [-80, -80, -120, -120, -92, -95, -92, -80],
-  Tcommaaccentotilde: [-80, -80, -60, -60, -92, -95, -92, -80],
-  Tcommaaccentperiod: [-80, -80, -120, -120, -90, -92, -74, -74],
-  Tcommaaccentr: [-80, -80, -120, -120, -74, -37, -55, -35],
-  Tcommaaccentracute: [-80, -80, -120, -120, -74, -37, -55, -35],
-  Tcommaaccentrcommaaccent: [-80, -80, -120, -120, -74, -37, -55, -35],
-  Tcommaaccentsemicolon: [-40, -40, -20, -20, -74, -74, -65, -55],
-  Tcommaaccentu: [-90, -90, -120, -120, -92, -37, -55, -45],
-  Tcommaaccentuacute: [-90, -90, -120, -120, -92, -37, -55, -45],
-  Tcommaaccentucircumflex: [-90, -90, -120, -120, -92, -37, -55, -45],
-  Tcommaaccentudieresis: [-90, -90, -120, -120, -92, -37, -55, -45],
-  Tcommaaccentugrave: [-90, -90, -120, -120, -92, -37, -55, -45],
-  Tcommaaccentuhungarumlaut: [-90, -90, -120, -120, -92, -37, -55, -45],
-  Tcommaaccentumacron: [-90, -90, -60, -60, -92, -37, -55, -45],
-  Tcommaaccentuogonek: [-90, -90, -120, -120, -92, -37, -55, -45],
-  Tcommaaccenturing: [-90, -90, -120, -120, -92, -37, -55, -45],
-  Tcommaaccentw: [-60, -60, -120, -120, -74, -37, -74, -80],
-  Tcommaaccenty: [-60, -60, -120, -120, -34, -37, -74, -80],
-  Tcommaaccentyacute: [-60, -60, -120, -120, -34, -37, -74, -80],
-  Tcommaaccentydieresis: [-60, -60, -60, -60, -34, -37, -34, -80],
-  UA: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UAacute: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UAbreve: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UAcircumflex: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UAdieresis: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UAgrave: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UAmacron: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UAogonek: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UAring: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UAtilde: [-50, -50, -40, -40, -60, -45, -40, -40],
-  Ucomma: [-30, -30, -40, -40, -50, 0, -25],
-  Uperiod: [-30, -30, -40, -40, -50, 0, -25],
-  UacuteA: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UacuteAacute: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UacuteAbreve: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UacuteAcircumflex: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UacuteAdieresis: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UacuteAgrave: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UacuteAmacron: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UacuteAogonek: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UacuteAring: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UacuteAtilde: [-50, -50, -40, -40, -60, -45, -40, -40],
-  Uacutecomma: [-30, -30, -40, -40, -50, 0, -25],
-  Uacuteperiod: [-30, -30, -40, -40, -50, 0, -25],
-  UcircumflexA: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UcircumflexAacute: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UcircumflexAbreve: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UcircumflexAcircumflex: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UcircumflexAdieresis: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UcircumflexAgrave: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UcircumflexAmacron: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UcircumflexAogonek: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UcircumflexAring: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UcircumflexAtilde: [-50, -50, -40, -40, -60, -45, -40, -40],
-  Ucircumflexcomma: [-30, -30, -40, -40, -50, 0, -25],
-  Ucircumflexperiod: [-30, -30, -40, -40, -50, 0, -25],
-  UdieresisA: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UdieresisAacute: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UdieresisAbreve: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UdieresisAcircumflex: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UdieresisAdieresis: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UdieresisAgrave: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UdieresisAmacron: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UdieresisAogonek: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UdieresisAring: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UdieresisAtilde: [-50, -50, -40, -40, -60, -45, -40, -40],
-  Udieresiscomma: [-30, -30, -40, -40, -50, 0, -25],
-  Udieresisperiod: [-30, -30, -40, -40, -50, 0, -25],
-  UgraveA: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UgraveAacute: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UgraveAbreve: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UgraveAcircumflex: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UgraveAdieresis: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UgraveAgrave: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UgraveAmacron: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UgraveAogonek: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UgraveAring: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UgraveAtilde: [-50, -50, -40, -40, -60, -45, -40, -40],
-  Ugravecomma: [-30, -30, -40, -40, -50, 0, -25],
-  Ugraveperiod: [-30, -30, -40, -40, -50, 0, -25],
-  UhungarumlautA: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UhungarumlautAacute: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UhungarumlautAbreve: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UhungarumlautAcircumflex: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UhungarumlautAdieresis: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UhungarumlautAgrave: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UhungarumlautAmacron: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UhungarumlautAogonek: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UhungarumlautAring: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UhungarumlautAtilde: [-50, -50, -40, -40, -60, -45, -40, -40],
-  Uhungarumlautcomma: [-30, -30, -40, -40, -50, 0, -25],
-  Uhungarumlautperiod: [-30, -30, -40, -40, -50, 0, -25],
-  UmacronA: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UmacronAacute: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UmacronAbreve: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UmacronAcircumflex: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UmacronAdieresis: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UmacronAgrave: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UmacronAmacron: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UmacronAogonek: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UmacronAring: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UmacronAtilde: [-50, -50, -40, -40, -60, -45, -40, -40],
-  Umacroncomma: [-30, -30, -40, -40, -50, 0, -25],
-  Umacronperiod: [-30, -30, -40, -40, -50, 0, -25],
-  UogonekA: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UogonekAacute: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UogonekAbreve: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UogonekAcircumflex: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UogonekAdieresis: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UogonekAgrave: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UogonekAmacron: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UogonekAogonek: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UogonekAring: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UogonekAtilde: [-50, -50, -40, -40, -60, -45, -40, -40],
-  Uogonekcomma: [-30, -30, -40, -40, -50, 0, -25],
-  Uogonekperiod: [-30, -30, -40, -40, -50, 0, -25],
-  UringA: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UringAacute: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UringAbreve: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UringAcircumflex: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UringAdieresis: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UringAgrave: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UringAmacron: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UringAogonek: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UringAring: [-50, -50, -40, -40, -60, -45, -40, -40],
-  UringAtilde: [-50, -50, -40, -40, -60, -45, -40, -40],
-  Uringcomma: [-30, -30, -40, -40, -50, 0, -25],
-  Uringperiod: [-30, -30, -40, -40, -50, 0, -25],
-  VA: [-80, -80, -80, -80, -135, -85, -60, -135],
-  VAacute: [-80, -80, -80, -80, -135, -85, -60, -135],
-  VAbreve: [-80, -80, -80, -80, -135, -85, -60, -135],
-  VAcircumflex: [-80, -80, -80, -80, -135, -85, -60, -135],
-  VAdieresis: [-80, -80, -80, -80, -135, -85, -60, -135],
-  VAgrave: [-80, -80, -80, -80, -135, -85, -60, -135],
-  VAmacron: [-80, -80, -80, -80, -135, -85, -60, -135],
-  VAogonek: [-80, -80, -80, -80, -135, -85, -60, -135],
-  VAring: [-80, -80, -80, -80, -135, -85, -60, -135],
-  VAtilde: [-80, -80, -80, -80, -135, -85, -60, -135],
-  VG: [-50, -50, -40, -40, -30, -10, 0, -15],
-  VGbreve: [-50, -50, -40, -40, -30, -10, 0, -15],
-  VGcommaaccent: [-50, -50, -40, -40, -30, -10, 0, -15],
-  VO: [-50, -50, -40, -40, -45, -30, -30, -40],
-  VOacute: [-50, -50, -40, -40, -45, -30, -30, -40],
-  VOcircumflex: [-50, -50, -40, -40, -45, -30, -30, -40],
-  VOdieresis: [-50, -50, -40, -40, -45, -30, -30, -40],
-  VOgrave: [-50, -50, -40, -40, -45, -30, -30, -40],
-  VOhungarumlaut: [-50, -50, -40, -40, -45, -30, -30, -40],
-  VOmacron: [-50, -50, -40, -40, -45, -30, -30, -40],
-  VOslash: [-50, -50, -40, -40, -45, -30, -30, -40],
-  VOtilde: [-50, -50, -40, -40, -45, -30, -30, -40],
-  Va: [-60, -60, -70, -70, -92, -111, -111, -111],
-  Vaacute: [-60, -60, -70, -70, -92, -111, -111, -111],
-  Vabreve: [-60, -60, -70, -70, -92, -111, -111, -111],
-  Vacircumflex: [-60, -60, -70, -70, -92, -111, -111, -71],
-  Vadieresis: [-60, -60, -70, -70, -92, -111, -111, -71],
-  Vagrave: [-60, -60, -70, -70, -92, -111, -111, -71],
-  Vamacron: [-60, -60, -70, -70, -92, -111, -111, -71],
-  Vaogonek: [-60, -60, -70, -70, -92, -111, -111, -111],
-  Varing: [-60, -60, -70, -70, -92, -111, -111, -111],
-  Vatilde: [-60, -60, -70, -70, -92, -111, -111, -71],
-  Vcolon: [-40, -40, -40, -40, -92, -74, -65, -74],
-  Vcomma: [-120, -120, -125, -125, -129, -129, -129, -129],
-  Ve: [-50, -50, -80, -80, -100, -111, -111, -111],
-  Veacute: [-50, -50, -80, -80, -100, -111, -111, -111],
-  Vecaron: [-50, -50, -80, -80, -100, -111, -111, -71],
-  Vecircumflex: [-50, -50, -80, -80, -100, -111, -111, -71],
-  Vedieresis: [-50, -50, -80, -80, -100, -71, -71, -71],
-  Vedotaccent: [-50, -50, -80, -80, -100, -111, -111, -111],
-  Vegrave: [-50, -50, -80, -80, -100, -71, -71, -71],
-  Vemacron: [-50, -50, -80, -80, -100, -71, -71, -71],
-  Veogonek: [-50, -50, -80, -80, -100, -111, -111, -111],
-  Vhyphen: [-80, -80, -80, -80, -74, -70, -55, -100],
-  Vo: [-90, -90, -80, -80, -100, -111, -111, -129],
-  Voacute: [-90, -90, -80, -80, -100, -111, -111, -129],
-  Vocircumflex: [-90, -90, -80, -80, -100, -111, -111, -129],
-  Vodieresis: [-90, -90, -80, -80, -100, -111, -111, -89],
-  Vograve: [-90, -90, -80, -80, -100, -111, -111, -89],
-  Vohungarumlaut: [-90, -90, -80, -80, -100, -111, -111, -129],
-  Vomacron: [-90, -90, -80, -80, -100, -111, -111, -89],
-  Voslash: [-90, -90, -80, -80, -100, -111, -111, -129],
-  Votilde: [-90, -90, -80, -80, -100, -111, -111, -89],
-  Vperiod: [-120, -120, -125, -125, -145, -129, -129, -129],
-  Vsemicolon: [-40, -40, -40, -40, -92, -74, -74, -74],
-  Vu: [-60, -60, -70, -70, -92, -55, -74, -75],
-  Vuacute: [-60, -60, -70, -70, -92, -55, -74, -75],
-  Vucircumflex: [-60, -60, -70, -70, -92, -55, -74, -75],
-  Vudieresis: [-60, -60, -70, -70, -92, -55, -74, -75],
-  Vugrave: [-60, -60, -70, -70, -92, -55, -74, -75],
-  Vuhungarumlaut: [-60, -60, -70, -70, -92, -55, -74, -75],
-  Vumacron: [-60, -60, -70, -70, -92, -55, -74, -75],
-  Vuogonek: [-60, -60, -70, -70, -92, -55, -74, -75],
-  Vuring: [-60, -60, -70, -70, -92, -55, -74, -75],
-  WA: [-60, -60, -50, -50, -120, -74, -60, -120],
-  WAacute: [-60, -60, -50, -50, -120, -74, -60, -120],
-  WAbreve: [-60, -60, -50, -50, -120, -74, -60, -120],
-  WAcircumflex: [-60, -60, -50, -50, -120, -74, -60, -120],
-  WAdieresis: [-60, -60, -50, -50, -120, -74, -60, -120],
-  WAgrave: [-60, -60, -50, -50, -120, -74, -60, -120],
-  WAmacron: [-60, -60, -50, -50, -120, -74, -60, -120],
-  WAogonek: [-60, -60, -50, -50, -120, -74, -60, -120],
-  WAring: [-60, -60, -50, -50, -120, -74, -60, -120],
-  WAtilde: [-60, -60, -50, -50, -120, -74, -60, -120],
-  WO: [-20, -20, -20, -20, -10, -15, -25, -10],
-  WOacute: [-20, -20, -20, -20, -10, -15, -25, -10],
-  WOcircumflex: [-20, -20, -20, -20, -10, -15, -25, -10],
-  WOdieresis: [-20, -20, -20, -20, -10, -15, -25, -10],
-  WOgrave: [-20, -20, -20, -20, -10, -15, -25, -10],
-  WOhungarumlaut: [-20, -20, -20, -20, -10, -15, -25, -10],
-  WOmacron: [-20, -20, -20, -20, -10, -15, -25, -10],
-  WOslash: [-20, -20, -20, -20, -10, -15, -25, -10],
-  WOtilde: [-20, -20, -20, -20, -10, -15, -25, -10],
-  Wa: [-40, -40, -40, -40, -65, -85, -92, -80],
-  Waacute: [-40, -40, -40, -40, -65, -85, -92, -80],
-  Wabreve: [-40, -40, -40, -40, -65, -85, -92, -80],
-  Wacircumflex: [-40, -40, -40, -40, -65, -85, -92, -80],
-  Wadieresis: [-40, -40, -40, -40, -65, -85, -92, -80],
-  Wagrave: [-40, -40, -40, -40, -65, -85, -92, -80],
-  Wamacron: [-40, -40, -40, -40, -65, -85, -92, -80],
-  Waogonek: [-40, -40, -40, -40, -65, -85, -92, -80],
-  Waring: [-40, -40, -40, -40, -65, -85, -92, -80],
-  Watilde: [-40, -40, -40, -40, -65, -85, -92, -80],
-  Wcolon: [-10, -10, 0, 0, -55, -55, -65, -37],
-  Wcomma: [-80, -80, -80, -80, -92, -74, -92, -92],
-  We: [-35, -35, -30, -30, -65, -90, -92, -80],
-  Weacute: [-35, -35, -30, -30, -65, -90, -92, -80],
-  Wecaron: [-35, -35, -30, -30, -65, -90, -92, -80],
-  Wecircumflex: [-35, -35, -30, -30, -65, -90, -92, -80],
-  Wedieresis: [-35, -35, -30, -30, -65, -50, -52, -40],
-  Wedotaccent: [-35, -35, -30, -30, -65, -90, -92, -80],
-  Wegrave: [-35, -35, -30, -30, -65, -50, -52, -40],
-  Wemacron: [-35, -35, -30, -30, -65, -50, -52, -40],
-  Weogonek: [-35, -35, -30, -30, -65, -90, -92, -80],
-  Whyphen: [-40, -40, -40, -40, -37, -50, -37, -65],
-  Wo: [-60, -60, -30, -30, -75, -80, -92, -80],
-  Woacute: [-60, -60, -30, -30, -75, -80, -92, -80],
-  Wocircumflex: [-60, -60, -30, -30, -75, -80, -92, -80],
-  Wodieresis: [-60, -60, -30, -30, -75, -80, -92, -80],
-  Wograve: [-60, -60, -30, -30, -75, -80, -92, -80],
-  Wohungarumlaut: [-60, -60, -30, -30, -75, -80, -92, -80],
-  Womacron: [-60, -60, -30, -30, -75, -80, -92, -80],
-  Woslash: [-60, -60, -30, -30, -75, -80, -92, -80],
-  Wotilde: [-60, -60, -30, -30, -75, -80, -92, -80],
-  Wperiod: [-80, -80, -80, -80, -92, -74, -92, -92],
-  Wsemicolon: [-10, -10, 0, 0, -55, -55, -65, -37],
-  Wu: [-45, -45, -30, -30, -50, -55, -55, -50],
-  Wuacute: [-45, -45, -30, -30, -50, -55, -55, -50],
-  Wucircumflex: [-45, -45, -30, -30, -50, -55, -55, -50],
-  Wudieresis: [-45, -45, -30, -30, -50, -55, -55, -50],
-  Wugrave: [-45, -45, -30, -30, -50, -55, -55, -50],
-  Wuhungarumlaut: [-45, -45, -30, -30, -50, -55, -55, -50],
-  Wumacron: [-45, -45, -30, -30, -50, -55, -55, -50],
-  Wuogonek: [-45, -45, -30, -30, -50, -55, -55, -50],
-  Wuring: [-45, -45, -30, -30, -50, -55, -55, -50],
-  Wy: [-20, -20, -20, -20, -60, -55, -70, -73],
-  Wyacute: [-20, -20, -20, -20, -60, -55, -70, -73],
-  Wydieresis: [-20, -20, -20, -20, -60, -55, -70, -73],
-  YA: [-110, -110, -110, -110, -110, -74, -50, -120],
-  YAacute: [-110, -110, -110, -110, -110, -74, -50, -120],
-  YAbreve: [-110, -110, -110, -110, -110, -74, -50, -120],
-  YAcircumflex: [-110, -110, -110, -110, -110, -74, -50, -120],
-  YAdieresis: [-110, -110, -110, -110, -110, -74, -50, -120],
-  YAgrave: [-110, -110, -110, -110, -110, -74, -50, -120],
-  YAmacron: [-110, -110, -110, -110, -110, -74, -50, -120],
-  YAogonek: [-110, -110, -110, -110, -110, -74, -50, -120],
-  YAring: [-110, -110, -110, -110, -110, -74, -50, -120],
-  YAtilde: [-110, -110, -110, -110, -110, -74, -50, -120],
-  YO: [-70, -70, -85, -85, -35, -25, -15, -30],
-  YOacute: [-70, -70, -85, -85, -35, -25, -15, -30],
-  YOcircumflex: [-70, -70, -85, -85, -35, -25, -15, -30],
-  YOdieresis: [-70, -70, -85, -85, -35, -25, -15, -30],
-  YOgrave: [-70, -70, -85, -85, -35, -25, -15, -30],
-  YOhungarumlaut: [-70, -70, -85, -85, -35, -25, -15, -30],
-  YOmacron: [-70, -70, -85, -85, -35, -25, -15, -30],
-  YOslash: [-70, -70, -85, -85, -35, -25, -15, -30],
-  YOtilde: [-70, -70, -85, -85, -35, -25, -15, -30],
-  Ya: [-90, -90, -140, -140, -85, -92, -92, -100],
-  Yaacute: [-90, -90, -140, -140, -85, -92, -92, -100],
-  Yabreve: [-90, -90, -70, -70, -85, -92, -92, -100],
-  Yacircumflex: [-90, -90, -140, -140, -85, -92, -92, -100],
-  Yadieresis: [-90, -90, -140, -140, -85, -92, -92, -60],
-  Yagrave: [-90, -90, -140, -140, -85, -92, -92, -60],
-  Yamacron: [-90, -90, -70, -70, -85, -92, -92, -60],
-  Yaogonek: [-90, -90, -140, -140, -85, -92, -92, -100],
-  Yaring: [-90, -90, -140, -140, -85, -92, -92, -100],
-  Yatilde: [-90, -90, -140, -140, -85, -92, -92, -60],
-  Ycolon: [-50, -50, -60, -60, -92, -92, -65, -92],
-  Ycomma: [-100, -100, -140, -140, -92, -92, -92, -129],
-  Ye: [-80, -80, -140, -140, -111, -111, -92, -100],
-  Yeacute: [-80, -80, -140, -140, -111, -111, -92, -100],
-  Yecaron: [-80, -80, -140, -140, -111, -111, -92, -100],
-  Yecircumflex: [-80, -80, -140, -140, -111, -71, -92, -100],
-  Yedieresis: [-80, -80, -140, -140, -71, -71, -52, -60],
-  Yedotaccent: [-80, -80, -140, -140, -111, -111, -92, -100],
-  Yegrave: [-80, -80, -140, -140, -71, -71, -52, -60],
-  Yemacron: [-80, -80, -70, -70, -71, -71, -52, -60],
-  Yeogonek: [-80, -80, -140, -140, -111, -111, -92, -100],
-  Yo: [-100, -100, -140, -140, -111, -111, -92, -110],
-  Yoacute: [-100, -100, -140, -140, -111, -111, -92, -110],
-  Yocircumflex: [-100, -100, -140, -140, -111, -111, -92, -110],
-  Yodieresis: [-100, -100, -140, -140, -111, -111, -92, -70],
-  Yograve: [-100, -100, -140, -140, -111, -111, -92, -70],
-  Yohungarumlaut: [-100, -100, -140, -140, -111, -111, -92, -110],
-  Yomacron: [-100, -100, -140, -140, -111, -111, -92, -70],
-  Yoslash: [-100, -100, -140, -140, -111, -111, -92, -110],
-  Yotilde: [-100, -100, -140, -140, -111, -111, -92, -70],
-  Yperiod: [-100, -100, -140, -140, -92, -74, -92, -129],
-  Ysemicolon: [-50, -50, -60, -60, -92, -92, -65, -92],
-  Yu: [-100, -100, -110, -110, -92, -92, -92, -111],
-  Yuacute: [-100, -100, -110, -110, -92, -92, -92, -111],
-  Yucircumflex: [-100, -100, -110, -110, -92, -92, -92, -111],
-  Yudieresis: [-100, -100, -110, -110, -92, -92, -92, -71],
-  Yugrave: [-100, -100, -110, -110, -92, -92, -92, -71],
-  Yuhungarumlaut: [-100, -100, -110, -110, -92, -92, -92, -111],
-  Yumacron: [-100, -100, -110, -110, -92, -92, -92, -71],
-  Yuogonek: [-100, -100, -110, -110, -92, -92, -92, -111],
-  Yuring: [-100, -100, -110, -110, -92, -92, -92, -111],
-  YacuteA: [-110, -110, -110, -110, -110, -74, -50, -120],
-  YacuteAacute: [-110, -110, -110, -110, -110, -74, -50, -120],
-  YacuteAbreve: [-110, -110, -110, -110, -110, -74, -50, -120],
-  YacuteAcircumflex: [-110, -110, -110, -110, -110, -74, -50, -120],
-  YacuteAdieresis: [-110, -110, -110, -110, -110, -74, -50, -120],
-  YacuteAgrave: [-110, -110, -110, -110, -110, -74, -50, -120],
-  YacuteAmacron: [-110, -110, -110, -110, -110, -74, -50, -120],
-  YacuteAogonek: [-110, -110, -110, -110, -110, -74, -50, -120],
-  YacuteAring: [-110, -110, -110, -110, -110, -74, -50, -120],
-  YacuteAtilde: [-110, -110, -110, -110, -110, -74, -50, -120],
-  YacuteO: [-70, -70, -85, -85, -35, -25, -15, -30],
-  YacuteOacute: [-70, -70, -85, -85, -35, -25, -15, -30],
-  YacuteOcircumflex: [-70, -70, -85, -85, -35, -25, -15, -30],
-  YacuteOdieresis: [-70, -70, -85, -85, -35, -25, -15, -30],
-  YacuteOgrave: [-70, -70, -85, -85, -35, -25, -15, -30],
-  YacuteOhungarumlaut: [-70, -70, -85, -85, -35, -25, -15, -30],
-  YacuteOmacron: [-70, -70, -85, -85, -35, -25, -15, -30],
-  YacuteOslash: [-70, -70, -85, -85, -35, -25, -15, -30],
-  YacuteOtilde: [-70, -70, -85, -85, -35, -25, -15, -30],
-  Yacutea: [-90, -90, -140, -140, -85, -92, -92, -100],
-  Yacuteaacute: [-90, -90, -140, -140, -85, -92, -92, -100],
-  Yacuteabreve: [-90, -90, -70, -70, -85, -92, -92, -100],
-  Yacuteacircumflex: [-90, -90, -140, -140, -85, -92, -92, -100],
-  Yacuteadieresis: [-90, -90, -140, -140, -85, -92, -92, -60],
-  Yacuteagrave: [-90, -90, -140, -140, -85, -92, -92, -60],
-  Yacuteamacron: [-90, -90, -70, -70, -85, -92, -92, -60],
-  Yacuteaogonek: [-90, -90, -140, -140, -85, -92, -92, -100],
-  Yacutearing: [-90, -90, -140, -140, -85, -92, -92, -100],
-  Yacuteatilde: [-90, -90, -70, -70, -85, -92, -92, -60],
-  Yacutecolon: [-50, -50, -60, -60, -92, -92, -65, -92],
-  Yacutecomma: [-100, -100, -140, -140, -92, -92, -92, -129],
-  Yacutee: [-80, -80, -140, -140, -111, -111, -92, -100],
-  Yacuteeacute: [-80, -80, -140, -140, -111, -111, -92, -100],
-  Yacuteecaron: [-80, -80, -140, -140, -111, -111, -92, -100],
-  Yacuteecircumflex: [-80, -80, -140, -140, -111, -71, -92, -100],
-  Yacuteedieresis: [-80, -80, -140, -140, -71, -71, -52, -60],
-  Yacuteedotaccent: [-80, -80, -140, -140, -111, -111, -92, -100],
-  Yacuteegrave: [-80, -80, -140, -140, -71, -71, -52, -60],
-  Yacuteemacron: [-80, -80, -70, -70, -71, -71, -52, -60],
-  Yacuteeogonek: [-80, -80, -140, -140, -111, -111, -92, -100],
-  Yacuteo: [-100, -100, -140, -140, -111, -111, -92, -110],
-  Yacuteoacute: [-100, -100, -140, -140, -111, -111, -92, -110],
-  Yacuteocircumflex: [-100, -100, -140, -140, -111, -111, -92, -110],
-  Yacuteodieresis: [-100, -100, -140, -140, -111, -111, -92, -70],
-  Yacuteograve: [-100, -100, -140, -140, -111, -111, -92, -70],
-  Yacuteohungarumlaut: [-100, -100, -140, -140, -111, -111, -92, -110],
-  Yacuteomacron: [-100, -100, -70, -70, -111, -111, -92, -70],
-  Yacuteoslash: [-100, -100, -140, -140, -111, -111, -92, -110],
-  Yacuteotilde: [-100, -100, -140, -140, -111, -111, -92, -70],
-  Yacuteperiod: [-100, -100, -140, -140, -92, -74, -92, -129],
-  Yacutesemicolon: [-50, -50, -60, -60, -92, -92, -65, -92],
-  Yacuteu: [-100, -100, -110, -110, -92, -92, -92, -111],
-  Yacuteuacute: [-100, -100, -110, -110, -92, -92, -92, -111],
-  Yacuteucircumflex: [-100, -100, -110, -110, -92, -92, -92, -111],
-  Yacuteudieresis: [-100, -100, -110, -110, -92, -92, -92, -71],
-  Yacuteugrave: [-100, -100, -110, -110, -92, -92, -92, -71],
-  Yacuteuhungarumlaut: [-100, -100, -110, -110, -92, -92, -92, -111],
-  Yacuteumacron: [-100, -100, -110, -110, -92, -92, -92, -71],
-  Yacuteuogonek: [-100, -100, -110, -110, -92, -92, -92, -111],
-  Yacuteuring: [-100, -100, -110, -110, -92, -92, -92, -111],
-  YdieresisA: [-110, -110, -110, -110, -110, -74, -50, -120],
-  YdieresisAacute: [-110, -110, -110, -110, -110, -74, -50, -120],
-  YdieresisAbreve: [-110, -110, -110, -110, -110, -74, -50, -120],
-  YdieresisAcircumflex: [-110, -110, -110, -110, -110, -74, -50, -120],
-  YdieresisAdieresis: [-110, -110, -110, -110, -110, -74, -50, -120],
-  YdieresisAgrave: [-110, -110, -110, -110, -110, -74, -50, -120],
-  YdieresisAmacron: [-110, -110, -110, -110, -110, -74, -50, -120],
-  YdieresisAogonek: [-110, -110, -110, -110, -110, -74, -50, -120],
-  YdieresisAring: [-110, -110, -110, -110, -110, -74, -50, -120],
-  YdieresisAtilde: [-110, -110, -110, -110, -110, -74, -50, -120],
-  YdieresisO: [-70, -70, -85, -85, -35, -25, -15, -30],
-  YdieresisOacute: [-70, -70, -85, -85, -35, -25, -15, -30],
-  YdieresisOcircumflex: [-70, -70, -85, -85, -35, -25, -15, -30],
-  YdieresisOdieresis: [-70, -70, -85, -85, -35, -25, -15, -30],
-  YdieresisOgrave: [-70, -70, -85, -85, -35, -25, -15, -30],
-  YdieresisOhungarumlaut: [-70, -70, -85, -85, -35, -25, -15, -30],
-  YdieresisOmacron: [-70, -70, -85, -85, -35, -25, -15, -30],
-  YdieresisOslash: [-70, -70, -85, -85, -35, -25, -15, -30],
-  YdieresisOtilde: [-70, -70, -85, -85, -35, -25, -15, -30],
-  Ydieresisa: [-90, -90, -140, -140, -85, -92, -92, -100],
-  Ydieresisaacute: [-90, -90, -140, -140, -85, -92, -92, -100],
-  Ydieresisabreve: [-90, -90, -70, -70, -85, -92, -92, -100],
-  Ydieresisacircumflex: [-90, -90, -140, -140, -85, -92, -92, -100],
-  Ydieresisadieresis: [-90, -90, -140, -140, -85, -92, -92, -60],
-  Ydieresisagrave: [-90, -90, -140, -140, -85, -92, -92, -60],
-  Ydieresisamacron: [-90, -90, -70, -70, -85, -92, -92, -60],
-  Ydieresisaogonek: [-90, -90, -140, -140, -85, -92, -92, -100],
-  Ydieresisaring: [-90, -90, -140, -140, -85, -92, -92, -100],
-  Ydieresisatilde: [-90, -90, -70, -70, -85, -92, -92, -100],
-  Ydieresiscolon: [-50, -50, -60, -60, -92, -92, -65, -92],
-  Ydieresiscomma: [-100, -100, -140, -140, -92, -92, -92, -129],
-  Ydieresise: [-80, -80, -140, -140, -111, -111, -92, -100],
-  Ydieresiseacute: [-80, -80, -140, -140, -111, -111, -92, -100],
-  Ydieresisecaron: [-80, -80, -140, -140, -111, -111, -92, -100],
-  Ydieresisecircumflex: [-80, -80, -140, -140, -111, -71, -92, -100],
-  Ydieresisedieresis: [-80, -80, -140, -140, -71, -71, -52, -60],
-  Ydieresisedotaccent: [-80, -80, -140, -140, -111, -111, -92, -100],
-  Ydieresisegrave: [-80, -80, -140, -140, -71, -71, -52, -60],
-  Ydieresisemacron: [-80, -80, -70, -70, -71, -71, -52, -60],
-  Ydieresiseogonek: [-80, -80, -140, -140, -111, -111, -92, -100],
-  Ydieresiso: [-100, -100, -140, -140, -111, -111, -92, -110],
-  Ydieresisoacute: [-100, -100, -140, -140, -111, -111, -92, -110],
-  Ydieresisocircumflex: [-100, -100, -140, -140, -111, -111, -92, -110],
-  Ydieresisodieresis: [-100, -100, -140, -140, -111, -111, -92, -70],
-  Ydieresisograve: [-100, -100, -140, -140, -111, -111, -92, -70],
-  Ydieresisohungarumlaut: [-100, -100, -140, -140, -111, -111, -92, -110],
-  Ydieresisomacron: [-100, -100, -140, -140, -111, -111, -92, -70],
-  Ydieresisoslash: [-100, -100, -140, -140, -111, -111, -92, -110],
-  Ydieresisotilde: [-100, -100, -140, -140, -111, -111, -92, -70],
-  Ydieresisperiod: [-100, -100, -140, -140, -92, -74, -92, -129],
-  Ydieresissemicolon: [-50, -50, -60, -60, -92, -92, -65, -92],
-  Ydieresisu: [-100, -100, -110, -110, -92, -92, -92, -111],
-  Ydieresisuacute: [-100, -100, -110, -110, -92, -92, -92, -111],
-  Ydieresisucircumflex: [-100, -100, -110, -110, -92, -92, -92, -111],
-  Ydieresisudieresis: [-100, -100, -110, -110, -92, -92, -92, -71],
-  Ydieresisugrave: [-100, -100, -110, -110, -92, -92, -92, -71],
-  Ydieresisuhungarumlaut: [-100, -100, -110, -110, -92, -92, -92, -111],
-  Ydieresisumacron: [-100, -100, -110, -110, -92, -92, -92, -71],
-  Ydieresisuogonek: [-100, -100, -110, -110, -92, -92, -92, -111],
-  Ydieresisuring: [-100, -100, -110, -110, -92, -92, -92, -111],
-  ag: [-10, -10, 0, 0, 0, 0, -10],
-  agbreve: [-10, -10, 0, 0, 0, 0, -10],
-  agcommaaccent: [-10, -10, 0, 0, 0, 0, -10],
-  av: [-15, -15, -20, -20, -25, 0, 0, -20],
-  aw: [-15, -15, -20, -20, 0, 0, 0, -15],
-  ay: [-20, -20, -30, -30],
-  ayacute: [-20, -20, -30, -30],
-  aydieresis: [-20, -20, -30, -30],
-  aacuteg: [-10, -10, 0, 0, 0, 0, -10],
-  aacutegbreve: [-10, -10, 0, 0, 0, 0, -10],
-  aacutegcommaaccent: [-10, -10, 0, 0, 0, 0, -10],
-  aacutev: [-15, -15, -20, -20, -25, 0, 0, -20],
-  aacutew: [-15, -15, -20, -20, 0, 0, 0, -15],
-  aacutey: [-20, -20, -30, -30],
-  aacuteyacute: [-20, -20, -30, -30],
-  aacuteydieresis: [-20, -20, -30, -30],
-  abreveg: [-10, -10, 0, 0, 0, 0, -10],
-  abrevegbreve: [-10, -10, 0, 0, 0, 0, -10],
-  abrevegcommaaccent: [-10, -10, 0, 0, 0, 0, -10],
-  abrevev: [-15, -15, -20, -20, -25, 0, 0, -20],
-  abrevew: [-15, -15, -20, -20, 0, 0, 0, -15],
-  abrevey: [-20, -20, -30, -30],
-  abreveyacute: [-20, -20, -30, -30],
-  abreveydieresis: [-20, -20, -30, -30],
-  acircumflexg: [-10, -10, 0, 0, 0, 0, -10],
-  acircumflexgbreve: [-10, -10, 0, 0, 0, 0, -10],
-  acircumflexgcommaaccent: [-10, -10, 0, 0, 0, 0, -10],
-  acircumflexv: [-15, -15, -20, -20, -25, 0, 0, -20],
-  acircumflexw: [-15, -15, -20, -20, 0, 0, 0, -15],
-  acircumflexy: [-20, -20, -30, -30],
-  acircumflexyacute: [-20, -20, -30, -30],
-  acircumflexydieresis: [-20, -20, -30, -30],
-  adieresisg: [-10, -10, 0, 0, 0, 0, -10],
-  adieresisgbreve: [-10, -10, 0, 0, 0, 0, -10],
-  adieresisgcommaaccent: [-10, -10, 0, 0, 0, 0, -10],
-  adieresisv: [-15, -15, -20, -20, -25, 0, 0, -20],
-  adieresisw: [-15, -15, -20, -20, 0, 0, 0, -15],
-  adieresisy: [-20, -20, -30, -30],
-  adieresisyacute: [-20, -20, -30, -30],
-  adieresisydieresis: [-20, -20, -30, -30],
-  agraveg: [-10, -10, 0, 0, 0, 0, -10],
-  agravegbreve: [-10, -10, 0, 0, 0, 0, -10],
-  agravegcommaaccent: [-10, -10, 0, 0, 0, 0, -10],
-  agravev: [-15, -15, -20, -20, -25, 0, 0, -20],
-  agravew: [-15, -15, -20, -20, 0, 0, 0, -15],
-  agravey: [-20, -20, -30, -30],
-  agraveyacute: [-20, -20, -30, -30],
-  agraveydieresis: [-20, -20, -30, -30],
-  amacrong: [-10, -10, 0, 0, 0, 0, -10],
-  amacrongbreve: [-10, -10, 0, 0, 0, 0, -10],
-  amacrongcommaaccent: [-10, -10, 0, 0, 0, 0, -10],
-  amacronv: [-15, -15, -20, -20, -25, 0, 0, -20],
-  amacronw: [-15, -15, -20, -20, 0, 0, 0, -15],
-  amacrony: [-20, -20, -30, -30],
-  amacronyacute: [-20, -20, -30, -30],
-  amacronydieresis: [-20, -20, -30, -30],
-  aogonekg: [-10, -10, 0, 0, 0, 0, -10],
-  aogonekgbreve: [-10, -10, 0, 0, 0, 0, -10],
-  aogonekgcommaaccent: [-10, -10, 0, 0, 0, 0, -10],
-  aogonekv: [-15, -15, -20, -20, -25, 0, 0, -20],
-  aogonekw: [-15, -15, -20, -20, 0, 0, 0, -15],
-  aogoneky: [-20, -20, -30, -30],
-  aogonekyacute: [-20, -20, -30, -30],
-  aogonekydieresis: [-20, -20, -30, -30],
-  aringg: [-10, -10, 0, 0, 0, 0, -10],
-  aringgbreve: [-10, -10, 0, 0, 0, 0, -10],
-  aringgcommaaccent: [-10, -10, 0, 0, 0, 0, -10],
-  aringv: [-15, -15, -20, -20, -25, 0, 0, -20],
-  aringw: [-15, -15, -20, -20, 0, 0, 0, -15],
-  aringy: [-20, -20, -30, -30],
-  aringyacute: [-20, -20, -30, -30],
-  aringydieresis: [-20, -20, -30, -30],
-  atildeg: [-10, -10, 0, 0, 0, 0, -10],
-  atildegbreve: [-10, -10, 0, 0, 0, 0, -10],
-  atildegcommaaccent: [-10, -10, 0, 0, 0, 0, -10],
-  atildev: [-15, -15, -20, -20, -25, 0, 0, -20],
-  atildew: [-15, -15, -20, -20, 0, 0, 0, -15],
-  atildey: [-20, -20, -30, -30],
-  atildeyacute: [-20, -20, -30, -30],
-  atildeydieresis: [-20, -20, -30, -30],
-  bl: [-10, -10, -20, -20],
-  blacute: [-10, -10, -20, -20],
-  blcommaaccent: [-10, -10, -20, -20],
-  blslash: [-10, -10, -20, -20],
-  bu: [-20, -20, -20, -20, -20, -20, -20, -20],
-  buacute: [-20, -20, -20, -20, -20, -20, -20, -20],
-  bucircumflex: [-20, -20, -20, -20, -20, -20, -20, -20],
-  budieresis: [-20, -20, -20, -20, -20, -20, -20, -20],
-  bugrave: [-20, -20, -20, -20, -20, -20, -20, -20],
-  buhungarumlaut: [-20, -20, -20, -20, -20, -20, -20, -20],
-  bumacron: [-20, -20, -20, -20, -20, -20, -20, -20],
-  buogonek: [-20, -20, -20, -20, -20, -20, -20, -20],
-  buring: [-20, -20, -20, -20, -20, -20, -20, -20],
-  bv: [-20, -20, -20, -20, -15, 0, 0, -15],
-  by: [-20, -20, -20, -20],
-  byacute: [-20, -20, -20, -20],
-  bydieresis: [-20, -20, -20, -20],
-  ch: [-10, -10, 0, 0, 0, -10, -15],
-  ck: [-20, -20, -20, -20, 0, -10, -20],
-  ckcommaaccent: [-20, -20, -20, -20, 0, -10, -20],
-  cl: [-20, -20],
-  clacute: [-20, -20],
-  clcommaaccent: [-20, -20],
-  clslash: [-20, -20],
-  cy: [-10, -10, 0, 0, 0, 0, 0, -15],
-  cyacute: [-10, -10, 0, 0, 0, 0, 0, -15],
-  cydieresis: [-10, -10, 0, 0, 0, 0, 0, -15],
-  cacuteh: [-10, -10, 0, 0, 0, -10, -15],
-  cacutek: [-20, -20, -20, -20, 0, -10, -20],
-  cacutekcommaaccent: [-20, -20, -20, -20, 0, -10, -20],
-  cacutel: [-20, -20],
-  cacutelacute: [-20, -20],
-  cacutelcommaaccent: [-20, -20],
-  cacutelslash: [-20, -20],
-  cacutey: [-10, -10, 0, 0, 0, 0, 0, -15],
-  cacuteyacute: [-10, -10, 0, 0, 0, 0, 0, -15],
-  cacuteydieresis: [-10, -10, 0, 0, 0, 0, 0, -15],
-  ccaronh: [-10, -10, 0, 0, 0, -10, -15],
-  ccaronk: [-20, -20, -20, -20, 0, -10, -20],
-  ccaronkcommaaccent: [-20, -20, -20, -20, 0, -10, -20],
-  ccaronl: [-20, -20],
-  ccaronlacute: [-20, -20],
-  ccaronlcommaaccent: [-20, -20],
-  ccaronlslash: [-20, -20],
-  ccarony: [-10, -10, 0, 0, 0, 0, 0, -15],
-  ccaronyacute: [-10, -10, 0, 0, 0, 0, 0, -15],
-  ccaronydieresis: [-10, -10, 0, 0, 0, 0, 0, -15],
-  ccedillah: [-10, -10, 0, 0, 0, -10, -15],
-  ccedillak: [-20, -20, -20, -20, 0, -10, -20],
-  ccedillakcommaaccent: [-20, -20, -20, -20, 0, -10, -20],
-  ccedillal: [-20, -20],
-  ccedillalacute: [-20, -20],
-  ccedillalcommaaccent: [-20, -20],
-  ccedillalslash: [-20, -20],
-  ccedillay: [-10, -10, 0, 0, 0, 0, 0, -15],
-  ccedillayacute: [-10, -10, 0, 0, 0, 0, 0, -15],
-  ccedillaydieresis: [-10, -10, 0, 0, 0, 0, 0, -15],
-  colonspace: [-40, -40, -50, -50],
-  commaquotedblright: [-120, -120, -100, -100, -45, -95, -140, -70],
-  commaquoteright: [-120, -120, -100, -100, -55, -95, -140, -70],
-  commaspace: [-40, -40],
-  dd: [-10, -10],
-  ddcroat: [-10, -10],
-  dv: [-15, -15],
-  dw: [-15, -15, 0, 0, -15],
-  dy: [-15, -15],
-  dyacute: [-15, -15],
-  dydieresis: [-15, -15],
-  dcroatd: [-10, -10],
-  dcroatdcroat: [-10, -10],
-  dcroatv: [-15, -15],
-  dcroatw: [-15, -15, 0, 0, -15],
-  dcroaty: [-15, -15],
-  dcroatyacute: [-15, -15],
-  dcroatydieresis: [-15, -15],
-  ecomma: [10, 10, -15, -15, 0, 0, -10],
-  eperiod: [20, 20, -15, -15, 0, 0, -15],
-  ev: [-15, -15, -30, -30, -15, 0, -15, -25],
-  ew: [-15, -15, -20, -20, 0, 0, -15, -25],
-  ex: [-15, -15, -30, -30, 0, 0, -20, -15],
-  ey: [-15, -15, -20, -20, 0, 0, -30, -15],
-  eyacute: [-15, -15, -20, -20, 0, 0, -30, -15],
-  eydieresis: [-15, -15, -20, -20, 0, 0, -30, -15],
-  eacutecomma: [10, 10, -15, -15, 0, 0, -10],
-  eacuteperiod: [20, 20, -15, -15, 0, 0, -15],
-  eacutev: [-15, -15, -30, -30, -15, 0, -15, -25],
-  eacutew: [-15, -15, -20, -20, 0, 0, -15, -25],
-  eacutex: [-15, -15, -30, -30, 0, 0, -20, -15],
-  eacutey: [-15, -15, -20, -20, 0, 0, -30, -15],
-  eacuteyacute: [-15, -15, -20, -20, 0, 0, -30, -15],
-  eacuteydieresis: [-15, -15, -20, -20, 0, 0, -30, -15],
-  ecaroncomma: [10, 10, -15, -15, 0, 0, -10],
-  ecaronperiod: [20, 20, -15, -15, 0, 0, -15],
-  ecaronv: [-15, -15, -30, -30, -15, 0, -15, -25],
-  ecaronw: [-15, -15, -20, -20, 0, 0, -15, -25],
-  ecaronx: [-15, -15, -30, -30, 0, 0, -20, -15],
-  ecarony: [-15, -15, -20, -20, 0, 0, -30, -15],
-  ecaronyacute: [-15, -15, -20, -20, 0, 0, -30, -15],
-  ecaronydieresis: [-15, -15, -20, -20, 0, 0, -30, -15],
-  ecircumflexcomma: [10, 10, -15, -15, 0, 0, -10],
-  ecircumflexperiod: [20, 20, -15, -15, 0, 0, -15],
-  ecircumflexv: [-15, -15, -30, -30, -15, 0, -15, -25],
-  ecircumflexw: [-15, -15, -20, -20, 0, 0, -15, -25],
-  ecircumflexx: [-15, -15, -30, -30, 0, 0, -20, -15],
-  ecircumflexy: [-15, -15, -20, -20, 0, 0, -30, -15],
-  ecircumflexyacute: [-15, -15, -20, -20, 0, 0, -30, -15],
-  ecircumflexydieresis: [-15, -15, -20, -20, 0, 0, -30, -15],
-  edieresiscomma: [10, 10, -15, -15, 0, 0, -10],
-  edieresisperiod: [20, 20, -15, -15, 0, 0, -15],
-  edieresisv: [-15, -15, -30, -30, -15, 0, -15, -25],
-  edieresisw: [-15, -15, -20, -20, 0, 0, -15, -25],
-  edieresisx: [-15, -15, -30, -30, 0, 0, -20, -15],
-  edieresisy: [-15, -15, -20, -20, 0, 0, -30, -15],
-  edieresisyacute: [-15, -15, -20, -20, 0, 0, -30, -15],
-  edieresisydieresis: [-15, -15, -20, -20, 0, 0, -30, -15],
-  edotaccentcomma: [10, 10, -15, -15, 0, 0, -10],
-  edotaccentperiod: [20, 20, -15, -15, 0, 0, -15],
-  edotaccentv: [-15, -15, -30, -30, -15, 0, -15, -25],
-  edotaccentw: [-15, -15, -20, -20, 0, 0, -15, -25],
-  edotaccentx: [-15, -15, -30, -30, 0, 0, -20, -15],
-  edotaccenty: [-15, -15, -20, -20, 0, 0, -30, -15],
-  edotaccentyacute: [-15, -15, -20, -20, 0, 0, -30, -15],
-  edotaccentydieresis: [-15, -15, -20, -20, 0, 0, -30, -15],
-  egravecomma: [10, 10, -15, -15, 0, 0, -10],
-  egraveperiod: [20, 20, -15, -15, 0, 0, -15],
-  egravev: [-15, -15, -30, -30, -15, 0, -15, -25],
-  egravew: [-15, -15, -20, -20, 0, 0, -15, -25],
-  egravex: [-15, -15, -30, -30, 0, 0, -20, -15],
-  egravey: [-15, -15, -20, -20, 0, 0, -30, -15],
-  egraveyacute: [-15, -15, -20, -20, 0, 0, -30, -15],
-  egraveydieresis: [-15, -15, -20, -20, 0, 0, -30, -15],
-  emacroncomma: [10, 10, -15, -15, 0, 0, -10],
-  emacronperiod: [20, 20, -15, -15, 0, 0, -15],
-  emacronv: [-15, -15, -30, -30, -15, 0, -15, -25],
-  emacronw: [-15, -15, -20, -20, 0, 0, -15, -25],
-  emacronx: [-15, -15, -30, -30, 0, 0, -20, -15],
-  emacrony: [-15, -15, -20, -20, 0, 0, -30, -15],
-  emacronyacute: [-15, -15, -20, -20, 0, 0, -30, -15],
-  emacronydieresis: [-15, -15, -20, -20, 0, 0, -30, -15],
-  eogonekcomma: [10, 10, -15, -15, 0, 0, -10],
-  eogonekperiod: [20, 20, -15, -15, 0, 0, -15],
-  eogonekv: [-15, -15, -30, -30, -15, 0, -15, -25],
-  eogonekw: [-15, -15, -20, -20, 0, 0, -15, -25],
-  eogonekx: [-15, -15, -30, -30, 0, 0, -20, -15],
-  eogoneky: [-15, -15, -20, -20, 0, 0, -30, -15],
-  eogonekyacute: [-15, -15, -20, -20, 0, 0, -30, -15],
-  eogonekydieresis: [-15, -15, -20, -20, 0, 0, -30, -15],
-  fcomma: [-10, -10, -30, -30, -15, -10, -10],
-  fe: [-10, -10, -30, -30, 0, -10],
-  feacute: [-10, -10, -30, -30, 0, -10],
-  fecaron: [-10, -10, -30, -30],
-  fecircumflex: [-10, -10, -30, -30],
-  fedieresis: [-10, -10, -30, -30],
-  fedotaccent: [-10, -10, -30, -30, 0, -10],
-  fegrave: [-10, -10, -30, -30],
-  femacron: [-10, -10, -30, -30],
-  feogonek: [-10, -10, -30, -30, 0, -10],
-  fo: [-20, -20, -30, -30, -25, -10],
-  foacute: [-20, -20, -30, -30, -25, -10],
-  focircumflex: [-20, -20, -30, -30, -25, -10],
-  fodieresis: [-20, -20, -30, -30, -25],
-  fograve: [-20, -20, -30, -30, -25, -10],
-  fohungarumlaut: [-20, -20, -30, -30, -25, -10],
-  fomacron: [-20, -20, -30, -30, -25],
-  foslash: [-20, -20, -30, -30, -25, -10],
-  fotilde: [-20, -20, -30, -30, -25, -10],
-  fperiod: [-10, -10, -30, -30, -15, -10, -15],
-  fquotedblright: [30, 30, 60, 60, 50],
-  fquoteright: [30, 30, 50, 50, 55, 55, 92, 55],
-  ge: [10, 10, 0, 0, 0, 0, -10],
-  geacute: [10, 10, 0, 0, 0, 0, -10],
-  gecaron: [10, 10, 0, 0, 0, 0, -10],
-  gecircumflex: [10, 10, 0, 0, 0, 0, -10],
-  gedieresis: [10, 10, 0, 0, 0, 0, -10],
-  gedotaccent: [10, 10, 0, 0, 0, 0, -10],
-  gegrave: [10, 10, 0, 0, 0, 0, -10],
-  gemacron: [10, 10, 0, 0, 0, 0, -10],
-  geogonek: [10, 10, 0, 0, 0, 0, -10],
-  gg: [-10, -10, 0, 0, 0, 0, -10],
-  ggbreve: [-10, -10, 0, 0, 0, 0, -10],
-  ggcommaaccent: [-10, -10, 0, 0, 0, 0, -10],
-  gbrevee: [10, 10, 0, 0, 0, 0, -10],
-  gbreveeacute: [10, 10, 0, 0, 0, 0, -10],
-  gbreveecaron: [10, 10, 0, 0, 0, 0, -10],
-  gbreveecircumflex: [10, 10, 0, 0, 0, 0, -10],
-  gbreveedieresis: [10, 10, 0, 0, 0, 0, -10],
-  gbreveedotaccent: [10, 10, 0, 0, 0, 0, -10],
-  gbreveegrave: [10, 10, 0, 0, 0, 0, -10],
-  gbreveemacron: [10, 10, 0, 0, 0, 0, -10],
-  gbreveeogonek: [10, 10, 0, 0, 0, 0, -10],
-  gbreveg: [-10, -10, 0, 0, 0, 0, -10],
-  gbrevegbreve: [-10, -10, 0, 0, 0, 0, -10],
-  gbrevegcommaaccent: [-10, -10, 0, 0, 0, 0, -10],
-  gcommaaccente: [10, 10, 0, 0, 0, 0, -10],
-  gcommaaccenteacute: [10, 10, 0, 0, 0, 0, -10],
-  gcommaaccentecaron: [10, 10, 0, 0, 0, 0, -10],
-  gcommaaccentecircumflex: [10, 10, 0, 0, 0, 0, -10],
-  gcommaaccentedieresis: [10, 10, 0, 0, 0, 0, -10],
-  gcommaaccentedotaccent: [10, 10, 0, 0, 0, 0, -10],
-  gcommaaccentegrave: [10, 10, 0, 0, 0, 0, -10],
-  gcommaaccentemacron: [10, 10, 0, 0, 0, 0, -10],
-  gcommaaccenteogonek: [10, 10, 0, 0, 0, 0, -10],
-  gcommaaccentg: [-10, -10, 0, 0, 0, 0, -10],
-  gcommaaccentgbreve: [-10, -10, 0, 0, 0, 0, -10],
-  gcommaaccentgcommaaccent: [-10, -10, 0, 0, 0, 0, -10],
-  hy: [-20, -20, -30, -30, -15, 0, 0, -5],
-  hyacute: [-20, -20, -30, -30, -15, 0, 0, -5],
-  hydieresis: [-20, -20, -30, -30, -15, 0, 0, -5],
-  ko: [-15, -15, -20, -20, -15, -10, -10, -10],
-  koacute: [-15, -15, -20, -20, -15, -10, -10, -10],
-  kocircumflex: [-15, -15, -20, -20, -15, -10, -10, -10],
-  kodieresis: [-15, -15, -20, -20, -15, -10, -10, -10],
-  kograve: [-15, -15, -20, -20, -15, -10, -10, -10],
-  kohungarumlaut: [-15, -15, -20, -20, -15, -10, -10, -10],
-  komacron: [-15, -15, -20, -20, -15, -10, -10, -10],
-  koslash: [-15, -15, -20, -20, -15, -10, -10, -10],
-  kotilde: [-15, -15, -20, -20, -15, -10, -10, -10],
-  kcommaaccento: [-15, -15, -20, -20, -15, -10, -10, -10],
-  kcommaaccentoacute: [-15, -15, -20, -20, -15, -10, -10, -10],
-  kcommaaccentocircumflex: [-15, -15, -20, -20, -15, -10, -10, -10],
-  kcommaaccentodieresis: [-15, -15, -20, -20, -15, -10, -10, -10],
-  kcommaaccentograve: [-15, -15, -20, -20, -15, -10, -10, -10],
-  kcommaaccentohungarumlaut: [-15, -15, -20, -20, -15, -10, -10, -10],
-  kcommaaccentomacron: [-15, -15, -20, -20, -15, -10, -10, -10],
-  kcommaaccentoslash: [-15, -15, -20, -20, -15, -10, -10, -10],
-  kcommaaccentotilde: [-15, -15, -20, -20, -15, -10, -10, -10],
-  lw: [-15, -15, 0, 0, 0, 0, 0, -10],
-  ly: [-15, -15],
-  lyacute: [-15, -15],
-  lydieresis: [-15, -15],
-  lacutew: [-15, -15, 0, 0, 0, 0, 0, -10],
-  lacutey: [-15, -15],
-  lacuteyacute: [-15, -15],
-  lacuteydieresis: [-15, -15],
-  lcommaaccentw: [-15, -15, 0, 0, 0, 0, 0, -10],
-  lcommaaccenty: [-15, -15],
-  lcommaaccentyacute: [-15, -15],
-  lcommaaccentydieresis: [-15, -15],
-  lslashw: [-15, -15, 0, 0, 0, 0, 0, -10],
-  lslashy: [-15, -15],
-  lslashyacute: [-15, -15],
-  lslashydieresis: [-15, -15],
-  mu: [-20, -20, -10, -10],
-  muacute: [-20, -20, -10, -10],
-  mucircumflex: [-20, -20, -10, -10],
-  mudieresis: [-20, -20, -10, -10],
-  mugrave: [-20, -20, -10, -10],
-  muhungarumlaut: [-20, -20, -10, -10],
-  mumacron: [-20, -20, -10, -10],
-  muogonek: [-20, -20, -10, -10],
-  muring: [-20, -20, -10, -10],
-  my: [-30, -30, -15, -15],
-  myacute: [-30, -30, -15, -15],
-  mydieresis: [-30, -30, -15, -15],
-  nu: [-10, -10, -10, -10],
-  nuacute: [-10, -10, -10, -10],
-  nucircumflex: [-10, -10, -10, -10],
-  nudieresis: [-10, -10, -10, -10],
-  nugrave: [-10, -10, -10, -10],
-  nuhungarumlaut: [-10, -10, -10, -10],
-  numacron: [-10, -10, -10, -10],
-  nuogonek: [-10, -10, -10, -10],
-  nuring: [-10, -10, -10, -10],
-  nv: [-40, -40, -20, -20, -40, -40, -40, -40],
-  ny: [-20, -20, -15, -15, 0, 0, 0, -15],
-  nyacute: [-20, -20, -15, -15, 0, 0, 0, -15],
-  nydieresis: [-20, -20, -15, -15, 0, 0, 0, -15],
-  nacuteu: [-10, -10, -10, -10],
-  nacuteuacute: [-10, -10, -10, -10],
-  nacuteucircumflex: [-10, -10, -10, -10],
-  nacuteudieresis: [-10, -10, -10, -10],
-  nacuteugrave: [-10, -10, -10, -10],
-  nacuteuhungarumlaut: [-10, -10, -10, -10],
-  nacuteumacron: [-10, -10, -10, -10],
-  nacuteuogonek: [-10, -10, -10, -10],
-  nacuteuring: [-10, -10, -10, -10],
-  nacutev: [-40, -40, -20, -20, -40, -40, -40, -40],
-  nacutey: [-20, -20, -15, -15, 0, 0, 0, -15],
-  nacuteyacute: [-20, -20, -15, -15, 0, 0, 0, -15],
-  nacuteydieresis: [-20, -20, -15, -15, 0, 0, 0, -15],
-  ncaronu: [-10, -10, -10, -10],
-  ncaronuacute: [-10, -10, -10, -10],
-  ncaronucircumflex: [-10, -10, -10, -10],
-  ncaronudieresis: [-10, -10, -10, -10],
-  ncaronugrave: [-10, -10, -10, -10],
-  ncaronuhungarumlaut: [-10, -10, -10, -10],
-  ncaronumacron: [-10, -10, -10, -10],
-  ncaronuogonek: [-10, -10, -10, -10],
-  ncaronuring: [-10, -10, -10, -10],
-  ncaronv: [-40, -40, -20, -20, -40, -40, -40, -40],
-  ncarony: [-20, -20, -15, -15, 0, 0, 0, -15],
-  ncaronyacute: [-20, -20, -15, -15, 0, 0, 0, -15],
-  ncaronydieresis: [-20, -20, -15, -15, 0, 0, 0, -15],
-  ncommaaccentu: [-10, -10, -10, -10],
-  ncommaaccentuacute: [-10, -10, -10, -10],
-  ncommaaccentucircumflex: [-10, -10, -10, -10],
-  ncommaaccentudieresis: [-10, -10, -10, -10],
-  ncommaaccentugrave: [-10, -10, -10, -10],
-  ncommaaccentuhungarumlaut: [-10, -10, -10, -10],
-  ncommaaccentumacron: [-10, -10, -10, -10],
-  ncommaaccentuogonek: [-10, -10, -10, -10],
-  ncommaaccenturing: [-10, -10, -10, -10],
-  ncommaaccentv: [-40, -40, -20, -20, -40, -40, -40, -40],
-  ncommaaccenty: [-20, -20, -15, -15, 0, 0, 0, -15],
-  ncommaaccentyacute: [-20, -20, -15, -15, 0, 0, 0, -15],
-  ncommaaccentydieresis: [-20, -20, -15, -15, 0, 0, 0, -15],
-  ntildeu: [-10, -10, -10, -10],
-  ntildeuacute: [-10, -10, -10, -10],
-  ntildeucircumflex: [-10, -10, -10, -10],
-  ntildeudieresis: [-10, -10, -10, -10],
-  ntildeugrave: [-10, -10, -10, -10],
-  ntildeuhungarumlaut: [-10, -10, -10, -10],
-  ntildeumacron: [-10, -10, -10, -10],
-  ntildeuogonek: [-10, -10, -10, -10],
-  ntildeuring: [-10, -10, -10, -10],
-  ntildev: [-40, -40, -20, -20, -40, -40, -40, -40],
-  ntildey: [-20, -20, -15, -15, 0, 0, 0, -15],
-  ntildeyacute: [-20, -20, -15, -15, 0, 0, 0, -15],
-  ntildeydieresis: [-20, -20, -15, -15, 0, 0, 0, -15],
-  ov: [-20, -20, -15, -15, -10, -15, -10, -15],
-  ow: [-15, -15, -15, -15, -10, -25, 0, -25],
-  ox: [-30, -30, -30, -30, 0, -10],
-  oy: [-20, -20, -30, -30, 0, -10, 0, -10],
-  oyacute: [-20, -20, -30, -30, 0, -10, 0, -10],
-  oydieresis: [-20, -20, -30, -30, 0, -10, 0, -10],
-  oacutev: [-20, -20, -15, -15, -10, -15, -10, -15],
-  oacutew: [-15, -15, -15, -15, -10, -25, 0, -25],
-  oacutex: [-30, -30, -30, -30, 0, -10],
-  oacutey: [-20, -20, -30, -30, 0, -10, 0, -10],
-  oacuteyacute: [-20, -20, -30, -30, 0, -10, 0, -10],
-  oacuteydieresis: [-20, -20, -30, -30, 0, -10, 0, -10],
-  ocircumflexv: [-20, -20, -15, -15, -10, -15, -10, -15],
-  ocircumflexw: [-15, -15, -15, -15, -10, -25, 0, -25],
-  ocircumflexx: [-30, -30, -30, -30, 0, -10],
-  ocircumflexy: [-20, -20, -30, -30, 0, -10, 0, -10],
-  ocircumflexyacute: [-20, -20, -30, -30, 0, -10, 0, -10],
-  ocircumflexydieresis: [-20, -20, -30, -30, 0, -10, 0, -10],
-  odieresisv: [-20, -20, -15, -15, -10, -15, -10, -15],
-  odieresisw: [-15, -15, -15, -15, -10, -25, 0, -25],
-  odieresisx: [-30, -30, -30, -30, 0, -10],
-  odieresisy: [-20, -20, -30, -30, 0, -10, 0, -10],
-  odieresisyacute: [-20, -20, -30, -30, 0, -10, 0, -10],
-  odieresisydieresis: [-20, -20, -30, -30, 0, -10, 0, -10],
-  ogravev: [-20, -20, -15, -15, -10, -15, -10, -15],
-  ogravew: [-15, -15, -15, -15, -10, -25, 0, -25],
-  ogravex: [-30, -30, -30, -30, 0, -10],
-  ogravey: [-20, -20, -30, -30, 0, -10, 0, -10],
-  ograveyacute: [-20, -20, -30, -30, 0, -10, 0, -10],
-  ograveydieresis: [-20, -20, -30, -30, 0, -10, 0, -10],
-  ohungarumlautv: [-20, -20, -15, -15, -10, -15, -10, -15],
-  ohungarumlautw: [-15, -15, -15, -15, -10, -25, 0, -25],
-  ohungarumlautx: [-30, -30, -30, -30, 0, -10],
-  ohungarumlauty: [-20, -20, -30, -30, 0, -10, 0, -10],
-  ohungarumlautyacute: [-20, -20, -30, -30, 0, -10, 0, -10],
-  ohungarumlautydieresis: [-20, -20, -30, -30, 0, -10, 0, -10],
-  omacronv: [-20, -20, -15, -15, -10, -15, -10, -15],
-  omacronw: [-15, -15, -15, -15, -10, -25, 0, -25],
-  omacronx: [-30, -30, -30, -30, 0, -10],
-  omacrony: [-20, -20, -30, -30, 0, -10, 0, -10],
-  omacronyacute: [-20, -20, -30, -30, 0, -10, 0, -10],
-  omacronydieresis: [-20, -20, -30, -30, 0, -10, 0, -10],
-  oslashv: [-20, -20, -70, -70, -10, -15, -10, -15],
-  oslashw: [-15, -15, -70, -70, -10, -25, 0, -25],
-  oslashx: [-30, -30, -85, -85, 0, -10],
-  oslashy: [-20, -20, -70, -70, 0, -10, 0, -10],
-  oslashyacute: [-20, -20, -70, -70, 0, -10, 0, -10],
-  oslashydieresis: [-20, -20, -70, -70, 0, -10, 0, -10],
-  otildev: [-20, -20, -15, -15, -10, -15, -10, -15],
-  otildew: [-15, -15, -15, -15, -10, -25, 0, -25],
-  otildex: [-30, -30, -30, -30, 0, -10],
-  otildey: [-20, -20, -30, -30, 0, -10, 0, -10],
-  otildeyacute: [-20, -20, -30, -30, 0, -10, 0, -10],
-  otildeydieresis: [-20, -20, -30, -30, 0, -10, 0, -10],
-  py: [-15, -15, -30, -30, 0, 0, 0, -10],
-  pyacute: [-15, -15, -30, -30, 0, 0, 0, -10],
-  pydieresis: [-15, -15, -30, -30, 0, 0, 0, -10],
-  periodquotedblright: [-120, -120, -100, -100, -55, -95, -140, -70],
-  periodquoteright: [-120, -120, -100, -100, -55, -95, -140, -70],
-  periodspace: [-40, -40, -60, -60],
-  quotedblrightspace: [-80, -80, -40, -40],
-  quoteleftquoteleft: [-46, -46, -57, -57, -63, -74, -111, -74],
-  quoterightd: [-80, -80, -50, -50, -20, -15, -25, -50],
-  quoterightdcroat: [-80, -80, -50, -50, -20, -15, -25, -50],
-  quoterightl: [-20, -20, 0, 0, 0, 0, 0, -10],
-  quoterightlacute: [-20, -20, 0, 0, 0, 0, 0, -10],
-  quoterightlcommaaccent: [-20, -20, 0, 0, 0, 0, 0, -10],
-  quoterightlslash: [-20, -20, 0, 0, 0, 0, 0, -10],
-  quoterightquoteright: [-46, -46, -57, -57, -63, -74, -111, -74],
-  quoterightr: [-40, -40, -50, -50, -20, -15, -25, -50],
-  quoterightracute: [-40, -40, -50, -50, -20, -15, -25, -50],
-  quoterightrcaron: [-40, -40, -50, -50, -20, -15, -25, -50],
-  quoterightrcommaaccent: [-40, -40, -50, -50, -20, -15, -25, -50],
-  quoterights: [-60, -60, -50, -50, -37, -74, -40, -55],
-  quoterightsacute: [-60, -60, -50, -50, -37, -74, -40, -55],
-  quoterightscaron: [-60, -60, -50, -50, -37, -74, -40, -55],
-  quoterightscedilla: [-60, -60, -50, -50, -37, -74, -40, -55],
-  quoterightscommaaccent: [-60, -60, -50, -50, -37, -74, -40, -55],
-  quoterightspace: [-80, -80, -70, -70, -74, -74, -111, -74],
-  quoterightv: [-20, -20, 0, 0, -20, -15, -10, -50],
-  rc: [-20, -20, 0, 0, -18, 0, -37],
-  rcacute: [-20, -20, 0, 0, -18, 0, -37],
-  rccaron: [-20, -20, 0, 0, -18, 0, -37],
-  rccedilla: [-20, -20, 0, 0, -18, 0, -37],
-  rcomma: [-60, -60, -50, -50, -92, -65, -111, -40],
-  rd: [-20, -20, 0, 0, 0, 0, -37],
-  rdcroat: [-20, -20, 0, 0, 0, 0, -37],
-  rg: [-15, -15, 0, 0, -10, 0, -37, -18],
-  rgbreve: [-15, -15, 0, 0, -10, 0, -37, -18],
-  rgcommaaccent: [-15, -15, 0, 0, -10, 0, -37, -18],
-  rhyphen: [-20, -20, 0, 0, -37, 0, -20, -20],
-  ro: [-20, -20, 0, 0, -18, 0, -45],
-  roacute: [-20, -20, 0, 0, -18, 0, -45],
-  rocircumflex: [-20, -20, 0, 0, -18, 0, -45],
-  rodieresis: [-20, -20, 0, 0, -18, 0, -45],
-  rograve: [-20, -20, 0, 0, -18, 0, -45],
-  rohungarumlaut: [-20, -20, 0, 0, -18, 0, -45],
-  romacron: [-20, -20, 0, 0, -18, 0, -45],
-  roslash: [-20, -20, 0, 0, -18, 0, -45],
-  rotilde: [-20, -20, 0, 0, -18, 0, -45],
-  rperiod: [-60, -60, -50, -50, -100, -65, -111, -55],
-  rq: [-20, -20, 0, 0, -18, 0, -37],
-  rs: [-15, -15, 0, 0, 0, 0, -10],
-  rsacute: [-15, -15, 0, 0, 0, 0, -10],
-  rscaron: [-15, -15, 0, 0, 0, 0, -10],
-  rscedilla: [-15, -15, 0, 0, 0, 0, -10],
-  rscommaaccent: [-15, -15, 0, 0, 0, 0, -10],
-  rt: [20, 20, 40, 40],
-  rtcommaaccent: [20, 20, 40, 40],
-  rv: [10, 10, 30, 30, -10],
-  ry: [10, 10, 30, 30],
-  ryacute: [10, 10, 30, 30],
-  rydieresis: [10, 10, 30, 30],
-  racutec: [-20, -20, 0, 0, -18, 0, -37],
-  racutecacute: [-20, -20, 0, 0, -18, 0, -37],
-  racuteccaron: [-20, -20, 0, 0, -18, 0, -37],
-  racuteccedilla: [-20, -20, 0, 0, -18, 0, -37],
-  racutecomma: [-60, -60, -50, -50, -92, -65, -111, -40],
-  racuted: [-20, -20, 0, 0, 0, 0, -37],
-  racutedcroat: [-20, -20, 0, 0, 0, 0, -37],
-  racuteg: [-15, -15, 0, 0, -10, 0, -37, -18],
-  racutegbreve: [-15, -15, 0, 0, -10, 0, -37, -18],
-  racutegcommaaccent: [-15, -15, 0, 0, -10, 0, -37, -18],
-  racutehyphen: [-20, -20, 0, 0, -37, 0, -20, -20],
-  racuteo: [-20, -20, 0, 0, -18, 0, -45],
-  racuteoacute: [-20, -20, 0, 0, -18, 0, -45],
-  racuteocircumflex: [-20, -20, 0, 0, -18, 0, -45],
-  racuteodieresis: [-20, -20, 0, 0, -18, 0, -45],
-  racuteograve: [-20, -20, 0, 0, -18, 0, -45],
-  racuteohungarumlaut: [-20, -20, 0, 0, -18, 0, -45],
-  racuteomacron: [-20, -20, 0, 0, -18, 0, -45],
-  racuteoslash: [-20, -20, 0, 0, -18, 0, -45],
-  racuteotilde: [-20, -20, 0, 0, -18, 0, -45],
-  racuteperiod: [-60, -60, -50, -50, -100, -65, -111, -55],
-  racuteq: [-20, -20, 0, 0, -18, 0, -37],
-  racutes: [-15, -15, 0, 0, 0, 0, -10],
-  racutesacute: [-15, -15, 0, 0, 0, 0, -10],
-  racutescaron: [-15, -15, 0, 0, 0, 0, -10],
-  racutescedilla: [-15, -15, 0, 0, 0, 0, -10],
-  racutescommaaccent: [-15, -15, 0, 0, 0, 0, -10],
-  racutet: [20, 20, 40, 40],
-  racutetcommaaccent: [20, 20, 40, 40],
-  racutev: [10, 10, 30, 30, -10],
-  racutey: [10, 10, 30, 30],
-  racuteyacute: [10, 10, 30, 30],
-  racuteydieresis: [10, 10, 30, 30],
-  rcaronc: [-20, -20, 0, 0, -18, 0, -37],
-  rcaroncacute: [-20, -20, 0, 0, -18, 0, -37],
-  rcaronccaron: [-20, -20, 0, 0, -18, 0, -37],
-  rcaronccedilla: [-20, -20, 0, 0, -18, 0, -37],
-  rcaroncomma: [-60, -60, -50, -50, -92, -65, -111, -40],
-  rcarond: [-20, -20, 0, 0, 0, 0, -37],
-  rcarondcroat: [-20, -20, 0, 0, 0, 0, -37],
-  rcarong: [-15, -15, 0, 0, -10, 0, -37, -18],
-  rcarongbreve: [-15, -15, 0, 0, -10, 0, -37, -18],
-  rcarongcommaaccent: [-15, -15, 0, 0, -10, 0, -37, -18],
-  rcaronhyphen: [-20, -20, 0, 0, -37, 0, -20, -20],
-  rcarono: [-20, -20, 0, 0, -18, 0, -45],
-  rcaronoacute: [-20, -20, 0, 0, -18, 0, -45],
-  rcaronocircumflex: [-20, -20, 0, 0, -18, 0, -45],
-  rcaronodieresis: [-20, -20, 0, 0, -18, 0, -45],
-  rcaronograve: [-20, -20, 0, 0, -18, 0, -45],
-  rcaronohungarumlaut: [-20, -20, 0, 0, -18, 0, -45],
-  rcaronomacron: [-20, -20, 0, 0, -18, 0, -45],
-  rcaronoslash: [-20, -20, 0, 0, -18, 0, -45],
-  rcaronotilde: [-20, -20, 0, 0, -18, 0, -45],
-  rcaronperiod: [-60, -60, -50, -50, -100, -65, -111, -55],
-  rcaronq: [-20, -20, 0, 0, -18, 0, -37],
-  rcarons: [-15, -15, 0, 0, 0, 0, -10],
-  rcaronsacute: [-15, -15, 0, 0, 0, 0, -10],
-  rcaronscaron: [-15, -15, 0, 0, 0, 0, -10],
-  rcaronscedilla: [-15, -15, 0, 0, 0, 0, -10],
-  rcaronscommaaccent: [-15, -15, 0, 0, 0, 0, -10],
-  rcaront: [20, 20, 40, 40],
-  rcarontcommaaccent: [20, 20, 40, 40],
-  rcaronv: [10, 10, 30, 30, -10],
-  rcarony: [10, 10, 30, 30],
-  rcaronyacute: [10, 10, 30, 30],
-  rcaronydieresis: [10, 10, 30, 30],
-  rcommaaccentc: [-20, -20, 0, 0, -18, 0, -37],
-  rcommaaccentcacute: [-20, -20, 0, 0, -18, 0, -37],
-  rcommaaccentccaron: [-20, -20, 0, 0, -18, 0, -37],
-  rcommaaccentccedilla: [-20, -20, 0, 0, -18, 0, -37],
-  rcommaaccentcomma: [-60, -60, -50, -50, -92, -65, -111, -40],
-  rcommaaccentd: [-20, -20, 0, 0, 0, 0, -37],
-  rcommaaccentdcroat: [-20, -20, 0, 0, 0, 0, -37],
-  rcommaaccentg: [-15, -15, 0, 0, -10, 0, -37, -18],
-  rcommaaccentgbreve: [-15, -15, 0, 0, -10, 0, -37, -18],
-  rcommaaccentgcommaaccent: [-15, -15, 0, 0, -10, 0, -37, -18],
-  rcommaaccenthyphen: [-20, -20, 0, 0, -37, 0, -20, -20],
-  rcommaaccento: [-20, -20, 0, 0, -18, 0, -45],
-  rcommaaccentoacute: [-20, -20, 0, 0, -18, 0, -45],
-  rcommaaccentocircumflex: [-20, -20, 0, 0, -18, 0, -45],
-  rcommaaccentodieresis: [-20, -20, 0, 0, -18, 0, -45],
-  rcommaaccentograve: [-20, -20, 0, 0, -18, 0, -45],
-  rcommaaccentohungarumlaut: [-20, -20, 0, 0, -18, 0, -45],
-  rcommaaccentomacron: [-20, -20, 0, 0, -18, 0, -45],
-  rcommaaccentoslash: [-20, -20, 0, 0, -18, 0, -45],
-  rcommaaccentotilde: [-20, -20, 0, 0, -18, 0, -45],
-  rcommaaccentperiod: [-60, -60, -50, -50, -100, -65, -111, -55],
-  rcommaaccentq: [-20, -20, 0, 0, -18, 0, -37],
-  rcommaaccents: [-15, -15, 0, 0, 0, 0, -10],
-  rcommaaccentsacute: [-15, -15, 0, 0, 0, 0, -10],
-  rcommaaccentscaron: [-15, -15, 0, 0, 0, 0, -10],
-  rcommaaccentscedilla: [-15, -15, 0, 0, 0, 0, -10],
-  rcommaaccentscommaaccent: [-15, -15, 0, 0, 0, 0, -10],
-  rcommaaccentt: [20, 20, 40, 40],
-  rcommaaccenttcommaaccent: [20, 20, 40, 40],
-  rcommaaccentv: [10, 10, 30, 30, -10],
-  rcommaaccenty: [10, 10, 30, 30],
-  rcommaaccentyacute: [10, 10, 30, 30],
-  rcommaaccentydieresis: [10, 10, 30, 30],
-  sw: [-15, -15, -30, -30],
-  sacutew: [-15, -15, -30, -30],
-  scaronw: [-15, -15, -30, -30],
-  scedillaw: [-15, -15, -30, -30],
-  scommaaccentw: [-15, -15, -30, -30],
-  semicolonspace: [-40, -40, -50, -50],
-  spaceT: [-100, -100, -50, -50, -30, 0, -18, -18],
-  spaceTcaron: [-100, -100, -50, -50, -30, 0, -18, -18],
-  spaceTcommaaccent: [-100, -100, -50, -50, -30, 0, -18, -18],
-  spaceV: [-80, -80, -50, -50, -45, -70, -35, -50],
-  spaceW: [-80, -80, -40, -40, -30, -70, -40, -30],
-  spaceY: [-120, -120, -90, -90, -55, -70, -75, -90],
-  spaceYacute: [-120, -120, -90, -90, -55, -70, -75, -90],
-  spaceYdieresis: [-120, -120, -90, -90, -55, -70, -75, -90],
-  spacequotedblleft: [-80, -80, -30, -30],
-  spacequoteleft: [-60, -60, -60, -60],
-  va: [-20, -20, -25, -25, -10, 0, 0, -25],
-  vaacute: [-20, -20, -25, -25, -10, 0, 0, -25],
-  vabreve: [-20, -20, -25, -25, -10, 0, 0, -25],
-  vacircumflex: [-20, -20, -25, -25, -10, 0, 0, -25],
-  vadieresis: [-20, -20, -25, -25, -10, 0, 0, -25],
-  vagrave: [-20, -20, -25, -25, -10, 0, 0, -25],
-  vamacron: [-20, -20, -25, -25, -10, 0, 0, -25],
-  vaogonek: [-20, -20, -25, -25, -10, 0, 0, -25],
-  varing: [-20, -20, -25, -25, -10, 0, 0, -25],
-  vatilde: [-20, -20, -25, -25, -10, 0, 0, -25],
-  vcomma: [-80, -80, -80, -80, -55, -37, -74, -65],
-  vo: [-30, -30, -25, -25, -10, -15, 0, -20],
-  voacute: [-30, -30, -25, -25, -10, -15, 0, -20],
-  vocircumflex: [-30, -30, -25, -25, -10, -15, 0, -20],
-  vodieresis: [-30, -30, -25, -25, -10, -15, 0, -20],
-  vograve: [-30, -30, -25, -25, -10, -15, 0, -20],
-  vohungarumlaut: [-30, -30, -25, -25, -10, -15, 0, -20],
-  vomacron: [-30, -30, -25, -25, -10, -15, 0, -20],
-  voslash: [-30, -30, -25, -25, -10, -15, 0, -20],
-  votilde: [-30, -30, -25, -25, -10, -15, 0, -20],
-  vperiod: [-80, -80, -80, -80, -70, -37, -74, -65],
-  wcomma: [-40, -40, -60, -60, -55, -37, -74, -65],
-  wo: [-20, -20, -10, -10, -10, -15, 0, -10],
-  woacute: [-20, -20, -10, -10, -10, -15, 0, -10],
-  wocircumflex: [-20, -20, -10, -10, -10, -15, 0, -10],
-  wodieresis: [-20, -20, -10, -10, -10, -15, 0, -10],
-  wograve: [-20, -20, -10, -10, -10, -15, 0, -10],
-  wohungarumlaut: [-20, -20, -10, -10, -10, -15, 0, -10],
-  womacron: [-20, -20, -10, -10, -10, -15, 0, -10],
-  woslash: [-20, -20, -10, -10, -10, -15, 0, -10],
-  wotilde: [-20, -20, -10, -10, -10, -15, 0, -10],
-  wperiod: [-40, -40, -60, -60, -70, -37, -74, -65],
-  xe: [-10, -10, -30, -30, 0, -10, 0, -15],
-  xeacute: [-10, -10, -30, -30, 0, -10, 0, -15],
-  xecaron: [-10, -10, -30, -30, 0, -10, 0, -15],
-  xecircumflex: [-10, -10, -30, -30, 0, -10, 0, -15],
-  xedieresis: [-10, -10, -30, -30, 0, -10, 0, -15],
-  xedotaccent: [-10, -10, -30, -30, 0, -10, 0, -15],
-  xegrave: [-10, -10, -30, -30, 0, -10, 0, -15],
-  xemacron: [-10, -10, -30, -30, 0, -10, 0, -15],
-  xeogonek: [-10, -10, -30, -30, 0, -10, 0, -15],
-  ya: [-30, -30, -20, -20],
-  yaacute: [-30, -30, -20, -20],
-  yabreve: [-30, -30, -20, -20],
-  yacircumflex: [-30, -30, -20, -20],
-  yadieresis: [-30, -30, -20, -20],
-  yagrave: [-30, -30, -20, -20],
-  yamacron: [-30, -30, -20, -20],
-  yaogonek: [-30, -30, -20, -20],
-  yaring: [-30, -30, -20, -20],
-  yatilde: [-30, -30, -20, -20],
-  ycomma: [-80, -80, -100, -100, -55, -37, -55, -65],
-  ye: [-10, -10, -20, -20, -10],
-  yeacute: [-10, -10, -20, -20, -10],
-  yecaron: [-10, -10, -20, -20, -10],
-  yecircumflex: [-10, -10, -20, -20, -10],
-  yedieresis: [-10, -10, -20, -20, -10],
-  yedotaccent: [-10, -10, -20, -20, -10],
-  yegrave: [-10, -10, -20, -20, -10],
-  yemacron: [-10, -10, -20, -20, -10],
-  yeogonek: [-10, -10, -20, -20, -10],
-  yo: [-25, -25, -20, -20, -25],
-  yoacute: [-25, -25, -20, -20, -25],
-  yocircumflex: [-25, -25, -20, -20, -25],
-  yodieresis: [-25, -25, -20, -20, -25],
-  yograve: [-25, -25, -20, -20, -25],
-  yohungarumlaut: [-25, -25, -20, -20, -25],
-  yomacron: [-25, -25, -20, -20, -25],
-  yoslash: [-25, -25, -20, -20, -25],
-  yotilde: [-25, -25, -20, -20, -25],
-  yperiod: [-80, -80, -100, -100, -70, -37, -55, -65],
-  yacutea: [-30, -30, -20, -20],
-  yacuteaacute: [-30, -30, -20, -20],
-  yacuteabreve: [-30, -30, -20, -20],
-  yacuteacircumflex: [-30, -30, -20, -20],
-  yacuteadieresis: [-30, -30, -20, -20],
-  yacuteagrave: [-30, -30, -20, -20],
-  yacuteamacron: [-30, -30, -20, -20],
-  yacuteaogonek: [-30, -30, -20, -20],
-  yacutearing: [-30, -30, -20, -20],
-  yacuteatilde: [-30, -30, -20, -20],
-  yacutecomma: [-80, -80, -100, -100, -55, -37, -55, -65],
-  yacutee: [-10, -10, -20, -20, -10],
-  yacuteeacute: [-10, -10, -20, -20, -10],
-  yacuteecaron: [-10, -10, -20, -20, -10],
-  yacuteecircumflex: [-10, -10, -20, -20, -10],
-  yacuteedieresis: [-10, -10, -20, -20, -10],
-  yacuteedotaccent: [-10, -10, -20, -20, -10],
-  yacuteegrave: [-10, -10, -20, -20, -10],
-  yacuteemacron: [-10, -10, -20, -20, -10],
-  yacuteeogonek: [-10, -10, -20, -20, -10],
-  yacuteo: [-25, -25, -20, -20, -25],
-  yacuteoacute: [-25, -25, -20, -20, -25],
-  yacuteocircumflex: [-25, -25, -20, -20, -25],
-  yacuteodieresis: [-25, -25, -20, -20, -25],
-  yacuteograve: [-25, -25, -20, -20, -25],
-  yacuteohungarumlaut: [-25, -25, -20, -20, -25],
-  yacuteomacron: [-25, -25, -20, -20, -25],
-  yacuteoslash: [-25, -25, -20, -20, -25],
-  yacuteotilde: [-25, -25, -20, -20, -25],
-  yacuteperiod: [-80, -80, -100, -100, -70, -37, -55, -65],
-  ydieresisa: [-30, -30, -20, -20],
-  ydieresisaacute: [-30, -30, -20, -20],
-  ydieresisabreve: [-30, -30, -20, -20],
-  ydieresisacircumflex: [-30, -30, -20, -20],
-  ydieresisadieresis: [-30, -30, -20, -20],
-  ydieresisagrave: [-30, -30, -20, -20],
-  ydieresisamacron: [-30, -30, -20, -20],
-  ydieresisaogonek: [-30, -30, -20, -20],
-  ydieresisaring: [-30, -30, -20, -20],
-  ydieresisatilde: [-30, -30, -20, -20],
-  ydieresiscomma: [-80, -80, -100, -100, -55, -37, -55, -65],
-  ydieresise: [-10, -10, -20, -20, -10],
-  ydieresiseacute: [-10, -10, -20, -20, -10],
-  ydieresisecaron: [-10, -10, -20, -20, -10],
-  ydieresisecircumflex: [-10, -10, -20, -20, -10],
-  ydieresisedieresis: [-10, -10, -20, -20, -10],
-  ydieresisedotaccent: [-10, -10, -20, -20, -10],
-  ydieresisegrave: [-10, -10, -20, -20, -10],
-  ydieresisemacron: [-10, -10, -20, -20, -10],
-  ydieresiseogonek: [-10, -10, -20, -20, -10],
-  ydieresiso: [-25, -25, -20, -20, -25],
-  ydieresisoacute: [-25, -25, -20, -20, -25],
-  ydieresisocircumflex: [-25, -25, -20, -20, -25],
-  ydieresisodieresis: [-25, -25, -20, -20, -25],
-  ydieresisograve: [-25, -25, -20, -20, -25],
-  ydieresisohungarumlaut: [-25, -25, -20, -20, -25],
-  ydieresisomacron: [-25, -25, -20, -20, -25],
-  ydieresisoslash: [-25, -25, -20, -20, -25],
-  ydieresisotilde: [-25, -25, -20, -20, -25],
-  ydieresisperiod: [-80, -80, -100, -100, -70, -37, -55, -65],
-  ze: [10, 10, -15, -15],
-  zeacute: [10, 10, -15, -15],
-  zecaron: [10, 10, -15, -15],
-  zecircumflex: [10, 10, -15, -15],
-  zedieresis: [10, 10, -15, -15],
-  zedotaccent: [10, 10, -15, -15],
-  zegrave: [10, 10, -15, -15],
-  zemacron: [10, 10, -15, -15],
-  zeogonek: [10, 10, -15, -15],
-  zacutee: [10, 10, -15, -15],
-  zacuteeacute: [10, 10, -15, -15],
-  zacuteecaron: [10, 10, -15, -15],
-  zacuteecircumflex: [10, 10, -15, -15],
-  zacuteedieresis: [10, 10, -15, -15],
-  zacuteedotaccent: [10, 10, -15, -15],
-  zacuteegrave: [10, 10, -15, -15],
-  zacuteemacron: [10, 10, -15, -15],
-  zacuteeogonek: [10, 10, -15, -15],
-  zcarone: [10, 10, -15, -15],
-  zcaroneacute: [10, 10, -15, -15],
-  zcaronecaron: [10, 10, -15, -15],
-  zcaronecircumflex: [10, 10, -15, -15],
-  zcaronedieresis: [10, 10, -15, -15],
-  zcaronedotaccent: [10, 10, -15, -15],
-  zcaronegrave: [10, 10, -15, -15],
-  zcaronemacron: [10, 10, -15, -15],
-  zcaroneogonek: [10, 10, -15, -15],
-  zdotaccente: [10, 10, -15, -15],
-  zdotaccenteacute: [10, 10, -15, -15],
-  zdotaccentecaron: [10, 10, -15, -15],
-  zdotaccentecircumflex: [10, 10, -15, -15],
-  zdotaccentedieresis: [10, 10, -15, -15],
-  zdotaccentedotaccent: [10, 10, -15, -15],
-  zdotaccentegrave: [10, 10, -15, -15],
-  zdotaccentemacron: [10, 10, -15, -15],
-  zdotaccenteogonek: [10, 10, -15, -15],
-  Bcomma: [0, 0, -20, -20],
-  Bperiod: [0, 0, -20, -20],
-  Ccomma: [0, 0, -30, -30],
-  Cperiod: [0, 0, -30, -30],
-  Cacutecomma: [0, 0, -30, -30],
-  Cacuteperiod: [0, 0, -30, -30],
-  Ccaroncomma: [0, 0, -30, -30],
-  Ccaronperiod: [0, 0, -30, -30],
-  Ccedillacomma: [0, 0, -30, -30],
-  Ccedillaperiod: [0, 0, -30, -30],
-  Fe: [0, 0, -30, -30, -25, -100, -75],
-  Feacute: [0, 0, -30, -30, -25, -100, -75],
-  Fecaron: [0, 0, -30, -30, -25, -100, -75],
-  Fecircumflex: [0, 0, -30, -30, -25, -100, -75],
-  Fedieresis: [0, 0, -30, -30, -25, -100, -75],
-  Fedotaccent: [0, 0, -30, -30, -25, -100, -75],
-  Fegrave: [0, 0, -30, -30, -25, -100, -75],
-  Femacron: [0, 0, -30, -30, -25, -100, -75],
-  Feogonek: [0, 0, -30, -30, -25, -100, -75],
-  Fo: [0, 0, -30, -30, -25, -70, -105, -15],
-  Foacute: [0, 0, -30, -30, -25, -70, -105, -15],
-  Focircumflex: [0, 0, -30, -30, -25, -70, -105, -15],
-  Fodieresis: [0, 0, -30, -30, -25, -70, -105, -15],
-  Fograve: [0, 0, -30, -30, -25, -70, -105, -15],
-  Fohungarumlaut: [0, 0, -30, -30, -25, -70, -105, -15],
-  Fomacron: [0, 0, -30, -30, -25, -70, -105, -15],
-  Foslash: [0, 0, -30, -30, -25, -70, -105, -15],
-  Fotilde: [0, 0, -30, -30, -25, -70, -105, -15],
-  Fr: [0, 0, -45, -45, 0, -50, -55],
-  Fracute: [0, 0, -45, -45, 0, -50, -55],
-  Frcaron: [0, 0, -45, -45, 0, -50, -55],
-  Frcommaaccent: [0, 0, -45, -45, 0, -50, -55],
-  Ja: [0, 0, -20, -20, -15, -40, -35],
-  Jaacute: [0, 0, -20, -20, -15, -40, -35],
-  Jabreve: [0, 0, -20, -20, -15, -40, -35],
-  Jacircumflex: [0, 0, -20, -20, -15, -40, -35],
-  Jadieresis: [0, 0, -20, -20, -15, -40, -35],
-  Jagrave: [0, 0, -20, -20, -15, -40, -35],
-  Jamacron: [0, 0, -20, -20, -15, -40, -35],
-  Jaogonek: [0, 0, -20, -20, -15, -40, -35],
-  Jaring: [0, 0, -20, -20, -15, -40, -35],
-  Jatilde: [0, 0, -20, -20, -15, -40, -35],
-  LcaronT: [0, 0, -110, -110],
-  LcaronTcaron: [0, 0, -110, -110],
-  LcaronTcommaaccent: [0, 0, -110, -110],
-  LcaronV: [0, 0, -110, -110],
-  LcaronW: [0, 0, -70, -70],
-  LcaronY: [0, 0, -140, -140],
-  LcaronYacute: [0, 0, -140, -140],
-  LcaronYdieresis: [0, 0, -140, -140],
-  Lcaronquotedblright: [0, 0, -140, -140],
-  Lcaronquoteright: [0, 0, -160, -160, 0, 0, 0, -92],
-  Lcarony: [0, 0, -30, -30, 0, 0, 0, -55],
-  Lcaronyacute: [0, 0, -30, -30, 0, 0, 0, -55],
-  Lcaronydieresis: [0, 0, -30, -30, 0, 0, 0, -55],
-  Scomma: [0, 0, -20, -20],
-  Speriod: [0, 0, -20, -20],
-  Sacutecomma: [0, 0, -20, -20],
-  Sacuteperiod: [0, 0, -20, -20],
-  Scaroncomma: [0, 0, -20, -20],
-  Scaronperiod: [0, 0, -20, -20],
-  Scedillacomma: [0, 0, -20, -20],
-  Scedillaperiod: [0, 0, -20, -20],
-  Scommaaccentcomma: [0, 0, -20, -20],
-  Scommaaccentperiod: [0, 0, -20, -20],
-  Trcaron: [0, 0, -120, -120, -74, -37, -55, -35],
-  Tcaronrcaron: [0, 0, -120, -120, -74, -37, -55, -35],
-  Tcommaaccentrcaron: [0, 0, -120, -120, -74, -37, -55, -35],
-  Yhyphen: [0, 0, -140, -140, -92, -92, -74, -111],
-  Yi: [0, 0, -20, -20, -37, -55, -74, -55],
-  Yiacute: [0, 0, -20, -20, -37, -55, -74, -55],
-  Yiogonek: [0, 0, -20, -20, -37, -55, -74, -55],
-  Yacutehyphen: [0, 0, -140, -140, -92, -92, -74, -111],
-  Yacutei: [0, 0, -20, -20, -37, -55, -74, -55],
-  Yacuteiacute: [0, 0, -20, -20, -37, -55, -74, -55],
-  Yacuteiogonek: [0, 0, -20, -20, -37, -55, -74, -55],
-  Ydieresishyphen: [0, 0, -140, -140, -92, -92, -74, -111],
-  Ydieresisi: [0, 0, -20, -20, -37, -55, -74, -55],
-  Ydieresisiacute: [0, 0, -20, -20, -37, -55, -74, -55],
-  Ydieresisiogonek: [0, 0, -20, -20, -37, -55, -74, -55],
-  bb: [0, 0, -10, -10, -10, -10],
-  bcomma: [0, 0, -40, -40],
-  bperiod: [0, 0, -40, -40, -40, -40, -40, -40],
-  ccomma: [0, 0, -15, -15],
-  cacutecomma: [0, 0, -15, -15],
-  ccaroncomma: [0, 0, -15, -15],
-  ccedillacomma: [0, 0, -15, -15],
-  fa: [0, 0, -30, -30, 0, 0, 0, -10],
-  faacute: [0, 0, -30, -30, 0, 0, 0, -10],
-  fabreve: [0, 0, -30, -30, 0, 0, 0, -10],
-  facircumflex: [0, 0, -30, -30, 0, 0, 0, -10],
-  fadieresis: [0, 0, -30, -30, 0, 0, 0, -10],
-  fagrave: [0, 0, -30, -30, 0, 0, 0, -10],
-  famacron: [0, 0, -30, -30, 0, 0, 0, -10],
-  faogonek: [0, 0, -30, -30, 0, 0, 0, -10],
-  faring: [0, 0, -30, -30, 0, 0, 0, -10],
-  fatilde: [0, 0, -30, -30, 0, 0, 0, -10],
-  fdotlessi: [0, 0, -28, -28, -35, -30, -60, -50],
-  gr: [0, 0, -10, -10],
-  gracute: [0, 0, -10, -10],
-  grcaron: [0, 0, -10, -10],
-  grcommaaccent: [0, 0, -10, -10],
-  gbrever: [0, 0, -10, -10],
-  gbreveracute: [0, 0, -10, -10],
-  gbrevercaron: [0, 0, -10, -10],
-  gbrevercommaaccent: [0, 0, -10, -10],
-  gcommaaccentr: [0, 0, -10, -10],
-  gcommaaccentracute: [0, 0, -10, -10],
-  gcommaaccentrcaron: [0, 0, -10, -10],
-  gcommaaccentrcommaaccent: [0, 0, -10, -10],
-  ke: [0, 0, -20, -20, -10, -30, -10, -10],
-  keacute: [0, 0, -20, -20, -10, -30, -10, -10],
-  kecaron: [0, 0, -20, -20, -10, -30, -10, -10],
-  kecircumflex: [0, 0, -20, -20, -10, -30, -10, -10],
-  kedieresis: [0, 0, -20, -20, -10, -30, -10, -10],
-  kedotaccent: [0, 0, -20, -20, -10, -30, -10, -10],
-  kegrave: [0, 0, -20, -20, -10, -30, -10, -10],
-  kemacron: [0, 0, -20, -20, -10, -30, -10, -10],
-  keogonek: [0, 0, -20, -20, -10, -30, -10, -10],
-  kcommaaccente: [0, 0, -20, -20, -10, -30, -10, -10],
-  kcommaaccenteacute: [0, 0, -20, -20, -10, -30, -10, -10],
-  kcommaaccentecaron: [0, 0, -20, -20, -10, -30, -10, -10],
-  kcommaaccentecircumflex: [0, 0, -20, -20, -10, -30, -10, -10],
-  kcommaaccentedieresis: [0, 0, -20, -20, -10, -30, -10, -10],
-  kcommaaccentedotaccent: [0, 0, -20, -20, -10, -30, -10, -10],
-  kcommaaccentegrave: [0, 0, -20, -20, -10, -30, -10, -10],
-  kcommaaccentemacron: [0, 0, -20, -20, -10, -30, -10, -10],
-  kcommaaccenteogonek: [0, 0, -20, -20, -10, -30, -10, -10],
-  ocomma: [0, 0, -40, -40],
-  operiod: [0, 0, -40, -40],
-  oacutecomma: [0, 0, -40, -40],
-  oacuteperiod: [0, 0, -40, -40],
-  ocircumflexcomma: [0, 0, -40, -40],
-  ocircumflexperiod: [0, 0, -40, -40],
-  odieresiscomma: [0, 0, -40, -40],
-  odieresisperiod: [0, 0, -40, -40],
-  ogravecomma: [0, 0, -40, -40],
-  ograveperiod: [0, 0, -40, -40],
-  ohungarumlautcomma: [0, 0, -40, -40],
-  ohungarumlautperiod: [0, 0, -40, -40],
-  omacroncomma: [0, 0, -40, -40],
-  omacronperiod: [0, 0, -40, -40],
-  oslasha: [0, 0, -55, -55],
-  oslashaacute: [0, 0, -55, -55],
-  oslashabreve: [0, 0, -55, -55],
-  oslashacircumflex: [0, 0, -55, -55],
-  oslashadieresis: [0, 0, -55, -55],
-  oslashagrave: [0, 0, -55, -55],
-  oslashamacron: [0, 0, -55, -55],
-  oslashaogonek: [0, 0, -55, -55],
-  oslasharing: [0, 0, -55, -55],
-  oslashatilde: [0, 0, -55, -55],
-  oslashb: [0, 0, -55, -55],
-  oslashc: [0, 0, -55, -55],
-  oslashcacute: [0, 0, -55, -55],
-  oslashccaron: [0, 0, -55, -55],
-  oslashccedilla: [0, 0, -55, -55],
-  oslashcomma: [0, 0, -95, -95],
-  oslashd: [0, 0, -55, -55],
-  oslashdcroat: [0, 0, -55, -55],
-  oslashe: [0, 0, -55, -55],
-  oslasheacute: [0, 0, -55, -55],
-  oslashecaron: [0, 0, -55, -55],
-  oslashecircumflex: [0, 0, -55, -55],
-  oslashedieresis: [0, 0, -55, -55],
-  oslashedotaccent: [0, 0, -55, -55],
-  oslashegrave: [0, 0, -55, -55],
-  oslashemacron: [0, 0, -55, -55],
-  oslasheogonek: [0, 0, -55, -55],
-  oslashf: [0, 0, -55, -55],
-  oslashg: [0, 0, -55, -55, 0, 0, -10],
-  oslashgbreve: [0, 0, -55, -55, 0, 0, -10],
-  oslashgcommaaccent: [0, 0, -55, -55, 0, 0, -10],
-  oslashh: [0, 0, -55, -55],
-  oslashi: [0, 0, -55, -55],
-  oslashiacute: [0, 0, -55, -55],
-  oslashicircumflex: [0, 0, -55, -55],
-  oslashidieresis: [0, 0, -55, -55],
-  oslashigrave: [0, 0, -55, -55],
-  oslashimacron: [0, 0, -55, -55],
-  oslashiogonek: [0, 0, -55, -55],
-  oslashj: [0, 0, -55, -55],
-  oslashk: [0, 0, -55, -55],
-  oslashkcommaaccent: [0, 0, -55, -55],
-  oslashl: [0, 0, -55, -55],
-  oslashlacute: [0, 0, -55, -55],
-  oslashlcommaaccent: [0, 0, -55, -55],
-  oslashlslash: [0, 0, -55, -55],
-  oslashm: [0, 0, -55, -55],
-  oslashn: [0, 0, -55, -55],
-  oslashnacute: [0, 0, -55, -55],
-  oslashncaron: [0, 0, -55, -55],
-  oslashncommaaccent: [0, 0, -55, -55],
-  oslashntilde: [0, 0, -55, -55],
-  oslasho: [0, 0, -55, -55],
-  oslashoacute: [0, 0, -55, -55],
-  oslashocircumflex: [0, 0, -55, -55],
-  oslashodieresis: [0, 0, -55, -55],
-  oslashograve: [0, 0, -55, -55],
-  oslashohungarumlaut: [0, 0, -55, -55],
-  oslashomacron: [0, 0, -55, -55],
-  oslashoslash: [0, 0, -55, -55],
-  oslashotilde: [0, 0, -55, -55],
-  oslashp: [0, 0, -55, -55],
-  oslashperiod: [0, 0, -95, -95],
-  oslashq: [0, 0, -55, -55],
-  oslashr: [0, 0, -55, -55],
-  oslashracute: [0, 0, -55, -55],
-  oslashrcaron: [0, 0, -55, -55],
-  oslashrcommaaccent: [0, 0, -55, -55],
-  oslashs: [0, 0, -55, -55],
-  oslashsacute: [0, 0, -55, -55],
-  oslashscaron: [0, 0, -55, -55],
-  oslashscedilla: [0, 0, -55, -55],
-  oslashscommaaccent: [0, 0, -55, -55],
-  oslasht: [0, 0, -55, -55],
-  oslashtcommaaccent: [0, 0, -55, -55],
-  oslashu: [0, 0, -55, -55],
-  oslashuacute: [0, 0, -55, -55],
-  oslashucircumflex: [0, 0, -55, -55],
-  oslashudieresis: [0, 0, -55, -55],
-  oslashugrave: [0, 0, -55, -55],
-  oslashuhungarumlaut: [0, 0, -55, -55],
-  oslashumacron: [0, 0, -55, -55],
-  oslashuogonek: [0, 0, -55, -55],
-  oslashuring: [0, 0, -55, -55],
-  oslashz: [0, 0, -55, -55],
-  oslashzacute: [0, 0, -55, -55],
-  oslashzcaron: [0, 0, -55, -55],
-  oslashzdotaccent: [0, 0, -55, -55],
-  otildecomma: [0, 0, -40, -40],
-  otildeperiod: [0, 0, -40, -40],
-  pcomma: [0, 0, -35, -35],
-  pperiod: [0, 0, -35, -35],
-  ra: [0, 0, -10, -10, 0, 0, -15],
-  raacute: [0, 0, -10, -10, 0, 0, -15],
-  rabreve: [0, 0, -10, -10, 0, 0, -15],
-  racircumflex: [0, 0, -10, -10, 0, 0, -15],
-  radieresis: [0, 0, -10, -10, 0, 0, -15],
-  ragrave: [0, 0, -10, -10, 0, 0, -15],
-  ramacron: [0, 0, -10, -10, 0, 0, -15],
-  raogonek: [0, 0, -10, -10, 0, 0, -15],
-  raring: [0, 0, -10, -10, 0, 0, -15],
-  ratilde: [0, 0, -10, -10, 0, 0, -15],
-  rcolon: [0, 0, 30, 30],
-  ri: [0, 0, 15, 15],
-  riacute: [0, 0, 15, 15],
-  ricircumflex: [0, 0, 15, 15],
-  ridieresis: [0, 0, 15, 15],
-  rigrave: [0, 0, 15, 15],
-  rimacron: [0, 0, 15, 15],
-  riogonek: [0, 0, 15, 15],
-  rk: [0, 0, 15, 15],
-  rkcommaaccent: [0, 0, 15, 15],
-  rl: [0, 0, 15, 15],
-  rlacute: [0, 0, 15, 15],
-  rlcommaaccent: [0, 0, 15, 15],
-  rlslash: [0, 0, 15, 15],
-  rm: [0, 0, 25, 25],
-  rn: [0, 0, 25, 25, -15],
-  rnacute: [0, 0, 25, 25, -15],
-  rncaron: [0, 0, 25, 25, -15],
-  rncommaaccent: [0, 0, 25, 25, -15],
-  rntilde: [0, 0, 25, 25, -15],
-  rp: [0, 0, 30, 30, -10],
-  rsemicolon: [0, 0, 30, 30],
-  ru: [0, 0, 15, 15],
-  ruacute: [0, 0, 15, 15],
-  rucircumflex: [0, 0, 15, 15],
-  rudieresis: [0, 0, 15, 15],
-  rugrave: [0, 0, 15, 15],
-  ruhungarumlaut: [0, 0, 15, 15],
-  rumacron: [0, 0, 15, 15],
-  ruogonek: [0, 0, 15, 15],
-  ruring: [0, 0, 15, 15],
-  racutea: [0, 0, -10, -10, 0, 0, -15],
-  racuteaacute: [0, 0, -10, -10, 0, 0, -15],
-  racuteabreve: [0, 0, -10, -10, 0, 0, -15],
-  racuteacircumflex: [0, 0, -10, -10, 0, 0, -15],
-  racuteadieresis: [0, 0, -10, -10, 0, 0, -15],
-  racuteagrave: [0, 0, -10, -10, 0, 0, -15],
-  racuteamacron: [0, 0, -10, -10, 0, 0, -15],
-  racuteaogonek: [0, 0, -10, -10, 0, 0, -15],
-  racutearing: [0, 0, -10, -10, 0, 0, -15],
-  racuteatilde: [0, 0, -10, -10, 0, 0, -15],
-  racutecolon: [0, 0, 30, 30],
-  racutei: [0, 0, 15, 15],
-  racuteiacute: [0, 0, 15, 15],
-  racuteicircumflex: [0, 0, 15, 15],
-  racuteidieresis: [0, 0, 15, 15],
-  racuteigrave: [0, 0, 15, 15],
-  racuteimacron: [0, 0, 15, 15],
-  racuteiogonek: [0, 0, 15, 15],
-  racutek: [0, 0, 15, 15],
-  racutekcommaaccent: [0, 0, 15, 15],
-  racutel: [0, 0, 15, 15],
-  racutelacute: [0, 0, 15, 15],
-  racutelcommaaccent: [0, 0, 15, 15],
-  racutelslash: [0, 0, 15, 15],
-  racutem: [0, 0, 25, 25],
-  racuten: [0, 0, 25, 25, -15],
-  racutenacute: [0, 0, 25, 25, -15],
-  racutencaron: [0, 0, 25, 25, -15],
-  racutencommaaccent: [0, 0, 25, 25, -15],
-  racutentilde: [0, 0, 25, 25, -15],
-  racutep: [0, 0, 30, 30, -10],
-  racutesemicolon: [0, 0, 30, 30],
-  racuteu: [0, 0, 15, 15],
-  racuteuacute: [0, 0, 15, 15],
-  racuteucircumflex: [0, 0, 15, 15],
-  racuteudieresis: [0, 0, 15, 15],
-  racuteugrave: [0, 0, 15, 15],
-  racuteuhungarumlaut: [0, 0, 15, 15],
-  racuteumacron: [0, 0, 15, 15],
-  racuteuogonek: [0, 0, 15, 15],
-  racuteuring: [0, 0, 15, 15],
-  rcarona: [0, 0, -10, -10, 0, 0, -15],
-  rcaronaacute: [0, 0, -10, -10, 0, 0, -15],
-  rcaronabreve: [0, 0, -10, -10, 0, 0, -15],
-  rcaronacircumflex: [0, 0, -10, -10, 0, 0, -15],
-  rcaronadieresis: [0, 0, -10, -10, 0, 0, -15],
-  rcaronagrave: [0, 0, -10, -10, 0, 0, -15],
-  rcaronamacron: [0, 0, -10, -10, 0, 0, -15],
-  rcaronaogonek: [0, 0, -10, -10, 0, 0, -15],
-  rcaronaring: [0, 0, -10, -10, 0, 0, -15],
-  rcaronatilde: [0, 0, -10, -10, 0, 0, -15],
-  rcaroncolon: [0, 0, 30, 30],
-  rcaroni: [0, 0, 15, 15],
-  rcaroniacute: [0, 0, 15, 15],
-  rcaronicircumflex: [0, 0, 15, 15],
-  rcaronidieresis: [0, 0, 15, 15],
-  rcaronigrave: [0, 0, 15, 15],
-  rcaronimacron: [0, 0, 15, 15],
-  rcaroniogonek: [0, 0, 15, 15],
-  rcaronk: [0, 0, 15, 15],
-  rcaronkcommaaccent: [0, 0, 15, 15],
-  rcaronl: [0, 0, 15, 15],
-  rcaronlacute: [0, 0, 15, 15],
-  rcaronlcommaaccent: [0, 0, 15, 15],
-  rcaronlslash: [0, 0, 15, 15],
-  rcaronm: [0, 0, 25, 25],
-  rcaronn: [0, 0, 25, 25, -15],
-  rcaronnacute: [0, 0, 25, 25, -15],
-  rcaronncaron: [0, 0, 25, 25, -15],
-  rcaronncommaaccent: [0, 0, 25, 25, -15],
-  rcaronntilde: [0, 0, 25, 25, -15],
-  rcaronp: [0, 0, 30, 30, -10],
-  rcaronsemicolon: [0, 0, 30, 30],
-  rcaronu: [0, 0, 15, 15],
-  rcaronuacute: [0, 0, 15, 15],
-  rcaronucircumflex: [0, 0, 15, 15],
-  rcaronudieresis: [0, 0, 15, 15],
-  rcaronugrave: [0, 0, 15, 15],
-  rcaronuhungarumlaut: [0, 0, 15, 15],
-  rcaronumacron: [0, 0, 15, 15],
-  rcaronuogonek: [0, 0, 15, 15],
-  rcaronuring: [0, 0, 15, 15],
-  rcommaaccenta: [0, 0, -10, -10, 0, 0, -15],
-  rcommaaccentaacute: [0, 0, -10, -10, 0, 0, -15],
-  rcommaaccentabreve: [0, 0, -10, -10, 0, 0, -15],
-  rcommaaccentacircumflex: [0, 0, -10, -10, 0, 0, -15],
-  rcommaaccentadieresis: [0, 0, -10, -10, 0, 0, -15],
-  rcommaaccentagrave: [0, 0, -10, -10, 0, 0, -15],
-  rcommaaccentamacron: [0, 0, -10, -10, 0, 0, -15],
-  rcommaaccentaogonek: [0, 0, -10, -10, 0, 0, -15],
-  rcommaaccentaring: [0, 0, -10, -10, 0, 0, -15],
-  rcommaaccentatilde: [0, 0, -10, -10, 0, 0, -15],
-  rcommaaccentcolon: [0, 0, 30, 30],
-  rcommaaccenti: [0, 0, 15, 15],
-  rcommaaccentiacute: [0, 0, 15, 15],
-  rcommaaccenticircumflex: [0, 0, 15, 15],
-  rcommaaccentidieresis: [0, 0, 15, 15],
-  rcommaaccentigrave: [0, 0, 15, 15],
-  rcommaaccentimacron: [0, 0, 15, 15],
-  rcommaaccentiogonek: [0, 0, 15, 15],
-  rcommaaccentk: [0, 0, 15, 15],
-  rcommaaccentkcommaaccent: [0, 0, 15, 15],
-  rcommaaccentl: [0, 0, 15, 15],
-  rcommaaccentlacute: [0, 0, 15, 15],
-  rcommaaccentlcommaaccent: [0, 0, 15, 15],
-  rcommaaccentlslash: [0, 0, 15, 15],
-  rcommaaccentm: [0, 0, 25, 25],
-  rcommaaccentn: [0, 0, 25, 25, -15],
-  rcommaaccentnacute: [0, 0, 25, 25, -15],
-  rcommaaccentncaron: [0, 0, 25, 25, -15],
-  rcommaaccentncommaaccent: [0, 0, 25, 25, -15],
-  rcommaaccentntilde: [0, 0, 25, 25, -15],
-  rcommaaccentp: [0, 0, 30, 30, -10],
-  rcommaaccentsemicolon: [0, 0, 30, 30],
-  rcommaaccentu: [0, 0, 15, 15],
-  rcommaaccentuacute: [0, 0, 15, 15],
-  rcommaaccentucircumflex: [0, 0, 15, 15],
-  rcommaaccentudieresis: [0, 0, 15, 15],
-  rcommaaccentugrave: [0, 0, 15, 15],
-  rcommaaccentuhungarumlaut: [0, 0, 15, 15],
-  rcommaaccentumacron: [0, 0, 15, 15],
-  rcommaaccentuogonek: [0, 0, 15, 15],
-  rcommaaccenturing: [0, 0, 15, 15],
-  scomma: [0, 0, -15, -15],
-  speriod: [0, 0, -15, -15],
-  sacutecomma: [0, 0, -15, -15],
-  sacuteperiod: [0, 0, -15, -15],
-  scaroncomma: [0, 0, -15, -15],
-  scaronperiod: [0, 0, -15, -15],
-  scedillacomma: [0, 0, -15, -15],
-  scedillaperiod: [0, 0, -15, -15],
-  scommaaccentcomma: [0, 0, -15, -15],
-  scommaaccentperiod: [0, 0, -15, -15],
-  ve: [0, 0, -25, -25, -10, -15, 0, -15],
-  veacute: [0, 0, -25, -25, -10, -15, 0, -15],
-  vecaron: [0, 0, -25, -25, -10, -15, 0, -15],
-  vecircumflex: [0, 0, -25, -25, -10, -15, 0, -15],
-  vedieresis: [0, 0, -25, -25, -10, -15, 0, -15],
-  vedotaccent: [0, 0, -25, -25, -10, -15, 0, -15],
-  vegrave: [0, 0, -25, -25, -10, -15, 0, -15],
-  vemacron: [0, 0, -25, -25, -10, -15, 0, -15],
-  veogonek: [0, 0, -25, -25, -10, -15, 0, -15],
-  wa: [0, 0, -15, -15, 0, -10, 0, -10],
-  waacute: [0, 0, -15, -15, 0, -10, 0, -10],
-  wabreve: [0, 0, -15, -15, 0, -10, 0, -10],
-  wacircumflex: [0, 0, -15, -15, 0, -10, 0, -10],
-  wadieresis: [0, 0, -15, -15, 0, -10, 0, -10],
-  wagrave: [0, 0, -15, -15, 0, -10, 0, -10],
-  wamacron: [0, 0, -15, -15, 0, -10, 0, -10],
-  waogonek: [0, 0, -15, -15, 0, -10, 0, -10],
-  waring: [0, 0, -15, -15, 0, -10, 0, -10],
-  watilde: [0, 0, -15, -15, 0, -10, 0, -10],
-  we: [0, 0, -10, -10, 0, -10],
-  weacute: [0, 0, -10, -10, 0, -10],
-  wecaron: [0, 0, -10, -10, 0, -10],
-  wecircumflex: [0, 0, -10, -10, 0, -10],
-  wedieresis: [0, 0, -10, -10, 0, -10],
-  wedotaccent: [0, 0, -10, -10, 0, -10],
-  wegrave: [0, 0, -10, -10, 0, -10],
-  wemacron: [0, 0, -10, -10, 0, -10],
-  weogonek: [0, 0, -10, -10, 0, -10],
-  zo: [0, 0, -15, -15],
-  zoacute: [0, 0, -15, -15],
-  zocircumflex: [0, 0, -15, -15],
-  zodieresis: [0, 0, -15, -15],
-  zograve: [0, 0, -15, -15],
-  zohungarumlaut: [0, 0, -15, -15],
-  zomacron: [0, 0, -15, -15],
-  zoslash: [0, 0, -15, -15],
-  zotilde: [0, 0, -15, -15],
-  zacuteo: [0, 0, -15, -15],
-  zacuteoacute: [0, 0, -15, -15],
-  zacuteocircumflex: [0, 0, -15, -15],
-  zacuteodieresis: [0, 0, -15, -15],
-  zacuteograve: [0, 0, -15, -15],
-  zacuteohungarumlaut: [0, 0, -15, -15],
-  zacuteomacron: [0, 0, -15, -15],
-  zacuteoslash: [0, 0, -15, -15],
-  zacuteotilde: [0, 0, -15, -15],
-  zcarono: [0, 0, -15, -15],
-  zcaronoacute: [0, 0, -15, -15],
-  zcaronocircumflex: [0, 0, -15, -15],
-  zcaronodieresis: [0, 0, -15, -15],
-  zcaronograve: [0, 0, -15, -15],
-  zcaronohungarumlaut: [0, 0, -15, -15],
-  zcaronomacron: [0, 0, -15, -15],
-  zcaronoslash: [0, 0, -15, -15],
-  zcaronotilde: [0, 0, -15, -15],
-  zdotaccento: [0, 0, -15, -15],
-  zdotaccentoacute: [0, 0, -15, -15],
-  zdotaccentocircumflex: [0, 0, -15, -15],
-  zdotaccentodieresis: [0, 0, -15, -15],
-  zdotaccentograve: [0, 0, -15, -15],
-  zdotaccentohungarumlaut: [0, 0, -15, -15],
-  zdotaccentomacron: [0, 0, -15, -15],
-  zdotaccentoslash: [0, 0, -15, -15],
-  zdotaccentotilde: [0, 0, -15, -15],
-  Ap: [0, 0, 0, 0, -25],
-  Aquoteright: [0, 0, 0, 0, -74, -74, -37, -111],
-  Aacutep: [0, 0, 0, 0, -25],
-  Aacutequoteright: [0, 0, 0, 0, -74, -74, -37, -111],
-  Abrevep: [0, 0, 0, 0, -25],
-  Abrevequoteright: [0, 0, 0, 0, -74, -74, -37, -111],
-  Acircumflexp: [0, 0, 0, 0, -25],
-  Acircumflexquoteright: [0, 0, 0, 0, -74, -74, -37, -111],
-  Adieresisp: [0, 0, 0, 0, -25],
-  Adieresisquoteright: [0, 0, 0, 0, -74, -74, -37, -111],
-  Agravep: [0, 0, 0, 0, -25],
-  Agravequoteright: [0, 0, 0, 0, -74, -74, -37, -111],
-  Amacronp: [0, 0, 0, 0, -25],
-  Amacronquoteright: [0, 0, 0, 0, -74, -74, -37, -111],
-  Aogonekp: [0, 0, 0, 0, -25],
-  Aogonekquoteright: [0, 0, 0, 0, -74, -74, -37, -111],
-  Aringp: [0, 0, 0, 0, -25],
-  Aringquoteright: [0, 0, 0, 0, -74, -74, -37, -111],
-  Atildep: [0, 0, 0, 0, -25],
-  Atildequoteright: [0, 0, 0, 0, -74, -74, -37, -111],
-  Je: [0, 0, 0, 0, -15, -40, -25],
-  Jeacute: [0, 0, 0, 0, -15, -40, -25],
-  Jecaron: [0, 0, 0, 0, -15, -40, -25],
-  Jecircumflex: [0, 0, 0, 0, -15, -40, -25],
-  Jedieresis: [0, 0, 0, 0, -15, -40, -25],
-  Jedotaccent: [0, 0, 0, 0, -15, -40, -25],
-  Jegrave: [0, 0, 0, 0, -15, -40, -25],
-  Jemacron: [0, 0, 0, 0, -15, -40, -25],
-  Jeogonek: [0, 0, 0, 0, -15, -40, -25],
-  Jo: [0, 0, 0, 0, -15, -40, -25],
-  Joacute: [0, 0, 0, 0, -15, -40, -25],
-  Jocircumflex: [0, 0, 0, 0, -15, -40, -25],
-  Jodieresis: [0, 0, 0, 0, -15, -40, -25],
-  Jograve: [0, 0, 0, 0, -15, -40, -25],
-  Johungarumlaut: [0, 0, 0, 0, -15, -40, -25],
-  Jomacron: [0, 0, 0, 0, -15, -40, -25],
-  Joslash: [0, 0, 0, 0, -15, -40, -25],
-  Jotilde: [0, 0, 0, 0, -15, -40, -25],
-  NA: [0, 0, 0, 0, -20, -30, -27, -35],
-  NAacute: [0, 0, 0, 0, -20, -30, -27, -35],
-  NAbreve: [0, 0, 0, 0, -20, -30, -27, -35],
-  NAcircumflex: [0, 0, 0, 0, -20, -30, -27, -35],
-  NAdieresis: [0, 0, 0, 0, -20, -30, -27, -35],
-  NAgrave: [0, 0, 0, 0, -20, -30, -27, -35],
-  NAmacron: [0, 0, 0, 0, -20, -30, -27, -35],
-  NAogonek: [0, 0, 0, 0, -20, -30, -27, -35],
-  NAring: [0, 0, 0, 0, -20, -30, -27, -35],
-  NAtilde: [0, 0, 0, 0, -20, -30, -27, -35],
-  NacuteA: [0, 0, 0, 0, -20, -30, -27, -35],
-  NacuteAacute: [0, 0, 0, 0, -20, -30, -27, -35],
-  NacuteAbreve: [0, 0, 0, 0, -20, -30, -27, -35],
-  NacuteAcircumflex: [0, 0, 0, 0, -20, -30, -27, -35],
-  NacuteAdieresis: [0, 0, 0, 0, -20, -30, -27, -35],
-  NacuteAgrave: [0, 0, 0, 0, -20, -30, -27, -35],
-  NacuteAmacron: [0, 0, 0, 0, -20, -30, -27, -35],
-  NacuteAogonek: [0, 0, 0, 0, -20, -30, -27, -35],
-  NacuteAring: [0, 0, 0, 0, -20, -30, -27, -35],
-  NacuteAtilde: [0, 0, 0, 0, -20, -30, -27, -35],
-  NcaronA: [0, 0, 0, 0, -20, -30, -27, -35],
-  NcaronAacute: [0, 0, 0, 0, -20, -30, -27, -35],
-  NcaronAbreve: [0, 0, 0, 0, -20, -30, -27, -35],
-  NcaronAcircumflex: [0, 0, 0, 0, -20, -30, -27, -35],
-  NcaronAdieresis: [0, 0, 0, 0, -20, -30, -27, -35],
-  NcaronAgrave: [0, 0, 0, 0, -20, -30, -27, -35],
-  NcaronAmacron: [0, 0, 0, 0, -20, -30, -27, -35],
-  NcaronAogonek: [0, 0, 0, 0, -20, -30, -27, -35],
-  NcaronAring: [0, 0, 0, 0, -20, -30, -27, -35],
-  NcaronAtilde: [0, 0, 0, 0, -20, -30, -27, -35],
-  NcommaaccentA: [0, 0, 0, 0, -20, -30, -27, -35],
-  NcommaaccentAacute: [0, 0, 0, 0, -20, -30, -27, -35],
-  NcommaaccentAbreve: [0, 0, 0, 0, -20, -30, -27, -35],
-  NcommaaccentAcircumflex: [0, 0, 0, 0, -20, -30, -27, -35],
-  NcommaaccentAdieresis: [0, 0, 0, 0, -20, -30, -27, -35],
-  NcommaaccentAgrave: [0, 0, 0, 0, -20, -30, -27, -35],
-  NcommaaccentAmacron: [0, 0, 0, 0, -20, -30, -27, -35],
-  NcommaaccentAogonek: [0, 0, 0, 0, -20, -30, -27, -35],
-  NcommaaccentAring: [0, 0, 0, 0, -20, -30, -27, -35],
-  NcommaaccentAtilde: [0, 0, 0, 0, -20, -30, -27, -35],
-  NtildeA: [0, 0, 0, 0, -20, -30, -27, -35],
-  NtildeAacute: [0, 0, 0, 0, -20, -30, -27, -35],
-  NtildeAbreve: [0, 0, 0, 0, -20, -30, -27, -35],
-  NtildeAcircumflex: [0, 0, 0, 0, -20, -30, -27, -35],
-  NtildeAdieresis: [0, 0, 0, 0, -20, -30, -27, -35],
-  NtildeAgrave: [0, 0, 0, 0, -20, -30, -27, -35],
-  NtildeAmacron: [0, 0, 0, 0, -20, -30, -27, -35],
-  NtildeAogonek: [0, 0, 0, 0, -20, -30, -27, -35],
-  NtildeAring: [0, 0, 0, 0, -20, -30, -27, -35],
-  NtildeAtilde: [0, 0, 0, 0, -20, -30, -27, -35],
-  Ti: [0, 0, 0, 0, -18, -37, -55, -35],
-  Tiacute: [0, 0, 0, 0, -18, -37, -55, -35],
-  Tiogonek: [0, 0, 0, 0, -18, -37, -55, -35],
-  Tcaroni: [0, 0, 0, 0, -18, -37, -55, -35],
-  Tcaroniacute: [0, 0, 0, 0, -18, -37, -55, -35],
-  Tcaroniogonek: [0, 0, 0, 0, -18, -37, -55, -35],
-  Tcommaaccenti: [0, 0, 0, 0, -18, -37, -55, -35],
-  Tcommaaccentiacute: [0, 0, 0, 0, -18, -37, -55, -35],
-  Tcommaaccentiogonek: [0, 0, 0, 0, -18, -37, -55, -35],
-  Vi: [0, 0, 0, 0, -37, -55, -74, -60],
-  Viacute: [0, 0, 0, 0, -37, -55, -74, -60],
-  Vicircumflex: [0, 0, 0, 0, -37, 0, -34, -20],
-  Vidieresis: [0, 0, 0, 0, -37, 0, -34, -20],
-  Vigrave: [0, 0, 0, 0, -37, 0, -34, -20],
-  Vimacron: [0, 0, 0, 0, -37, 0, -34, -20],
-  Viogonek: [0, 0, 0, 0, -37, -55, -74, -60],
-  Wi: [0, 0, 0, 0, -18, -37, -55, -40],
-  Wiacute: [0, 0, 0, 0, -18, -37, -55, -40],
-  Wiogonek: [0, 0, 0, 0, -18, -37, -55, -40],
-  fi: [0, 0, 0, 0, -25, 0, -20, -20],
-  gperiod: [0, 0, 0, 0, -15, 0, -15],
-  gbreveperiod: [0, 0, 0, 0, -15, 0, -15],
-  gcommaaccentperiod: [0, 0, 0, 0, -15, 0, -15],
-  iv: [0, 0, 0, 0, -10, 0, 0, -25],
-  iacutev: [0, 0, 0, 0, -10, 0, 0, -25],
-  icircumflexv: [0, 0, 0, 0, -10, 0, 0, -25],
-  idieresisv: [0, 0, 0, 0, -10, 0, 0, -25],
-  igravev: [0, 0, 0, 0, -10, 0, 0, -25],
-  imacronv: [0, 0, 0, 0, -10, 0, 0, -25],
-  iogonekv: [0, 0, 0, 0, -10, 0, 0, -25],
-  ky: [0, 0, 0, 0, -15, 0, -10, -15],
-  kyacute: [0, 0, 0, 0, -15, 0, -10, -15],
-  kydieresis: [0, 0, 0, 0, -15, 0, -10, -15],
-  kcommaaccenty: [0, 0, 0, 0, -15, 0, -10, -15],
-  kcommaaccentyacute: [0, 0, 0, 0, -15, 0, -10, -15],
-  kcommaaccentydieresis: [0, 0, 0, 0, -15, 0, -10, -15],
-  quotedblleftA: [0, 0, 0, 0, -10, 0, 0, -80],
-  quotedblleftAacute: [0, 0, 0, 0, -10, 0, 0, -80],
-  quotedblleftAbreve: [0, 0, 0, 0, -10, 0, 0, -80],
-  quotedblleftAcircumflex: [0, 0, 0, 0, -10, 0, 0, -80],
-  quotedblleftAdieresis: [0, 0, 0, 0, -10, 0, 0, -80],
-  quotedblleftAgrave: [0, 0, 0, 0, -10, 0, 0, -80],
-  quotedblleftAmacron: [0, 0, 0, 0, -10, 0, 0, -80],
-  quotedblleftAogonek: [0, 0, 0, 0, -10, 0, 0, -80],
-  quotedblleftAring: [0, 0, 0, 0, -10, 0, 0, -80],
-  quotedblleftAtilde: [0, 0, 0, 0, -10, 0, 0, -80],
-  quoteleftA: [0, 0, 0, 0, -10, 0, 0, -80],
-  quoteleftAacute: [0, 0, 0, 0, -10, 0, 0, -80],
-  quoteleftAbreve: [0, 0, 0, 0, -10, 0, 0, -80],
-  quoteleftAcircumflex: [0, 0, 0, 0, -10, 0, 0, -80],
-  quoteleftAdieresis: [0, 0, 0, 0, -10, 0, 0, -80],
-  quoteleftAgrave: [0, 0, 0, 0, -10, 0, 0, -80],
-  quoteleftAmacron: [0, 0, 0, 0, -10, 0, 0, -80],
-  quoteleftAogonek: [0, 0, 0, 0, -10, 0, 0, -80],
-  quoteleftAring: [0, 0, 0, 0, -10, 0, 0, -80],
-  quoteleftAtilde: [0, 0, 0, 0, -10, 0, 0, -80],
-  re: [0, 0, 0, 0, -18, 0, -37],
-  reacute: [0, 0, 0, 0, -18, 0, -37],
-  recaron: [0, 0, 0, 0, -18, 0, -37],
-  recircumflex: [0, 0, 0, 0, -18, 0, -37],
-  redieresis: [0, 0, 0, 0, -18, 0, -37],
-  redotaccent: [0, 0, 0, 0, -18, 0, -37],
-  regrave: [0, 0, 0, 0, -18, 0, -37],
-  remacron: [0, 0, 0, 0, -18, 0, -37],
-  reogonek: [0, 0, 0, 0, -18, 0, -37],
-  racutee: [0, 0, 0, 0, -18, 0, -37],
-  racuteeacute: [0, 0, 0, 0, -18, 0, -37],
-  racuteecaron: [0, 0, 0, 0, -18, 0, -37],
-  racuteecircumflex: [0, 0, 0, 0, -18, 0, -37],
-  racuteedieresis: [0, 0, 0, 0, -18, 0, -37],
-  racuteedotaccent: [0, 0, 0, 0, -18, 0, -37],
-  racuteegrave: [0, 0, 0, 0, -18, 0, -37],
-  racuteemacron: [0, 0, 0, 0, -18, 0, -37],
-  racuteeogonek: [0, 0, 0, 0, -18, 0, -37],
-  rcarone: [0, 0, 0, 0, -18, 0, -37],
-  rcaroneacute: [0, 0, 0, 0, -18, 0, -37],
-  rcaronecaron: [0, 0, 0, 0, -18, 0, -37],
-  rcaronecircumflex: [0, 0, 0, 0, -18, 0, -37],
-  rcaronedieresis: [0, 0, 0, 0, -18, 0, -37],
-  rcaronedotaccent: [0, 0, 0, 0, -18, 0, -37],
-  rcaronegrave: [0, 0, 0, 0, -18, 0, -37],
-  rcaronemacron: [0, 0, 0, 0, -18, 0, -37],
-  rcaroneogonek: [0, 0, 0, 0, -18, 0, -37],
-  rcommaaccente: [0, 0, 0, 0, -18, 0, -37],
-  rcommaaccenteacute: [0, 0, 0, 0, -18, 0, -37],
-  rcommaaccentecaron: [0, 0, 0, 0, -18, 0, -37],
-  rcommaaccentecircumflex: [0, 0, 0, 0, -18, 0, -37],
-  rcommaaccentedieresis: [0, 0, 0, 0, -18, 0, -37],
-  rcommaaccentedotaccent: [0, 0, 0, 0, -18, 0, -37],
-  rcommaaccentegrave: [0, 0, 0, 0, -18, 0, -37],
-  rcommaaccentemacron: [0, 0, 0, 0, -18, 0, -37],
-  rcommaaccenteogonek: [0, 0, 0, 0, -18, 0, -37],
-  spaceA: [0, 0, 0, 0, -55, -37, -18, -55],
-  spaceAacute: [0, 0, 0, 0, -55, -37, -18, -55],
-  spaceAbreve: [0, 0, 0, 0, -55, -37, -18, -55],
-  spaceAcircumflex: [0, 0, 0, 0, -55, -37, -18, -55],
-  spaceAdieresis: [0, 0, 0, 0, -55, -37, -18, -55],
-  spaceAgrave: [0, 0, 0, 0, -55, -37, -18, -55],
-  spaceAmacron: [0, 0, 0, 0, -55, -37, -18, -55],
-  spaceAogonek: [0, 0, 0, 0, -55, -37, -18, -55],
-  spaceAring: [0, 0, 0, 0, -55, -37, -18, -55],
-  spaceAtilde: [0, 0, 0, 0, -55, -37, -18, -55],
-  Fi: [0, 0, 0, 0, 0, -40, -45],
-  Fiacute: [0, 0, 0, 0, 0, -40, -45],
-  Ficircumflex: [0, 0, 0, 0, 0, -40, -45],
-  Fidieresis: [0, 0, 0, 0, 0, -40, -45],
-  Figrave: [0, 0, 0, 0, 0, -40, -45],
-  Fimacron: [0, 0, 0, 0, 0, -40, -45],
-  Fiogonek: [0, 0, 0, 0, 0, -40, -45],
-  eb: [0, 0, 0, 0, 0, -10],
-  eacuteb: [0, 0, 0, 0, 0, -10],
-  ecaronb: [0, 0, 0, 0, 0, -10],
-  ecircumflexb: [0, 0, 0, 0, 0, -10],
-  edieresisb: [0, 0, 0, 0, 0, -10],
-  edotaccentb: [0, 0, 0, 0, 0, -10],
-  egraveb: [0, 0, 0, 0, 0, -10],
-  emacronb: [0, 0, 0, 0, 0, -10],
-  eogonekb: [0, 0, 0, 0, 0, -10],
-  ff: [0, 0, 0, 0, 0, -18, -18, -25],
-  quoterightt: [0, 0, 0, 0, 0, -37, -30, -18],
-  quoterighttcommaaccent: [0, 0, 0, 0, 0, -37, -30, -18],
-  Yicircumflex: [0, 0, 0, 0, 0, 0, -34],
-  Yidieresis: [0, 0, 0, 0, 0, 0, -34],
-  Yigrave: [0, 0, 0, 0, 0, 0, -34],
-  Yimacron: [0, 0, 0, 0, 0, 0, -34],
-  Yacuteicircumflex: [0, 0, 0, 0, 0, 0, -34],
-  Yacuteidieresis: [0, 0, 0, 0, 0, 0, -34],
-  Yacuteigrave: [0, 0, 0, 0, 0, 0, -34],
-  Yacuteimacron: [0, 0, 0, 0, 0, 0, -34],
-  Ydieresisicircumflex: [0, 0, 0, 0, 0, 0, -34],
-  Ydieresisidieresis: [0, 0, 0, 0, 0, 0, -34],
-  Ydieresisigrave: [0, 0, 0, 0, 0, 0, -34],
-  Ydieresisimacron: [0, 0, 0, 0, 0, 0, -34],
-  eg: [0, 0, 0, 0, 0, 0, -40, -15],
-  egbreve: [0, 0, 0, 0, 0, 0, -40, -15],
-  egcommaaccent: [0, 0, 0, 0, 0, 0, -40, -15],
-  eacuteg: [0, 0, 0, 0, 0, 0, -40, -15],
-  eacutegbreve: [0, 0, 0, 0, 0, 0, -40, -15],
-  eacutegcommaaccent: [0, 0, 0, 0, 0, 0, -40, -15],
-  ecarong: [0, 0, 0, 0, 0, 0, -40, -15],
-  ecarongbreve: [0, 0, 0, 0, 0, 0, -40, -15],
-  ecarongcommaaccent: [0, 0, 0, 0, 0, 0, -40, -15],
-  ecircumflexg: [0, 0, 0, 0, 0, 0, -40, -15],
-  ecircumflexgbreve: [0, 0, 0, 0, 0, 0, -40, -15],
-  ecircumflexgcommaaccent: [0, 0, 0, 0, 0, 0, -40, -15],
-  edieresisg: [0, 0, 0, 0, 0, 0, -40, -15],
-  edieresisgbreve: [0, 0, 0, 0, 0, 0, -40, -15],
-  edieresisgcommaaccent: [0, 0, 0, 0, 0, 0, -40, -15],
-  edotaccentg: [0, 0, 0, 0, 0, 0, -40, -15],
-  edotaccentgbreve: [0, 0, 0, 0, 0, 0, -40, -15],
-  edotaccentgcommaaccent: [0, 0, 0, 0, 0, 0, -40, -15],
-  egraveg: [0, 0, 0, 0, 0, 0, -40, -15],
-  egravegbreve: [0, 0, 0, 0, 0, 0, -40, -15],
-  egravegcommaaccent: [0, 0, 0, 0, 0, 0, -40, -15],
-  emacrong: [0, 0, 0, 0, 0, 0, -40, -15],
-  emacrongbreve: [0, 0, 0, 0, 0, 0, -40, -15],
-  emacrongcommaaccent: [0, 0, 0, 0, 0, 0, -40, -15],
-  eogonekg: [0, 0, 0, 0, 0, 0, -40, -15],
-  eogonekgbreve: [0, 0, 0, 0, 0, 0, -40, -15],
-  eogonekgcommaaccent: [0, 0, 0, 0, 0, 0, -40, -15],
-  fiogonek: [0, 0, 0, 0, 0, 0, -20],
-  gcomma: [0, 0, 0, 0, 0, 0, -10],
-  gbrevecomma: [0, 0, 0, 0, 0, 0, -10],
-  gcommaaccentcomma: [0, 0, 0, 0, 0, 0, -10],
-  og: [0, 0, 0, 0, 0, 0, -10],
-  ogbreve: [0, 0, 0, 0, 0, 0, -10],
-  ogcommaaccent: [0, 0, 0, 0, 0, 0, -10],
-  oacuteg: [0, 0, 0, 0, 0, 0, -10],
-  oacutegbreve: [0, 0, 0, 0, 0, 0, -10],
-  oacutegcommaaccent: [0, 0, 0, 0, 0, 0, -10],
-  ocircumflexg: [0, 0, 0, 0, 0, 0, -10],
-  ocircumflexgbreve: [0, 0, 0, 0, 0, 0, -10],
-  ocircumflexgcommaaccent: [0, 0, 0, 0, 0, 0, -10],
-  odieresisg: [0, 0, 0, 0, 0, 0, -10],
-  odieresisgbreve: [0, 0, 0, 0, 0, 0, -10],
-  odieresisgcommaaccent: [0, 0, 0, 0, 0, 0, -10],
-  ograveg: [0, 0, 0, 0, 0, 0, -10],
-  ogravegbreve: [0, 0, 0, 0, 0, 0, -10],
-  ogravegcommaaccent: [0, 0, 0, 0, 0, 0, -10],
-  ohungarumlautg: [0, 0, 0, 0, 0, 0, -10],
-  ohungarumlautgbreve: [0, 0, 0, 0, 0, 0, -10],
-  ohungarumlautgcommaaccent: [0, 0, 0, 0, 0, 0, -10],
-  omacrong: [0, 0, 0, 0, 0, 0, -10],
-  omacrongbreve: [0, 0, 0, 0, 0, 0, -10],
-  omacrongcommaaccent: [0, 0, 0, 0, 0, 0, -10],
-  otildeg: [0, 0, 0, 0, 0, 0, -10],
-  otildegbreve: [0, 0, 0, 0, 0, 0, -10],
-  otildegcommaaccent: [0, 0, 0, 0, 0, 0, -10],
-  fiacute: [0, 0, 0, 0, 0, 0, 0, -20],
-  ga: [0, 0, 0, 0, 0, 0, 0, -5],
-  gaacute: [0, 0, 0, 0, 0, 0, 0, -5],
-  gabreve: [0, 0, 0, 0, 0, 0, 0, -5],
-  gacircumflex: [0, 0, 0, 0, 0, 0, 0, -5],
-  gadieresis: [0, 0, 0, 0, 0, 0, 0, -5],
-  gagrave: [0, 0, 0, 0, 0, 0, 0, -5],
-  gamacron: [0, 0, 0, 0, 0, 0, 0, -5],
-  gaogonek: [0, 0, 0, 0, 0, 0, 0, -5],
-  garing: [0, 0, 0, 0, 0, 0, 0, -5],
-  gatilde: [0, 0, 0, 0, 0, 0, 0, -5],
-  gbrevea: [0, 0, 0, 0, 0, 0, 0, -5],
-  gbreveaacute: [0, 0, 0, 0, 0, 0, 0, -5],
-  gbreveabreve: [0, 0, 0, 0, 0, 0, 0, -5],
-  gbreveacircumflex: [0, 0, 0, 0, 0, 0, 0, -5],
-  gbreveadieresis: [0, 0, 0, 0, 0, 0, 0, -5],
-  gbreveagrave: [0, 0, 0, 0, 0, 0, 0, -5],
-  gbreveamacron: [0, 0, 0, 0, 0, 0, 0, -5],
-  gbreveaogonek: [0, 0, 0, 0, 0, 0, 0, -5],
-  gbrevearing: [0, 0, 0, 0, 0, 0, 0, -5],
-  gbreveatilde: [0, 0, 0, 0, 0, 0, 0, -5],
-  gcommaaccenta: [0, 0, 0, 0, 0, 0, 0, -5],
-  gcommaaccentaacute: [0, 0, 0, 0, 0, 0, 0, -5],
-  gcommaaccentabreve: [0, 0, 0, 0, 0, 0, 0, -5],
-  gcommaaccentacircumflex: [0, 0, 0, 0, 0, 0, 0, -5],
-  gcommaaccentadieresis: [0, 0, 0, 0, 0, 0, 0, -5],
-  gcommaaccentagrave: [0, 0, 0, 0, 0, 0, 0, -5],
-  gcommaaccentamacron: [0, 0, 0, 0, 0, 0, 0, -5],
-  gcommaaccentaogonek: [0, 0, 0, 0, 0, 0, 0, -5],
-  gcommaaccentaring: [0, 0, 0, 0, 0, 0, 0, -5],
-  gcommaaccentatilde: [0, 0, 0, 0, 0, 0, 0, -5]
+	AC: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-55,
+		-65,
+		-30,
+		-40
+	],
+	ACacute: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-55,
+		-65,
+		-30,
+		-40
+	],
+	ACcaron: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-55,
+		-65,
+		-30,
+		-40
+	],
+	ACcedilla: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-55,
+		-65,
+		-30,
+		-40
+	],
+	AG: [
+		-50,
+		-50,
+		-30,
+		-30,
+		-55,
+		-60,
+		-35,
+		-40
+	],
+	AGbreve: [
+		-50,
+		-50,
+		-30,
+		-30,
+		-55,
+		-60,
+		-35,
+		-40
+	],
+	AGcommaaccent: [
+		-50,
+		-50,
+		-30,
+		-30,
+		-55,
+		-60,
+		-35,
+		-40
+	],
+	AO: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AOacute: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AOcircumflex: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AOdieresis: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AOgrave: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AOhungarumlaut: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AOmacron: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AOslash: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AOtilde: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AQ: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-55,
+		-40,
+		-55
+	],
+	AT: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-95,
+		-55,
+		-37,
+		-111
+	],
+	ATcaron: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-95,
+		-55,
+		-37,
+		-111
+	],
+	ATcommaaccent: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-95,
+		-55,
+		-37,
+		-111
+	],
+	AU: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AUacute: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AUcircumflex: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AUdieresis: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AUgrave: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AUhungarumlaut: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AUmacron: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AUogonek: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AUring: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AV: [
+		-80,
+		-80,
+		-70,
+		-70,
+		-145,
+		-95,
+		-105,
+		-135
+	],
+	AW: [
+		-60,
+		-60,
+		-50,
+		-50,
+		-130,
+		-100,
+		-95,
+		-90
+	],
+	AY: [
+		-110,
+		-110,
+		-100,
+		-100,
+		-100,
+		-70,
+		-55,
+		-105
+	],
+	AYacute: [
+		-110,
+		-110,
+		-100,
+		-100,
+		-100,
+		-70,
+		-55,
+		-105
+	],
+	AYdieresis: [
+		-110,
+		-110,
+		-100,
+		-100,
+		-100,
+		-70,
+		-55,
+		-105
+	],
+	Au: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Auacute: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Aucircumflex: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Audieresis: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Augrave: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Auhungarumlaut: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Aumacron: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Auogonek: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Auring: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Av: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-100,
+		-74,
+		-55,
+		-74
+	],
+	Aw: [
+		-30,
+		-30,
+		-40,
+		-40,
+		-90,
+		-74,
+		-55,
+		-92
+	],
+	Ay: [
+		-30,
+		-30,
+		-40,
+		-40,
+		-74,
+		-74,
+		-55,
+		-92
+	],
+	Ayacute: [
+		-30,
+		-30,
+		-40,
+		-40,
+		-74,
+		-74,
+		-55,
+		-92
+	],
+	Aydieresis: [
+		-30,
+		-30,
+		-40,
+		-40,
+		-74,
+		-74,
+		-55,
+		-92
+	],
+	AacuteC: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-55,
+		-65,
+		-30,
+		-40
+	],
+	AacuteCacute: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-55,
+		-65,
+		-30,
+		-40
+	],
+	AacuteCcaron: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-55,
+		-65,
+		-30,
+		-40
+	],
+	AacuteCcedilla: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-55,
+		-65,
+		-30,
+		-40
+	],
+	AacuteG: [
+		-50,
+		-50,
+		-30,
+		-30,
+		-55,
+		-60,
+		-35,
+		-40
+	],
+	AacuteGbreve: [
+		-50,
+		-50,
+		-30,
+		-30,
+		-55,
+		-60,
+		-35,
+		-40
+	],
+	AacuteGcommaaccent: [
+		-50,
+		-50,
+		-30,
+		-30,
+		-55,
+		-60,
+		-35,
+		-40
+	],
+	AacuteO: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AacuteOacute: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AacuteOcircumflex: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AacuteOdieresis: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AacuteOgrave: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AacuteOhungarumlaut: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AacuteOmacron: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AacuteOslash: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AacuteOtilde: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AacuteQ: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-55,
+		-40,
+		-55
+	],
+	AacuteT: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-95,
+		-55,
+		-37,
+		-111
+	],
+	AacuteTcaron: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-95,
+		-55,
+		-37,
+		-111
+	],
+	AacuteTcommaaccent: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-95,
+		-55,
+		-37,
+		-111
+	],
+	AacuteU: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AacuteUacute: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AacuteUcircumflex: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AacuteUdieresis: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AacuteUgrave: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AacuteUhungarumlaut: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AacuteUmacron: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AacuteUogonek: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AacuteUring: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AacuteV: [
+		-80,
+		-80,
+		-70,
+		-70,
+		-145,
+		-95,
+		-105,
+		-135
+	],
+	AacuteW: [
+		-60,
+		-60,
+		-50,
+		-50,
+		-130,
+		-100,
+		-95,
+		-90
+	],
+	AacuteY: [
+		-110,
+		-110,
+		-100,
+		-100,
+		-100,
+		-70,
+		-55,
+		-105
+	],
+	AacuteYacute: [
+		-110,
+		-110,
+		-100,
+		-100,
+		-100,
+		-70,
+		-55,
+		-105
+	],
+	AacuteYdieresis: [
+		-110,
+		-110,
+		-100,
+		-100,
+		-100,
+		-70,
+		-55,
+		-105
+	],
+	Aacuteu: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Aacuteuacute: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Aacuteucircumflex: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Aacuteudieresis: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Aacuteugrave: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Aacuteuhungarumlaut: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Aacuteumacron: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Aacuteuogonek: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Aacuteuring: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Aacutev: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-100,
+		-74,
+		-55,
+		-74
+	],
+	Aacutew: [
+		-30,
+		-30,
+		-40,
+		-40,
+		-90,
+		-74,
+		-55,
+		-92
+	],
+	Aacutey: [
+		-30,
+		-30,
+		-40,
+		-40,
+		-74,
+		-74,
+		-55,
+		-92
+	],
+	Aacuteyacute: [
+		-30,
+		-30,
+		-40,
+		-40,
+		-74,
+		-74,
+		-55,
+		-92
+	],
+	Aacuteydieresis: [
+		-30,
+		-30,
+		-40,
+		-40,
+		-74,
+		-74,
+		-55,
+		-92
+	],
+	AbreveC: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-55,
+		-65,
+		-30,
+		-40
+	],
+	AbreveCacute: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-55,
+		-65,
+		-30,
+		-40
+	],
+	AbreveCcaron: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-55,
+		-65,
+		-30,
+		-40
+	],
+	AbreveCcedilla: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-55,
+		-65,
+		-30,
+		-40
+	],
+	AbreveG: [
+		-50,
+		-50,
+		-30,
+		-30,
+		-55,
+		-60,
+		-35,
+		-40
+	],
+	AbreveGbreve: [
+		-50,
+		-50,
+		-30,
+		-30,
+		-55,
+		-60,
+		-35,
+		-40
+	],
+	AbreveGcommaaccent: [
+		-50,
+		-50,
+		-30,
+		-30,
+		-55,
+		-60,
+		-35,
+		-40
+	],
+	AbreveO: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AbreveOacute: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AbreveOcircumflex: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AbreveOdieresis: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AbreveOgrave: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AbreveOhungarumlaut: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AbreveOmacron: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AbreveOslash: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AbreveOtilde: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AbreveQ: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-55,
+		-40,
+		-55
+	],
+	AbreveT: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-95,
+		-55,
+		-37,
+		-111
+	],
+	AbreveTcaron: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-95,
+		-55,
+		-37,
+		-111
+	],
+	AbreveTcommaaccent: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-95,
+		-55,
+		-37,
+		-111
+	],
+	AbreveU: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AbreveUacute: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AbreveUcircumflex: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AbreveUdieresis: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AbreveUgrave: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AbreveUhungarumlaut: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AbreveUmacron: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AbreveUogonek: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AbreveUring: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AbreveV: [
+		-80,
+		-80,
+		-70,
+		-70,
+		-145,
+		-95,
+		-105,
+		-135
+	],
+	AbreveW: [
+		-60,
+		-60,
+		-50,
+		-50,
+		-130,
+		-100,
+		-95,
+		-90
+	],
+	AbreveY: [
+		-110,
+		-110,
+		-100,
+		-100,
+		-100,
+		-70,
+		-55,
+		-105
+	],
+	AbreveYacute: [
+		-110,
+		-110,
+		-100,
+		-100,
+		-100,
+		-70,
+		-55,
+		-105
+	],
+	AbreveYdieresis: [
+		-110,
+		-110,
+		-100,
+		-100,
+		-100,
+		-70,
+		-55,
+		-105
+	],
+	Abreveu: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Abreveuacute: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Abreveucircumflex: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Abreveudieresis: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Abreveugrave: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Abreveuhungarumlaut: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Abreveumacron: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Abreveuogonek: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Abreveuring: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Abrevev: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-100,
+		-74,
+		-55,
+		-74
+	],
+	Abrevew: [
+		-30,
+		-30,
+		-40,
+		-40,
+		-90,
+		-74,
+		-55,
+		-92
+	],
+	Abrevey: [
+		-30,
+		-30,
+		-40,
+		-40,
+		-74,
+		-74,
+		-55,
+		-92
+	],
+	Abreveyacute: [
+		-30,
+		-30,
+		-40,
+		-40,
+		-74,
+		-74,
+		-55,
+		-92
+	],
+	Abreveydieresis: [
+		-30,
+		-30,
+		-40,
+		-40,
+		-74,
+		-74,
+		-55,
+		-92
+	],
+	AcircumflexC: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-55,
+		-65,
+		-30,
+		-40
+	],
+	AcircumflexCacute: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-55,
+		-65,
+		-30,
+		-40
+	],
+	AcircumflexCcaron: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-55,
+		-65,
+		-30,
+		-40
+	],
+	AcircumflexCcedilla: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-55,
+		-65,
+		-30,
+		-40
+	],
+	AcircumflexG: [
+		-50,
+		-50,
+		-30,
+		-30,
+		-55,
+		-60,
+		-35,
+		-40
+	],
+	AcircumflexGbreve: [
+		-50,
+		-50,
+		-30,
+		-30,
+		-55,
+		-60,
+		-35,
+		-40
+	],
+	AcircumflexGcommaaccent: [
+		-50,
+		-50,
+		-30,
+		-30,
+		-55,
+		-60,
+		-35,
+		-40
+	],
+	AcircumflexO: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AcircumflexOacute: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AcircumflexOcircumflex: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AcircumflexOdieresis: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AcircumflexOgrave: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AcircumflexOhungarumlaut: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AcircumflexOmacron: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AcircumflexOslash: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AcircumflexOtilde: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AcircumflexQ: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-55,
+		-40,
+		-55
+	],
+	AcircumflexT: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-95,
+		-55,
+		-37,
+		-111
+	],
+	AcircumflexTcaron: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-95,
+		-55,
+		-37,
+		-111
+	],
+	AcircumflexTcommaaccent: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-95,
+		-55,
+		-37,
+		-111
+	],
+	AcircumflexU: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AcircumflexUacute: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AcircumflexUcircumflex: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AcircumflexUdieresis: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AcircumflexUgrave: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AcircumflexUhungarumlaut: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AcircumflexUmacron: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AcircumflexUogonek: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AcircumflexUring: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AcircumflexV: [
+		-80,
+		-80,
+		-70,
+		-70,
+		-145,
+		-95,
+		-105,
+		-135
+	],
+	AcircumflexW: [
+		-60,
+		-60,
+		-50,
+		-50,
+		-130,
+		-100,
+		-95,
+		-90
+	],
+	AcircumflexY: [
+		-110,
+		-110,
+		-100,
+		-100,
+		-100,
+		-70,
+		-55,
+		-105
+	],
+	AcircumflexYacute: [
+		-110,
+		-110,
+		-100,
+		-100,
+		-100,
+		-70,
+		-55,
+		-105
+	],
+	AcircumflexYdieresis: [
+		-110,
+		-110,
+		-100,
+		-100,
+		-100,
+		-70,
+		-55,
+		-105
+	],
+	Acircumflexu: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Acircumflexuacute: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Acircumflexucircumflex: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Acircumflexudieresis: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Acircumflexugrave: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Acircumflexuhungarumlaut: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Acircumflexumacron: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Acircumflexuogonek: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Acircumflexuring: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Acircumflexv: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-100,
+		-74,
+		-55,
+		-74
+	],
+	Acircumflexw: [
+		-30,
+		-30,
+		-40,
+		-40,
+		-90,
+		-74,
+		-55,
+		-92
+	],
+	Acircumflexy: [
+		-30,
+		-30,
+		-40,
+		-40,
+		-74,
+		-74,
+		-55,
+		-92
+	],
+	Acircumflexyacute: [
+		-30,
+		-30,
+		-40,
+		-40,
+		-74,
+		-74,
+		-55,
+		-92
+	],
+	Acircumflexydieresis: [
+		-30,
+		-30,
+		-40,
+		-40,
+		-74,
+		-74,
+		-55,
+		-92
+	],
+	AdieresisC: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-55,
+		-65,
+		-30,
+		-40
+	],
+	AdieresisCacute: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-55,
+		-65,
+		-30,
+		-40
+	],
+	AdieresisCcaron: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-55,
+		-65,
+		-30,
+		-40
+	],
+	AdieresisCcedilla: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-55,
+		-65,
+		-30,
+		-40
+	],
+	AdieresisG: [
+		-50,
+		-50,
+		-30,
+		-30,
+		-55,
+		-60,
+		-35,
+		-40
+	],
+	AdieresisGbreve: [
+		-50,
+		-50,
+		-30,
+		-30,
+		-55,
+		-60,
+		-35,
+		-40
+	],
+	AdieresisGcommaaccent: [
+		-50,
+		-50,
+		-30,
+		-30,
+		-55,
+		-60,
+		-35,
+		-40
+	],
+	AdieresisO: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AdieresisOacute: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AdieresisOcircumflex: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AdieresisOdieresis: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AdieresisOgrave: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AdieresisOhungarumlaut: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AdieresisOmacron: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AdieresisOslash: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AdieresisOtilde: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AdieresisQ: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-55,
+		-40,
+		-55
+	],
+	AdieresisT: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-95,
+		-55,
+		-37,
+		-111
+	],
+	AdieresisTcaron: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-95,
+		-55,
+		-37,
+		-111
+	],
+	AdieresisTcommaaccent: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-95,
+		-55,
+		-37,
+		-111
+	],
+	AdieresisU: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AdieresisUacute: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AdieresisUcircumflex: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AdieresisUdieresis: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AdieresisUgrave: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AdieresisUhungarumlaut: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AdieresisUmacron: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AdieresisUogonek: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AdieresisUring: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AdieresisV: [
+		-80,
+		-80,
+		-70,
+		-70,
+		-145,
+		-95,
+		-105,
+		-135
+	],
+	AdieresisW: [
+		-60,
+		-60,
+		-50,
+		-50,
+		-130,
+		-100,
+		-95,
+		-90
+	],
+	AdieresisY: [
+		-110,
+		-110,
+		-100,
+		-100,
+		-100,
+		-70,
+		-55,
+		-105
+	],
+	AdieresisYacute: [
+		-110,
+		-110,
+		-100,
+		-100,
+		-100,
+		-70,
+		-55,
+		-105
+	],
+	AdieresisYdieresis: [
+		-110,
+		-110,
+		-100,
+		-100,
+		-100,
+		-70,
+		-55,
+		-105
+	],
+	Adieresisu: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Adieresisuacute: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Adieresisucircumflex: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Adieresisudieresis: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Adieresisugrave: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Adieresisuhungarumlaut: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Adieresisumacron: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Adieresisuogonek: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Adieresisuring: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Adieresisv: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-100,
+		-74,
+		-55,
+		-74
+	],
+	Adieresisw: [
+		-30,
+		-30,
+		-40,
+		-40,
+		-90,
+		-74,
+		-55,
+		-92
+	],
+	Adieresisy: [
+		-30,
+		-30,
+		-40,
+		-40,
+		-74,
+		-74,
+		-55,
+		-92
+	],
+	Adieresisyacute: [
+		-30,
+		-30,
+		-40,
+		-40,
+		-74,
+		-74,
+		-55,
+		-92
+	],
+	Adieresisydieresis: [
+		-30,
+		-30,
+		-40,
+		-40,
+		-74,
+		-74,
+		-55,
+		-92
+	],
+	AgraveC: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-55,
+		-65,
+		-30,
+		-40
+	],
+	AgraveCacute: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-55,
+		-65,
+		-30,
+		-40
+	],
+	AgraveCcaron: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-55,
+		-65,
+		-30,
+		-40
+	],
+	AgraveCcedilla: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-55,
+		-65,
+		-30,
+		-40
+	],
+	AgraveG: [
+		-50,
+		-50,
+		-30,
+		-30,
+		-55,
+		-60,
+		-35,
+		-40
+	],
+	AgraveGbreve: [
+		-50,
+		-50,
+		-30,
+		-30,
+		-55,
+		-60,
+		-35,
+		-40
+	],
+	AgraveGcommaaccent: [
+		-50,
+		-50,
+		-30,
+		-30,
+		-55,
+		-60,
+		-35,
+		-40
+	],
+	AgraveO: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AgraveOacute: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AgraveOcircumflex: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AgraveOdieresis: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AgraveOgrave: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AgraveOhungarumlaut: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AgraveOmacron: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AgraveOslash: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AgraveOtilde: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AgraveQ: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-55,
+		-40,
+		-55
+	],
+	AgraveT: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-95,
+		-55,
+		-37,
+		-111
+	],
+	AgraveTcaron: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-95,
+		-55,
+		-37,
+		-111
+	],
+	AgraveTcommaaccent: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-95,
+		-55,
+		-37,
+		-111
+	],
+	AgraveU: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AgraveUacute: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AgraveUcircumflex: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AgraveUdieresis: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AgraveUgrave: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AgraveUhungarumlaut: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AgraveUmacron: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AgraveUogonek: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AgraveUring: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AgraveV: [
+		-80,
+		-80,
+		-70,
+		-70,
+		-145,
+		-95,
+		-105,
+		-135
+	],
+	AgraveW: [
+		-60,
+		-60,
+		-50,
+		-50,
+		-130,
+		-100,
+		-95,
+		-90
+	],
+	AgraveY: [
+		-110,
+		-110,
+		-100,
+		-100,
+		-100,
+		-70,
+		-55,
+		-105
+	],
+	AgraveYacute: [
+		-110,
+		-110,
+		-100,
+		-100,
+		-100,
+		-70,
+		-55,
+		-105
+	],
+	AgraveYdieresis: [
+		-110,
+		-110,
+		-100,
+		-100,
+		-100,
+		-70,
+		-55,
+		-105
+	],
+	Agraveu: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Agraveuacute: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Agraveucircumflex: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Agraveudieresis: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Agraveugrave: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Agraveuhungarumlaut: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Agraveumacron: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Agraveuogonek: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Agraveuring: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Agravev: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-100,
+		-74,
+		-55,
+		-74
+	],
+	Agravew: [
+		-30,
+		-30,
+		-40,
+		-40,
+		-90,
+		-74,
+		-55,
+		-92
+	],
+	Agravey: [
+		-30,
+		-30,
+		-40,
+		-40,
+		-74,
+		-74,
+		-55,
+		-92
+	],
+	Agraveyacute: [
+		-30,
+		-30,
+		-40,
+		-40,
+		-74,
+		-74,
+		-55,
+		-92
+	],
+	Agraveydieresis: [
+		-30,
+		-30,
+		-40,
+		-40,
+		-74,
+		-74,
+		-55,
+		-92
+	],
+	AmacronC: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-55,
+		-65,
+		-30,
+		-40
+	],
+	AmacronCacute: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-55,
+		-65,
+		-30,
+		-40
+	],
+	AmacronCcaron: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-55,
+		-65,
+		-30,
+		-40
+	],
+	AmacronCcedilla: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-55,
+		-65,
+		-30,
+		-40
+	],
+	AmacronG: [
+		-50,
+		-50,
+		-30,
+		-30,
+		-55,
+		-60,
+		-35,
+		-40
+	],
+	AmacronGbreve: [
+		-50,
+		-50,
+		-30,
+		-30,
+		-55,
+		-60,
+		-35,
+		-40
+	],
+	AmacronGcommaaccent: [
+		-50,
+		-50,
+		-30,
+		-30,
+		-55,
+		-60,
+		-35,
+		-40
+	],
+	AmacronO: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AmacronOacute: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AmacronOcircumflex: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AmacronOdieresis: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AmacronOgrave: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AmacronOhungarumlaut: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AmacronOmacron: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AmacronOslash: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AmacronOtilde: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AmacronQ: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-55,
+		-40,
+		-55
+	],
+	AmacronT: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-95,
+		-55,
+		-37,
+		-111
+	],
+	AmacronTcaron: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-95,
+		-55,
+		-37,
+		-111
+	],
+	AmacronTcommaaccent: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-95,
+		-55,
+		-37,
+		-111
+	],
+	AmacronU: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AmacronUacute: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AmacronUcircumflex: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AmacronUdieresis: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AmacronUgrave: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AmacronUhungarumlaut: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AmacronUmacron: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AmacronUogonek: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AmacronUring: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AmacronV: [
+		-80,
+		-80,
+		-70,
+		-70,
+		-145,
+		-95,
+		-105,
+		-135
+	],
+	AmacronW: [
+		-60,
+		-60,
+		-50,
+		-50,
+		-130,
+		-100,
+		-95,
+		-90
+	],
+	AmacronY: [
+		-110,
+		-110,
+		-100,
+		-100,
+		-100,
+		-70,
+		-55,
+		-105
+	],
+	AmacronYacute: [
+		-110,
+		-110,
+		-100,
+		-100,
+		-100,
+		-70,
+		-55,
+		-105
+	],
+	AmacronYdieresis: [
+		-110,
+		-110,
+		-100,
+		-100,
+		-100,
+		-70,
+		-55,
+		-105
+	],
+	Amacronu: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Amacronuacute: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Amacronucircumflex: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Amacronudieresis: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Amacronugrave: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Amacronuhungarumlaut: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Amacronumacron: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Amacronuogonek: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Amacronuring: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Amacronv: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-100,
+		-74,
+		-55,
+		-74
+	],
+	Amacronw: [
+		-30,
+		-30,
+		-40,
+		-40,
+		-90,
+		-74,
+		-55,
+		-92
+	],
+	Amacrony: [
+		-30,
+		-30,
+		-40,
+		-40,
+		-74,
+		-74,
+		-55,
+		-92
+	],
+	Amacronyacute: [
+		-30,
+		-30,
+		-40,
+		-40,
+		-74,
+		-74,
+		-55,
+		-92
+	],
+	Amacronydieresis: [
+		-30,
+		-30,
+		-40,
+		-40,
+		-74,
+		-74,
+		-55,
+		-92
+	],
+	AogonekC: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-55,
+		-65,
+		-30,
+		-40
+	],
+	AogonekCacute: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-55,
+		-65,
+		-30,
+		-40
+	],
+	AogonekCcaron: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-55,
+		-65,
+		-30,
+		-40
+	],
+	AogonekCcedilla: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-55,
+		-65,
+		-30,
+		-40
+	],
+	AogonekG: [
+		-50,
+		-50,
+		-30,
+		-30,
+		-55,
+		-60,
+		-35,
+		-40
+	],
+	AogonekGbreve: [
+		-50,
+		-50,
+		-30,
+		-30,
+		-55,
+		-60,
+		-35,
+		-40
+	],
+	AogonekGcommaaccent: [
+		-50,
+		-50,
+		-30,
+		-30,
+		-55,
+		-60,
+		-35,
+		-40
+	],
+	AogonekO: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AogonekOacute: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AogonekOcircumflex: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AogonekOdieresis: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AogonekOgrave: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AogonekOhungarumlaut: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AogonekOmacron: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AogonekOslash: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AogonekOtilde: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AogonekQ: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-55,
+		-40,
+		-55
+	],
+	AogonekT: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-95,
+		-55,
+		-37,
+		-111
+	],
+	AogonekTcaron: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-95,
+		-55,
+		-37,
+		-111
+	],
+	AogonekTcommaaccent: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-95,
+		-55,
+		-37,
+		-111
+	],
+	AogonekU: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AogonekUacute: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AogonekUcircumflex: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AogonekUdieresis: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AogonekUgrave: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AogonekUhungarumlaut: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AogonekUmacron: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AogonekUogonek: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AogonekUring: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AogonekV: [
+		-80,
+		-80,
+		-70,
+		-70,
+		-145,
+		-95,
+		-105,
+		-135
+	],
+	AogonekW: [
+		-60,
+		-60,
+		-50,
+		-50,
+		-130,
+		-100,
+		-95,
+		-90
+	],
+	AogonekY: [
+		-110,
+		-110,
+		-100,
+		-100,
+		-100,
+		-70,
+		-55,
+		-105
+	],
+	AogonekYacute: [
+		-110,
+		-110,
+		-100,
+		-100,
+		-100,
+		-70,
+		-55,
+		-105
+	],
+	AogonekYdieresis: [
+		-110,
+		-110,
+		-100,
+		-100,
+		-100,
+		-70,
+		-55,
+		-105
+	],
+	Aogoneku: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Aogonekuacute: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Aogonekucircumflex: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Aogonekudieresis: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Aogonekugrave: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Aogonekuhungarumlaut: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Aogonekumacron: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Aogonekuogonek: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Aogonekuring: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Aogonekv: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-100,
+		-74,
+		-55,
+		-74
+	],
+	Aogonekw: [
+		-30,
+		-30,
+		-40,
+		-40,
+		-90,
+		-74,
+		-55,
+		-52
+	],
+	Aogoneky: [
+		-30,
+		-30,
+		-40,
+		-40,
+		-34,
+		-34,
+		-55,
+		-52
+	],
+	Aogonekyacute: [
+		-30,
+		-30,
+		-40,
+		-40,
+		-34,
+		-34,
+		-55,
+		-52
+	],
+	Aogonekydieresis: [
+		-30,
+		-30,
+		-40,
+		-40,
+		-34,
+		-34,
+		-55,
+		-52
+	],
+	AringC: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-55,
+		-65,
+		-30,
+		-40
+	],
+	AringCacute: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-55,
+		-65,
+		-30,
+		-40
+	],
+	AringCcaron: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-55,
+		-65,
+		-30,
+		-40
+	],
+	AringCcedilla: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-55,
+		-65,
+		-30,
+		-40
+	],
+	AringG: [
+		-50,
+		-50,
+		-30,
+		-30,
+		-55,
+		-60,
+		-35,
+		-40
+	],
+	AringGbreve: [
+		-50,
+		-50,
+		-30,
+		-30,
+		-55,
+		-60,
+		-35,
+		-40
+	],
+	AringGcommaaccent: [
+		-50,
+		-50,
+		-30,
+		-30,
+		-55,
+		-60,
+		-35,
+		-40
+	],
+	AringO: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AringOacute: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AringOcircumflex: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AringOdieresis: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AringOgrave: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AringOhungarumlaut: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AringOmacron: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AringOslash: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AringOtilde: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AringQ: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-55,
+		-40,
+		-55
+	],
+	AringT: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-95,
+		-55,
+		-37,
+		-111
+	],
+	AringTcaron: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-95,
+		-55,
+		-37,
+		-111
+	],
+	AringTcommaaccent: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-95,
+		-55,
+		-37,
+		-111
+	],
+	AringU: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AringUacute: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AringUcircumflex: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AringUdieresis: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AringUgrave: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AringUhungarumlaut: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AringUmacron: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AringUogonek: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AringUring: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AringV: [
+		-80,
+		-80,
+		-70,
+		-70,
+		-145,
+		-95,
+		-105,
+		-135
+	],
+	AringW: [
+		-60,
+		-60,
+		-50,
+		-50,
+		-130,
+		-100,
+		-95,
+		-90
+	],
+	AringY: [
+		-110,
+		-110,
+		-100,
+		-100,
+		-100,
+		-70,
+		-55,
+		-105
+	],
+	AringYacute: [
+		-110,
+		-110,
+		-100,
+		-100,
+		-100,
+		-70,
+		-55,
+		-105
+	],
+	AringYdieresis: [
+		-110,
+		-110,
+		-100,
+		-100,
+		-100,
+		-70,
+		-55,
+		-105
+	],
+	Aringu: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Aringuacute: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Aringucircumflex: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Aringudieresis: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Aringugrave: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Aringuhungarumlaut: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Aringumacron: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Aringuogonek: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Aringuring: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Aringv: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-100,
+		-74,
+		-55,
+		-74
+	],
+	Aringw: [
+		-30,
+		-30,
+		-40,
+		-40,
+		-90,
+		-74,
+		-55,
+		-92
+	],
+	Aringy: [
+		-30,
+		-30,
+		-40,
+		-40,
+		-74,
+		-74,
+		-55,
+		-92
+	],
+	Aringyacute: [
+		-30,
+		-30,
+		-40,
+		-40,
+		-74,
+		-74,
+		-55,
+		-92
+	],
+	Aringydieresis: [
+		-30,
+		-30,
+		-40,
+		-40,
+		-74,
+		-74,
+		-55,
+		-92
+	],
+	AtildeC: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-55,
+		-65,
+		-30,
+		-40
+	],
+	AtildeCacute: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-55,
+		-65,
+		-30,
+		-40
+	],
+	AtildeCcaron: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-55,
+		-65,
+		-30,
+		-40
+	],
+	AtildeCcedilla: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-55,
+		-65,
+		-30,
+		-40
+	],
+	AtildeG: [
+		-50,
+		-50,
+		-30,
+		-30,
+		-55,
+		-60,
+		-35,
+		-40
+	],
+	AtildeGbreve: [
+		-50,
+		-50,
+		-30,
+		-30,
+		-55,
+		-60,
+		-35,
+		-40
+	],
+	AtildeGcommaaccent: [
+		-50,
+		-50,
+		-30,
+		-30,
+		-55,
+		-60,
+		-35,
+		-40
+	],
+	AtildeO: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AtildeOacute: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AtildeOcircumflex: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AtildeOdieresis: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AtildeOgrave: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AtildeOhungarumlaut: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AtildeOmacron: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AtildeOslash: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AtildeOtilde: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-50,
+		-40,
+		-55
+	],
+	AtildeQ: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-45,
+		-55,
+		-40,
+		-55
+	],
+	AtildeT: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-95,
+		-55,
+		-37,
+		-111
+	],
+	AtildeTcaron: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-95,
+		-55,
+		-37,
+		-111
+	],
+	AtildeTcommaaccent: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-95,
+		-55,
+		-37,
+		-111
+	],
+	AtildeU: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AtildeUacute: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AtildeUcircumflex: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AtildeUdieresis: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AtildeUgrave: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AtildeUhungarumlaut: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AtildeUmacron: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AtildeUogonek: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AtildeUring: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-55
+	],
+	AtildeV: [
+		-80,
+		-80,
+		-70,
+		-70,
+		-145,
+		-95,
+		-105,
+		-135
+	],
+	AtildeW: [
+		-60,
+		-60,
+		-50,
+		-50,
+		-130,
+		-100,
+		-95,
+		-90
+	],
+	AtildeY: [
+		-110,
+		-110,
+		-100,
+		-100,
+		-100,
+		-70,
+		-55,
+		-105
+	],
+	AtildeYacute: [
+		-110,
+		-110,
+		-100,
+		-100,
+		-100,
+		-70,
+		-55,
+		-105
+	],
+	AtildeYdieresis: [
+		-110,
+		-110,
+		-100,
+		-100,
+		-100,
+		-70,
+		-55,
+		-105
+	],
+	Atildeu: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Atildeuacute: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Atildeucircumflex: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Atildeudieresis: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Atildeugrave: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Atildeuhungarumlaut: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Atildeumacron: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Atildeuogonek: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Atildeuring: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-50,
+		-30,
+		-20
+	],
+	Atildev: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-100,
+		-74,
+		-55,
+		-74
+	],
+	Atildew: [
+		-30,
+		-30,
+		-40,
+		-40,
+		-90,
+		-74,
+		-55,
+		-92
+	],
+	Atildey: [
+		-30,
+		-30,
+		-40,
+		-40,
+		-74,
+		-74,
+		-55,
+		-92
+	],
+	Atildeyacute: [
+		-30,
+		-30,
+		-40,
+		-40,
+		-74,
+		-74,
+		-55,
+		-92
+	],
+	Atildeydieresis: [
+		-30,
+		-30,
+		-40,
+		-40,
+		-74,
+		-74,
+		-55,
+		-92
+	],
+	BA: [
+		-30,
+		-30,
+		0,
+		0,
+		-30,
+		-25,
+		-25,
+		-35
+	],
+	BAacute: [
+		-30,
+		-30,
+		0,
+		0,
+		-30,
+		-25,
+		-25,
+		-35
+	],
+	BAbreve: [
+		-30,
+		-30,
+		0,
+		0,
+		-30,
+		-25,
+		-25,
+		-35
+	],
+	BAcircumflex: [
+		-30,
+		-30,
+		0,
+		0,
+		-30,
+		-25,
+		-25,
+		-35
+	],
+	BAdieresis: [
+		-30,
+		-30,
+		0,
+		0,
+		-30,
+		-25,
+		-25,
+		-35
+	],
+	BAgrave: [
+		-30,
+		-30,
+		0,
+		0,
+		-30,
+		-25,
+		-25,
+		-35
+	],
+	BAmacron: [
+		-30,
+		-30,
+		0,
+		0,
+		-30,
+		-25,
+		-25,
+		-35
+	],
+	BAogonek: [
+		-30,
+		-30,
+		0,
+		0,
+		-30,
+		-25,
+		-25,
+		-35
+	],
+	BAring: [
+		-30,
+		-30,
+		0,
+		0,
+		-30,
+		-25,
+		-25,
+		-35
+	],
+	BAtilde: [
+		-30,
+		-30,
+		0,
+		0,
+		-30,
+		-25,
+		-25,
+		-35
+	],
+	BU: [
+		-10,
+		-10,
+		-10,
+		-10,
+		-10,
+		-10,
+		-10,
+		-10
+	],
+	BUacute: [
+		-10,
+		-10,
+		-10,
+		-10,
+		-10,
+		-10,
+		-10,
+		-10
+	],
+	BUcircumflex: [
+		-10,
+		-10,
+		-10,
+		-10,
+		-10,
+		-10,
+		-10,
+		-10
+	],
+	BUdieresis: [
+		-10,
+		-10,
+		-10,
+		-10,
+		-10,
+		-10,
+		-10,
+		-10
+	],
+	BUgrave: [
+		-10,
+		-10,
+		-10,
+		-10,
+		-10,
+		-10,
+		-10,
+		-10
+	],
+	BUhungarumlaut: [
+		-10,
+		-10,
+		-10,
+		-10,
+		-10,
+		-10,
+		-10,
+		-10
+	],
+	BUmacron: [
+		-10,
+		-10,
+		-10,
+		-10,
+		-10,
+		-10,
+		-10,
+		-10
+	],
+	BUogonek: [
+		-10,
+		-10,
+		-10,
+		-10,
+		-10,
+		-10,
+		-10,
+		-10
+	],
+	BUring: [
+		-10,
+		-10,
+		-10,
+		-10,
+		-10,
+		-10,
+		-10,
+		-10
+	],
+	DA: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-35,
+		-25,
+		-35,
+		-40
+	],
+	DAacute: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-35,
+		-25,
+		-35,
+		-40
+	],
+	DAbreve: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-35,
+		-25,
+		-35,
+		-40
+	],
+	DAcircumflex: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-35,
+		-25,
+		-35,
+		-40
+	],
+	DAdieresis: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-35,
+		-25,
+		-35,
+		-40
+	],
+	DAgrave: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-35,
+		-25,
+		-35,
+		-40
+	],
+	DAmacron: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-35,
+		-25,
+		-35,
+		-40
+	],
+	DAogonek: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-35,
+		-25,
+		-35,
+		-40
+	],
+	DAring: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-35,
+		-25,
+		-35,
+		-40
+	],
+	DAtilde: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-35,
+		-25,
+		-35,
+		-40
+	],
+	DV: [
+		-40,
+		-40,
+		-70,
+		-70,
+		-40,
+		-50,
+		-40,
+		-40
+	],
+	DW: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-30
+	],
+	DY: [
+		-70,
+		-70,
+		-90,
+		-90,
+		-40,
+		-50,
+		-40,
+		-55
+	],
+	DYacute: [
+		-70,
+		-70,
+		-90,
+		-90,
+		-40,
+		-50,
+		-40,
+		-55
+	],
+	DYdieresis: [
+		-70,
+		-70,
+		-90,
+		-90,
+		-40,
+		-50,
+		-40,
+		-55
+	],
+	Dcomma: [
+		-30,
+		-30,
+		-70,
+		-70
+	],
+	Dperiod: [
+		-30,
+		-30,
+		-70,
+		-70,
+		-20
+	],
+	DcaronA: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-35,
+		-25,
+		-35,
+		-40
+	],
+	DcaronAacute: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-35,
+		-25,
+		-35,
+		-40
+	],
+	DcaronAbreve: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-35,
+		-25,
+		-35,
+		-40
+	],
+	DcaronAcircumflex: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-35,
+		-25,
+		-35,
+		-40
+	],
+	DcaronAdieresis: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-35,
+		-25,
+		-35,
+		-40
+	],
+	DcaronAgrave: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-35,
+		-25,
+		-35,
+		-40
+	],
+	DcaronAmacron: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-35,
+		-25,
+		-35,
+		-40
+	],
+	DcaronAogonek: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-35,
+		-25,
+		-35,
+		-40
+	],
+	DcaronAring: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-35,
+		-25,
+		-35,
+		-40
+	],
+	DcaronAtilde: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-35,
+		-25,
+		-35,
+		-40
+	],
+	DcaronV: [
+		-40,
+		-40,
+		-70,
+		-70,
+		-40,
+		-50,
+		-40,
+		-40
+	],
+	DcaronW: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-30
+	],
+	DcaronY: [
+		-70,
+		-70,
+		-90,
+		-90,
+		-40,
+		-50,
+		-40,
+		-55
+	],
+	DcaronYacute: [
+		-70,
+		-70,
+		-90,
+		-90,
+		-40,
+		-50,
+		-40,
+		-55
+	],
+	DcaronYdieresis: [
+		-70,
+		-70,
+		-90,
+		-90,
+		-40,
+		-50,
+		-40,
+		-55
+	],
+	Dcaroncomma: [
+		-30,
+		-30,
+		-70,
+		-70
+	],
+	Dcaronperiod: [
+		-30,
+		-30,
+		-70,
+		-70,
+		-20
+	],
+	DcroatA: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-35,
+		-25,
+		-35,
+		-40
+	],
+	DcroatAacute: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-35,
+		-25,
+		-35,
+		-40
+	],
+	DcroatAbreve: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-35,
+		-25,
+		-35,
+		-40
+	],
+	DcroatAcircumflex: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-35,
+		-25,
+		-35,
+		-40
+	],
+	DcroatAdieresis: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-35,
+		-25,
+		-35,
+		-40
+	],
+	DcroatAgrave: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-35,
+		-25,
+		-35,
+		-40
+	],
+	DcroatAmacron: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-35,
+		-25,
+		-35,
+		-40
+	],
+	DcroatAogonek: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-35,
+		-25,
+		-35,
+		-40
+	],
+	DcroatAring: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-35,
+		-25,
+		-35,
+		-40
+	],
+	DcroatAtilde: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-35,
+		-25,
+		-35,
+		-40
+	],
+	DcroatV: [
+		-40,
+		-40,
+		-70,
+		-70,
+		-40,
+		-50,
+		-40,
+		-40
+	],
+	DcroatW: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-30
+	],
+	DcroatY: [
+		-70,
+		-70,
+		-90,
+		-90,
+		-40,
+		-50,
+		-40,
+		-55
+	],
+	DcroatYacute: [
+		-70,
+		-70,
+		-90,
+		-90,
+		-40,
+		-50,
+		-40,
+		-55
+	],
+	DcroatYdieresis: [
+		-70,
+		-70,
+		-90,
+		-90,
+		-40,
+		-50,
+		-40,
+		-55
+	],
+	Dcroatcomma: [
+		-30,
+		-30,
+		-70,
+		-70
+	],
+	Dcroatperiod: [
+		-30,
+		-30,
+		-70,
+		-70,
+		-20
+	],
+	FA: [
+		-80,
+		-80,
+		-80,
+		-80,
+		-90,
+		-100,
+		-115,
+		-74
+	],
+	FAacute: [
+		-80,
+		-80,
+		-80,
+		-80,
+		-90,
+		-100,
+		-115,
+		-74
+	],
+	FAbreve: [
+		-80,
+		-80,
+		-80,
+		-80,
+		-90,
+		-100,
+		-115,
+		-74
+	],
+	FAcircumflex: [
+		-80,
+		-80,
+		-80,
+		-80,
+		-90,
+		-100,
+		-115,
+		-74
+	],
+	FAdieresis: [
+		-80,
+		-80,
+		-80,
+		-80,
+		-90,
+		-100,
+		-115,
+		-74
+	],
+	FAgrave: [
+		-80,
+		-80,
+		-80,
+		-80,
+		-90,
+		-100,
+		-115,
+		-74
+	],
+	FAmacron: [
+		-80,
+		-80,
+		-80,
+		-80,
+		-90,
+		-100,
+		-115,
+		-74
+	],
+	FAogonek: [
+		-80,
+		-80,
+		-80,
+		-80,
+		-90,
+		-100,
+		-115,
+		-74
+	],
+	FAring: [
+		-80,
+		-80,
+		-80,
+		-80,
+		-90,
+		-100,
+		-115,
+		-74
+	],
+	FAtilde: [
+		-80,
+		-80,
+		-80,
+		-80,
+		-90,
+		-100,
+		-115,
+		-74
+	],
+	Fa: [
+		-20,
+		-20,
+		-50,
+		-50,
+		-25,
+		-95,
+		-75,
+		-15
+	],
+	Faacute: [
+		-20,
+		-20,
+		-50,
+		-50,
+		-25,
+		-95,
+		-75,
+		-15
+	],
+	Fabreve: [
+		-20,
+		-20,
+		-50,
+		-50,
+		-25,
+		-95,
+		-75,
+		-15
+	],
+	Facircumflex: [
+		-20,
+		-20,
+		-50,
+		-50,
+		-25,
+		-95,
+		-75,
+		-15
+	],
+	Fadieresis: [
+		-20,
+		-20,
+		-50,
+		-50,
+		-25,
+		-95,
+		-75,
+		-15
+	],
+	Fagrave: [
+		-20,
+		-20,
+		-50,
+		-50,
+		-25,
+		-95,
+		-75,
+		-15
+	],
+	Famacron: [
+		-20,
+		-20,
+		-50,
+		-50,
+		-25,
+		-95,
+		-75,
+		-15
+	],
+	Faogonek: [
+		-20,
+		-20,
+		-50,
+		-50,
+		-25,
+		-95,
+		-75,
+		-15
+	],
+	Faring: [
+		-20,
+		-20,
+		-50,
+		-50,
+		-25,
+		-95,
+		-75,
+		-15
+	],
+	Fatilde: [
+		-20,
+		-20,
+		-50,
+		-50,
+		-25,
+		-95,
+		-75,
+		-15
+	],
+	Fcomma: [
+		-100,
+		-100,
+		-150,
+		-150,
+		-92,
+		-129,
+		-135,
+		-80
+	],
+	Fperiod: [
+		-100,
+		-100,
+		-150,
+		-150,
+		-110,
+		-129,
+		-135,
+		-80
+	],
+	JA: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-30,
+		-25,
+		-40,
+		-60
+	],
+	JAacute: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-30,
+		-25,
+		-40,
+		-60
+	],
+	JAbreve: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-30,
+		-25,
+		-40,
+		-60
+	],
+	JAcircumflex: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-30,
+		-25,
+		-40,
+		-60
+	],
+	JAdieresis: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-30,
+		-25,
+		-40,
+		-60
+	],
+	JAgrave: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-30,
+		-25,
+		-40,
+		-60
+	],
+	JAmacron: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-30,
+		-25,
+		-40,
+		-60
+	],
+	JAogonek: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-30,
+		-25,
+		-40,
+		-60
+	],
+	JAring: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-30,
+		-25,
+		-40,
+		-60
+	],
+	JAtilde: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-30,
+		-25,
+		-40,
+		-60
+	],
+	Jcomma: [
+		-20,
+		-20,
+		-30,
+		-30,
+		0,
+		-10,
+		-25
+	],
+	Jperiod: [
+		-20,
+		-20,
+		-30,
+		-30,
+		-20,
+		-10,
+		-25
+	],
+	Ju: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-15,
+		-40,
+		-35
+	],
+	Juacute: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-15,
+		-40,
+		-35
+	],
+	Jucircumflex: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-15,
+		-40,
+		-35
+	],
+	Judieresis: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-15,
+		-40,
+		-35
+	],
+	Jugrave: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-15,
+		-40,
+		-35
+	],
+	Juhungarumlaut: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-15,
+		-40,
+		-35
+	],
+	Jumacron: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-15,
+		-40,
+		-35
+	],
+	Juogonek: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-15,
+		-40,
+		-35
+	],
+	Juring: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-15,
+		-40,
+		-35
+	],
+	KO: [
+		-30,
+		-30,
+		-50,
+		-50,
+		-30,
+		-30,
+		-50,
+		-30
+	],
+	KOacute: [
+		-30,
+		-30,
+		-50,
+		-50,
+		-30,
+		-30,
+		-50,
+		-30
+	],
+	KOcircumflex: [
+		-30,
+		-30,
+		-50,
+		-50,
+		-30,
+		-30,
+		-50,
+		-30
+	],
+	KOdieresis: [
+		-30,
+		-30,
+		-50,
+		-50,
+		-30,
+		-30,
+		-50,
+		-30
+	],
+	KOgrave: [
+		-30,
+		-30,
+		-50,
+		-50,
+		-30,
+		-30,
+		-50,
+		-30
+	],
+	KOhungarumlaut: [
+		-30,
+		-30,
+		-50,
+		-50,
+		-30,
+		-30,
+		-50,
+		-30
+	],
+	KOmacron: [
+		-30,
+		-30,
+		-50,
+		-50,
+		-30,
+		-30,
+		-50,
+		-30
+	],
+	KOslash: [
+		-30,
+		-30,
+		-50,
+		-50,
+		-30,
+		-30,
+		-50,
+		-30
+	],
+	KOtilde: [
+		-30,
+		-30,
+		-50,
+		-50,
+		-30,
+		-30,
+		-50,
+		-30
+	],
+	Ke: [
+		-15,
+		-15,
+		-40,
+		-40,
+		-25,
+		-25,
+		-35,
+		-25
+	],
+	Keacute: [
+		-15,
+		-15,
+		-40,
+		-40,
+		-25,
+		-25,
+		-35,
+		-25
+	],
+	Kecaron: [
+		-15,
+		-15,
+		-40,
+		-40,
+		-25,
+		-25,
+		-35,
+		-25
+	],
+	Kecircumflex: [
+		-15,
+		-15,
+		-40,
+		-40,
+		-25,
+		-25,
+		-35,
+		-25
+	],
+	Kedieresis: [
+		-15,
+		-15,
+		-40,
+		-40,
+		-25,
+		-25,
+		-35,
+		-25
+	],
+	Kedotaccent: [
+		-15,
+		-15,
+		-40,
+		-40,
+		-25,
+		-25,
+		-35,
+		-25
+	],
+	Kegrave: [
+		-15,
+		-15,
+		-40,
+		-40,
+		-25,
+		-25,
+		-35,
+		-25
+	],
+	Kemacron: [
+		-15,
+		-15,
+		-40,
+		-40,
+		-25,
+		-25,
+		-35,
+		-25
+	],
+	Keogonek: [
+		-15,
+		-15,
+		-40,
+		-40,
+		-25,
+		-25,
+		-35,
+		-25
+	],
+	Ko: [
+		-35,
+		-35,
+		-40,
+		-40,
+		-25,
+		-25,
+		-40,
+		-35
+	],
+	Koacute: [
+		-35,
+		-35,
+		-40,
+		-40,
+		-25,
+		-25,
+		-40,
+		-35
+	],
+	Kocircumflex: [
+		-35,
+		-35,
+		-40,
+		-40,
+		-25,
+		-25,
+		-40,
+		-35
+	],
+	Kodieresis: [
+		-35,
+		-35,
+		-40,
+		-40,
+		-25,
+		-25,
+		-40,
+		-35
+	],
+	Kograve: [
+		-35,
+		-35,
+		-40,
+		-40,
+		-25,
+		-25,
+		-40,
+		-35
+	],
+	Kohungarumlaut: [
+		-35,
+		-35,
+		-40,
+		-40,
+		-25,
+		-25,
+		-40,
+		-35
+	],
+	Komacron: [
+		-35,
+		-35,
+		-40,
+		-40,
+		-25,
+		-25,
+		-40,
+		-35
+	],
+	Koslash: [
+		-35,
+		-35,
+		-40,
+		-40,
+		-25,
+		-25,
+		-40,
+		-35
+	],
+	Kotilde: [
+		-35,
+		-35,
+		-40,
+		-40,
+		-25,
+		-25,
+		-40,
+		-35
+	],
+	Ku: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-15,
+		-20,
+		-40,
+		-15
+	],
+	Kuacute: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-15,
+		-20,
+		-40,
+		-15
+	],
+	Kucircumflex: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-15,
+		-20,
+		-40,
+		-15
+	],
+	Kudieresis: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-15,
+		-20,
+		-40,
+		-15
+	],
+	Kugrave: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-15,
+		-20,
+		-40,
+		-15
+	],
+	Kuhungarumlaut: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-15,
+		-20,
+		-40,
+		-15
+	],
+	Kumacron: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-15,
+		-20,
+		-40,
+		-15
+	],
+	Kuogonek: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-15,
+		-20,
+		-40,
+		-15
+	],
+	Kuring: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-15,
+		-20,
+		-40,
+		-15
+	],
+	Ky: [
+		-40,
+		-40,
+		-50,
+		-50,
+		-45,
+		-20,
+		-40,
+		-25
+	],
+	Kyacute: [
+		-40,
+		-40,
+		-50,
+		-50,
+		-45,
+		-20,
+		-40,
+		-25
+	],
+	Kydieresis: [
+		-40,
+		-40,
+		-50,
+		-50,
+		-45,
+		-20,
+		-40,
+		-25
+	],
+	KcommaaccentO: [
+		-30,
+		-30,
+		-50,
+		-50,
+		-30,
+		-30,
+		-50,
+		-30
+	],
+	KcommaaccentOacute: [
+		-30,
+		-30,
+		-50,
+		-50,
+		-30,
+		-30,
+		-50,
+		-30
+	],
+	KcommaaccentOcircumflex: [
+		-30,
+		-30,
+		-50,
+		-50,
+		-30,
+		-30,
+		-50,
+		-30
+	],
+	KcommaaccentOdieresis: [
+		-30,
+		-30,
+		-50,
+		-50,
+		-30,
+		-30,
+		-50,
+		-30
+	],
+	KcommaaccentOgrave: [
+		-30,
+		-30,
+		-50,
+		-50,
+		-30,
+		-30,
+		-50,
+		-30
+	],
+	KcommaaccentOhungarumlaut: [
+		-30,
+		-30,
+		-50,
+		-50,
+		-30,
+		-30,
+		-50,
+		-30
+	],
+	KcommaaccentOmacron: [
+		-30,
+		-30,
+		-50,
+		-50,
+		-30,
+		-30,
+		-50,
+		-30
+	],
+	KcommaaccentOslash: [
+		-30,
+		-30,
+		-50,
+		-50,
+		-30,
+		-30,
+		-50,
+		-30
+	],
+	KcommaaccentOtilde: [
+		-30,
+		-30,
+		-50,
+		-50,
+		-30,
+		-30,
+		-50,
+		-30
+	],
+	Kcommaaccente: [
+		-15,
+		-15,
+		-40,
+		-40,
+		-25,
+		-25,
+		-35,
+		-25
+	],
+	Kcommaaccenteacute: [
+		-15,
+		-15,
+		-40,
+		-40,
+		-25,
+		-25,
+		-35,
+		-25
+	],
+	Kcommaaccentecaron: [
+		-15,
+		-15,
+		-40,
+		-40,
+		-25,
+		-25,
+		-35,
+		-25
+	],
+	Kcommaaccentecircumflex: [
+		-15,
+		-15,
+		-40,
+		-40,
+		-25,
+		-25,
+		-35,
+		-25
+	],
+	Kcommaaccentedieresis: [
+		-15,
+		-15,
+		-40,
+		-40,
+		-25,
+		-25,
+		-35,
+		-25
+	],
+	Kcommaaccentedotaccent: [
+		-15,
+		-15,
+		-40,
+		-40,
+		-25,
+		-25,
+		-35,
+		-25
+	],
+	Kcommaaccentegrave: [
+		-15,
+		-15,
+		-40,
+		-40,
+		-25,
+		-25,
+		-35,
+		-25
+	],
+	Kcommaaccentemacron: [
+		-15,
+		-15,
+		-40,
+		-40,
+		-25,
+		-25,
+		-35,
+		-25
+	],
+	Kcommaaccenteogonek: [
+		-15,
+		-15,
+		-40,
+		-40,
+		-25,
+		-25,
+		-35,
+		-25
+	],
+	Kcommaaccento: [
+		-35,
+		-35,
+		-40,
+		-40,
+		-25,
+		-25,
+		-40,
+		-35
+	],
+	Kcommaaccentoacute: [
+		-35,
+		-35,
+		-40,
+		-40,
+		-25,
+		-25,
+		-40,
+		-35
+	],
+	Kcommaaccentocircumflex: [
+		-35,
+		-35,
+		-40,
+		-40,
+		-25,
+		-25,
+		-40,
+		-35
+	],
+	Kcommaaccentodieresis: [
+		-35,
+		-35,
+		-40,
+		-40,
+		-25,
+		-25,
+		-40,
+		-35
+	],
+	Kcommaaccentograve: [
+		-35,
+		-35,
+		-40,
+		-40,
+		-25,
+		-25,
+		-40,
+		-35
+	],
+	Kcommaaccentohungarumlaut: [
+		-35,
+		-35,
+		-40,
+		-40,
+		-25,
+		-25,
+		-40,
+		-35
+	],
+	Kcommaaccentomacron: [
+		-35,
+		-35,
+		-40,
+		-40,
+		-25,
+		-25,
+		-40,
+		-35
+	],
+	Kcommaaccentoslash: [
+		-35,
+		-35,
+		-40,
+		-40,
+		-25,
+		-25,
+		-40,
+		-35
+	],
+	Kcommaaccentotilde: [
+		-35,
+		-35,
+		-40,
+		-40,
+		-25,
+		-25,
+		-40,
+		-35
+	],
+	Kcommaaccentu: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-15,
+		-20,
+		-40,
+		-15
+	],
+	Kcommaaccentuacute: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-15,
+		-20,
+		-40,
+		-15
+	],
+	Kcommaaccentucircumflex: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-15,
+		-20,
+		-40,
+		-15
+	],
+	Kcommaaccentudieresis: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-15,
+		-20,
+		-40,
+		-15
+	],
+	Kcommaaccentugrave: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-15,
+		-20,
+		-40,
+		-15
+	],
+	Kcommaaccentuhungarumlaut: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-15,
+		-20,
+		-40,
+		-15
+	],
+	Kcommaaccentumacron: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-15,
+		-20,
+		-40,
+		-15
+	],
+	Kcommaaccentuogonek: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-15,
+		-20,
+		-40,
+		-15
+	],
+	Kcommaaccenturing: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-15,
+		-20,
+		-40,
+		-15
+	],
+	Kcommaaccenty: [
+		-40,
+		-40,
+		-50,
+		-50,
+		-45,
+		-20,
+		-40,
+		-25
+	],
+	Kcommaaccentyacute: [
+		-40,
+		-40,
+		-50,
+		-50,
+		-45,
+		-20,
+		-40,
+		-25
+	],
+	Kcommaaccentydieresis: [
+		-40,
+		-40,
+		-50,
+		-50,
+		-45,
+		-20,
+		-40,
+		-25
+	],
+	LT: [
+		-90,
+		-90,
+		-110,
+		-110,
+		-92,
+		-18,
+		-20,
+		-92
+	],
+	LTcaron: [
+		-90,
+		-90,
+		-110,
+		-110,
+		-92,
+		-18,
+		-20,
+		-92
+	],
+	LTcommaaccent: [
+		-90,
+		-90,
+		-110,
+		-110,
+		-92,
+		-18,
+		-20,
+		-92
+	],
+	LV: [
+		-110,
+		-110,
+		-110,
+		-110,
+		-92,
+		-37,
+		-55,
+		-100
+	],
+	LW: [
+		-80,
+		-80,
+		-70,
+		-70,
+		-92,
+		-37,
+		-55,
+		-74
+	],
+	LY: [
+		-120,
+		-120,
+		-140,
+		-140,
+		-92,
+		-37,
+		-20,
+		-100
+	],
+	LYacute: [
+		-120,
+		-120,
+		-140,
+		-140,
+		-92,
+		-37,
+		-20,
+		-100
+	],
+	LYdieresis: [
+		-120,
+		-120,
+		-140,
+		-140,
+		-92,
+		-37,
+		-20,
+		-100
+	],
+	Lquotedblright: [
+		-140,
+		-140,
+		-140,
+		-140,
+		-20
+	],
+	Lquoteright: [
+		-140,
+		-140,
+		-160,
+		-160,
+		-110,
+		-55,
+		-37,
+		-92
+	],
+	Ly: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-55,
+		-37,
+		-30,
+		-55
+	],
+	Lyacute: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-55,
+		-37,
+		-30,
+		-55
+	],
+	Lydieresis: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-55,
+		-37,
+		-30,
+		-55
+	],
+	LacuteT: [
+		-90,
+		-90,
+		-110,
+		-110,
+		-92,
+		-18,
+		-20,
+		-92
+	],
+	LacuteTcaron: [
+		-90,
+		-90,
+		-110,
+		-110,
+		-92,
+		-18,
+		-20,
+		-92
+	],
+	LacuteTcommaaccent: [
+		-90,
+		-90,
+		-110,
+		-110,
+		-92,
+		-18,
+		-20,
+		-92
+	],
+	LacuteV: [
+		-110,
+		-110,
+		-110,
+		-110,
+		-92,
+		-37,
+		-55,
+		-100
+	],
+	LacuteW: [
+		-80,
+		-80,
+		-70,
+		-70,
+		-92,
+		-37,
+		-55,
+		-74
+	],
+	LacuteY: [
+		-120,
+		-120,
+		-140,
+		-140,
+		-92,
+		-37,
+		-20,
+		-100
+	],
+	LacuteYacute: [
+		-120,
+		-120,
+		-140,
+		-140,
+		-92,
+		-37,
+		-20,
+		-100
+	],
+	LacuteYdieresis: [
+		-120,
+		-120,
+		-140,
+		-140,
+		-92,
+		-37,
+		-20,
+		-100
+	],
+	Lacutequotedblright: [
+		-140,
+		-140,
+		-140,
+		-140,
+		-20
+	],
+	Lacutequoteright: [
+		-140,
+		-140,
+		-160,
+		-160,
+		-110,
+		-55,
+		-37,
+		-92
+	],
+	Lacutey: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-55,
+		-37,
+		-30,
+		-55
+	],
+	Lacuteyacute: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-55,
+		-37,
+		-30,
+		-55
+	],
+	Lacuteydieresis: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-55,
+		-37,
+		-30,
+		-55
+	],
+	LcommaaccentT: [
+		-90,
+		-90,
+		-110,
+		-110,
+		-92,
+		-18,
+		-20,
+		-92
+	],
+	LcommaaccentTcaron: [
+		-90,
+		-90,
+		-110,
+		-110,
+		-92,
+		-18,
+		-20,
+		-92
+	],
+	LcommaaccentTcommaaccent: [
+		-90,
+		-90,
+		-110,
+		-110,
+		-92,
+		-18,
+		-20,
+		-92
+	],
+	LcommaaccentV: [
+		-110,
+		-110,
+		-110,
+		-110,
+		-92,
+		-37,
+		-55,
+		-100
+	],
+	LcommaaccentW: [
+		-80,
+		-80,
+		-70,
+		-70,
+		-92,
+		-37,
+		-55,
+		-74
+	],
+	LcommaaccentY: [
+		-120,
+		-120,
+		-140,
+		-140,
+		-92,
+		-37,
+		-20,
+		-100
+	],
+	LcommaaccentYacute: [
+		-120,
+		-120,
+		-140,
+		-140,
+		-92,
+		-37,
+		-20,
+		-100
+	],
+	LcommaaccentYdieresis: [
+		-120,
+		-120,
+		-140,
+		-140,
+		-92,
+		-37,
+		-20,
+		-100
+	],
+	Lcommaaccentquotedblright: [
+		-140,
+		-140,
+		-140,
+		-140,
+		-20
+	],
+	Lcommaaccentquoteright: [
+		-140,
+		-140,
+		-160,
+		-160,
+		-110,
+		-55,
+		-37,
+		-92
+	],
+	Lcommaaccenty: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-55,
+		-37,
+		-30,
+		-55
+	],
+	Lcommaaccentyacute: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-55,
+		-37,
+		-30,
+		-55
+	],
+	Lcommaaccentydieresis: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-55,
+		-37,
+		-30,
+		-55
+	],
+	LslashT: [
+		-90,
+		-90,
+		-110,
+		-110,
+		-92,
+		-18,
+		-20,
+		-92
+	],
+	LslashTcaron: [
+		-90,
+		-90,
+		-110,
+		-110,
+		-92,
+		-18,
+		-20,
+		-92
+	],
+	LslashTcommaaccent: [
+		-90,
+		-90,
+		-110,
+		-110,
+		-92,
+		-18,
+		-20,
+		-92
+	],
+	LslashV: [
+		-110,
+		-110,
+		-110,
+		-110,
+		-92,
+		-37,
+		-55,
+		-100
+	],
+	LslashW: [
+		-80,
+		-80,
+		-70,
+		-70,
+		-92,
+		-37,
+		-55,
+		-74
+	],
+	LslashY: [
+		-120,
+		-120,
+		-140,
+		-140,
+		-92,
+		-37,
+		-20,
+		-100
+	],
+	LslashYacute: [
+		-120,
+		-120,
+		-140,
+		-140,
+		-92,
+		-37,
+		-20,
+		-100
+	],
+	LslashYdieresis: [
+		-120,
+		-120,
+		-140,
+		-140,
+		-92,
+		-37,
+		-20,
+		-100
+	],
+	Lslashquotedblright: [
+		-140,
+		-140,
+		-140,
+		-140,
+		-20
+	],
+	Lslashquoteright: [
+		-140,
+		-140,
+		-160,
+		-160,
+		-110,
+		-55,
+		-37,
+		-92
+	],
+	Lslashy: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-55,
+		-37,
+		-30,
+		-55
+	],
+	Lslashyacute: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-55,
+		-37,
+		-30,
+		-55
+	],
+	Lslashydieresis: [
+		-30,
+		-30,
+		-30,
+		-30,
+		-55,
+		-37,
+		-30,
+		-55
+	],
+	OA: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OAacute: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OAbreve: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OAcircumflex: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OAdieresis: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OAgrave: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OAmacron: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OAogonek: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OAring: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OAtilde: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OT: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40
+	],
+	OTcaron: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40
+	],
+	OTcommaaccent: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40
+	],
+	OV: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50
+	],
+	OW: [
+		-50,
+		-50,
+		-30,
+		-30,
+		-50,
+		-50,
+		-50,
+		-35
+	],
+	OX: [
+		-50,
+		-50,
+		-60,
+		-60,
+		-40,
+		-40,
+		-40,
+		-40
+	],
+	OY: [
+		-70,
+		-70,
+		-70,
+		-70,
+		-50,
+		-50,
+		-50,
+		-50
+	],
+	OYacute: [
+		-70,
+		-70,
+		-70,
+		-70,
+		-50,
+		-50,
+		-50,
+		-50
+	],
+	OYdieresis: [
+		-70,
+		-70,
+		-70,
+		-70,
+		-50,
+		-50,
+		-50,
+		-50
+	],
+	Ocomma: [
+		-40,
+		-40,
+		-40,
+		-40
+	],
+	Operiod: [
+		-40,
+		-40,
+		-40,
+		-40
+	],
+	OacuteA: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OacuteAacute: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OacuteAbreve: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OacuteAcircumflex: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OacuteAdieresis: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OacuteAgrave: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OacuteAmacron: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OacuteAogonek: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OacuteAring: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OacuteAtilde: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OacuteT: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40
+	],
+	OacuteTcaron: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40
+	],
+	OacuteTcommaaccent: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40
+	],
+	OacuteV: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50
+	],
+	OacuteW: [
+		-50,
+		-50,
+		-30,
+		-30,
+		-50,
+		-50,
+		-50,
+		-35
+	],
+	OacuteX: [
+		-50,
+		-50,
+		-60,
+		-60,
+		-40,
+		-40,
+		-40,
+		-40
+	],
+	OacuteY: [
+		-70,
+		-70,
+		-70,
+		-70,
+		-50,
+		-50,
+		-50,
+		-50
+	],
+	OacuteYacute: [
+		-70,
+		-70,
+		-70,
+		-70,
+		-50,
+		-50,
+		-50,
+		-50
+	],
+	OacuteYdieresis: [
+		-70,
+		-70,
+		-70,
+		-70,
+		-50,
+		-50,
+		-50,
+		-50
+	],
+	Oacutecomma: [
+		-40,
+		-40,
+		-40,
+		-40
+	],
+	Oacuteperiod: [
+		-40,
+		-40,
+		-40,
+		-40
+	],
+	OcircumflexA: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OcircumflexAacute: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OcircumflexAbreve: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OcircumflexAcircumflex: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OcircumflexAdieresis: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OcircumflexAgrave: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OcircumflexAmacron: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OcircumflexAogonek: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OcircumflexAring: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OcircumflexAtilde: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OcircumflexT: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40
+	],
+	OcircumflexTcaron: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40
+	],
+	OcircumflexTcommaaccent: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40
+	],
+	OcircumflexV: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50
+	],
+	OcircumflexW: [
+		-50,
+		-50,
+		-30,
+		-30,
+		-50,
+		-50,
+		-50,
+		-35
+	],
+	OcircumflexX: [
+		-50,
+		-50,
+		-60,
+		-60,
+		-40,
+		-40,
+		-40,
+		-40
+	],
+	OcircumflexY: [
+		-70,
+		-70,
+		-70,
+		-70,
+		-50,
+		-50,
+		-50,
+		-50
+	],
+	OcircumflexYacute: [
+		-70,
+		-70,
+		-70,
+		-70,
+		-50,
+		-50,
+		-50,
+		-50
+	],
+	OcircumflexYdieresis: [
+		-70,
+		-70,
+		-70,
+		-70,
+		-50,
+		-50,
+		-50,
+		-50
+	],
+	Ocircumflexcomma: [
+		-40,
+		-40,
+		-40,
+		-40
+	],
+	Ocircumflexperiod: [
+		-40,
+		-40,
+		-40,
+		-40
+	],
+	OdieresisA: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OdieresisAacute: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OdieresisAbreve: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OdieresisAcircumflex: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OdieresisAdieresis: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OdieresisAgrave: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OdieresisAmacron: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OdieresisAogonek: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OdieresisAring: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OdieresisAtilde: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OdieresisT: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40
+	],
+	OdieresisTcaron: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40
+	],
+	OdieresisTcommaaccent: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40
+	],
+	OdieresisV: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50
+	],
+	OdieresisW: [
+		-50,
+		-50,
+		-30,
+		-30,
+		-50,
+		-50,
+		-50,
+		-35
+	],
+	OdieresisX: [
+		-50,
+		-50,
+		-60,
+		-60,
+		-40,
+		-40,
+		-40,
+		-40
+	],
+	OdieresisY: [
+		-70,
+		-70,
+		-70,
+		-70,
+		-50,
+		-50,
+		-50,
+		-50
+	],
+	OdieresisYacute: [
+		-70,
+		-70,
+		-70,
+		-70,
+		-50,
+		-50,
+		-50,
+		-50
+	],
+	OdieresisYdieresis: [
+		-70,
+		-70,
+		-70,
+		-70,
+		-50,
+		-50,
+		-50,
+		-50
+	],
+	Odieresiscomma: [
+		-40,
+		-40,
+		-40,
+		-40
+	],
+	Odieresisperiod: [
+		-40,
+		-40,
+		-40,
+		-40
+	],
+	OgraveA: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OgraveAacute: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OgraveAbreve: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OgraveAcircumflex: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OgraveAdieresis: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OgraveAgrave: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OgraveAmacron: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OgraveAogonek: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OgraveAring: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OgraveAtilde: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OgraveT: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40
+	],
+	OgraveTcaron: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40
+	],
+	OgraveTcommaaccent: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40
+	],
+	OgraveV: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50
+	],
+	OgraveW: [
+		-50,
+		-50,
+		-30,
+		-30,
+		-50,
+		-50,
+		-50,
+		-35
+	],
+	OgraveX: [
+		-50,
+		-50,
+		-60,
+		-60,
+		-40,
+		-40,
+		-40,
+		-40
+	],
+	OgraveY: [
+		-70,
+		-70,
+		-70,
+		-70,
+		-50,
+		-50,
+		-50,
+		-50
+	],
+	OgraveYacute: [
+		-70,
+		-70,
+		-70,
+		-70,
+		-50,
+		-50,
+		-50,
+		-50
+	],
+	OgraveYdieresis: [
+		-70,
+		-70,
+		-70,
+		-70,
+		-50,
+		-50,
+		-50,
+		-50
+	],
+	Ogravecomma: [
+		-40,
+		-40,
+		-40,
+		-40
+	],
+	Ograveperiod: [
+		-40,
+		-40,
+		-40,
+		-40
+	],
+	OhungarumlautA: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OhungarumlautAacute: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OhungarumlautAbreve: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OhungarumlautAcircumflex: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OhungarumlautAdieresis: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OhungarumlautAgrave: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OhungarumlautAmacron: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OhungarumlautAogonek: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OhungarumlautAring: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OhungarumlautAtilde: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OhungarumlautT: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40
+	],
+	OhungarumlautTcaron: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40
+	],
+	OhungarumlautTcommaaccent: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40
+	],
+	OhungarumlautV: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50
+	],
+	OhungarumlautW: [
+		-50,
+		-50,
+		-30,
+		-30,
+		-50,
+		-50,
+		-50,
+		-35
+	],
+	OhungarumlautX: [
+		-50,
+		-50,
+		-60,
+		-60,
+		-40,
+		-40,
+		-40,
+		-40
+	],
+	OhungarumlautY: [
+		-70,
+		-70,
+		-70,
+		-70,
+		-50,
+		-50,
+		-50,
+		-50
+	],
+	OhungarumlautYacute: [
+		-70,
+		-70,
+		-70,
+		-70,
+		-50,
+		-50,
+		-50,
+		-50
+	],
+	OhungarumlautYdieresis: [
+		-70,
+		-70,
+		-70,
+		-70,
+		-50,
+		-50,
+		-50,
+		-50
+	],
+	Ohungarumlautcomma: [
+		-40,
+		-40,
+		-40,
+		-40
+	],
+	Ohungarumlautperiod: [
+		-40,
+		-40,
+		-40,
+		-40
+	],
+	OmacronA: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OmacronAacute: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OmacronAbreve: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OmacronAcircumflex: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OmacronAdieresis: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OmacronAgrave: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OmacronAmacron: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OmacronAogonek: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OmacronAring: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OmacronAtilde: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OmacronT: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40
+	],
+	OmacronTcaron: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40
+	],
+	OmacronTcommaaccent: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40
+	],
+	OmacronV: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50
+	],
+	OmacronW: [
+		-50,
+		-50,
+		-30,
+		-30,
+		-50,
+		-50,
+		-50,
+		-35
+	],
+	OmacronX: [
+		-50,
+		-50,
+		-60,
+		-60,
+		-40,
+		-40,
+		-40,
+		-40
+	],
+	OmacronY: [
+		-70,
+		-70,
+		-70,
+		-70,
+		-50,
+		-50,
+		-50,
+		-50
+	],
+	OmacronYacute: [
+		-70,
+		-70,
+		-70,
+		-70,
+		-50,
+		-50,
+		-50,
+		-50
+	],
+	OmacronYdieresis: [
+		-70,
+		-70,
+		-70,
+		-70,
+		-50,
+		-50,
+		-50,
+		-50
+	],
+	Omacroncomma: [
+		-40,
+		-40,
+		-40,
+		-40
+	],
+	Omacronperiod: [
+		-40,
+		-40,
+		-40,
+		-40
+	],
+	OslashA: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OslashAacute: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OslashAbreve: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OslashAcircumflex: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OslashAdieresis: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OslashAgrave: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OslashAmacron: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OslashAogonek: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OslashAring: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OslashAtilde: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OslashT: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40
+	],
+	OslashTcaron: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40
+	],
+	OslashTcommaaccent: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40
+	],
+	OslashV: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50
+	],
+	OslashW: [
+		-50,
+		-50,
+		-30,
+		-30,
+		-50,
+		-50,
+		-50,
+		-35
+	],
+	OslashX: [
+		-50,
+		-50,
+		-60,
+		-60,
+		-40,
+		-40,
+		-40,
+		-40
+	],
+	OslashY: [
+		-70,
+		-70,
+		-70,
+		-70,
+		-50,
+		-50,
+		-50,
+		-50
+	],
+	OslashYacute: [
+		-70,
+		-70,
+		-70,
+		-70,
+		-50,
+		-50,
+		-50,
+		-50
+	],
+	OslashYdieresis: [
+		-70,
+		-70,
+		-70,
+		-70,
+		-50,
+		-50,
+		-50,
+		-50
+	],
+	Oslashcomma: [
+		-40,
+		-40,
+		-40,
+		-40
+	],
+	Oslashperiod: [
+		-40,
+		-40,
+		-40,
+		-40
+	],
+	OtildeA: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OtildeAacute: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OtildeAbreve: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OtildeAcircumflex: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OtildeAdieresis: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OtildeAgrave: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OtildeAmacron: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OtildeAogonek: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OtildeAring: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OtildeAtilde: [
+		-50,
+		-50,
+		-20,
+		-20,
+		-40,
+		-40,
+		-55,
+		-35
+	],
+	OtildeT: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40
+	],
+	OtildeTcaron: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40
+	],
+	OtildeTcommaaccent: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40
+	],
+	OtildeV: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50,
+		-50
+	],
+	OtildeW: [
+		-50,
+		-50,
+		-30,
+		-30,
+		-50,
+		-50,
+		-50,
+		-35
+	],
+	OtildeX: [
+		-50,
+		-50,
+		-60,
+		-60,
+		-40,
+		-40,
+		-40,
+		-40
+	],
+	OtildeY: [
+		-70,
+		-70,
+		-70,
+		-70,
+		-50,
+		-50,
+		-50,
+		-50
+	],
+	OtildeYacute: [
+		-70,
+		-70,
+		-70,
+		-70,
+		-50,
+		-50,
+		-50,
+		-50
+	],
+	OtildeYdieresis: [
+		-70,
+		-70,
+		-70,
+		-70,
+		-50,
+		-50,
+		-50,
+		-50
+	],
+	Otildecomma: [
+		-40,
+		-40,
+		-40,
+		-40
+	],
+	Otildeperiod: [
+		-40,
+		-40,
+		-40,
+		-40
+	],
+	PA: [
+		-100,
+		-100,
+		-120,
+		-120,
+		-74,
+		-85,
+		-90,
+		-92
+	],
+	PAacute: [
+		-100,
+		-100,
+		-120,
+		-120,
+		-74,
+		-85,
+		-90,
+		-92
+	],
+	PAbreve: [
+		-100,
+		-100,
+		-120,
+		-120,
+		-74,
+		-85,
+		-90,
+		-92
+	],
+	PAcircumflex: [
+		-100,
+		-100,
+		-120,
+		-120,
+		-74,
+		-85,
+		-90,
+		-92
+	],
+	PAdieresis: [
+		-100,
+		-100,
+		-120,
+		-120,
+		-74,
+		-85,
+		-90,
+		-92
+	],
+	PAgrave: [
+		-100,
+		-100,
+		-120,
+		-120,
+		-74,
+		-85,
+		-90,
+		-92
+	],
+	PAmacron: [
+		-100,
+		-100,
+		-120,
+		-120,
+		-74,
+		-85,
+		-90,
+		-92
+	],
+	PAogonek: [
+		-100,
+		-100,
+		-120,
+		-120,
+		-74,
+		-85,
+		-90,
+		-92
+	],
+	PAring: [
+		-100,
+		-100,
+		-120,
+		-120,
+		-74,
+		-85,
+		-90,
+		-92
+	],
+	PAtilde: [
+		-100,
+		-100,
+		-120,
+		-120,
+		-74,
+		-85,
+		-90,
+		-92
+	],
+	Pa: [
+		-30,
+		-30,
+		-40,
+		-40,
+		-10,
+		-40,
+		-80,
+		-15
+	],
+	Paacute: [
+		-30,
+		-30,
+		-40,
+		-40,
+		-10,
+		-40,
+		-80,
+		-15
+	],
+	Pabreve: [
+		-30,
+		-30,
+		-40,
+		-40,
+		-10,
+		-40,
+		-80,
+		-15
+	],
+	Pacircumflex: [
+		-30,
+		-30,
+		-40,
+		-40,
+		-10,
+		-40,
+		-80,
+		-15
+	],
+	Padieresis: [
+		-30,
+		-30,
+		-40,
+		-40,
+		-10,
+		-40,
+		-80,
+		-15
+	],
+	Pagrave: [
+		-30,
+		-30,
+		-40,
+		-40,
+		-10,
+		-40,
+		-80,
+		-15
+	],
+	Pamacron: [
+		-30,
+		-30,
+		-40,
+		-40,
+		-10,
+		-40,
+		-80,
+		-15
+	],
+	Paogonek: [
+		-30,
+		-30,
+		-40,
+		-40,
+		-10,
+		-40,
+		-80,
+		-15
+	],
+	Paring: [
+		-30,
+		-30,
+		-40,
+		-40,
+		-10,
+		-40,
+		-80,
+		-15
+	],
+	Patilde: [
+		-30,
+		-30,
+		-40,
+		-40,
+		-10,
+		-40,
+		-80,
+		-15
+	],
+	Pcomma: [
+		-120,
+		-120,
+		-180,
+		-180,
+		-92,
+		-129,
+		-135,
+		-111
+	],
+	Pe: [
+		-30,
+		-30,
+		-50,
+		-50,
+		-20,
+		-50,
+		-80
+	],
+	Peacute: [
+		-30,
+		-30,
+		-50,
+		-50,
+		-20,
+		-50,
+		-80
+	],
+	Pecaron: [
+		-30,
+		-30,
+		-50,
+		-50,
+		-20,
+		-50,
+		-80
+	],
+	Pecircumflex: [
+		-30,
+		-30,
+		-50,
+		-50,
+		-20,
+		-50,
+		-80
+	],
+	Pedieresis: [
+		-30,
+		-30,
+		-50,
+		-50,
+		-20,
+		-50,
+		-80
+	],
+	Pedotaccent: [
+		-30,
+		-30,
+		-50,
+		-50,
+		-20,
+		-50,
+		-80
+	],
+	Pegrave: [
+		-30,
+		-30,
+		-50,
+		-50,
+		-20,
+		-50,
+		-80
+	],
+	Pemacron: [
+		-30,
+		-30,
+		-50,
+		-50,
+		-20,
+		-50,
+		-80
+	],
+	Peogonek: [
+		-30,
+		-30,
+		-50,
+		-50,
+		-20,
+		-50,
+		-80
+	],
+	Po: [
+		-40,
+		-40,
+		-50,
+		-50,
+		-20,
+		-55,
+		-80
+	],
+	Poacute: [
+		-40,
+		-40,
+		-50,
+		-50,
+		-20,
+		-55,
+		-80
+	],
+	Pocircumflex: [
+		-40,
+		-40,
+		-50,
+		-50,
+		-20,
+		-55,
+		-80
+	],
+	Podieresis: [
+		-40,
+		-40,
+		-50,
+		-50,
+		-20,
+		-55,
+		-80
+	],
+	Pograve: [
+		-40,
+		-40,
+		-50,
+		-50,
+		-20,
+		-55,
+		-80
+	],
+	Pohungarumlaut: [
+		-40,
+		-40,
+		-50,
+		-50,
+		-20,
+		-55,
+		-80
+	],
+	Pomacron: [
+		-40,
+		-40,
+		-50,
+		-50,
+		-20,
+		-55,
+		-80
+	],
+	Poslash: [
+		-40,
+		-40,
+		-50,
+		-50,
+		-20,
+		-55,
+		-80
+	],
+	Potilde: [
+		-40,
+		-40,
+		-50,
+		-50,
+		-20,
+		-55,
+		-80
+	],
+	Pperiod: [
+		-120,
+		-120,
+		-180,
+		-180,
+		-110,
+		-129,
+		-135,
+		-111
+	],
+	QU: [
+		-10,
+		-10,
+		-10,
+		-10,
+		-10,
+		-10,
+		-10,
+		-10
+	],
+	QUacute: [
+		-10,
+		-10,
+		-10,
+		-10,
+		-10,
+		-10,
+		-10,
+		-10
+	],
+	QUcircumflex: [
+		-10,
+		-10,
+		-10,
+		-10,
+		-10,
+		-10,
+		-10,
+		-10
+	],
+	QUdieresis: [
+		-10,
+		-10,
+		-10,
+		-10,
+		-10,
+		-10,
+		-10,
+		-10
+	],
+	QUgrave: [
+		-10,
+		-10,
+		-10,
+		-10,
+		-10,
+		-10,
+		-10,
+		-10
+	],
+	QUhungarumlaut: [
+		-10,
+		-10,
+		-10,
+		-10,
+		-10,
+		-10,
+		-10,
+		-10
+	],
+	QUmacron: [
+		-10,
+		-10,
+		-10,
+		-10,
+		-10,
+		-10,
+		-10,
+		-10
+	],
+	QUogonek: [
+		-10,
+		-10,
+		-10,
+		-10,
+		-10,
+		-10,
+		-10,
+		-10
+	],
+	QUring: [
+		-10,
+		-10,
+		-10,
+		-10,
+		-10,
+		-10,
+		-10,
+		-10
+	],
+	Qcomma: [
+		20,
+		20
+	],
+	Qperiod: [
+		20,
+		20,
+		0,
+		0,
+		-20
+	],
+	RO: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	ROacute: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	ROcircumflex: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	ROdieresis: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	ROgrave: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	ROhungarumlaut: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	ROmacron: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	ROslash: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	ROtilde: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	RT: [
+		-20,
+		-20,
+		-30,
+		-30,
+		-40,
+		-30,
+		0,
+		-60
+	],
+	RTcaron: [
+		-20,
+		-20,
+		-30,
+		-30,
+		-40,
+		-30,
+		0,
+		-60
+	],
+	RTcommaaccent: [
+		-20,
+		-20,
+		-30,
+		-30,
+		-40,
+		-30,
+		0,
+		-60
+	],
+	RU: [
+		-20,
+		-20,
+		-40,
+		-40,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	RUacute: [
+		-20,
+		-20,
+		-40,
+		-40,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	RUcircumflex: [
+		-20,
+		-20,
+		-40,
+		-40,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	RUdieresis: [
+		-20,
+		-20,
+		-40,
+		-40,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	RUgrave: [
+		-20,
+		-20,
+		-40,
+		-40,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	RUhungarumlaut: [
+		-20,
+		-20,
+		-40,
+		-40,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	RUmacron: [
+		-20,
+		-20,
+		-40,
+		-40,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	RUogonek: [
+		-20,
+		-20,
+		-40,
+		-40,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	RUring: [
+		-20,
+		-20,
+		-40,
+		-40,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	RV: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-55,
+		-18,
+		-18,
+		-80
+	],
+	RW: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-35,
+		-18,
+		-18,
+		-55
+	],
+	RY: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-35,
+		-18,
+		-18,
+		-65
+	],
+	RYacute: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-35,
+		-18,
+		-18,
+		-65
+	],
+	RYdieresis: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-35,
+		-18,
+		-18,
+		-65
+	],
+	RacuteO: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	RacuteOacute: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	RacuteOcircumflex: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	RacuteOdieresis: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	RacuteOgrave: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	RacuteOhungarumlaut: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	RacuteOmacron: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	RacuteOslash: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	RacuteOtilde: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	RacuteT: [
+		-20,
+		-20,
+		-30,
+		-30,
+		-40,
+		-30,
+		0,
+		-60
+	],
+	RacuteTcaron: [
+		-20,
+		-20,
+		-30,
+		-30,
+		-40,
+		-30,
+		0,
+		-60
+	],
+	RacuteTcommaaccent: [
+		-20,
+		-20,
+		-30,
+		-30,
+		-40,
+		-30,
+		0,
+		-60
+	],
+	RacuteU: [
+		-20,
+		-20,
+		-40,
+		-40,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	RacuteUacute: [
+		-20,
+		-20,
+		-40,
+		-40,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	RacuteUcircumflex: [
+		-20,
+		-20,
+		-40,
+		-40,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	RacuteUdieresis: [
+		-20,
+		-20,
+		-40,
+		-40,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	RacuteUgrave: [
+		-20,
+		-20,
+		-40,
+		-40,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	RacuteUhungarumlaut: [
+		-20,
+		-20,
+		-40,
+		-40,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	RacuteUmacron: [
+		-20,
+		-20,
+		-40,
+		-40,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	RacuteUogonek: [
+		-20,
+		-20,
+		-40,
+		-40,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	RacuteUring: [
+		-20,
+		-20,
+		-40,
+		-40,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	RacuteV: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-55,
+		-18,
+		-18,
+		-80
+	],
+	RacuteW: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-35,
+		-18,
+		-18,
+		-55
+	],
+	RacuteY: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-35,
+		-18,
+		-18,
+		-65
+	],
+	RacuteYacute: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-35,
+		-18,
+		-18,
+		-65
+	],
+	RacuteYdieresis: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-35,
+		-18,
+		-18,
+		-65
+	],
+	RcaronO: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	RcaronOacute: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	RcaronOcircumflex: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	RcaronOdieresis: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	RcaronOgrave: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	RcaronOhungarumlaut: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	RcaronOmacron: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	RcaronOslash: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	RcaronOtilde: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	RcaronT: [
+		-20,
+		-20,
+		-30,
+		-30,
+		-40,
+		-30,
+		0,
+		-60
+	],
+	RcaronTcaron: [
+		-20,
+		-20,
+		-30,
+		-30,
+		-40,
+		-30,
+		0,
+		-60
+	],
+	RcaronTcommaaccent: [
+		-20,
+		-20,
+		-30,
+		-30,
+		-40,
+		-30,
+		0,
+		-60
+	],
+	RcaronU: [
+		-20,
+		-20,
+		-40,
+		-40,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	RcaronUacute: [
+		-20,
+		-20,
+		-40,
+		-40,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	RcaronUcircumflex: [
+		-20,
+		-20,
+		-40,
+		-40,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	RcaronUdieresis: [
+		-20,
+		-20,
+		-40,
+		-40,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	RcaronUgrave: [
+		-20,
+		-20,
+		-40,
+		-40,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	RcaronUhungarumlaut: [
+		-20,
+		-20,
+		-40,
+		-40,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	RcaronUmacron: [
+		-20,
+		-20,
+		-40,
+		-40,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	RcaronUogonek: [
+		-20,
+		-20,
+		-40,
+		-40,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	RcaronUring: [
+		-20,
+		-20,
+		-40,
+		-40,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	RcaronV: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-55,
+		-18,
+		-18,
+		-80
+	],
+	RcaronW: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-35,
+		-18,
+		-18,
+		-55
+	],
+	RcaronY: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-35,
+		-18,
+		-18,
+		-65
+	],
+	RcaronYacute: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-35,
+		-18,
+		-18,
+		-65
+	],
+	RcaronYdieresis: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-35,
+		-18,
+		-18,
+		-65
+	],
+	RcommaaccentO: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	RcommaaccentOacute: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	RcommaaccentOcircumflex: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	RcommaaccentOdieresis: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	RcommaaccentOgrave: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	RcommaaccentOhungarumlaut: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	RcommaaccentOmacron: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	RcommaaccentOslash: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	RcommaaccentOtilde: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	RcommaaccentT: [
+		-20,
+		-20,
+		-30,
+		-30,
+		-40,
+		-30,
+		0,
+		-60
+	],
+	RcommaaccentTcaron: [
+		-20,
+		-20,
+		-30,
+		-30,
+		-40,
+		-30,
+		0,
+		-60
+	],
+	RcommaaccentTcommaaccent: [
+		-20,
+		-20,
+		-30,
+		-30,
+		-40,
+		-30,
+		0,
+		-60
+	],
+	RcommaaccentU: [
+		-20,
+		-20,
+		-40,
+		-40,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	RcommaaccentUacute: [
+		-20,
+		-20,
+		-40,
+		-40,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	RcommaaccentUcircumflex: [
+		-20,
+		-20,
+		-40,
+		-40,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	RcommaaccentUdieresis: [
+		-20,
+		-20,
+		-40,
+		-40,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	RcommaaccentUgrave: [
+		-20,
+		-20,
+		-40,
+		-40,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	RcommaaccentUhungarumlaut: [
+		-20,
+		-20,
+		-40,
+		-40,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	RcommaaccentUmacron: [
+		-20,
+		-20,
+		-40,
+		-40,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	RcommaaccentUogonek: [
+		-20,
+		-20,
+		-40,
+		-40,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	RcommaaccentUring: [
+		-20,
+		-20,
+		-40,
+		-40,
+		-30,
+		-40,
+		-40,
+		-40
+	],
+	RcommaaccentV: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-55,
+		-18,
+		-18,
+		-80
+	],
+	RcommaaccentW: [
+		-40,
+		-40,
+		-30,
+		-30,
+		-35,
+		-18,
+		-18,
+		-55
+	],
+	RcommaaccentY: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-35,
+		-18,
+		-18,
+		-65
+	],
+	RcommaaccentYacute: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-35,
+		-18,
+		-18,
+		-65
+	],
+	RcommaaccentYdieresis: [
+		-50,
+		-50,
+		-50,
+		-50,
+		-35,
+		-18,
+		-18,
+		-65
+	],
+	TA: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-90,
+		-55,
+		-50,
+		-93
+	],
+	TAacute: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-90,
+		-55,
+		-50,
+		-93
+	],
+	TAbreve: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-90,
+		-55,
+		-50,
+		-93
+	],
+	TAcircumflex: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-90,
+		-55,
+		-50,
+		-93
+	],
+	TAdieresis: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-90,
+		-55,
+		-50,
+		-93
+	],
+	TAgrave: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-90,
+		-55,
+		-50,
+		-93
+	],
+	TAmacron: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-90,
+		-55,
+		-50,
+		-93
+	],
+	TAogonek: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-90,
+		-55,
+		-50,
+		-93
+	],
+	TAring: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-90,
+		-55,
+		-50,
+		-93
+	],
+	TAtilde: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-90,
+		-55,
+		-50,
+		-93
+	],
+	TO: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-18,
+		-18,
+		-18,
+		-18
+	],
+	TOacute: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-18,
+		-18,
+		-18,
+		-18
+	],
+	TOcircumflex: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-18,
+		-18,
+		-18,
+		-18
+	],
+	TOdieresis: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-18,
+		-18,
+		-18,
+		-18
+	],
+	TOgrave: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-18,
+		-18,
+		-18,
+		-18
+	],
+	TOhungarumlaut: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-18,
+		-18,
+		-18,
+		-18
+	],
+	TOmacron: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-18,
+		-18,
+		-18,
+		-18
+	],
+	TOslash: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-18,
+		-18,
+		-18,
+		-18
+	],
+	TOtilde: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-18,
+		-18,
+		-18,
+		-18
+	],
+	Ta: [
+		-80,
+		-80,
+		-120,
+		-120,
+		-92,
+		-92,
+		-92,
+		-80
+	],
+	Taacute: [
+		-80,
+		-80,
+		-120,
+		-120,
+		-92,
+		-92,
+		-92,
+		-80
+	],
+	Tabreve: [
+		-80,
+		-80,
+		-60,
+		-60,
+		-52,
+		-92,
+		-92,
+		-80
+	],
+	Tacircumflex: [
+		-80,
+		-80,
+		-120,
+		-120,
+		-52,
+		-92,
+		-92,
+		-80
+	],
+	Tadieresis: [
+		-80,
+		-80,
+		-120,
+		-120,
+		-52,
+		-92,
+		-92,
+		-40
+	],
+	Tagrave: [
+		-80,
+		-80,
+		-120,
+		-120,
+		-52,
+		-92,
+		-92,
+		-40
+	],
+	Tamacron: [
+		-80,
+		-80,
+		-60,
+		-60,
+		-52,
+		-92,
+		-92,
+		-40
+	],
+	Taogonek: [
+		-80,
+		-80,
+		-120,
+		-120,
+		-92,
+		-92,
+		-92,
+		-80
+	],
+	Taring: [
+		-80,
+		-80,
+		-120,
+		-120,
+		-92,
+		-92,
+		-92,
+		-80
+	],
+	Tatilde: [
+		-80,
+		-80,
+		-60,
+		-60,
+		-52,
+		-92,
+		-92,
+		-40
+	],
+	Tcolon: [
+		-40,
+		-40,
+		-20,
+		-20,
+		-74,
+		-74,
+		-55,
+		-50
+	],
+	Tcomma: [
+		-80,
+		-80,
+		-120,
+		-120,
+		-74,
+		-92,
+		-74,
+		-74
+	],
+	Te: [
+		-60,
+		-60,
+		-120,
+		-120,
+		-92,
+		-92,
+		-92,
+		-70
+	],
+	Teacute: [
+		-60,
+		-60,
+		-120,
+		-120,
+		-92,
+		-92,
+		-92,
+		-70
+	],
+	Tecaron: [
+		-60,
+		-60,
+		-120,
+		-120,
+		-92,
+		-92,
+		-92,
+		-70
+	],
+	Tecircumflex: [
+		-60,
+		-60,
+		-120,
+		-120,
+		-92,
+		-92,
+		-52,
+		-70
+	],
+	Tedieresis: [
+		-60,
+		-60,
+		-120,
+		-120,
+		-52,
+		-52,
+		-52,
+		-30
+	],
+	Tedotaccent: [
+		-60,
+		-60,
+		-120,
+		-120,
+		-92,
+		-92,
+		-92,
+		-70
+	],
+	Tegrave: [
+		-60,
+		-60,
+		-60,
+		-60,
+		-52,
+		-52,
+		-52,
+		-70
+	],
+	Temacron: [
+		-60,
+		-60,
+		-60,
+		-60,
+		-52,
+		-52,
+		-52,
+		-30
+	],
+	Teogonek: [
+		-60,
+		-60,
+		-120,
+		-120,
+		-92,
+		-92,
+		-92,
+		-70
+	],
+	Thyphen: [
+		-120,
+		-120,
+		-140,
+		-140,
+		-92,
+		-92,
+		-74,
+		-92
+	],
+	To: [
+		-80,
+		-80,
+		-120,
+		-120,
+		-92,
+		-95,
+		-92,
+		-80
+	],
+	Toacute: [
+		-80,
+		-80,
+		-120,
+		-120,
+		-92,
+		-95,
+		-92,
+		-80
+	],
+	Tocircumflex: [
+		-80,
+		-80,
+		-120,
+		-120,
+		-92,
+		-95,
+		-92,
+		-80
+	],
+	Todieresis: [
+		-80,
+		-80,
+		-120,
+		-120,
+		-92,
+		-95,
+		-92,
+		-80
+	],
+	Tograve: [
+		-80,
+		-80,
+		-120,
+		-120,
+		-92,
+		-95,
+		-92,
+		-80
+	],
+	Tohungarumlaut: [
+		-80,
+		-80,
+		-120,
+		-120,
+		-92,
+		-95,
+		-92,
+		-80
+	],
+	Tomacron: [
+		-80,
+		-80,
+		-60,
+		-60,
+		-92,
+		-95,
+		-92,
+		-80
+	],
+	Toslash: [
+		-80,
+		-80,
+		-120,
+		-120,
+		-92,
+		-95,
+		-92,
+		-80
+	],
+	Totilde: [
+		-80,
+		-80,
+		-60,
+		-60,
+		-92,
+		-95,
+		-92,
+		-80
+	],
+	Tperiod: [
+		-80,
+		-80,
+		-120,
+		-120,
+		-90,
+		-92,
+		-74,
+		-74
+	],
+	Tr: [
+		-80,
+		-80,
+		-120,
+		-120,
+		-74,
+		-37,
+		-55,
+		-35
+	],
+	Tracute: [
+		-80,
+		-80,
+		-120,
+		-120,
+		-74,
+		-37,
+		-55,
+		-35
+	],
+	Trcommaaccent: [
+		-80,
+		-80,
+		-120,
+		-120,
+		-74,
+		-37,
+		-55,
+		-35
+	],
+	Tsemicolon: [
+		-40,
+		-40,
+		-20,
+		-20,
+		-74,
+		-74,
+		-65,
+		-55
+	],
+	Tu: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-92,
+		-37,
+		-55,
+		-45
+	],
+	Tuacute: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-92,
+		-37,
+		-55,
+		-45
+	],
+	Tucircumflex: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-92,
+		-37,
+		-55,
+		-45
+	],
+	Tudieresis: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-92,
+		-37,
+		-55,
+		-45
+	],
+	Tugrave: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-92,
+		-37,
+		-55,
+		-45
+	],
+	Tuhungarumlaut: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-92,
+		-37,
+		-55,
+		-45
+	],
+	Tumacron: [
+		-90,
+		-90,
+		-60,
+		-60,
+		-92,
+		-37,
+		-55,
+		-45
+	],
+	Tuogonek: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-92,
+		-37,
+		-55,
+		-45
+	],
+	Turing: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-92,
+		-37,
+		-55,
+		-45
+	],
+	Tw: [
+		-60,
+		-60,
+		-120,
+		-120,
+		-74,
+		-37,
+		-74,
+		-80
+	],
+	Ty: [
+		-60,
+		-60,
+		-120,
+		-120,
+		-34,
+		-37,
+		-74,
+		-80
+	],
+	Tyacute: [
+		-60,
+		-60,
+		-120,
+		-120,
+		-34,
+		-37,
+		-74,
+		-80
+	],
+	Tydieresis: [
+		-60,
+		-60,
+		-60,
+		-60,
+		-34,
+		-37,
+		-34,
+		-80
+	],
+	TcaronA: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-90,
+		-55,
+		-50,
+		-93
+	],
+	TcaronAacute: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-90,
+		-55,
+		-50,
+		-93
+	],
+	TcaronAbreve: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-90,
+		-55,
+		-50,
+		-93
+	],
+	TcaronAcircumflex: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-90,
+		-55,
+		-50,
+		-93
+	],
+	TcaronAdieresis: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-90,
+		-55,
+		-50,
+		-93
+	],
+	TcaronAgrave: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-90,
+		-55,
+		-50,
+		-93
+	],
+	TcaronAmacron: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-90,
+		-55,
+		-50,
+		-93
+	],
+	TcaronAogonek: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-90,
+		-55,
+		-50,
+		-93
+	],
+	TcaronAring: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-90,
+		-55,
+		-50,
+		-93
+	],
+	TcaronAtilde: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-90,
+		-55,
+		-50,
+		-93
+	],
+	TcaronO: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-18,
+		-18,
+		-18,
+		-18
+	],
+	TcaronOacute: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-18,
+		-18,
+		-18,
+		-18
+	],
+	TcaronOcircumflex: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-18,
+		-18,
+		-18,
+		-18
+	],
+	TcaronOdieresis: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-18,
+		-18,
+		-18,
+		-18
+	],
+	TcaronOgrave: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-18,
+		-18,
+		-18,
+		-18
+	],
+	TcaronOhungarumlaut: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-18,
+		-18,
+		-18,
+		-18
+	],
+	TcaronOmacron: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-18,
+		-18,
+		-18,
+		-18
+	],
+	TcaronOslash: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-18,
+		-18,
+		-18,
+		-18
+	],
+	TcaronOtilde: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-18,
+		-18,
+		-18,
+		-18
+	],
+	Tcarona: [
+		-80,
+		-80,
+		-120,
+		-120,
+		-92,
+		-92,
+		-92,
+		-80
+	],
+	Tcaronaacute: [
+		-80,
+		-80,
+		-120,
+		-120,
+		-92,
+		-92,
+		-92,
+		-80
+	],
+	Tcaronabreve: [
+		-80,
+		-80,
+		-60,
+		-60,
+		-52,
+		-92,
+		-92,
+		-80
+	],
+	Tcaronacircumflex: [
+		-80,
+		-80,
+		-120,
+		-120,
+		-52,
+		-92,
+		-92,
+		-80
+	],
+	Tcaronadieresis: [
+		-80,
+		-80,
+		-120,
+		-120,
+		-52,
+		-92,
+		-92,
+		-40
+	],
+	Tcaronagrave: [
+		-80,
+		-80,
+		-120,
+		-120,
+		-52,
+		-92,
+		-92,
+		-40
+	],
+	Tcaronamacron: [
+		-80,
+		-80,
+		-60,
+		-60,
+		-52,
+		-92,
+		-92,
+		-40
+	],
+	Tcaronaogonek: [
+		-80,
+		-80,
+		-120,
+		-120,
+		-92,
+		-92,
+		-92,
+		-80
+	],
+	Tcaronaring: [
+		-80,
+		-80,
+		-120,
+		-120,
+		-92,
+		-92,
+		-92,
+		-80
+	],
+	Tcaronatilde: [
+		-80,
+		-80,
+		-60,
+		-60,
+		-52,
+		-92,
+		-92,
+		-40
+	],
+	Tcaroncolon: [
+		-40,
+		-40,
+		-20,
+		-20,
+		-74,
+		-74,
+		-55,
+		-50
+	],
+	Tcaroncomma: [
+		-80,
+		-80,
+		-120,
+		-120,
+		-74,
+		-92,
+		-74,
+		-74
+	],
+	Tcarone: [
+		-60,
+		-60,
+		-120,
+		-120,
+		-92,
+		-92,
+		-92,
+		-70
+	],
+	Tcaroneacute: [
+		-60,
+		-60,
+		-120,
+		-120,
+		-92,
+		-92,
+		-92,
+		-70
+	],
+	Tcaronecaron: [
+		-60,
+		-60,
+		-120,
+		-120,
+		-92,
+		-92,
+		-92,
+		-70
+	],
+	Tcaronecircumflex: [
+		-60,
+		-60,
+		-120,
+		-120,
+		-92,
+		-92,
+		-52,
+		-30
+	],
+	Tcaronedieresis: [
+		-60,
+		-60,
+		-120,
+		-120,
+		-52,
+		-52,
+		-52,
+		-30
+	],
+	Tcaronedotaccent: [
+		-60,
+		-60,
+		-120,
+		-120,
+		-92,
+		-92,
+		-92,
+		-70
+	],
+	Tcaronegrave: [
+		-60,
+		-60,
+		-60,
+		-60,
+		-52,
+		-52,
+		-52,
+		-70
+	],
+	Tcaronemacron: [
+		-60,
+		-60,
+		-60,
+		-60,
+		-52,
+		-52,
+		-52,
+		-30
+	],
+	Tcaroneogonek: [
+		-60,
+		-60,
+		-120,
+		-120,
+		-92,
+		-92,
+		-92,
+		-70
+	],
+	Tcaronhyphen: [
+		-120,
+		-120,
+		-140,
+		-140,
+		-92,
+		-92,
+		-74,
+		-92
+	],
+	Tcarono: [
+		-80,
+		-80,
+		-120,
+		-120,
+		-92,
+		-95,
+		-92,
+		-80
+	],
+	Tcaronoacute: [
+		-80,
+		-80,
+		-120,
+		-120,
+		-92,
+		-95,
+		-92,
+		-80
+	],
+	Tcaronocircumflex: [
+		-80,
+		-80,
+		-120,
+		-120,
+		-92,
+		-95,
+		-92,
+		-80
+	],
+	Tcaronodieresis: [
+		-80,
+		-80,
+		-120,
+		-120,
+		-92,
+		-95,
+		-92,
+		-80
+	],
+	Tcaronograve: [
+		-80,
+		-80,
+		-120,
+		-120,
+		-92,
+		-95,
+		-92,
+		-80
+	],
+	Tcaronohungarumlaut: [
+		-80,
+		-80,
+		-120,
+		-120,
+		-92,
+		-95,
+		-92,
+		-80
+	],
+	Tcaronomacron: [
+		-80,
+		-80,
+		-60,
+		-60,
+		-92,
+		-95,
+		-92,
+		-80
+	],
+	Tcaronoslash: [
+		-80,
+		-80,
+		-120,
+		-120,
+		-92,
+		-95,
+		-92,
+		-80
+	],
+	Tcaronotilde: [
+		-80,
+		-80,
+		-60,
+		-60,
+		-92,
+		-95,
+		-92,
+		-80
+	],
+	Tcaronperiod: [
+		-80,
+		-80,
+		-120,
+		-120,
+		-90,
+		-92,
+		-74,
+		-74
+	],
+	Tcaronr: [
+		-80,
+		-80,
+		-120,
+		-120,
+		-74,
+		-37,
+		-55,
+		-35
+	],
+	Tcaronracute: [
+		-80,
+		-80,
+		-120,
+		-120,
+		-74,
+		-37,
+		-55,
+		-35
+	],
+	Tcaronrcommaaccent: [
+		-80,
+		-80,
+		-120,
+		-120,
+		-74,
+		-37,
+		-55,
+		-35
+	],
+	Tcaronsemicolon: [
+		-40,
+		-40,
+		-20,
+		-20,
+		-74,
+		-74,
+		-65,
+		-55
+	],
+	Tcaronu: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-92,
+		-37,
+		-55,
+		-45
+	],
+	Tcaronuacute: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-92,
+		-37,
+		-55,
+		-45
+	],
+	Tcaronucircumflex: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-92,
+		-37,
+		-55,
+		-45
+	],
+	Tcaronudieresis: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-92,
+		-37,
+		-55,
+		-45
+	],
+	Tcaronugrave: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-92,
+		-37,
+		-55,
+		-45
+	],
+	Tcaronuhungarumlaut: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-92,
+		-37,
+		-55,
+		-45
+	],
+	Tcaronumacron: [
+		-90,
+		-90,
+		-60,
+		-60,
+		-92,
+		-37,
+		-55,
+		-45
+	],
+	Tcaronuogonek: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-92,
+		-37,
+		-55,
+		-45
+	],
+	Tcaronuring: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-92,
+		-37,
+		-55,
+		-45
+	],
+	Tcaronw: [
+		-60,
+		-60,
+		-120,
+		-120,
+		-74,
+		-37,
+		-74,
+		-80
+	],
+	Tcarony: [
+		-60,
+		-60,
+		-120,
+		-120,
+		-34,
+		-37,
+		-74,
+		-80
+	],
+	Tcaronyacute: [
+		-60,
+		-60,
+		-120,
+		-120,
+		-34,
+		-37,
+		-74,
+		-80
+	],
+	Tcaronydieresis: [
+		-60,
+		-60,
+		-60,
+		-60,
+		-34,
+		-37,
+		-34,
+		-80
+	],
+	TcommaaccentA: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-90,
+		-55,
+		-50,
+		-93
+	],
+	TcommaaccentAacute: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-90,
+		-55,
+		-50,
+		-93
+	],
+	TcommaaccentAbreve: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-90,
+		-55,
+		-50,
+		-93
+	],
+	TcommaaccentAcircumflex: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-90,
+		-55,
+		-50,
+		-93
+	],
+	TcommaaccentAdieresis: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-90,
+		-55,
+		-50,
+		-93
+	],
+	TcommaaccentAgrave: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-90,
+		-55,
+		-50,
+		-93
+	],
+	TcommaaccentAmacron: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-90,
+		-55,
+		-50,
+		-93
+	],
+	TcommaaccentAogonek: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-90,
+		-55,
+		-50,
+		-93
+	],
+	TcommaaccentAring: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-90,
+		-55,
+		-50,
+		-93
+	],
+	TcommaaccentAtilde: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-90,
+		-55,
+		-50,
+		-93
+	],
+	TcommaaccentO: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-18,
+		-18,
+		-18,
+		-18
+	],
+	TcommaaccentOacute: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-18,
+		-18,
+		-18,
+		-18
+	],
+	TcommaaccentOcircumflex: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-18,
+		-18,
+		-18,
+		-18
+	],
+	TcommaaccentOdieresis: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-18,
+		-18,
+		-18,
+		-18
+	],
+	TcommaaccentOgrave: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-18,
+		-18,
+		-18,
+		-18
+	],
+	TcommaaccentOhungarumlaut: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-18,
+		-18,
+		-18,
+		-18
+	],
+	TcommaaccentOmacron: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-18,
+		-18,
+		-18,
+		-18
+	],
+	TcommaaccentOslash: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-18,
+		-18,
+		-18,
+		-18
+	],
+	TcommaaccentOtilde: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-18,
+		-18,
+		-18,
+		-18
+	],
+	Tcommaaccenta: [
+		-80,
+		-80,
+		-120,
+		-120,
+		-92,
+		-92,
+		-92,
+		-80
+	],
+	Tcommaaccentaacute: [
+		-80,
+		-80,
+		-120,
+		-120,
+		-92,
+		-92,
+		-92,
+		-80
+	],
+	Tcommaaccentabreve: [
+		-80,
+		-80,
+		-60,
+		-60,
+		-52,
+		-92,
+		-92,
+		-80
+	],
+	Tcommaaccentacircumflex: [
+		-80,
+		-80,
+		-120,
+		-120,
+		-52,
+		-92,
+		-92,
+		-80
+	],
+	Tcommaaccentadieresis: [
+		-80,
+		-80,
+		-120,
+		-120,
+		-52,
+		-92,
+		-92,
+		-40
+	],
+	Tcommaaccentagrave: [
+		-80,
+		-80,
+		-120,
+		-120,
+		-52,
+		-92,
+		-92,
+		-40
+	],
+	Tcommaaccentamacron: [
+		-80,
+		-80,
+		-60,
+		-60,
+		-52,
+		-92,
+		-92,
+		-40
+	],
+	Tcommaaccentaogonek: [
+		-80,
+		-80,
+		-120,
+		-120,
+		-92,
+		-92,
+		-92,
+		-80
+	],
+	Tcommaaccentaring: [
+		-80,
+		-80,
+		-120,
+		-120,
+		-92,
+		-92,
+		-92,
+		-80
+	],
+	Tcommaaccentatilde: [
+		-80,
+		-80,
+		-60,
+		-60,
+		-52,
+		-92,
+		-92,
+		-40
+	],
+	Tcommaaccentcolon: [
+		-40,
+		-40,
+		-20,
+		-20,
+		-74,
+		-74,
+		-55,
+		-50
+	],
+	Tcommaaccentcomma: [
+		-80,
+		-80,
+		-120,
+		-120,
+		-74,
+		-92,
+		-74,
+		-74
+	],
+	Tcommaaccente: [
+		-60,
+		-60,
+		-120,
+		-120,
+		-92,
+		-92,
+		-92,
+		-70
+	],
+	Tcommaaccenteacute: [
+		-60,
+		-60,
+		-120,
+		-120,
+		-92,
+		-92,
+		-92,
+		-70
+	],
+	Tcommaaccentecaron: [
+		-60,
+		-60,
+		-120,
+		-120,
+		-92,
+		-92,
+		-92,
+		-70
+	],
+	Tcommaaccentecircumflex: [
+		-60,
+		-60,
+		-120,
+		-120,
+		-92,
+		-92,
+		-52,
+		-30
+	],
+	Tcommaaccentedieresis: [
+		-60,
+		-60,
+		-120,
+		-120,
+		-52,
+		-52,
+		-52,
+		-30
+	],
+	Tcommaaccentedotaccent: [
+		-60,
+		-60,
+		-120,
+		-120,
+		-92,
+		-92,
+		-92,
+		-70
+	],
+	Tcommaaccentegrave: [
+		-60,
+		-60,
+		-60,
+		-60,
+		-52,
+		-52,
+		-52,
+		-30
+	],
+	Tcommaaccentemacron: [
+		-60,
+		-60,
+		-60,
+		-60,
+		-52,
+		-52,
+		-52,
+		-70
+	],
+	Tcommaaccenteogonek: [
+		-60,
+		-60,
+		-120,
+		-120,
+		-92,
+		-92,
+		-92,
+		-70
+	],
+	Tcommaaccenthyphen: [
+		-120,
+		-120,
+		-140,
+		-140,
+		-92,
+		-92,
+		-74,
+		-92
+	],
+	Tcommaaccento: [
+		-80,
+		-80,
+		-120,
+		-120,
+		-92,
+		-95,
+		-92,
+		-80
+	],
+	Tcommaaccentoacute: [
+		-80,
+		-80,
+		-120,
+		-120,
+		-92,
+		-95,
+		-92,
+		-80
+	],
+	Tcommaaccentocircumflex: [
+		-80,
+		-80,
+		-120,
+		-120,
+		-92,
+		-95,
+		-92,
+		-80
+	],
+	Tcommaaccentodieresis: [
+		-80,
+		-80,
+		-120,
+		-120,
+		-92,
+		-95,
+		-92,
+		-80
+	],
+	Tcommaaccentograve: [
+		-80,
+		-80,
+		-120,
+		-120,
+		-92,
+		-95,
+		-92,
+		-80
+	],
+	Tcommaaccentohungarumlaut: [
+		-80,
+		-80,
+		-120,
+		-120,
+		-92,
+		-95,
+		-92,
+		-80
+	],
+	Tcommaaccentomacron: [
+		-80,
+		-80,
+		-60,
+		-60,
+		-92,
+		-95,
+		-92,
+		-80
+	],
+	Tcommaaccentoslash: [
+		-80,
+		-80,
+		-120,
+		-120,
+		-92,
+		-95,
+		-92,
+		-80
+	],
+	Tcommaaccentotilde: [
+		-80,
+		-80,
+		-60,
+		-60,
+		-92,
+		-95,
+		-92,
+		-80
+	],
+	Tcommaaccentperiod: [
+		-80,
+		-80,
+		-120,
+		-120,
+		-90,
+		-92,
+		-74,
+		-74
+	],
+	Tcommaaccentr: [
+		-80,
+		-80,
+		-120,
+		-120,
+		-74,
+		-37,
+		-55,
+		-35
+	],
+	Tcommaaccentracute: [
+		-80,
+		-80,
+		-120,
+		-120,
+		-74,
+		-37,
+		-55,
+		-35
+	],
+	Tcommaaccentrcommaaccent: [
+		-80,
+		-80,
+		-120,
+		-120,
+		-74,
+		-37,
+		-55,
+		-35
+	],
+	Tcommaaccentsemicolon: [
+		-40,
+		-40,
+		-20,
+		-20,
+		-74,
+		-74,
+		-65,
+		-55
+	],
+	Tcommaaccentu: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-92,
+		-37,
+		-55,
+		-45
+	],
+	Tcommaaccentuacute: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-92,
+		-37,
+		-55,
+		-45
+	],
+	Tcommaaccentucircumflex: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-92,
+		-37,
+		-55,
+		-45
+	],
+	Tcommaaccentudieresis: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-92,
+		-37,
+		-55,
+		-45
+	],
+	Tcommaaccentugrave: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-92,
+		-37,
+		-55,
+		-45
+	],
+	Tcommaaccentuhungarumlaut: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-92,
+		-37,
+		-55,
+		-45
+	],
+	Tcommaaccentumacron: [
+		-90,
+		-90,
+		-60,
+		-60,
+		-92,
+		-37,
+		-55,
+		-45
+	],
+	Tcommaaccentuogonek: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-92,
+		-37,
+		-55,
+		-45
+	],
+	Tcommaaccenturing: [
+		-90,
+		-90,
+		-120,
+		-120,
+		-92,
+		-37,
+		-55,
+		-45
+	],
+	Tcommaaccentw: [
+		-60,
+		-60,
+		-120,
+		-120,
+		-74,
+		-37,
+		-74,
+		-80
+	],
+	Tcommaaccenty: [
+		-60,
+		-60,
+		-120,
+		-120,
+		-34,
+		-37,
+		-74,
+		-80
+	],
+	Tcommaaccentyacute: [
+		-60,
+		-60,
+		-120,
+		-120,
+		-34,
+		-37,
+		-74,
+		-80
+	],
+	Tcommaaccentydieresis: [
+		-60,
+		-60,
+		-60,
+		-60,
+		-34,
+		-37,
+		-34,
+		-80
+	],
+	UA: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UAacute: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UAbreve: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UAcircumflex: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UAdieresis: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UAgrave: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UAmacron: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UAogonek: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UAring: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UAtilde: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	Ucomma: [
+		-30,
+		-30,
+		-40,
+		-40,
+		-50,
+		0,
+		-25
+	],
+	Uperiod: [
+		-30,
+		-30,
+		-40,
+		-40,
+		-50,
+		0,
+		-25
+	],
+	UacuteA: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UacuteAacute: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UacuteAbreve: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UacuteAcircumflex: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UacuteAdieresis: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UacuteAgrave: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UacuteAmacron: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UacuteAogonek: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UacuteAring: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UacuteAtilde: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	Uacutecomma: [
+		-30,
+		-30,
+		-40,
+		-40,
+		-50,
+		0,
+		-25
+	],
+	Uacuteperiod: [
+		-30,
+		-30,
+		-40,
+		-40,
+		-50,
+		0,
+		-25
+	],
+	UcircumflexA: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UcircumflexAacute: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UcircumflexAbreve: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UcircumflexAcircumflex: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UcircumflexAdieresis: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UcircumflexAgrave: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UcircumflexAmacron: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UcircumflexAogonek: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UcircumflexAring: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UcircumflexAtilde: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	Ucircumflexcomma: [
+		-30,
+		-30,
+		-40,
+		-40,
+		-50,
+		0,
+		-25
+	],
+	Ucircumflexperiod: [
+		-30,
+		-30,
+		-40,
+		-40,
+		-50,
+		0,
+		-25
+	],
+	UdieresisA: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UdieresisAacute: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UdieresisAbreve: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UdieresisAcircumflex: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UdieresisAdieresis: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UdieresisAgrave: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UdieresisAmacron: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UdieresisAogonek: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UdieresisAring: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UdieresisAtilde: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	Udieresiscomma: [
+		-30,
+		-30,
+		-40,
+		-40,
+		-50,
+		0,
+		-25
+	],
+	Udieresisperiod: [
+		-30,
+		-30,
+		-40,
+		-40,
+		-50,
+		0,
+		-25
+	],
+	UgraveA: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UgraveAacute: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UgraveAbreve: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UgraveAcircumflex: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UgraveAdieresis: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UgraveAgrave: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UgraveAmacron: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UgraveAogonek: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UgraveAring: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UgraveAtilde: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	Ugravecomma: [
+		-30,
+		-30,
+		-40,
+		-40,
+		-50,
+		0,
+		-25
+	],
+	Ugraveperiod: [
+		-30,
+		-30,
+		-40,
+		-40,
+		-50,
+		0,
+		-25
+	],
+	UhungarumlautA: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UhungarumlautAacute: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UhungarumlautAbreve: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UhungarumlautAcircumflex: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UhungarumlautAdieresis: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UhungarumlautAgrave: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UhungarumlautAmacron: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UhungarumlautAogonek: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UhungarumlautAring: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UhungarumlautAtilde: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	Uhungarumlautcomma: [
+		-30,
+		-30,
+		-40,
+		-40,
+		-50,
+		0,
+		-25
+	],
+	Uhungarumlautperiod: [
+		-30,
+		-30,
+		-40,
+		-40,
+		-50,
+		0,
+		-25
+	],
+	UmacronA: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UmacronAacute: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UmacronAbreve: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UmacronAcircumflex: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UmacronAdieresis: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UmacronAgrave: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UmacronAmacron: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UmacronAogonek: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UmacronAring: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UmacronAtilde: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	Umacroncomma: [
+		-30,
+		-30,
+		-40,
+		-40,
+		-50,
+		0,
+		-25
+	],
+	Umacronperiod: [
+		-30,
+		-30,
+		-40,
+		-40,
+		-50,
+		0,
+		-25
+	],
+	UogonekA: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UogonekAacute: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UogonekAbreve: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UogonekAcircumflex: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UogonekAdieresis: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UogonekAgrave: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UogonekAmacron: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UogonekAogonek: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UogonekAring: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UogonekAtilde: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	Uogonekcomma: [
+		-30,
+		-30,
+		-40,
+		-40,
+		-50,
+		0,
+		-25
+	],
+	Uogonekperiod: [
+		-30,
+		-30,
+		-40,
+		-40,
+		-50,
+		0,
+		-25
+	],
+	UringA: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UringAacute: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UringAbreve: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UringAcircumflex: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UringAdieresis: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UringAgrave: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UringAmacron: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UringAogonek: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UringAring: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	UringAtilde: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-60,
+		-45,
+		-40,
+		-40
+	],
+	Uringcomma: [
+		-30,
+		-30,
+		-40,
+		-40,
+		-50,
+		0,
+		-25
+	],
+	Uringperiod: [
+		-30,
+		-30,
+		-40,
+		-40,
+		-50,
+		0,
+		-25
+	],
+	VA: [
+		-80,
+		-80,
+		-80,
+		-80,
+		-135,
+		-85,
+		-60,
+		-135
+	],
+	VAacute: [
+		-80,
+		-80,
+		-80,
+		-80,
+		-135,
+		-85,
+		-60,
+		-135
+	],
+	VAbreve: [
+		-80,
+		-80,
+		-80,
+		-80,
+		-135,
+		-85,
+		-60,
+		-135
+	],
+	VAcircumflex: [
+		-80,
+		-80,
+		-80,
+		-80,
+		-135,
+		-85,
+		-60,
+		-135
+	],
+	VAdieresis: [
+		-80,
+		-80,
+		-80,
+		-80,
+		-135,
+		-85,
+		-60,
+		-135
+	],
+	VAgrave: [
+		-80,
+		-80,
+		-80,
+		-80,
+		-135,
+		-85,
+		-60,
+		-135
+	],
+	VAmacron: [
+		-80,
+		-80,
+		-80,
+		-80,
+		-135,
+		-85,
+		-60,
+		-135
+	],
+	VAogonek: [
+		-80,
+		-80,
+		-80,
+		-80,
+		-135,
+		-85,
+		-60,
+		-135
+	],
+	VAring: [
+		-80,
+		-80,
+		-80,
+		-80,
+		-135,
+		-85,
+		-60,
+		-135
+	],
+	VAtilde: [
+		-80,
+		-80,
+		-80,
+		-80,
+		-135,
+		-85,
+		-60,
+		-135
+	],
+	VG: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-30,
+		-10,
+		0,
+		-15
+	],
+	VGbreve: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-30,
+		-10,
+		0,
+		-15
+	],
+	VGcommaaccent: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-30,
+		-10,
+		0,
+		-15
+	],
+	VO: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-45,
+		-30,
+		-30,
+		-40
+	],
+	VOacute: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-45,
+		-30,
+		-30,
+		-40
+	],
+	VOcircumflex: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-45,
+		-30,
+		-30,
+		-40
+	],
+	VOdieresis: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-45,
+		-30,
+		-30,
+		-40
+	],
+	VOgrave: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-45,
+		-30,
+		-30,
+		-40
+	],
+	VOhungarumlaut: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-45,
+		-30,
+		-30,
+		-40
+	],
+	VOmacron: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-45,
+		-30,
+		-30,
+		-40
+	],
+	VOslash: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-45,
+		-30,
+		-30,
+		-40
+	],
+	VOtilde: [
+		-50,
+		-50,
+		-40,
+		-40,
+		-45,
+		-30,
+		-30,
+		-40
+	],
+	Va: [
+		-60,
+		-60,
+		-70,
+		-70,
+		-92,
+		-111,
+		-111,
+		-111
+	],
+	Vaacute: [
+		-60,
+		-60,
+		-70,
+		-70,
+		-92,
+		-111,
+		-111,
+		-111
+	],
+	Vabreve: [
+		-60,
+		-60,
+		-70,
+		-70,
+		-92,
+		-111,
+		-111,
+		-111
+	],
+	Vacircumflex: [
+		-60,
+		-60,
+		-70,
+		-70,
+		-92,
+		-111,
+		-111,
+		-71
+	],
+	Vadieresis: [
+		-60,
+		-60,
+		-70,
+		-70,
+		-92,
+		-111,
+		-111,
+		-71
+	],
+	Vagrave: [
+		-60,
+		-60,
+		-70,
+		-70,
+		-92,
+		-111,
+		-111,
+		-71
+	],
+	Vamacron: [
+		-60,
+		-60,
+		-70,
+		-70,
+		-92,
+		-111,
+		-111,
+		-71
+	],
+	Vaogonek: [
+		-60,
+		-60,
+		-70,
+		-70,
+		-92,
+		-111,
+		-111,
+		-111
+	],
+	Varing: [
+		-60,
+		-60,
+		-70,
+		-70,
+		-92,
+		-111,
+		-111,
+		-111
+	],
+	Vatilde: [
+		-60,
+		-60,
+		-70,
+		-70,
+		-92,
+		-111,
+		-111,
+		-71
+	],
+	Vcolon: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-92,
+		-74,
+		-65,
+		-74
+	],
+	Vcomma: [
+		-120,
+		-120,
+		-125,
+		-125,
+		-129,
+		-129,
+		-129,
+		-129
+	],
+	Ve: [
+		-50,
+		-50,
+		-80,
+		-80,
+		-100,
+		-111,
+		-111,
+		-111
+	],
+	Veacute: [
+		-50,
+		-50,
+		-80,
+		-80,
+		-100,
+		-111,
+		-111,
+		-111
+	],
+	Vecaron: [
+		-50,
+		-50,
+		-80,
+		-80,
+		-100,
+		-111,
+		-111,
+		-71
+	],
+	Vecircumflex: [
+		-50,
+		-50,
+		-80,
+		-80,
+		-100,
+		-111,
+		-111,
+		-71
+	],
+	Vedieresis: [
+		-50,
+		-50,
+		-80,
+		-80,
+		-100,
+		-71,
+		-71,
+		-71
+	],
+	Vedotaccent: [
+		-50,
+		-50,
+		-80,
+		-80,
+		-100,
+		-111,
+		-111,
+		-111
+	],
+	Vegrave: [
+		-50,
+		-50,
+		-80,
+		-80,
+		-100,
+		-71,
+		-71,
+		-71
+	],
+	Vemacron: [
+		-50,
+		-50,
+		-80,
+		-80,
+		-100,
+		-71,
+		-71,
+		-71
+	],
+	Veogonek: [
+		-50,
+		-50,
+		-80,
+		-80,
+		-100,
+		-111,
+		-111,
+		-111
+	],
+	Vhyphen: [
+		-80,
+		-80,
+		-80,
+		-80,
+		-74,
+		-70,
+		-55,
+		-100
+	],
+	Vo: [
+		-90,
+		-90,
+		-80,
+		-80,
+		-100,
+		-111,
+		-111,
+		-129
+	],
+	Voacute: [
+		-90,
+		-90,
+		-80,
+		-80,
+		-100,
+		-111,
+		-111,
+		-129
+	],
+	Vocircumflex: [
+		-90,
+		-90,
+		-80,
+		-80,
+		-100,
+		-111,
+		-111,
+		-129
+	],
+	Vodieresis: [
+		-90,
+		-90,
+		-80,
+		-80,
+		-100,
+		-111,
+		-111,
+		-89
+	],
+	Vograve: [
+		-90,
+		-90,
+		-80,
+		-80,
+		-100,
+		-111,
+		-111,
+		-89
+	],
+	Vohungarumlaut: [
+		-90,
+		-90,
+		-80,
+		-80,
+		-100,
+		-111,
+		-111,
+		-129
+	],
+	Vomacron: [
+		-90,
+		-90,
+		-80,
+		-80,
+		-100,
+		-111,
+		-111,
+		-89
+	],
+	Voslash: [
+		-90,
+		-90,
+		-80,
+		-80,
+		-100,
+		-111,
+		-111,
+		-129
+	],
+	Votilde: [
+		-90,
+		-90,
+		-80,
+		-80,
+		-100,
+		-111,
+		-111,
+		-89
+	],
+	Vperiod: [
+		-120,
+		-120,
+		-125,
+		-125,
+		-145,
+		-129,
+		-129,
+		-129
+	],
+	Vsemicolon: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-92,
+		-74,
+		-74,
+		-74
+	],
+	Vu: [
+		-60,
+		-60,
+		-70,
+		-70,
+		-92,
+		-55,
+		-74,
+		-75
+	],
+	Vuacute: [
+		-60,
+		-60,
+		-70,
+		-70,
+		-92,
+		-55,
+		-74,
+		-75
+	],
+	Vucircumflex: [
+		-60,
+		-60,
+		-70,
+		-70,
+		-92,
+		-55,
+		-74,
+		-75
+	],
+	Vudieresis: [
+		-60,
+		-60,
+		-70,
+		-70,
+		-92,
+		-55,
+		-74,
+		-75
+	],
+	Vugrave: [
+		-60,
+		-60,
+		-70,
+		-70,
+		-92,
+		-55,
+		-74,
+		-75
+	],
+	Vuhungarumlaut: [
+		-60,
+		-60,
+		-70,
+		-70,
+		-92,
+		-55,
+		-74,
+		-75
+	],
+	Vumacron: [
+		-60,
+		-60,
+		-70,
+		-70,
+		-92,
+		-55,
+		-74,
+		-75
+	],
+	Vuogonek: [
+		-60,
+		-60,
+		-70,
+		-70,
+		-92,
+		-55,
+		-74,
+		-75
+	],
+	Vuring: [
+		-60,
+		-60,
+		-70,
+		-70,
+		-92,
+		-55,
+		-74,
+		-75
+	],
+	WA: [
+		-60,
+		-60,
+		-50,
+		-50,
+		-120,
+		-74,
+		-60,
+		-120
+	],
+	WAacute: [
+		-60,
+		-60,
+		-50,
+		-50,
+		-120,
+		-74,
+		-60,
+		-120
+	],
+	WAbreve: [
+		-60,
+		-60,
+		-50,
+		-50,
+		-120,
+		-74,
+		-60,
+		-120
+	],
+	WAcircumflex: [
+		-60,
+		-60,
+		-50,
+		-50,
+		-120,
+		-74,
+		-60,
+		-120
+	],
+	WAdieresis: [
+		-60,
+		-60,
+		-50,
+		-50,
+		-120,
+		-74,
+		-60,
+		-120
+	],
+	WAgrave: [
+		-60,
+		-60,
+		-50,
+		-50,
+		-120,
+		-74,
+		-60,
+		-120
+	],
+	WAmacron: [
+		-60,
+		-60,
+		-50,
+		-50,
+		-120,
+		-74,
+		-60,
+		-120
+	],
+	WAogonek: [
+		-60,
+		-60,
+		-50,
+		-50,
+		-120,
+		-74,
+		-60,
+		-120
+	],
+	WAring: [
+		-60,
+		-60,
+		-50,
+		-50,
+		-120,
+		-74,
+		-60,
+		-120
+	],
+	WAtilde: [
+		-60,
+		-60,
+		-50,
+		-50,
+		-120,
+		-74,
+		-60,
+		-120
+	],
+	WO: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-10,
+		-15,
+		-25,
+		-10
+	],
+	WOacute: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-10,
+		-15,
+		-25,
+		-10
+	],
+	WOcircumflex: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-10,
+		-15,
+		-25,
+		-10
+	],
+	WOdieresis: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-10,
+		-15,
+		-25,
+		-10
+	],
+	WOgrave: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-10,
+		-15,
+		-25,
+		-10
+	],
+	WOhungarumlaut: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-10,
+		-15,
+		-25,
+		-10
+	],
+	WOmacron: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-10,
+		-15,
+		-25,
+		-10
+	],
+	WOslash: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-10,
+		-15,
+		-25,
+		-10
+	],
+	WOtilde: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-10,
+		-15,
+		-25,
+		-10
+	],
+	Wa: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-65,
+		-85,
+		-92,
+		-80
+	],
+	Waacute: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-65,
+		-85,
+		-92,
+		-80
+	],
+	Wabreve: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-65,
+		-85,
+		-92,
+		-80
+	],
+	Wacircumflex: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-65,
+		-85,
+		-92,
+		-80
+	],
+	Wadieresis: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-65,
+		-85,
+		-92,
+		-80
+	],
+	Wagrave: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-65,
+		-85,
+		-92,
+		-80
+	],
+	Wamacron: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-65,
+		-85,
+		-92,
+		-80
+	],
+	Waogonek: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-65,
+		-85,
+		-92,
+		-80
+	],
+	Waring: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-65,
+		-85,
+		-92,
+		-80
+	],
+	Watilde: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-65,
+		-85,
+		-92,
+		-80
+	],
+	Wcolon: [
+		-10,
+		-10,
+		0,
+		0,
+		-55,
+		-55,
+		-65,
+		-37
+	],
+	Wcomma: [
+		-80,
+		-80,
+		-80,
+		-80,
+		-92,
+		-74,
+		-92,
+		-92
+	],
+	We: [
+		-35,
+		-35,
+		-30,
+		-30,
+		-65,
+		-90,
+		-92,
+		-80
+	],
+	Weacute: [
+		-35,
+		-35,
+		-30,
+		-30,
+		-65,
+		-90,
+		-92,
+		-80
+	],
+	Wecaron: [
+		-35,
+		-35,
+		-30,
+		-30,
+		-65,
+		-90,
+		-92,
+		-80
+	],
+	Wecircumflex: [
+		-35,
+		-35,
+		-30,
+		-30,
+		-65,
+		-90,
+		-92,
+		-80
+	],
+	Wedieresis: [
+		-35,
+		-35,
+		-30,
+		-30,
+		-65,
+		-50,
+		-52,
+		-40
+	],
+	Wedotaccent: [
+		-35,
+		-35,
+		-30,
+		-30,
+		-65,
+		-90,
+		-92,
+		-80
+	],
+	Wegrave: [
+		-35,
+		-35,
+		-30,
+		-30,
+		-65,
+		-50,
+		-52,
+		-40
+	],
+	Wemacron: [
+		-35,
+		-35,
+		-30,
+		-30,
+		-65,
+		-50,
+		-52,
+		-40
+	],
+	Weogonek: [
+		-35,
+		-35,
+		-30,
+		-30,
+		-65,
+		-90,
+		-92,
+		-80
+	],
+	Whyphen: [
+		-40,
+		-40,
+		-40,
+		-40,
+		-37,
+		-50,
+		-37,
+		-65
+	],
+	Wo: [
+		-60,
+		-60,
+		-30,
+		-30,
+		-75,
+		-80,
+		-92,
+		-80
+	],
+	Woacute: [
+		-60,
+		-60,
+		-30,
+		-30,
+		-75,
+		-80,
+		-92,
+		-80
+	],
+	Wocircumflex: [
+		-60,
+		-60,
+		-30,
+		-30,
+		-75,
+		-80,
+		-92,
+		-80
+	],
+	Wodieresis: [
+		-60,
+		-60,
+		-30,
+		-30,
+		-75,
+		-80,
+		-92,
+		-80
+	],
+	Wograve: [
+		-60,
+		-60,
+		-30,
+		-30,
+		-75,
+		-80,
+		-92,
+		-80
+	],
+	Wohungarumlaut: [
+		-60,
+		-60,
+		-30,
+		-30,
+		-75,
+		-80,
+		-92,
+		-80
+	],
+	Womacron: [
+		-60,
+		-60,
+		-30,
+		-30,
+		-75,
+		-80,
+		-92,
+		-80
+	],
+	Woslash: [
+		-60,
+		-60,
+		-30,
+		-30,
+		-75,
+		-80,
+		-92,
+		-80
+	],
+	Wotilde: [
+		-60,
+		-60,
+		-30,
+		-30,
+		-75,
+		-80,
+		-92,
+		-80
+	],
+	Wperiod: [
+		-80,
+		-80,
+		-80,
+		-80,
+		-92,
+		-74,
+		-92,
+		-92
+	],
+	Wsemicolon: [
+		-10,
+		-10,
+		0,
+		0,
+		-55,
+		-55,
+		-65,
+		-37
+	],
+	Wu: [
+		-45,
+		-45,
+		-30,
+		-30,
+		-50,
+		-55,
+		-55,
+		-50
+	],
+	Wuacute: [
+		-45,
+		-45,
+		-30,
+		-30,
+		-50,
+		-55,
+		-55,
+		-50
+	],
+	Wucircumflex: [
+		-45,
+		-45,
+		-30,
+		-30,
+		-50,
+		-55,
+		-55,
+		-50
+	],
+	Wudieresis: [
+		-45,
+		-45,
+		-30,
+		-30,
+		-50,
+		-55,
+		-55,
+		-50
+	],
+	Wugrave: [
+		-45,
+		-45,
+		-30,
+		-30,
+		-50,
+		-55,
+		-55,
+		-50
+	],
+	Wuhungarumlaut: [
+		-45,
+		-45,
+		-30,
+		-30,
+		-50,
+		-55,
+		-55,
+		-50
+	],
+	Wumacron: [
+		-45,
+		-45,
+		-30,
+		-30,
+		-50,
+		-55,
+		-55,
+		-50
+	],
+	Wuogonek: [
+		-45,
+		-45,
+		-30,
+		-30,
+		-50,
+		-55,
+		-55,
+		-50
+	],
+	Wuring: [
+		-45,
+		-45,
+		-30,
+		-30,
+		-50,
+		-55,
+		-55,
+		-50
+	],
+	Wy: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-60,
+		-55,
+		-70,
+		-73
+	],
+	Wyacute: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-60,
+		-55,
+		-70,
+		-73
+	],
+	Wydieresis: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-60,
+		-55,
+		-70,
+		-73
+	],
+	YA: [
+		-110,
+		-110,
+		-110,
+		-110,
+		-110,
+		-74,
+		-50,
+		-120
+	],
+	YAacute: [
+		-110,
+		-110,
+		-110,
+		-110,
+		-110,
+		-74,
+		-50,
+		-120
+	],
+	YAbreve: [
+		-110,
+		-110,
+		-110,
+		-110,
+		-110,
+		-74,
+		-50,
+		-120
+	],
+	YAcircumflex: [
+		-110,
+		-110,
+		-110,
+		-110,
+		-110,
+		-74,
+		-50,
+		-120
+	],
+	YAdieresis: [
+		-110,
+		-110,
+		-110,
+		-110,
+		-110,
+		-74,
+		-50,
+		-120
+	],
+	YAgrave: [
+		-110,
+		-110,
+		-110,
+		-110,
+		-110,
+		-74,
+		-50,
+		-120
+	],
+	YAmacron: [
+		-110,
+		-110,
+		-110,
+		-110,
+		-110,
+		-74,
+		-50,
+		-120
+	],
+	YAogonek: [
+		-110,
+		-110,
+		-110,
+		-110,
+		-110,
+		-74,
+		-50,
+		-120
+	],
+	YAring: [
+		-110,
+		-110,
+		-110,
+		-110,
+		-110,
+		-74,
+		-50,
+		-120
+	],
+	YAtilde: [
+		-110,
+		-110,
+		-110,
+		-110,
+		-110,
+		-74,
+		-50,
+		-120
+	],
+	YO: [
+		-70,
+		-70,
+		-85,
+		-85,
+		-35,
+		-25,
+		-15,
+		-30
+	],
+	YOacute: [
+		-70,
+		-70,
+		-85,
+		-85,
+		-35,
+		-25,
+		-15,
+		-30
+	],
+	YOcircumflex: [
+		-70,
+		-70,
+		-85,
+		-85,
+		-35,
+		-25,
+		-15,
+		-30
+	],
+	YOdieresis: [
+		-70,
+		-70,
+		-85,
+		-85,
+		-35,
+		-25,
+		-15,
+		-30
+	],
+	YOgrave: [
+		-70,
+		-70,
+		-85,
+		-85,
+		-35,
+		-25,
+		-15,
+		-30
+	],
+	YOhungarumlaut: [
+		-70,
+		-70,
+		-85,
+		-85,
+		-35,
+		-25,
+		-15,
+		-30
+	],
+	YOmacron: [
+		-70,
+		-70,
+		-85,
+		-85,
+		-35,
+		-25,
+		-15,
+		-30
+	],
+	YOslash: [
+		-70,
+		-70,
+		-85,
+		-85,
+		-35,
+		-25,
+		-15,
+		-30
+	],
+	YOtilde: [
+		-70,
+		-70,
+		-85,
+		-85,
+		-35,
+		-25,
+		-15,
+		-30
+	],
+	Ya: [
+		-90,
+		-90,
+		-140,
+		-140,
+		-85,
+		-92,
+		-92,
+		-100
+	],
+	Yaacute: [
+		-90,
+		-90,
+		-140,
+		-140,
+		-85,
+		-92,
+		-92,
+		-100
+	],
+	Yabreve: [
+		-90,
+		-90,
+		-70,
+		-70,
+		-85,
+		-92,
+		-92,
+		-100
+	],
+	Yacircumflex: [
+		-90,
+		-90,
+		-140,
+		-140,
+		-85,
+		-92,
+		-92,
+		-100
+	],
+	Yadieresis: [
+		-90,
+		-90,
+		-140,
+		-140,
+		-85,
+		-92,
+		-92,
+		-60
+	],
+	Yagrave: [
+		-90,
+		-90,
+		-140,
+		-140,
+		-85,
+		-92,
+		-92,
+		-60
+	],
+	Yamacron: [
+		-90,
+		-90,
+		-70,
+		-70,
+		-85,
+		-92,
+		-92,
+		-60
+	],
+	Yaogonek: [
+		-90,
+		-90,
+		-140,
+		-140,
+		-85,
+		-92,
+		-92,
+		-100
+	],
+	Yaring: [
+		-90,
+		-90,
+		-140,
+		-140,
+		-85,
+		-92,
+		-92,
+		-100
+	],
+	Yatilde: [
+		-90,
+		-90,
+		-140,
+		-140,
+		-85,
+		-92,
+		-92,
+		-60
+	],
+	Ycolon: [
+		-50,
+		-50,
+		-60,
+		-60,
+		-92,
+		-92,
+		-65,
+		-92
+	],
+	Ycomma: [
+		-100,
+		-100,
+		-140,
+		-140,
+		-92,
+		-92,
+		-92,
+		-129
+	],
+	Ye: [
+		-80,
+		-80,
+		-140,
+		-140,
+		-111,
+		-111,
+		-92,
+		-100
+	],
+	Yeacute: [
+		-80,
+		-80,
+		-140,
+		-140,
+		-111,
+		-111,
+		-92,
+		-100
+	],
+	Yecaron: [
+		-80,
+		-80,
+		-140,
+		-140,
+		-111,
+		-111,
+		-92,
+		-100
+	],
+	Yecircumflex: [
+		-80,
+		-80,
+		-140,
+		-140,
+		-111,
+		-71,
+		-92,
+		-100
+	],
+	Yedieresis: [
+		-80,
+		-80,
+		-140,
+		-140,
+		-71,
+		-71,
+		-52,
+		-60
+	],
+	Yedotaccent: [
+		-80,
+		-80,
+		-140,
+		-140,
+		-111,
+		-111,
+		-92,
+		-100
+	],
+	Yegrave: [
+		-80,
+		-80,
+		-140,
+		-140,
+		-71,
+		-71,
+		-52,
+		-60
+	],
+	Yemacron: [
+		-80,
+		-80,
+		-70,
+		-70,
+		-71,
+		-71,
+		-52,
+		-60
+	],
+	Yeogonek: [
+		-80,
+		-80,
+		-140,
+		-140,
+		-111,
+		-111,
+		-92,
+		-100
+	],
+	Yo: [
+		-100,
+		-100,
+		-140,
+		-140,
+		-111,
+		-111,
+		-92,
+		-110
+	],
+	Yoacute: [
+		-100,
+		-100,
+		-140,
+		-140,
+		-111,
+		-111,
+		-92,
+		-110
+	],
+	Yocircumflex: [
+		-100,
+		-100,
+		-140,
+		-140,
+		-111,
+		-111,
+		-92,
+		-110
+	],
+	Yodieresis: [
+		-100,
+		-100,
+		-140,
+		-140,
+		-111,
+		-111,
+		-92,
+		-70
+	],
+	Yograve: [
+		-100,
+		-100,
+		-140,
+		-140,
+		-111,
+		-111,
+		-92,
+		-70
+	],
+	Yohungarumlaut: [
+		-100,
+		-100,
+		-140,
+		-140,
+		-111,
+		-111,
+		-92,
+		-110
+	],
+	Yomacron: [
+		-100,
+		-100,
+		-140,
+		-140,
+		-111,
+		-111,
+		-92,
+		-70
+	],
+	Yoslash: [
+		-100,
+		-100,
+		-140,
+		-140,
+		-111,
+		-111,
+		-92,
+		-110
+	],
+	Yotilde: [
+		-100,
+		-100,
+		-140,
+		-140,
+		-111,
+		-111,
+		-92,
+		-70
+	],
+	Yperiod: [
+		-100,
+		-100,
+		-140,
+		-140,
+		-92,
+		-74,
+		-92,
+		-129
+	],
+	Ysemicolon: [
+		-50,
+		-50,
+		-60,
+		-60,
+		-92,
+		-92,
+		-65,
+		-92
+	],
+	Yu: [
+		-100,
+		-100,
+		-110,
+		-110,
+		-92,
+		-92,
+		-92,
+		-111
+	],
+	Yuacute: [
+		-100,
+		-100,
+		-110,
+		-110,
+		-92,
+		-92,
+		-92,
+		-111
+	],
+	Yucircumflex: [
+		-100,
+		-100,
+		-110,
+		-110,
+		-92,
+		-92,
+		-92,
+		-111
+	],
+	Yudieresis: [
+		-100,
+		-100,
+		-110,
+		-110,
+		-92,
+		-92,
+		-92,
+		-71
+	],
+	Yugrave: [
+		-100,
+		-100,
+		-110,
+		-110,
+		-92,
+		-92,
+		-92,
+		-71
+	],
+	Yuhungarumlaut: [
+		-100,
+		-100,
+		-110,
+		-110,
+		-92,
+		-92,
+		-92,
+		-111
+	],
+	Yumacron: [
+		-100,
+		-100,
+		-110,
+		-110,
+		-92,
+		-92,
+		-92,
+		-71
+	],
+	Yuogonek: [
+		-100,
+		-100,
+		-110,
+		-110,
+		-92,
+		-92,
+		-92,
+		-111
+	],
+	Yuring: [
+		-100,
+		-100,
+		-110,
+		-110,
+		-92,
+		-92,
+		-92,
+		-111
+	],
+	YacuteA: [
+		-110,
+		-110,
+		-110,
+		-110,
+		-110,
+		-74,
+		-50,
+		-120
+	],
+	YacuteAacute: [
+		-110,
+		-110,
+		-110,
+		-110,
+		-110,
+		-74,
+		-50,
+		-120
+	],
+	YacuteAbreve: [
+		-110,
+		-110,
+		-110,
+		-110,
+		-110,
+		-74,
+		-50,
+		-120
+	],
+	YacuteAcircumflex: [
+		-110,
+		-110,
+		-110,
+		-110,
+		-110,
+		-74,
+		-50,
+		-120
+	],
+	YacuteAdieresis: [
+		-110,
+		-110,
+		-110,
+		-110,
+		-110,
+		-74,
+		-50,
+		-120
+	],
+	YacuteAgrave: [
+		-110,
+		-110,
+		-110,
+		-110,
+		-110,
+		-74,
+		-50,
+		-120
+	],
+	YacuteAmacron: [
+		-110,
+		-110,
+		-110,
+		-110,
+		-110,
+		-74,
+		-50,
+		-120
+	],
+	YacuteAogonek: [
+		-110,
+		-110,
+		-110,
+		-110,
+		-110,
+		-74,
+		-50,
+		-120
+	],
+	YacuteAring: [
+		-110,
+		-110,
+		-110,
+		-110,
+		-110,
+		-74,
+		-50,
+		-120
+	],
+	YacuteAtilde: [
+		-110,
+		-110,
+		-110,
+		-110,
+		-110,
+		-74,
+		-50,
+		-120
+	],
+	YacuteO: [
+		-70,
+		-70,
+		-85,
+		-85,
+		-35,
+		-25,
+		-15,
+		-30
+	],
+	YacuteOacute: [
+		-70,
+		-70,
+		-85,
+		-85,
+		-35,
+		-25,
+		-15,
+		-30
+	],
+	YacuteOcircumflex: [
+		-70,
+		-70,
+		-85,
+		-85,
+		-35,
+		-25,
+		-15,
+		-30
+	],
+	YacuteOdieresis: [
+		-70,
+		-70,
+		-85,
+		-85,
+		-35,
+		-25,
+		-15,
+		-30
+	],
+	YacuteOgrave: [
+		-70,
+		-70,
+		-85,
+		-85,
+		-35,
+		-25,
+		-15,
+		-30
+	],
+	YacuteOhungarumlaut: [
+		-70,
+		-70,
+		-85,
+		-85,
+		-35,
+		-25,
+		-15,
+		-30
+	],
+	YacuteOmacron: [
+		-70,
+		-70,
+		-85,
+		-85,
+		-35,
+		-25,
+		-15,
+		-30
+	],
+	YacuteOslash: [
+		-70,
+		-70,
+		-85,
+		-85,
+		-35,
+		-25,
+		-15,
+		-30
+	],
+	YacuteOtilde: [
+		-70,
+		-70,
+		-85,
+		-85,
+		-35,
+		-25,
+		-15,
+		-30
+	],
+	Yacutea: [
+		-90,
+		-90,
+		-140,
+		-140,
+		-85,
+		-92,
+		-92,
+		-100
+	],
+	Yacuteaacute: [
+		-90,
+		-90,
+		-140,
+		-140,
+		-85,
+		-92,
+		-92,
+		-100
+	],
+	Yacuteabreve: [
+		-90,
+		-90,
+		-70,
+		-70,
+		-85,
+		-92,
+		-92,
+		-100
+	],
+	Yacuteacircumflex: [
+		-90,
+		-90,
+		-140,
+		-140,
+		-85,
+		-92,
+		-92,
+		-100
+	],
+	Yacuteadieresis: [
+		-90,
+		-90,
+		-140,
+		-140,
+		-85,
+		-92,
+		-92,
+		-60
+	],
+	Yacuteagrave: [
+		-90,
+		-90,
+		-140,
+		-140,
+		-85,
+		-92,
+		-92,
+		-60
+	],
+	Yacuteamacron: [
+		-90,
+		-90,
+		-70,
+		-70,
+		-85,
+		-92,
+		-92,
+		-60
+	],
+	Yacuteaogonek: [
+		-90,
+		-90,
+		-140,
+		-140,
+		-85,
+		-92,
+		-92,
+		-100
+	],
+	Yacutearing: [
+		-90,
+		-90,
+		-140,
+		-140,
+		-85,
+		-92,
+		-92,
+		-100
+	],
+	Yacuteatilde: [
+		-90,
+		-90,
+		-70,
+		-70,
+		-85,
+		-92,
+		-92,
+		-60
+	],
+	Yacutecolon: [
+		-50,
+		-50,
+		-60,
+		-60,
+		-92,
+		-92,
+		-65,
+		-92
+	],
+	Yacutecomma: [
+		-100,
+		-100,
+		-140,
+		-140,
+		-92,
+		-92,
+		-92,
+		-129
+	],
+	Yacutee: [
+		-80,
+		-80,
+		-140,
+		-140,
+		-111,
+		-111,
+		-92,
+		-100
+	],
+	Yacuteeacute: [
+		-80,
+		-80,
+		-140,
+		-140,
+		-111,
+		-111,
+		-92,
+		-100
+	],
+	Yacuteecaron: [
+		-80,
+		-80,
+		-140,
+		-140,
+		-111,
+		-111,
+		-92,
+		-100
+	],
+	Yacuteecircumflex: [
+		-80,
+		-80,
+		-140,
+		-140,
+		-111,
+		-71,
+		-92,
+		-100
+	],
+	Yacuteedieresis: [
+		-80,
+		-80,
+		-140,
+		-140,
+		-71,
+		-71,
+		-52,
+		-60
+	],
+	Yacuteedotaccent: [
+		-80,
+		-80,
+		-140,
+		-140,
+		-111,
+		-111,
+		-92,
+		-100
+	],
+	Yacuteegrave: [
+		-80,
+		-80,
+		-140,
+		-140,
+		-71,
+		-71,
+		-52,
+		-60
+	],
+	Yacuteemacron: [
+		-80,
+		-80,
+		-70,
+		-70,
+		-71,
+		-71,
+		-52,
+		-60
+	],
+	Yacuteeogonek: [
+		-80,
+		-80,
+		-140,
+		-140,
+		-111,
+		-111,
+		-92,
+		-100
+	],
+	Yacuteo: [
+		-100,
+		-100,
+		-140,
+		-140,
+		-111,
+		-111,
+		-92,
+		-110
+	],
+	Yacuteoacute: [
+		-100,
+		-100,
+		-140,
+		-140,
+		-111,
+		-111,
+		-92,
+		-110
+	],
+	Yacuteocircumflex: [
+		-100,
+		-100,
+		-140,
+		-140,
+		-111,
+		-111,
+		-92,
+		-110
+	],
+	Yacuteodieresis: [
+		-100,
+		-100,
+		-140,
+		-140,
+		-111,
+		-111,
+		-92,
+		-70
+	],
+	Yacuteograve: [
+		-100,
+		-100,
+		-140,
+		-140,
+		-111,
+		-111,
+		-92,
+		-70
+	],
+	Yacuteohungarumlaut: [
+		-100,
+		-100,
+		-140,
+		-140,
+		-111,
+		-111,
+		-92,
+		-110
+	],
+	Yacuteomacron: [
+		-100,
+		-100,
+		-70,
+		-70,
+		-111,
+		-111,
+		-92,
+		-70
+	],
+	Yacuteoslash: [
+		-100,
+		-100,
+		-140,
+		-140,
+		-111,
+		-111,
+		-92,
+		-110
+	],
+	Yacuteotilde: [
+		-100,
+		-100,
+		-140,
+		-140,
+		-111,
+		-111,
+		-92,
+		-70
+	],
+	Yacuteperiod: [
+		-100,
+		-100,
+		-140,
+		-140,
+		-92,
+		-74,
+		-92,
+		-129
+	],
+	Yacutesemicolon: [
+		-50,
+		-50,
+		-60,
+		-60,
+		-92,
+		-92,
+		-65,
+		-92
+	],
+	Yacuteu: [
+		-100,
+		-100,
+		-110,
+		-110,
+		-92,
+		-92,
+		-92,
+		-111
+	],
+	Yacuteuacute: [
+		-100,
+		-100,
+		-110,
+		-110,
+		-92,
+		-92,
+		-92,
+		-111
+	],
+	Yacuteucircumflex: [
+		-100,
+		-100,
+		-110,
+		-110,
+		-92,
+		-92,
+		-92,
+		-111
+	],
+	Yacuteudieresis: [
+		-100,
+		-100,
+		-110,
+		-110,
+		-92,
+		-92,
+		-92,
+		-71
+	],
+	Yacuteugrave: [
+		-100,
+		-100,
+		-110,
+		-110,
+		-92,
+		-92,
+		-92,
+		-71
+	],
+	Yacuteuhungarumlaut: [
+		-100,
+		-100,
+		-110,
+		-110,
+		-92,
+		-92,
+		-92,
+		-111
+	],
+	Yacuteumacron: [
+		-100,
+		-100,
+		-110,
+		-110,
+		-92,
+		-92,
+		-92,
+		-71
+	],
+	Yacuteuogonek: [
+		-100,
+		-100,
+		-110,
+		-110,
+		-92,
+		-92,
+		-92,
+		-111
+	],
+	Yacuteuring: [
+		-100,
+		-100,
+		-110,
+		-110,
+		-92,
+		-92,
+		-92,
+		-111
+	],
+	YdieresisA: [
+		-110,
+		-110,
+		-110,
+		-110,
+		-110,
+		-74,
+		-50,
+		-120
+	],
+	YdieresisAacute: [
+		-110,
+		-110,
+		-110,
+		-110,
+		-110,
+		-74,
+		-50,
+		-120
+	],
+	YdieresisAbreve: [
+		-110,
+		-110,
+		-110,
+		-110,
+		-110,
+		-74,
+		-50,
+		-120
+	],
+	YdieresisAcircumflex: [
+		-110,
+		-110,
+		-110,
+		-110,
+		-110,
+		-74,
+		-50,
+		-120
+	],
+	YdieresisAdieresis: [
+		-110,
+		-110,
+		-110,
+		-110,
+		-110,
+		-74,
+		-50,
+		-120
+	],
+	YdieresisAgrave: [
+		-110,
+		-110,
+		-110,
+		-110,
+		-110,
+		-74,
+		-50,
+		-120
+	],
+	YdieresisAmacron: [
+		-110,
+		-110,
+		-110,
+		-110,
+		-110,
+		-74,
+		-50,
+		-120
+	],
+	YdieresisAogonek: [
+		-110,
+		-110,
+		-110,
+		-110,
+		-110,
+		-74,
+		-50,
+		-120
+	],
+	YdieresisAring: [
+		-110,
+		-110,
+		-110,
+		-110,
+		-110,
+		-74,
+		-50,
+		-120
+	],
+	YdieresisAtilde: [
+		-110,
+		-110,
+		-110,
+		-110,
+		-110,
+		-74,
+		-50,
+		-120
+	],
+	YdieresisO: [
+		-70,
+		-70,
+		-85,
+		-85,
+		-35,
+		-25,
+		-15,
+		-30
+	],
+	YdieresisOacute: [
+		-70,
+		-70,
+		-85,
+		-85,
+		-35,
+		-25,
+		-15,
+		-30
+	],
+	YdieresisOcircumflex: [
+		-70,
+		-70,
+		-85,
+		-85,
+		-35,
+		-25,
+		-15,
+		-30
+	],
+	YdieresisOdieresis: [
+		-70,
+		-70,
+		-85,
+		-85,
+		-35,
+		-25,
+		-15,
+		-30
+	],
+	YdieresisOgrave: [
+		-70,
+		-70,
+		-85,
+		-85,
+		-35,
+		-25,
+		-15,
+		-30
+	],
+	YdieresisOhungarumlaut: [
+		-70,
+		-70,
+		-85,
+		-85,
+		-35,
+		-25,
+		-15,
+		-30
+	],
+	YdieresisOmacron: [
+		-70,
+		-70,
+		-85,
+		-85,
+		-35,
+		-25,
+		-15,
+		-30
+	],
+	YdieresisOslash: [
+		-70,
+		-70,
+		-85,
+		-85,
+		-35,
+		-25,
+		-15,
+		-30
+	],
+	YdieresisOtilde: [
+		-70,
+		-70,
+		-85,
+		-85,
+		-35,
+		-25,
+		-15,
+		-30
+	],
+	Ydieresisa: [
+		-90,
+		-90,
+		-140,
+		-140,
+		-85,
+		-92,
+		-92,
+		-100
+	],
+	Ydieresisaacute: [
+		-90,
+		-90,
+		-140,
+		-140,
+		-85,
+		-92,
+		-92,
+		-100
+	],
+	Ydieresisabreve: [
+		-90,
+		-90,
+		-70,
+		-70,
+		-85,
+		-92,
+		-92,
+		-100
+	],
+	Ydieresisacircumflex: [
+		-90,
+		-90,
+		-140,
+		-140,
+		-85,
+		-92,
+		-92,
+		-100
+	],
+	Ydieresisadieresis: [
+		-90,
+		-90,
+		-140,
+		-140,
+		-85,
+		-92,
+		-92,
+		-60
+	],
+	Ydieresisagrave: [
+		-90,
+		-90,
+		-140,
+		-140,
+		-85,
+		-92,
+		-92,
+		-60
+	],
+	Ydieresisamacron: [
+		-90,
+		-90,
+		-70,
+		-70,
+		-85,
+		-92,
+		-92,
+		-60
+	],
+	Ydieresisaogonek: [
+		-90,
+		-90,
+		-140,
+		-140,
+		-85,
+		-92,
+		-92,
+		-100
+	],
+	Ydieresisaring: [
+		-90,
+		-90,
+		-140,
+		-140,
+		-85,
+		-92,
+		-92,
+		-100
+	],
+	Ydieresisatilde: [
+		-90,
+		-90,
+		-70,
+		-70,
+		-85,
+		-92,
+		-92,
+		-100
+	],
+	Ydieresiscolon: [
+		-50,
+		-50,
+		-60,
+		-60,
+		-92,
+		-92,
+		-65,
+		-92
+	],
+	Ydieresiscomma: [
+		-100,
+		-100,
+		-140,
+		-140,
+		-92,
+		-92,
+		-92,
+		-129
+	],
+	Ydieresise: [
+		-80,
+		-80,
+		-140,
+		-140,
+		-111,
+		-111,
+		-92,
+		-100
+	],
+	Ydieresiseacute: [
+		-80,
+		-80,
+		-140,
+		-140,
+		-111,
+		-111,
+		-92,
+		-100
+	],
+	Ydieresisecaron: [
+		-80,
+		-80,
+		-140,
+		-140,
+		-111,
+		-111,
+		-92,
+		-100
+	],
+	Ydieresisecircumflex: [
+		-80,
+		-80,
+		-140,
+		-140,
+		-111,
+		-71,
+		-92,
+		-100
+	],
+	Ydieresisedieresis: [
+		-80,
+		-80,
+		-140,
+		-140,
+		-71,
+		-71,
+		-52,
+		-60
+	],
+	Ydieresisedotaccent: [
+		-80,
+		-80,
+		-140,
+		-140,
+		-111,
+		-111,
+		-92,
+		-100
+	],
+	Ydieresisegrave: [
+		-80,
+		-80,
+		-140,
+		-140,
+		-71,
+		-71,
+		-52,
+		-60
+	],
+	Ydieresisemacron: [
+		-80,
+		-80,
+		-70,
+		-70,
+		-71,
+		-71,
+		-52,
+		-60
+	],
+	Ydieresiseogonek: [
+		-80,
+		-80,
+		-140,
+		-140,
+		-111,
+		-111,
+		-92,
+		-100
+	],
+	Ydieresiso: [
+		-100,
+		-100,
+		-140,
+		-140,
+		-111,
+		-111,
+		-92,
+		-110
+	],
+	Ydieresisoacute: [
+		-100,
+		-100,
+		-140,
+		-140,
+		-111,
+		-111,
+		-92,
+		-110
+	],
+	Ydieresisocircumflex: [
+		-100,
+		-100,
+		-140,
+		-140,
+		-111,
+		-111,
+		-92,
+		-110
+	],
+	Ydieresisodieresis: [
+		-100,
+		-100,
+		-140,
+		-140,
+		-111,
+		-111,
+		-92,
+		-70
+	],
+	Ydieresisograve: [
+		-100,
+		-100,
+		-140,
+		-140,
+		-111,
+		-111,
+		-92,
+		-70
+	],
+	Ydieresisohungarumlaut: [
+		-100,
+		-100,
+		-140,
+		-140,
+		-111,
+		-111,
+		-92,
+		-110
+	],
+	Ydieresisomacron: [
+		-100,
+		-100,
+		-140,
+		-140,
+		-111,
+		-111,
+		-92,
+		-70
+	],
+	Ydieresisoslash: [
+		-100,
+		-100,
+		-140,
+		-140,
+		-111,
+		-111,
+		-92,
+		-110
+	],
+	Ydieresisotilde: [
+		-100,
+		-100,
+		-140,
+		-140,
+		-111,
+		-111,
+		-92,
+		-70
+	],
+	Ydieresisperiod: [
+		-100,
+		-100,
+		-140,
+		-140,
+		-92,
+		-74,
+		-92,
+		-129
+	],
+	Ydieresissemicolon: [
+		-50,
+		-50,
+		-60,
+		-60,
+		-92,
+		-92,
+		-65,
+		-92
+	],
+	Ydieresisu: [
+		-100,
+		-100,
+		-110,
+		-110,
+		-92,
+		-92,
+		-92,
+		-111
+	],
+	Ydieresisuacute: [
+		-100,
+		-100,
+		-110,
+		-110,
+		-92,
+		-92,
+		-92,
+		-111
+	],
+	Ydieresisucircumflex: [
+		-100,
+		-100,
+		-110,
+		-110,
+		-92,
+		-92,
+		-92,
+		-111
+	],
+	Ydieresisudieresis: [
+		-100,
+		-100,
+		-110,
+		-110,
+		-92,
+		-92,
+		-92,
+		-71
+	],
+	Ydieresisugrave: [
+		-100,
+		-100,
+		-110,
+		-110,
+		-92,
+		-92,
+		-92,
+		-71
+	],
+	Ydieresisuhungarumlaut: [
+		-100,
+		-100,
+		-110,
+		-110,
+		-92,
+		-92,
+		-92,
+		-111
+	],
+	Ydieresisumacron: [
+		-100,
+		-100,
+		-110,
+		-110,
+		-92,
+		-92,
+		-92,
+		-71
+	],
+	Ydieresisuogonek: [
+		-100,
+		-100,
+		-110,
+		-110,
+		-92,
+		-92,
+		-92,
+		-111
+	],
+	Ydieresisuring: [
+		-100,
+		-100,
+		-110,
+		-110,
+		-92,
+		-92,
+		-92,
+		-111
+	],
+	ag: [
+		-10,
+		-10,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	agbreve: [
+		-10,
+		-10,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	agcommaaccent: [
+		-10,
+		-10,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	av: [
+		-15,
+		-15,
+		-20,
+		-20,
+		-25,
+		0,
+		0,
+		-20
+	],
+	aw: [
+		-15,
+		-15,
+		-20,
+		-20,
+		0,
+		0,
+		0,
+		-15
+	],
+	ay: [
+		-20,
+		-20,
+		-30,
+		-30
+	],
+	ayacute: [
+		-20,
+		-20,
+		-30,
+		-30
+	],
+	aydieresis: [
+		-20,
+		-20,
+		-30,
+		-30
+	],
+	aacuteg: [
+		-10,
+		-10,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	aacutegbreve: [
+		-10,
+		-10,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	aacutegcommaaccent: [
+		-10,
+		-10,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	aacutev: [
+		-15,
+		-15,
+		-20,
+		-20,
+		-25,
+		0,
+		0,
+		-20
+	],
+	aacutew: [
+		-15,
+		-15,
+		-20,
+		-20,
+		0,
+		0,
+		0,
+		-15
+	],
+	aacutey: [
+		-20,
+		-20,
+		-30,
+		-30
+	],
+	aacuteyacute: [
+		-20,
+		-20,
+		-30,
+		-30
+	],
+	aacuteydieresis: [
+		-20,
+		-20,
+		-30,
+		-30
+	],
+	abreveg: [
+		-10,
+		-10,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	abrevegbreve: [
+		-10,
+		-10,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	abrevegcommaaccent: [
+		-10,
+		-10,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	abrevev: [
+		-15,
+		-15,
+		-20,
+		-20,
+		-25,
+		0,
+		0,
+		-20
+	],
+	abrevew: [
+		-15,
+		-15,
+		-20,
+		-20,
+		0,
+		0,
+		0,
+		-15
+	],
+	abrevey: [
+		-20,
+		-20,
+		-30,
+		-30
+	],
+	abreveyacute: [
+		-20,
+		-20,
+		-30,
+		-30
+	],
+	abreveydieresis: [
+		-20,
+		-20,
+		-30,
+		-30
+	],
+	acircumflexg: [
+		-10,
+		-10,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	acircumflexgbreve: [
+		-10,
+		-10,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	acircumflexgcommaaccent: [
+		-10,
+		-10,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	acircumflexv: [
+		-15,
+		-15,
+		-20,
+		-20,
+		-25,
+		0,
+		0,
+		-20
+	],
+	acircumflexw: [
+		-15,
+		-15,
+		-20,
+		-20,
+		0,
+		0,
+		0,
+		-15
+	],
+	acircumflexy: [
+		-20,
+		-20,
+		-30,
+		-30
+	],
+	acircumflexyacute: [
+		-20,
+		-20,
+		-30,
+		-30
+	],
+	acircumflexydieresis: [
+		-20,
+		-20,
+		-30,
+		-30
+	],
+	adieresisg: [
+		-10,
+		-10,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	adieresisgbreve: [
+		-10,
+		-10,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	adieresisgcommaaccent: [
+		-10,
+		-10,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	adieresisv: [
+		-15,
+		-15,
+		-20,
+		-20,
+		-25,
+		0,
+		0,
+		-20
+	],
+	adieresisw: [
+		-15,
+		-15,
+		-20,
+		-20,
+		0,
+		0,
+		0,
+		-15
+	],
+	adieresisy: [
+		-20,
+		-20,
+		-30,
+		-30
+	],
+	adieresisyacute: [
+		-20,
+		-20,
+		-30,
+		-30
+	],
+	adieresisydieresis: [
+		-20,
+		-20,
+		-30,
+		-30
+	],
+	agraveg: [
+		-10,
+		-10,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	agravegbreve: [
+		-10,
+		-10,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	agravegcommaaccent: [
+		-10,
+		-10,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	agravev: [
+		-15,
+		-15,
+		-20,
+		-20,
+		-25,
+		0,
+		0,
+		-20
+	],
+	agravew: [
+		-15,
+		-15,
+		-20,
+		-20,
+		0,
+		0,
+		0,
+		-15
+	],
+	agravey: [
+		-20,
+		-20,
+		-30,
+		-30
+	],
+	agraveyacute: [
+		-20,
+		-20,
+		-30,
+		-30
+	],
+	agraveydieresis: [
+		-20,
+		-20,
+		-30,
+		-30
+	],
+	amacrong: [
+		-10,
+		-10,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	amacrongbreve: [
+		-10,
+		-10,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	amacrongcommaaccent: [
+		-10,
+		-10,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	amacronv: [
+		-15,
+		-15,
+		-20,
+		-20,
+		-25,
+		0,
+		0,
+		-20
+	],
+	amacronw: [
+		-15,
+		-15,
+		-20,
+		-20,
+		0,
+		0,
+		0,
+		-15
+	],
+	amacrony: [
+		-20,
+		-20,
+		-30,
+		-30
+	],
+	amacronyacute: [
+		-20,
+		-20,
+		-30,
+		-30
+	],
+	amacronydieresis: [
+		-20,
+		-20,
+		-30,
+		-30
+	],
+	aogonekg: [
+		-10,
+		-10,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	aogonekgbreve: [
+		-10,
+		-10,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	aogonekgcommaaccent: [
+		-10,
+		-10,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	aogonekv: [
+		-15,
+		-15,
+		-20,
+		-20,
+		-25,
+		0,
+		0,
+		-20
+	],
+	aogonekw: [
+		-15,
+		-15,
+		-20,
+		-20,
+		0,
+		0,
+		0,
+		-15
+	],
+	aogoneky: [
+		-20,
+		-20,
+		-30,
+		-30
+	],
+	aogonekyacute: [
+		-20,
+		-20,
+		-30,
+		-30
+	],
+	aogonekydieresis: [
+		-20,
+		-20,
+		-30,
+		-30
+	],
+	aringg: [
+		-10,
+		-10,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	aringgbreve: [
+		-10,
+		-10,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	aringgcommaaccent: [
+		-10,
+		-10,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	aringv: [
+		-15,
+		-15,
+		-20,
+		-20,
+		-25,
+		0,
+		0,
+		-20
+	],
+	aringw: [
+		-15,
+		-15,
+		-20,
+		-20,
+		0,
+		0,
+		0,
+		-15
+	],
+	aringy: [
+		-20,
+		-20,
+		-30,
+		-30
+	],
+	aringyacute: [
+		-20,
+		-20,
+		-30,
+		-30
+	],
+	aringydieresis: [
+		-20,
+		-20,
+		-30,
+		-30
+	],
+	atildeg: [
+		-10,
+		-10,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	atildegbreve: [
+		-10,
+		-10,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	atildegcommaaccent: [
+		-10,
+		-10,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	atildev: [
+		-15,
+		-15,
+		-20,
+		-20,
+		-25,
+		0,
+		0,
+		-20
+	],
+	atildew: [
+		-15,
+		-15,
+		-20,
+		-20,
+		0,
+		0,
+		0,
+		-15
+	],
+	atildey: [
+		-20,
+		-20,
+		-30,
+		-30
+	],
+	atildeyacute: [
+		-20,
+		-20,
+		-30,
+		-30
+	],
+	atildeydieresis: [
+		-20,
+		-20,
+		-30,
+		-30
+	],
+	bl: [
+		-10,
+		-10,
+		-20,
+		-20
+	],
+	blacute: [
+		-10,
+		-10,
+		-20,
+		-20
+	],
+	blcommaaccent: [
+		-10,
+		-10,
+		-20,
+		-20
+	],
+	blslash: [
+		-10,
+		-10,
+		-20,
+		-20
+	],
+	bu: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-20,
+		-20,
+		-20,
+		-20
+	],
+	buacute: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-20,
+		-20,
+		-20,
+		-20
+	],
+	bucircumflex: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-20,
+		-20,
+		-20,
+		-20
+	],
+	budieresis: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-20,
+		-20,
+		-20,
+		-20
+	],
+	bugrave: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-20,
+		-20,
+		-20,
+		-20
+	],
+	buhungarumlaut: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-20,
+		-20,
+		-20,
+		-20
+	],
+	bumacron: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-20,
+		-20,
+		-20,
+		-20
+	],
+	buogonek: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-20,
+		-20,
+		-20,
+		-20
+	],
+	buring: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-20,
+		-20,
+		-20,
+		-20
+	],
+	bv: [
+		-20,
+		-20,
+		-20,
+		-20,
+		-15,
+		0,
+		0,
+		-15
+	],
+	by: [
+		-20,
+		-20,
+		-20,
+		-20
+	],
+	byacute: [
+		-20,
+		-20,
+		-20,
+		-20
+	],
+	bydieresis: [
+		-20,
+		-20,
+		-20,
+		-20
+	],
+	ch: [
+		-10,
+		-10,
+		0,
+		0,
+		0,
+		-10,
+		-15
+	],
+	ck: [
+		-20,
+		-20,
+		-20,
+		-20,
+		0,
+		-10,
+		-20
+	],
+	ckcommaaccent: [
+		-20,
+		-20,
+		-20,
+		-20,
+		0,
+		-10,
+		-20
+	],
+	cl: [
+		-20,
+		-20
+	],
+	clacute: [
+		-20,
+		-20
+	],
+	clcommaaccent: [
+		-20,
+		-20
+	],
+	clslash: [
+		-20,
+		-20
+	],
+	cy: [
+		-10,
+		-10,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-15
+	],
+	cyacute: [
+		-10,
+		-10,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-15
+	],
+	cydieresis: [
+		-10,
+		-10,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-15
+	],
+	cacuteh: [
+		-10,
+		-10,
+		0,
+		0,
+		0,
+		-10,
+		-15
+	],
+	cacutek: [
+		-20,
+		-20,
+		-20,
+		-20,
+		0,
+		-10,
+		-20
+	],
+	cacutekcommaaccent: [
+		-20,
+		-20,
+		-20,
+		-20,
+		0,
+		-10,
+		-20
+	],
+	cacutel: [
+		-20,
+		-20
+	],
+	cacutelacute: [
+		-20,
+		-20
+	],
+	cacutelcommaaccent: [
+		-20,
+		-20
+	],
+	cacutelslash: [
+		-20,
+		-20
+	],
+	cacutey: [
+		-10,
+		-10,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-15
+	],
+	cacuteyacute: [
+		-10,
+		-10,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-15
+	],
+	cacuteydieresis: [
+		-10,
+		-10,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-15
+	],
+	ccaronh: [
+		-10,
+		-10,
+		0,
+		0,
+		0,
+		-10,
+		-15
+	],
+	ccaronk: [
+		-20,
+		-20,
+		-20,
+		-20,
+		0,
+		-10,
+		-20
+	],
+	ccaronkcommaaccent: [
+		-20,
+		-20,
+		-20,
+		-20,
+		0,
+		-10,
+		-20
+	],
+	ccaronl: [
+		-20,
+		-20
+	],
+	ccaronlacute: [
+		-20,
+		-20
+	],
+	ccaronlcommaaccent: [
+		-20,
+		-20
+	],
+	ccaronlslash: [
+		-20,
+		-20
+	],
+	ccarony: [
+		-10,
+		-10,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-15
+	],
+	ccaronyacute: [
+		-10,
+		-10,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-15
+	],
+	ccaronydieresis: [
+		-10,
+		-10,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-15
+	],
+	ccedillah: [
+		-10,
+		-10,
+		0,
+		0,
+		0,
+		-10,
+		-15
+	],
+	ccedillak: [
+		-20,
+		-20,
+		-20,
+		-20,
+		0,
+		-10,
+		-20
+	],
+	ccedillakcommaaccent: [
+		-20,
+		-20,
+		-20,
+		-20,
+		0,
+		-10,
+		-20
+	],
+	ccedillal: [
+		-20,
+		-20
+	],
+	ccedillalacute: [
+		-20,
+		-20
+	],
+	ccedillalcommaaccent: [
+		-20,
+		-20
+	],
+	ccedillalslash: [
+		-20,
+		-20
+	],
+	ccedillay: [
+		-10,
+		-10,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-15
+	],
+	ccedillayacute: [
+		-10,
+		-10,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-15
+	],
+	ccedillaydieresis: [
+		-10,
+		-10,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-15
+	],
+	colonspace: [
+		-40,
+		-40,
+		-50,
+		-50
+	],
+	commaquotedblright: [
+		-120,
+		-120,
+		-100,
+		-100,
+		-45,
+		-95,
+		-140,
+		-70
+	],
+	commaquoteright: [
+		-120,
+		-120,
+		-100,
+		-100,
+		-55,
+		-95,
+		-140,
+		-70
+	],
+	commaspace: [
+		-40,
+		-40
+	],
+	dd: [
+		-10,
+		-10
+	],
+	ddcroat: [
+		-10,
+		-10
+	],
+	dv: [
+		-15,
+		-15
+	],
+	dw: [
+		-15,
+		-15,
+		0,
+		0,
+		-15
+	],
+	dy: [
+		-15,
+		-15
+	],
+	dyacute: [
+		-15,
+		-15
+	],
+	dydieresis: [
+		-15,
+		-15
+	],
+	dcroatd: [
+		-10,
+		-10
+	],
+	dcroatdcroat: [
+		-10,
+		-10
+	],
+	dcroatv: [
+		-15,
+		-15
+	],
+	dcroatw: [
+		-15,
+		-15,
+		0,
+		0,
+		-15
+	],
+	dcroaty: [
+		-15,
+		-15
+	],
+	dcroatyacute: [
+		-15,
+		-15
+	],
+	dcroatydieresis: [
+		-15,
+		-15
+	],
+	ecomma: [
+		10,
+		10,
+		-15,
+		-15,
+		0,
+		0,
+		-10
+	],
+	eperiod: [
+		20,
+		20,
+		-15,
+		-15,
+		0,
+		0,
+		-15
+	],
+	ev: [
+		-15,
+		-15,
+		-30,
+		-30,
+		-15,
+		0,
+		-15,
+		-25
+	],
+	ew: [
+		-15,
+		-15,
+		-20,
+		-20,
+		0,
+		0,
+		-15,
+		-25
+	],
+	ex: [
+		-15,
+		-15,
+		-30,
+		-30,
+		0,
+		0,
+		-20,
+		-15
+	],
+	ey: [
+		-15,
+		-15,
+		-20,
+		-20,
+		0,
+		0,
+		-30,
+		-15
+	],
+	eyacute: [
+		-15,
+		-15,
+		-20,
+		-20,
+		0,
+		0,
+		-30,
+		-15
+	],
+	eydieresis: [
+		-15,
+		-15,
+		-20,
+		-20,
+		0,
+		0,
+		-30,
+		-15
+	],
+	eacutecomma: [
+		10,
+		10,
+		-15,
+		-15,
+		0,
+		0,
+		-10
+	],
+	eacuteperiod: [
+		20,
+		20,
+		-15,
+		-15,
+		0,
+		0,
+		-15
+	],
+	eacutev: [
+		-15,
+		-15,
+		-30,
+		-30,
+		-15,
+		0,
+		-15,
+		-25
+	],
+	eacutew: [
+		-15,
+		-15,
+		-20,
+		-20,
+		0,
+		0,
+		-15,
+		-25
+	],
+	eacutex: [
+		-15,
+		-15,
+		-30,
+		-30,
+		0,
+		0,
+		-20,
+		-15
+	],
+	eacutey: [
+		-15,
+		-15,
+		-20,
+		-20,
+		0,
+		0,
+		-30,
+		-15
+	],
+	eacuteyacute: [
+		-15,
+		-15,
+		-20,
+		-20,
+		0,
+		0,
+		-30,
+		-15
+	],
+	eacuteydieresis: [
+		-15,
+		-15,
+		-20,
+		-20,
+		0,
+		0,
+		-30,
+		-15
+	],
+	ecaroncomma: [
+		10,
+		10,
+		-15,
+		-15,
+		0,
+		0,
+		-10
+	],
+	ecaronperiod: [
+		20,
+		20,
+		-15,
+		-15,
+		0,
+		0,
+		-15
+	],
+	ecaronv: [
+		-15,
+		-15,
+		-30,
+		-30,
+		-15,
+		0,
+		-15,
+		-25
+	],
+	ecaronw: [
+		-15,
+		-15,
+		-20,
+		-20,
+		0,
+		0,
+		-15,
+		-25
+	],
+	ecaronx: [
+		-15,
+		-15,
+		-30,
+		-30,
+		0,
+		0,
+		-20,
+		-15
+	],
+	ecarony: [
+		-15,
+		-15,
+		-20,
+		-20,
+		0,
+		0,
+		-30,
+		-15
+	],
+	ecaronyacute: [
+		-15,
+		-15,
+		-20,
+		-20,
+		0,
+		0,
+		-30,
+		-15
+	],
+	ecaronydieresis: [
+		-15,
+		-15,
+		-20,
+		-20,
+		0,
+		0,
+		-30,
+		-15
+	],
+	ecircumflexcomma: [
+		10,
+		10,
+		-15,
+		-15,
+		0,
+		0,
+		-10
+	],
+	ecircumflexperiod: [
+		20,
+		20,
+		-15,
+		-15,
+		0,
+		0,
+		-15
+	],
+	ecircumflexv: [
+		-15,
+		-15,
+		-30,
+		-30,
+		-15,
+		0,
+		-15,
+		-25
+	],
+	ecircumflexw: [
+		-15,
+		-15,
+		-20,
+		-20,
+		0,
+		0,
+		-15,
+		-25
+	],
+	ecircumflexx: [
+		-15,
+		-15,
+		-30,
+		-30,
+		0,
+		0,
+		-20,
+		-15
+	],
+	ecircumflexy: [
+		-15,
+		-15,
+		-20,
+		-20,
+		0,
+		0,
+		-30,
+		-15
+	],
+	ecircumflexyacute: [
+		-15,
+		-15,
+		-20,
+		-20,
+		0,
+		0,
+		-30,
+		-15
+	],
+	ecircumflexydieresis: [
+		-15,
+		-15,
+		-20,
+		-20,
+		0,
+		0,
+		-30,
+		-15
+	],
+	edieresiscomma: [
+		10,
+		10,
+		-15,
+		-15,
+		0,
+		0,
+		-10
+	],
+	edieresisperiod: [
+		20,
+		20,
+		-15,
+		-15,
+		0,
+		0,
+		-15
+	],
+	edieresisv: [
+		-15,
+		-15,
+		-30,
+		-30,
+		-15,
+		0,
+		-15,
+		-25
+	],
+	edieresisw: [
+		-15,
+		-15,
+		-20,
+		-20,
+		0,
+		0,
+		-15,
+		-25
+	],
+	edieresisx: [
+		-15,
+		-15,
+		-30,
+		-30,
+		0,
+		0,
+		-20,
+		-15
+	],
+	edieresisy: [
+		-15,
+		-15,
+		-20,
+		-20,
+		0,
+		0,
+		-30,
+		-15
+	],
+	edieresisyacute: [
+		-15,
+		-15,
+		-20,
+		-20,
+		0,
+		0,
+		-30,
+		-15
+	],
+	edieresisydieresis: [
+		-15,
+		-15,
+		-20,
+		-20,
+		0,
+		0,
+		-30,
+		-15
+	],
+	edotaccentcomma: [
+		10,
+		10,
+		-15,
+		-15,
+		0,
+		0,
+		-10
+	],
+	edotaccentperiod: [
+		20,
+		20,
+		-15,
+		-15,
+		0,
+		0,
+		-15
+	],
+	edotaccentv: [
+		-15,
+		-15,
+		-30,
+		-30,
+		-15,
+		0,
+		-15,
+		-25
+	],
+	edotaccentw: [
+		-15,
+		-15,
+		-20,
+		-20,
+		0,
+		0,
+		-15,
+		-25
+	],
+	edotaccentx: [
+		-15,
+		-15,
+		-30,
+		-30,
+		0,
+		0,
+		-20,
+		-15
+	],
+	edotaccenty: [
+		-15,
+		-15,
+		-20,
+		-20,
+		0,
+		0,
+		-30,
+		-15
+	],
+	edotaccentyacute: [
+		-15,
+		-15,
+		-20,
+		-20,
+		0,
+		0,
+		-30,
+		-15
+	],
+	edotaccentydieresis: [
+		-15,
+		-15,
+		-20,
+		-20,
+		0,
+		0,
+		-30,
+		-15
+	],
+	egravecomma: [
+		10,
+		10,
+		-15,
+		-15,
+		0,
+		0,
+		-10
+	],
+	egraveperiod: [
+		20,
+		20,
+		-15,
+		-15,
+		0,
+		0,
+		-15
+	],
+	egravev: [
+		-15,
+		-15,
+		-30,
+		-30,
+		-15,
+		0,
+		-15,
+		-25
+	],
+	egravew: [
+		-15,
+		-15,
+		-20,
+		-20,
+		0,
+		0,
+		-15,
+		-25
+	],
+	egravex: [
+		-15,
+		-15,
+		-30,
+		-30,
+		0,
+		0,
+		-20,
+		-15
+	],
+	egravey: [
+		-15,
+		-15,
+		-20,
+		-20,
+		0,
+		0,
+		-30,
+		-15
+	],
+	egraveyacute: [
+		-15,
+		-15,
+		-20,
+		-20,
+		0,
+		0,
+		-30,
+		-15
+	],
+	egraveydieresis: [
+		-15,
+		-15,
+		-20,
+		-20,
+		0,
+		0,
+		-30,
+		-15
+	],
+	emacroncomma: [
+		10,
+		10,
+		-15,
+		-15,
+		0,
+		0,
+		-10
+	],
+	emacronperiod: [
+		20,
+		20,
+		-15,
+		-15,
+		0,
+		0,
+		-15
+	],
+	emacronv: [
+		-15,
+		-15,
+		-30,
+		-30,
+		-15,
+		0,
+		-15,
+		-25
+	],
+	emacronw: [
+		-15,
+		-15,
+		-20,
+		-20,
+		0,
+		0,
+		-15,
+		-25
+	],
+	emacronx: [
+		-15,
+		-15,
+		-30,
+		-30,
+		0,
+		0,
+		-20,
+		-15
+	],
+	emacrony: [
+		-15,
+		-15,
+		-20,
+		-20,
+		0,
+		0,
+		-30,
+		-15
+	],
+	emacronyacute: [
+		-15,
+		-15,
+		-20,
+		-20,
+		0,
+		0,
+		-30,
+		-15
+	],
+	emacronydieresis: [
+		-15,
+		-15,
+		-20,
+		-20,
+		0,
+		0,
+		-30,
+		-15
+	],
+	eogonekcomma: [
+		10,
+		10,
+		-15,
+		-15,
+		0,
+		0,
+		-10
+	],
+	eogonekperiod: [
+		20,
+		20,
+		-15,
+		-15,
+		0,
+		0,
+		-15
+	],
+	eogonekv: [
+		-15,
+		-15,
+		-30,
+		-30,
+		-15,
+		0,
+		-15,
+		-25
+	],
+	eogonekw: [
+		-15,
+		-15,
+		-20,
+		-20,
+		0,
+		0,
+		-15,
+		-25
+	],
+	eogonekx: [
+		-15,
+		-15,
+		-30,
+		-30,
+		0,
+		0,
+		-20,
+		-15
+	],
+	eogoneky: [
+		-15,
+		-15,
+		-20,
+		-20,
+		0,
+		0,
+		-30,
+		-15
+	],
+	eogonekyacute: [
+		-15,
+		-15,
+		-20,
+		-20,
+		0,
+		0,
+		-30,
+		-15
+	],
+	eogonekydieresis: [
+		-15,
+		-15,
+		-20,
+		-20,
+		0,
+		0,
+		-30,
+		-15
+	],
+	fcomma: [
+		-10,
+		-10,
+		-30,
+		-30,
+		-15,
+		-10,
+		-10
+	],
+	fe: [
+		-10,
+		-10,
+		-30,
+		-30,
+		0,
+		-10
+	],
+	feacute: [
+		-10,
+		-10,
+		-30,
+		-30,
+		0,
+		-10
+	],
+	fecaron: [
+		-10,
+		-10,
+		-30,
+		-30
+	],
+	fecircumflex: [
+		-10,
+		-10,
+		-30,
+		-30
+	],
+	fedieresis: [
+		-10,
+		-10,
+		-30,
+		-30
+	],
+	fedotaccent: [
+		-10,
+		-10,
+		-30,
+		-30,
+		0,
+		-10
+	],
+	fegrave: [
+		-10,
+		-10,
+		-30,
+		-30
+	],
+	femacron: [
+		-10,
+		-10,
+		-30,
+		-30
+	],
+	feogonek: [
+		-10,
+		-10,
+		-30,
+		-30,
+		0,
+		-10
+	],
+	fo: [
+		-20,
+		-20,
+		-30,
+		-30,
+		-25,
+		-10
+	],
+	foacute: [
+		-20,
+		-20,
+		-30,
+		-30,
+		-25,
+		-10
+	],
+	focircumflex: [
+		-20,
+		-20,
+		-30,
+		-30,
+		-25,
+		-10
+	],
+	fodieresis: [
+		-20,
+		-20,
+		-30,
+		-30,
+		-25
+	],
+	fograve: [
+		-20,
+		-20,
+		-30,
+		-30,
+		-25,
+		-10
+	],
+	fohungarumlaut: [
+		-20,
+		-20,
+		-30,
+		-30,
+		-25,
+		-10
+	],
+	fomacron: [
+		-20,
+		-20,
+		-30,
+		-30,
+		-25
+	],
+	foslash: [
+		-20,
+		-20,
+		-30,
+		-30,
+		-25,
+		-10
+	],
+	fotilde: [
+		-20,
+		-20,
+		-30,
+		-30,
+		-25,
+		-10
+	],
+	fperiod: [
+		-10,
+		-10,
+		-30,
+		-30,
+		-15,
+		-10,
+		-15
+	],
+	fquotedblright: [
+		30,
+		30,
+		60,
+		60,
+		50
+	],
+	fquoteright: [
+		30,
+		30,
+		50,
+		50,
+		55,
+		55,
+		92,
+		55
+	],
+	ge: [
+		10,
+		10,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	geacute: [
+		10,
+		10,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	gecaron: [
+		10,
+		10,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	gecircumflex: [
+		10,
+		10,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	gedieresis: [
+		10,
+		10,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	gedotaccent: [
+		10,
+		10,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	gegrave: [
+		10,
+		10,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	gemacron: [
+		10,
+		10,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	geogonek: [
+		10,
+		10,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	gg: [
+		-10,
+		-10,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	ggbreve: [
+		-10,
+		-10,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	ggcommaaccent: [
+		-10,
+		-10,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	gbrevee: [
+		10,
+		10,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	gbreveeacute: [
+		10,
+		10,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	gbreveecaron: [
+		10,
+		10,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	gbreveecircumflex: [
+		10,
+		10,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	gbreveedieresis: [
+		10,
+		10,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	gbreveedotaccent: [
+		10,
+		10,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	gbreveegrave: [
+		10,
+		10,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	gbreveemacron: [
+		10,
+		10,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	gbreveeogonek: [
+		10,
+		10,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	gbreveg: [
+		-10,
+		-10,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	gbrevegbreve: [
+		-10,
+		-10,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	gbrevegcommaaccent: [
+		-10,
+		-10,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	gcommaaccente: [
+		10,
+		10,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	gcommaaccenteacute: [
+		10,
+		10,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	gcommaaccentecaron: [
+		10,
+		10,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	gcommaaccentecircumflex: [
+		10,
+		10,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	gcommaaccentedieresis: [
+		10,
+		10,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	gcommaaccentedotaccent: [
+		10,
+		10,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	gcommaaccentegrave: [
+		10,
+		10,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	gcommaaccentemacron: [
+		10,
+		10,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	gcommaaccenteogonek: [
+		10,
+		10,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	gcommaaccentg: [
+		-10,
+		-10,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	gcommaaccentgbreve: [
+		-10,
+		-10,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	gcommaaccentgcommaaccent: [
+		-10,
+		-10,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	hy: [
+		-20,
+		-20,
+		-30,
+		-30,
+		-15,
+		0,
+		0,
+		-5
+	],
+	hyacute: [
+		-20,
+		-20,
+		-30,
+		-30,
+		-15,
+		0,
+		0,
+		-5
+	],
+	hydieresis: [
+		-20,
+		-20,
+		-30,
+		-30,
+		-15,
+		0,
+		0,
+		-5
+	],
+	ko: [
+		-15,
+		-15,
+		-20,
+		-20,
+		-15,
+		-10,
+		-10,
+		-10
+	],
+	koacute: [
+		-15,
+		-15,
+		-20,
+		-20,
+		-15,
+		-10,
+		-10,
+		-10
+	],
+	kocircumflex: [
+		-15,
+		-15,
+		-20,
+		-20,
+		-15,
+		-10,
+		-10,
+		-10
+	],
+	kodieresis: [
+		-15,
+		-15,
+		-20,
+		-20,
+		-15,
+		-10,
+		-10,
+		-10
+	],
+	kograve: [
+		-15,
+		-15,
+		-20,
+		-20,
+		-15,
+		-10,
+		-10,
+		-10
+	],
+	kohungarumlaut: [
+		-15,
+		-15,
+		-20,
+		-20,
+		-15,
+		-10,
+		-10,
+		-10
+	],
+	komacron: [
+		-15,
+		-15,
+		-20,
+		-20,
+		-15,
+		-10,
+		-10,
+		-10
+	],
+	koslash: [
+		-15,
+		-15,
+		-20,
+		-20,
+		-15,
+		-10,
+		-10,
+		-10
+	],
+	kotilde: [
+		-15,
+		-15,
+		-20,
+		-20,
+		-15,
+		-10,
+		-10,
+		-10
+	],
+	kcommaaccento: [
+		-15,
+		-15,
+		-20,
+		-20,
+		-15,
+		-10,
+		-10,
+		-10
+	],
+	kcommaaccentoacute: [
+		-15,
+		-15,
+		-20,
+		-20,
+		-15,
+		-10,
+		-10,
+		-10
+	],
+	kcommaaccentocircumflex: [
+		-15,
+		-15,
+		-20,
+		-20,
+		-15,
+		-10,
+		-10,
+		-10
+	],
+	kcommaaccentodieresis: [
+		-15,
+		-15,
+		-20,
+		-20,
+		-15,
+		-10,
+		-10,
+		-10
+	],
+	kcommaaccentograve: [
+		-15,
+		-15,
+		-20,
+		-20,
+		-15,
+		-10,
+		-10,
+		-10
+	],
+	kcommaaccentohungarumlaut: [
+		-15,
+		-15,
+		-20,
+		-20,
+		-15,
+		-10,
+		-10,
+		-10
+	],
+	kcommaaccentomacron: [
+		-15,
+		-15,
+		-20,
+		-20,
+		-15,
+		-10,
+		-10,
+		-10
+	],
+	kcommaaccentoslash: [
+		-15,
+		-15,
+		-20,
+		-20,
+		-15,
+		-10,
+		-10,
+		-10
+	],
+	kcommaaccentotilde: [
+		-15,
+		-15,
+		-20,
+		-20,
+		-15,
+		-10,
+		-10,
+		-10
+	],
+	lw: [
+		-15,
+		-15,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	ly: [
+		-15,
+		-15
+	],
+	lyacute: [
+		-15,
+		-15
+	],
+	lydieresis: [
+		-15,
+		-15
+	],
+	lacutew: [
+		-15,
+		-15,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	lacutey: [
+		-15,
+		-15
+	],
+	lacuteyacute: [
+		-15,
+		-15
+	],
+	lacuteydieresis: [
+		-15,
+		-15
+	],
+	lcommaaccentw: [
+		-15,
+		-15,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	lcommaaccenty: [
+		-15,
+		-15
+	],
+	lcommaaccentyacute: [
+		-15,
+		-15
+	],
+	lcommaaccentydieresis: [
+		-15,
+		-15
+	],
+	lslashw: [
+		-15,
+		-15,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	lslashy: [
+		-15,
+		-15
+	],
+	lslashyacute: [
+		-15,
+		-15
+	],
+	lslashydieresis: [
+		-15,
+		-15
+	],
+	mu: [
+		-20,
+		-20,
+		-10,
+		-10
+	],
+	muacute: [
+		-20,
+		-20,
+		-10,
+		-10
+	],
+	mucircumflex: [
+		-20,
+		-20,
+		-10,
+		-10
+	],
+	mudieresis: [
+		-20,
+		-20,
+		-10,
+		-10
+	],
+	mugrave: [
+		-20,
+		-20,
+		-10,
+		-10
+	],
+	muhungarumlaut: [
+		-20,
+		-20,
+		-10,
+		-10
+	],
+	mumacron: [
+		-20,
+		-20,
+		-10,
+		-10
+	],
+	muogonek: [
+		-20,
+		-20,
+		-10,
+		-10
+	],
+	muring: [
+		-20,
+		-20,
+		-10,
+		-10
+	],
+	my: [
+		-30,
+		-30,
+		-15,
+		-15
+	],
+	myacute: [
+		-30,
+		-30,
+		-15,
+		-15
+	],
+	mydieresis: [
+		-30,
+		-30,
+		-15,
+		-15
+	],
+	nu: [
+		-10,
+		-10,
+		-10,
+		-10
+	],
+	nuacute: [
+		-10,
+		-10,
+		-10,
+		-10
+	],
+	nucircumflex: [
+		-10,
+		-10,
+		-10,
+		-10
+	],
+	nudieresis: [
+		-10,
+		-10,
+		-10,
+		-10
+	],
+	nugrave: [
+		-10,
+		-10,
+		-10,
+		-10
+	],
+	nuhungarumlaut: [
+		-10,
+		-10,
+		-10,
+		-10
+	],
+	numacron: [
+		-10,
+		-10,
+		-10,
+		-10
+	],
+	nuogonek: [
+		-10,
+		-10,
+		-10,
+		-10
+	],
+	nuring: [
+		-10,
+		-10,
+		-10,
+		-10
+	],
+	nv: [
+		-40,
+		-40,
+		-20,
+		-20,
+		-40,
+		-40,
+		-40,
+		-40
+	],
+	ny: [
+		-20,
+		-20,
+		-15,
+		-15,
+		0,
+		0,
+		0,
+		-15
+	],
+	nyacute: [
+		-20,
+		-20,
+		-15,
+		-15,
+		0,
+		0,
+		0,
+		-15
+	],
+	nydieresis: [
+		-20,
+		-20,
+		-15,
+		-15,
+		0,
+		0,
+		0,
+		-15
+	],
+	nacuteu: [
+		-10,
+		-10,
+		-10,
+		-10
+	],
+	nacuteuacute: [
+		-10,
+		-10,
+		-10,
+		-10
+	],
+	nacuteucircumflex: [
+		-10,
+		-10,
+		-10,
+		-10
+	],
+	nacuteudieresis: [
+		-10,
+		-10,
+		-10,
+		-10
+	],
+	nacuteugrave: [
+		-10,
+		-10,
+		-10,
+		-10
+	],
+	nacuteuhungarumlaut: [
+		-10,
+		-10,
+		-10,
+		-10
+	],
+	nacuteumacron: [
+		-10,
+		-10,
+		-10,
+		-10
+	],
+	nacuteuogonek: [
+		-10,
+		-10,
+		-10,
+		-10
+	],
+	nacuteuring: [
+		-10,
+		-10,
+		-10,
+		-10
+	],
+	nacutev: [
+		-40,
+		-40,
+		-20,
+		-20,
+		-40,
+		-40,
+		-40,
+		-40
+	],
+	nacutey: [
+		-20,
+		-20,
+		-15,
+		-15,
+		0,
+		0,
+		0,
+		-15
+	],
+	nacuteyacute: [
+		-20,
+		-20,
+		-15,
+		-15,
+		0,
+		0,
+		0,
+		-15
+	],
+	nacuteydieresis: [
+		-20,
+		-20,
+		-15,
+		-15,
+		0,
+		0,
+		0,
+		-15
+	],
+	ncaronu: [
+		-10,
+		-10,
+		-10,
+		-10
+	],
+	ncaronuacute: [
+		-10,
+		-10,
+		-10,
+		-10
+	],
+	ncaronucircumflex: [
+		-10,
+		-10,
+		-10,
+		-10
+	],
+	ncaronudieresis: [
+		-10,
+		-10,
+		-10,
+		-10
+	],
+	ncaronugrave: [
+		-10,
+		-10,
+		-10,
+		-10
+	],
+	ncaronuhungarumlaut: [
+		-10,
+		-10,
+		-10,
+		-10
+	],
+	ncaronumacron: [
+		-10,
+		-10,
+		-10,
+		-10
+	],
+	ncaronuogonek: [
+		-10,
+		-10,
+		-10,
+		-10
+	],
+	ncaronuring: [
+		-10,
+		-10,
+		-10,
+		-10
+	],
+	ncaronv: [
+		-40,
+		-40,
+		-20,
+		-20,
+		-40,
+		-40,
+		-40,
+		-40
+	],
+	ncarony: [
+		-20,
+		-20,
+		-15,
+		-15,
+		0,
+		0,
+		0,
+		-15
+	],
+	ncaronyacute: [
+		-20,
+		-20,
+		-15,
+		-15,
+		0,
+		0,
+		0,
+		-15
+	],
+	ncaronydieresis: [
+		-20,
+		-20,
+		-15,
+		-15,
+		0,
+		0,
+		0,
+		-15
+	],
+	ncommaaccentu: [
+		-10,
+		-10,
+		-10,
+		-10
+	],
+	ncommaaccentuacute: [
+		-10,
+		-10,
+		-10,
+		-10
+	],
+	ncommaaccentucircumflex: [
+		-10,
+		-10,
+		-10,
+		-10
+	],
+	ncommaaccentudieresis: [
+		-10,
+		-10,
+		-10,
+		-10
+	],
+	ncommaaccentugrave: [
+		-10,
+		-10,
+		-10,
+		-10
+	],
+	ncommaaccentuhungarumlaut: [
+		-10,
+		-10,
+		-10,
+		-10
+	],
+	ncommaaccentumacron: [
+		-10,
+		-10,
+		-10,
+		-10
+	],
+	ncommaaccentuogonek: [
+		-10,
+		-10,
+		-10,
+		-10
+	],
+	ncommaaccenturing: [
+		-10,
+		-10,
+		-10,
+		-10
+	],
+	ncommaaccentv: [
+		-40,
+		-40,
+		-20,
+		-20,
+		-40,
+		-40,
+		-40,
+		-40
+	],
+	ncommaaccenty: [
+		-20,
+		-20,
+		-15,
+		-15,
+		0,
+		0,
+		0,
+		-15
+	],
+	ncommaaccentyacute: [
+		-20,
+		-20,
+		-15,
+		-15,
+		0,
+		0,
+		0,
+		-15
+	],
+	ncommaaccentydieresis: [
+		-20,
+		-20,
+		-15,
+		-15,
+		0,
+		0,
+		0,
+		-15
+	],
+	ntildeu: [
+		-10,
+		-10,
+		-10,
+		-10
+	],
+	ntildeuacute: [
+		-10,
+		-10,
+		-10,
+		-10
+	],
+	ntildeucircumflex: [
+		-10,
+		-10,
+		-10,
+		-10
+	],
+	ntildeudieresis: [
+		-10,
+		-10,
+		-10,
+		-10
+	],
+	ntildeugrave: [
+		-10,
+		-10,
+		-10,
+		-10
+	],
+	ntildeuhungarumlaut: [
+		-10,
+		-10,
+		-10,
+		-10
+	],
+	ntildeumacron: [
+		-10,
+		-10,
+		-10,
+		-10
+	],
+	ntildeuogonek: [
+		-10,
+		-10,
+		-10,
+		-10
+	],
+	ntildeuring: [
+		-10,
+		-10,
+		-10,
+		-10
+	],
+	ntildev: [
+		-40,
+		-40,
+		-20,
+		-20,
+		-40,
+		-40,
+		-40,
+		-40
+	],
+	ntildey: [
+		-20,
+		-20,
+		-15,
+		-15,
+		0,
+		0,
+		0,
+		-15
+	],
+	ntildeyacute: [
+		-20,
+		-20,
+		-15,
+		-15,
+		0,
+		0,
+		0,
+		-15
+	],
+	ntildeydieresis: [
+		-20,
+		-20,
+		-15,
+		-15,
+		0,
+		0,
+		0,
+		-15
+	],
+	ov: [
+		-20,
+		-20,
+		-15,
+		-15,
+		-10,
+		-15,
+		-10,
+		-15
+	],
+	ow: [
+		-15,
+		-15,
+		-15,
+		-15,
+		-10,
+		-25,
+		0,
+		-25
+	],
+	ox: [
+		-30,
+		-30,
+		-30,
+		-30,
+		0,
+		-10
+	],
+	oy: [
+		-20,
+		-20,
+		-30,
+		-30,
+		0,
+		-10,
+		0,
+		-10
+	],
+	oyacute: [
+		-20,
+		-20,
+		-30,
+		-30,
+		0,
+		-10,
+		0,
+		-10
+	],
+	oydieresis: [
+		-20,
+		-20,
+		-30,
+		-30,
+		0,
+		-10,
+		0,
+		-10
+	],
+	oacutev: [
+		-20,
+		-20,
+		-15,
+		-15,
+		-10,
+		-15,
+		-10,
+		-15
+	],
+	oacutew: [
+		-15,
+		-15,
+		-15,
+		-15,
+		-10,
+		-25,
+		0,
+		-25
+	],
+	oacutex: [
+		-30,
+		-30,
+		-30,
+		-30,
+		0,
+		-10
+	],
+	oacutey: [
+		-20,
+		-20,
+		-30,
+		-30,
+		0,
+		-10,
+		0,
+		-10
+	],
+	oacuteyacute: [
+		-20,
+		-20,
+		-30,
+		-30,
+		0,
+		-10,
+		0,
+		-10
+	],
+	oacuteydieresis: [
+		-20,
+		-20,
+		-30,
+		-30,
+		0,
+		-10,
+		0,
+		-10
+	],
+	ocircumflexv: [
+		-20,
+		-20,
+		-15,
+		-15,
+		-10,
+		-15,
+		-10,
+		-15
+	],
+	ocircumflexw: [
+		-15,
+		-15,
+		-15,
+		-15,
+		-10,
+		-25,
+		0,
+		-25
+	],
+	ocircumflexx: [
+		-30,
+		-30,
+		-30,
+		-30,
+		0,
+		-10
+	],
+	ocircumflexy: [
+		-20,
+		-20,
+		-30,
+		-30,
+		0,
+		-10,
+		0,
+		-10
+	],
+	ocircumflexyacute: [
+		-20,
+		-20,
+		-30,
+		-30,
+		0,
+		-10,
+		0,
+		-10
+	],
+	ocircumflexydieresis: [
+		-20,
+		-20,
+		-30,
+		-30,
+		0,
+		-10,
+		0,
+		-10
+	],
+	odieresisv: [
+		-20,
+		-20,
+		-15,
+		-15,
+		-10,
+		-15,
+		-10,
+		-15
+	],
+	odieresisw: [
+		-15,
+		-15,
+		-15,
+		-15,
+		-10,
+		-25,
+		0,
+		-25
+	],
+	odieresisx: [
+		-30,
+		-30,
+		-30,
+		-30,
+		0,
+		-10
+	],
+	odieresisy: [
+		-20,
+		-20,
+		-30,
+		-30,
+		0,
+		-10,
+		0,
+		-10
+	],
+	odieresisyacute: [
+		-20,
+		-20,
+		-30,
+		-30,
+		0,
+		-10,
+		0,
+		-10
+	],
+	odieresisydieresis: [
+		-20,
+		-20,
+		-30,
+		-30,
+		0,
+		-10,
+		0,
+		-10
+	],
+	ogravev: [
+		-20,
+		-20,
+		-15,
+		-15,
+		-10,
+		-15,
+		-10,
+		-15
+	],
+	ogravew: [
+		-15,
+		-15,
+		-15,
+		-15,
+		-10,
+		-25,
+		0,
+		-25
+	],
+	ogravex: [
+		-30,
+		-30,
+		-30,
+		-30,
+		0,
+		-10
+	],
+	ogravey: [
+		-20,
+		-20,
+		-30,
+		-30,
+		0,
+		-10,
+		0,
+		-10
+	],
+	ograveyacute: [
+		-20,
+		-20,
+		-30,
+		-30,
+		0,
+		-10,
+		0,
+		-10
+	],
+	ograveydieresis: [
+		-20,
+		-20,
+		-30,
+		-30,
+		0,
+		-10,
+		0,
+		-10
+	],
+	ohungarumlautv: [
+		-20,
+		-20,
+		-15,
+		-15,
+		-10,
+		-15,
+		-10,
+		-15
+	],
+	ohungarumlautw: [
+		-15,
+		-15,
+		-15,
+		-15,
+		-10,
+		-25,
+		0,
+		-25
+	],
+	ohungarumlautx: [
+		-30,
+		-30,
+		-30,
+		-30,
+		0,
+		-10
+	],
+	ohungarumlauty: [
+		-20,
+		-20,
+		-30,
+		-30,
+		0,
+		-10,
+		0,
+		-10
+	],
+	ohungarumlautyacute: [
+		-20,
+		-20,
+		-30,
+		-30,
+		0,
+		-10,
+		0,
+		-10
+	],
+	ohungarumlautydieresis: [
+		-20,
+		-20,
+		-30,
+		-30,
+		0,
+		-10,
+		0,
+		-10
+	],
+	omacronv: [
+		-20,
+		-20,
+		-15,
+		-15,
+		-10,
+		-15,
+		-10,
+		-15
+	],
+	omacronw: [
+		-15,
+		-15,
+		-15,
+		-15,
+		-10,
+		-25,
+		0,
+		-25
+	],
+	omacronx: [
+		-30,
+		-30,
+		-30,
+		-30,
+		0,
+		-10
+	],
+	omacrony: [
+		-20,
+		-20,
+		-30,
+		-30,
+		0,
+		-10,
+		0,
+		-10
+	],
+	omacronyacute: [
+		-20,
+		-20,
+		-30,
+		-30,
+		0,
+		-10,
+		0,
+		-10
+	],
+	omacronydieresis: [
+		-20,
+		-20,
+		-30,
+		-30,
+		0,
+		-10,
+		0,
+		-10
+	],
+	oslashv: [
+		-20,
+		-20,
+		-70,
+		-70,
+		-10,
+		-15,
+		-10,
+		-15
+	],
+	oslashw: [
+		-15,
+		-15,
+		-70,
+		-70,
+		-10,
+		-25,
+		0,
+		-25
+	],
+	oslashx: [
+		-30,
+		-30,
+		-85,
+		-85,
+		0,
+		-10
+	],
+	oslashy: [
+		-20,
+		-20,
+		-70,
+		-70,
+		0,
+		-10,
+		0,
+		-10
+	],
+	oslashyacute: [
+		-20,
+		-20,
+		-70,
+		-70,
+		0,
+		-10,
+		0,
+		-10
+	],
+	oslashydieresis: [
+		-20,
+		-20,
+		-70,
+		-70,
+		0,
+		-10,
+		0,
+		-10
+	],
+	otildev: [
+		-20,
+		-20,
+		-15,
+		-15,
+		-10,
+		-15,
+		-10,
+		-15
+	],
+	otildew: [
+		-15,
+		-15,
+		-15,
+		-15,
+		-10,
+		-25,
+		0,
+		-25
+	],
+	otildex: [
+		-30,
+		-30,
+		-30,
+		-30,
+		0,
+		-10
+	],
+	otildey: [
+		-20,
+		-20,
+		-30,
+		-30,
+		0,
+		-10,
+		0,
+		-10
+	],
+	otildeyacute: [
+		-20,
+		-20,
+		-30,
+		-30,
+		0,
+		-10,
+		0,
+		-10
+	],
+	otildeydieresis: [
+		-20,
+		-20,
+		-30,
+		-30,
+		0,
+		-10,
+		0,
+		-10
+	],
+	py: [
+		-15,
+		-15,
+		-30,
+		-30,
+		0,
+		0,
+		0,
+		-10
+	],
+	pyacute: [
+		-15,
+		-15,
+		-30,
+		-30,
+		0,
+		0,
+		0,
+		-10
+	],
+	pydieresis: [
+		-15,
+		-15,
+		-30,
+		-30,
+		0,
+		0,
+		0,
+		-10
+	],
+	periodquotedblright: [
+		-120,
+		-120,
+		-100,
+		-100,
+		-55,
+		-95,
+		-140,
+		-70
+	],
+	periodquoteright: [
+		-120,
+		-120,
+		-100,
+		-100,
+		-55,
+		-95,
+		-140,
+		-70
+	],
+	periodspace: [
+		-40,
+		-40,
+		-60,
+		-60
+	],
+	quotedblrightspace: [
+		-80,
+		-80,
+		-40,
+		-40
+	],
+	quoteleftquoteleft: [
+		-46,
+		-46,
+		-57,
+		-57,
+		-63,
+		-74,
+		-111,
+		-74
+	],
+	quoterightd: [
+		-80,
+		-80,
+		-50,
+		-50,
+		-20,
+		-15,
+		-25,
+		-50
+	],
+	quoterightdcroat: [
+		-80,
+		-80,
+		-50,
+		-50,
+		-20,
+		-15,
+		-25,
+		-50
+	],
+	quoterightl: [
+		-20,
+		-20,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	quoterightlacute: [
+		-20,
+		-20,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	quoterightlcommaaccent: [
+		-20,
+		-20,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	quoterightlslash: [
+		-20,
+		-20,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	quoterightquoteright: [
+		-46,
+		-46,
+		-57,
+		-57,
+		-63,
+		-74,
+		-111,
+		-74
+	],
+	quoterightr: [
+		-40,
+		-40,
+		-50,
+		-50,
+		-20,
+		-15,
+		-25,
+		-50
+	],
+	quoterightracute: [
+		-40,
+		-40,
+		-50,
+		-50,
+		-20,
+		-15,
+		-25,
+		-50
+	],
+	quoterightrcaron: [
+		-40,
+		-40,
+		-50,
+		-50,
+		-20,
+		-15,
+		-25,
+		-50
+	],
+	quoterightrcommaaccent: [
+		-40,
+		-40,
+		-50,
+		-50,
+		-20,
+		-15,
+		-25,
+		-50
+	],
+	quoterights: [
+		-60,
+		-60,
+		-50,
+		-50,
+		-37,
+		-74,
+		-40,
+		-55
+	],
+	quoterightsacute: [
+		-60,
+		-60,
+		-50,
+		-50,
+		-37,
+		-74,
+		-40,
+		-55
+	],
+	quoterightscaron: [
+		-60,
+		-60,
+		-50,
+		-50,
+		-37,
+		-74,
+		-40,
+		-55
+	],
+	quoterightscedilla: [
+		-60,
+		-60,
+		-50,
+		-50,
+		-37,
+		-74,
+		-40,
+		-55
+	],
+	quoterightscommaaccent: [
+		-60,
+		-60,
+		-50,
+		-50,
+		-37,
+		-74,
+		-40,
+		-55
+	],
+	quoterightspace: [
+		-80,
+		-80,
+		-70,
+		-70,
+		-74,
+		-74,
+		-111,
+		-74
+	],
+	quoterightv: [
+		-20,
+		-20,
+		0,
+		0,
+		-20,
+		-15,
+		-10,
+		-50
+	],
+	rc: [
+		-20,
+		-20,
+		0,
+		0,
+		-18,
+		0,
+		-37
+	],
+	rcacute: [
+		-20,
+		-20,
+		0,
+		0,
+		-18,
+		0,
+		-37
+	],
+	rccaron: [
+		-20,
+		-20,
+		0,
+		0,
+		-18,
+		0,
+		-37
+	],
+	rccedilla: [
+		-20,
+		-20,
+		0,
+		0,
+		-18,
+		0,
+		-37
+	],
+	rcomma: [
+		-60,
+		-60,
+		-50,
+		-50,
+		-92,
+		-65,
+		-111,
+		-40
+	],
+	rd: [
+		-20,
+		-20,
+		0,
+		0,
+		0,
+		0,
+		-37
+	],
+	rdcroat: [
+		-20,
+		-20,
+		0,
+		0,
+		0,
+		0,
+		-37
+	],
+	rg: [
+		-15,
+		-15,
+		0,
+		0,
+		-10,
+		0,
+		-37,
+		-18
+	],
+	rgbreve: [
+		-15,
+		-15,
+		0,
+		0,
+		-10,
+		0,
+		-37,
+		-18
+	],
+	rgcommaaccent: [
+		-15,
+		-15,
+		0,
+		0,
+		-10,
+		0,
+		-37,
+		-18
+	],
+	rhyphen: [
+		-20,
+		-20,
+		0,
+		0,
+		-37,
+		0,
+		-20,
+		-20
+	],
+	ro: [
+		-20,
+		-20,
+		0,
+		0,
+		-18,
+		0,
+		-45
+	],
+	roacute: [
+		-20,
+		-20,
+		0,
+		0,
+		-18,
+		0,
+		-45
+	],
+	rocircumflex: [
+		-20,
+		-20,
+		0,
+		0,
+		-18,
+		0,
+		-45
+	],
+	rodieresis: [
+		-20,
+		-20,
+		0,
+		0,
+		-18,
+		0,
+		-45
+	],
+	rograve: [
+		-20,
+		-20,
+		0,
+		0,
+		-18,
+		0,
+		-45
+	],
+	rohungarumlaut: [
+		-20,
+		-20,
+		0,
+		0,
+		-18,
+		0,
+		-45
+	],
+	romacron: [
+		-20,
+		-20,
+		0,
+		0,
+		-18,
+		0,
+		-45
+	],
+	roslash: [
+		-20,
+		-20,
+		0,
+		0,
+		-18,
+		0,
+		-45
+	],
+	rotilde: [
+		-20,
+		-20,
+		0,
+		0,
+		-18,
+		0,
+		-45
+	],
+	rperiod: [
+		-60,
+		-60,
+		-50,
+		-50,
+		-100,
+		-65,
+		-111,
+		-55
+	],
+	rq: [
+		-20,
+		-20,
+		0,
+		0,
+		-18,
+		0,
+		-37
+	],
+	rs: [
+		-15,
+		-15,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	rsacute: [
+		-15,
+		-15,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	rscaron: [
+		-15,
+		-15,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	rscedilla: [
+		-15,
+		-15,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	rscommaaccent: [
+		-15,
+		-15,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	rt: [
+		20,
+		20,
+		40,
+		40
+	],
+	rtcommaaccent: [
+		20,
+		20,
+		40,
+		40
+	],
+	rv: [
+		10,
+		10,
+		30,
+		30,
+		-10
+	],
+	ry: [
+		10,
+		10,
+		30,
+		30
+	],
+	ryacute: [
+		10,
+		10,
+		30,
+		30
+	],
+	rydieresis: [
+		10,
+		10,
+		30,
+		30
+	],
+	racutec: [
+		-20,
+		-20,
+		0,
+		0,
+		-18,
+		0,
+		-37
+	],
+	racutecacute: [
+		-20,
+		-20,
+		0,
+		0,
+		-18,
+		0,
+		-37
+	],
+	racuteccaron: [
+		-20,
+		-20,
+		0,
+		0,
+		-18,
+		0,
+		-37
+	],
+	racuteccedilla: [
+		-20,
+		-20,
+		0,
+		0,
+		-18,
+		0,
+		-37
+	],
+	racutecomma: [
+		-60,
+		-60,
+		-50,
+		-50,
+		-92,
+		-65,
+		-111,
+		-40
+	],
+	racuted: [
+		-20,
+		-20,
+		0,
+		0,
+		0,
+		0,
+		-37
+	],
+	racutedcroat: [
+		-20,
+		-20,
+		0,
+		0,
+		0,
+		0,
+		-37
+	],
+	racuteg: [
+		-15,
+		-15,
+		0,
+		0,
+		-10,
+		0,
+		-37,
+		-18
+	],
+	racutegbreve: [
+		-15,
+		-15,
+		0,
+		0,
+		-10,
+		0,
+		-37,
+		-18
+	],
+	racutegcommaaccent: [
+		-15,
+		-15,
+		0,
+		0,
+		-10,
+		0,
+		-37,
+		-18
+	],
+	racutehyphen: [
+		-20,
+		-20,
+		0,
+		0,
+		-37,
+		0,
+		-20,
+		-20
+	],
+	racuteo: [
+		-20,
+		-20,
+		0,
+		0,
+		-18,
+		0,
+		-45
+	],
+	racuteoacute: [
+		-20,
+		-20,
+		0,
+		0,
+		-18,
+		0,
+		-45
+	],
+	racuteocircumflex: [
+		-20,
+		-20,
+		0,
+		0,
+		-18,
+		0,
+		-45
+	],
+	racuteodieresis: [
+		-20,
+		-20,
+		0,
+		0,
+		-18,
+		0,
+		-45
+	],
+	racuteograve: [
+		-20,
+		-20,
+		0,
+		0,
+		-18,
+		0,
+		-45
+	],
+	racuteohungarumlaut: [
+		-20,
+		-20,
+		0,
+		0,
+		-18,
+		0,
+		-45
+	],
+	racuteomacron: [
+		-20,
+		-20,
+		0,
+		0,
+		-18,
+		0,
+		-45
+	],
+	racuteoslash: [
+		-20,
+		-20,
+		0,
+		0,
+		-18,
+		0,
+		-45
+	],
+	racuteotilde: [
+		-20,
+		-20,
+		0,
+		0,
+		-18,
+		0,
+		-45
+	],
+	racuteperiod: [
+		-60,
+		-60,
+		-50,
+		-50,
+		-100,
+		-65,
+		-111,
+		-55
+	],
+	racuteq: [
+		-20,
+		-20,
+		0,
+		0,
+		-18,
+		0,
+		-37
+	],
+	racutes: [
+		-15,
+		-15,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	racutesacute: [
+		-15,
+		-15,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	racutescaron: [
+		-15,
+		-15,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	racutescedilla: [
+		-15,
+		-15,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	racutescommaaccent: [
+		-15,
+		-15,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	racutet: [
+		20,
+		20,
+		40,
+		40
+	],
+	racutetcommaaccent: [
+		20,
+		20,
+		40,
+		40
+	],
+	racutev: [
+		10,
+		10,
+		30,
+		30,
+		-10
+	],
+	racutey: [
+		10,
+		10,
+		30,
+		30
+	],
+	racuteyacute: [
+		10,
+		10,
+		30,
+		30
+	],
+	racuteydieresis: [
+		10,
+		10,
+		30,
+		30
+	],
+	rcaronc: [
+		-20,
+		-20,
+		0,
+		0,
+		-18,
+		0,
+		-37
+	],
+	rcaroncacute: [
+		-20,
+		-20,
+		0,
+		0,
+		-18,
+		0,
+		-37
+	],
+	rcaronccaron: [
+		-20,
+		-20,
+		0,
+		0,
+		-18,
+		0,
+		-37
+	],
+	rcaronccedilla: [
+		-20,
+		-20,
+		0,
+		0,
+		-18,
+		0,
+		-37
+	],
+	rcaroncomma: [
+		-60,
+		-60,
+		-50,
+		-50,
+		-92,
+		-65,
+		-111,
+		-40
+	],
+	rcarond: [
+		-20,
+		-20,
+		0,
+		0,
+		0,
+		0,
+		-37
+	],
+	rcarondcroat: [
+		-20,
+		-20,
+		0,
+		0,
+		0,
+		0,
+		-37
+	],
+	rcarong: [
+		-15,
+		-15,
+		0,
+		0,
+		-10,
+		0,
+		-37,
+		-18
+	],
+	rcarongbreve: [
+		-15,
+		-15,
+		0,
+		0,
+		-10,
+		0,
+		-37,
+		-18
+	],
+	rcarongcommaaccent: [
+		-15,
+		-15,
+		0,
+		0,
+		-10,
+		0,
+		-37,
+		-18
+	],
+	rcaronhyphen: [
+		-20,
+		-20,
+		0,
+		0,
+		-37,
+		0,
+		-20,
+		-20
+	],
+	rcarono: [
+		-20,
+		-20,
+		0,
+		0,
+		-18,
+		0,
+		-45
+	],
+	rcaronoacute: [
+		-20,
+		-20,
+		0,
+		0,
+		-18,
+		0,
+		-45
+	],
+	rcaronocircumflex: [
+		-20,
+		-20,
+		0,
+		0,
+		-18,
+		0,
+		-45
+	],
+	rcaronodieresis: [
+		-20,
+		-20,
+		0,
+		0,
+		-18,
+		0,
+		-45
+	],
+	rcaronograve: [
+		-20,
+		-20,
+		0,
+		0,
+		-18,
+		0,
+		-45
+	],
+	rcaronohungarumlaut: [
+		-20,
+		-20,
+		0,
+		0,
+		-18,
+		0,
+		-45
+	],
+	rcaronomacron: [
+		-20,
+		-20,
+		0,
+		0,
+		-18,
+		0,
+		-45
+	],
+	rcaronoslash: [
+		-20,
+		-20,
+		0,
+		0,
+		-18,
+		0,
+		-45
+	],
+	rcaronotilde: [
+		-20,
+		-20,
+		0,
+		0,
+		-18,
+		0,
+		-45
+	],
+	rcaronperiod: [
+		-60,
+		-60,
+		-50,
+		-50,
+		-100,
+		-65,
+		-111,
+		-55
+	],
+	rcaronq: [
+		-20,
+		-20,
+		0,
+		0,
+		-18,
+		0,
+		-37
+	],
+	rcarons: [
+		-15,
+		-15,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	rcaronsacute: [
+		-15,
+		-15,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	rcaronscaron: [
+		-15,
+		-15,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	rcaronscedilla: [
+		-15,
+		-15,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	rcaronscommaaccent: [
+		-15,
+		-15,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	rcaront: [
+		20,
+		20,
+		40,
+		40
+	],
+	rcarontcommaaccent: [
+		20,
+		20,
+		40,
+		40
+	],
+	rcaronv: [
+		10,
+		10,
+		30,
+		30,
+		-10
+	],
+	rcarony: [
+		10,
+		10,
+		30,
+		30
+	],
+	rcaronyacute: [
+		10,
+		10,
+		30,
+		30
+	],
+	rcaronydieresis: [
+		10,
+		10,
+		30,
+		30
+	],
+	rcommaaccentc: [
+		-20,
+		-20,
+		0,
+		0,
+		-18,
+		0,
+		-37
+	],
+	rcommaaccentcacute: [
+		-20,
+		-20,
+		0,
+		0,
+		-18,
+		0,
+		-37
+	],
+	rcommaaccentccaron: [
+		-20,
+		-20,
+		0,
+		0,
+		-18,
+		0,
+		-37
+	],
+	rcommaaccentccedilla: [
+		-20,
+		-20,
+		0,
+		0,
+		-18,
+		0,
+		-37
+	],
+	rcommaaccentcomma: [
+		-60,
+		-60,
+		-50,
+		-50,
+		-92,
+		-65,
+		-111,
+		-40
+	],
+	rcommaaccentd: [
+		-20,
+		-20,
+		0,
+		0,
+		0,
+		0,
+		-37
+	],
+	rcommaaccentdcroat: [
+		-20,
+		-20,
+		0,
+		0,
+		0,
+		0,
+		-37
+	],
+	rcommaaccentg: [
+		-15,
+		-15,
+		0,
+		0,
+		-10,
+		0,
+		-37,
+		-18
+	],
+	rcommaaccentgbreve: [
+		-15,
+		-15,
+		0,
+		0,
+		-10,
+		0,
+		-37,
+		-18
+	],
+	rcommaaccentgcommaaccent: [
+		-15,
+		-15,
+		0,
+		0,
+		-10,
+		0,
+		-37,
+		-18
+	],
+	rcommaaccenthyphen: [
+		-20,
+		-20,
+		0,
+		0,
+		-37,
+		0,
+		-20,
+		-20
+	],
+	rcommaaccento: [
+		-20,
+		-20,
+		0,
+		0,
+		-18,
+		0,
+		-45
+	],
+	rcommaaccentoacute: [
+		-20,
+		-20,
+		0,
+		0,
+		-18,
+		0,
+		-45
+	],
+	rcommaaccentocircumflex: [
+		-20,
+		-20,
+		0,
+		0,
+		-18,
+		0,
+		-45
+	],
+	rcommaaccentodieresis: [
+		-20,
+		-20,
+		0,
+		0,
+		-18,
+		0,
+		-45
+	],
+	rcommaaccentograve: [
+		-20,
+		-20,
+		0,
+		0,
+		-18,
+		0,
+		-45
+	],
+	rcommaaccentohungarumlaut: [
+		-20,
+		-20,
+		0,
+		0,
+		-18,
+		0,
+		-45
+	],
+	rcommaaccentomacron: [
+		-20,
+		-20,
+		0,
+		0,
+		-18,
+		0,
+		-45
+	],
+	rcommaaccentoslash: [
+		-20,
+		-20,
+		0,
+		0,
+		-18,
+		0,
+		-45
+	],
+	rcommaaccentotilde: [
+		-20,
+		-20,
+		0,
+		0,
+		-18,
+		0,
+		-45
+	],
+	rcommaaccentperiod: [
+		-60,
+		-60,
+		-50,
+		-50,
+		-100,
+		-65,
+		-111,
+		-55
+	],
+	rcommaaccentq: [
+		-20,
+		-20,
+		0,
+		0,
+		-18,
+		0,
+		-37
+	],
+	rcommaaccents: [
+		-15,
+		-15,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	rcommaaccentsacute: [
+		-15,
+		-15,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	rcommaaccentscaron: [
+		-15,
+		-15,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	rcommaaccentscedilla: [
+		-15,
+		-15,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	rcommaaccentscommaaccent: [
+		-15,
+		-15,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	rcommaaccentt: [
+		20,
+		20,
+		40,
+		40
+	],
+	rcommaaccenttcommaaccent: [
+		20,
+		20,
+		40,
+		40
+	],
+	rcommaaccentv: [
+		10,
+		10,
+		30,
+		30,
+		-10
+	],
+	rcommaaccenty: [
+		10,
+		10,
+		30,
+		30
+	],
+	rcommaaccentyacute: [
+		10,
+		10,
+		30,
+		30
+	],
+	rcommaaccentydieresis: [
+		10,
+		10,
+		30,
+		30
+	],
+	sw: [
+		-15,
+		-15,
+		-30,
+		-30
+	],
+	sacutew: [
+		-15,
+		-15,
+		-30,
+		-30
+	],
+	scaronw: [
+		-15,
+		-15,
+		-30,
+		-30
+	],
+	scedillaw: [
+		-15,
+		-15,
+		-30,
+		-30
+	],
+	scommaaccentw: [
+		-15,
+		-15,
+		-30,
+		-30
+	],
+	semicolonspace: [
+		-40,
+		-40,
+		-50,
+		-50
+	],
+	spaceT: [
+		-100,
+		-100,
+		-50,
+		-50,
+		-30,
+		0,
+		-18,
+		-18
+	],
+	spaceTcaron: [
+		-100,
+		-100,
+		-50,
+		-50,
+		-30,
+		0,
+		-18,
+		-18
+	],
+	spaceTcommaaccent: [
+		-100,
+		-100,
+		-50,
+		-50,
+		-30,
+		0,
+		-18,
+		-18
+	],
+	spaceV: [
+		-80,
+		-80,
+		-50,
+		-50,
+		-45,
+		-70,
+		-35,
+		-50
+	],
+	spaceW: [
+		-80,
+		-80,
+		-40,
+		-40,
+		-30,
+		-70,
+		-40,
+		-30
+	],
+	spaceY: [
+		-120,
+		-120,
+		-90,
+		-90,
+		-55,
+		-70,
+		-75,
+		-90
+	],
+	spaceYacute: [
+		-120,
+		-120,
+		-90,
+		-90,
+		-55,
+		-70,
+		-75,
+		-90
+	],
+	spaceYdieresis: [
+		-120,
+		-120,
+		-90,
+		-90,
+		-55,
+		-70,
+		-75,
+		-90
+	],
+	spacequotedblleft: [
+		-80,
+		-80,
+		-30,
+		-30
+	],
+	spacequoteleft: [
+		-60,
+		-60,
+		-60,
+		-60
+	],
+	va: [
+		-20,
+		-20,
+		-25,
+		-25,
+		-10,
+		0,
+		0,
+		-25
+	],
+	vaacute: [
+		-20,
+		-20,
+		-25,
+		-25,
+		-10,
+		0,
+		0,
+		-25
+	],
+	vabreve: [
+		-20,
+		-20,
+		-25,
+		-25,
+		-10,
+		0,
+		0,
+		-25
+	],
+	vacircumflex: [
+		-20,
+		-20,
+		-25,
+		-25,
+		-10,
+		0,
+		0,
+		-25
+	],
+	vadieresis: [
+		-20,
+		-20,
+		-25,
+		-25,
+		-10,
+		0,
+		0,
+		-25
+	],
+	vagrave: [
+		-20,
+		-20,
+		-25,
+		-25,
+		-10,
+		0,
+		0,
+		-25
+	],
+	vamacron: [
+		-20,
+		-20,
+		-25,
+		-25,
+		-10,
+		0,
+		0,
+		-25
+	],
+	vaogonek: [
+		-20,
+		-20,
+		-25,
+		-25,
+		-10,
+		0,
+		0,
+		-25
+	],
+	varing: [
+		-20,
+		-20,
+		-25,
+		-25,
+		-10,
+		0,
+		0,
+		-25
+	],
+	vatilde: [
+		-20,
+		-20,
+		-25,
+		-25,
+		-10,
+		0,
+		0,
+		-25
+	],
+	vcomma: [
+		-80,
+		-80,
+		-80,
+		-80,
+		-55,
+		-37,
+		-74,
+		-65
+	],
+	vo: [
+		-30,
+		-30,
+		-25,
+		-25,
+		-10,
+		-15,
+		0,
+		-20
+	],
+	voacute: [
+		-30,
+		-30,
+		-25,
+		-25,
+		-10,
+		-15,
+		0,
+		-20
+	],
+	vocircumflex: [
+		-30,
+		-30,
+		-25,
+		-25,
+		-10,
+		-15,
+		0,
+		-20
+	],
+	vodieresis: [
+		-30,
+		-30,
+		-25,
+		-25,
+		-10,
+		-15,
+		0,
+		-20
+	],
+	vograve: [
+		-30,
+		-30,
+		-25,
+		-25,
+		-10,
+		-15,
+		0,
+		-20
+	],
+	vohungarumlaut: [
+		-30,
+		-30,
+		-25,
+		-25,
+		-10,
+		-15,
+		0,
+		-20
+	],
+	vomacron: [
+		-30,
+		-30,
+		-25,
+		-25,
+		-10,
+		-15,
+		0,
+		-20
+	],
+	voslash: [
+		-30,
+		-30,
+		-25,
+		-25,
+		-10,
+		-15,
+		0,
+		-20
+	],
+	votilde: [
+		-30,
+		-30,
+		-25,
+		-25,
+		-10,
+		-15,
+		0,
+		-20
+	],
+	vperiod: [
+		-80,
+		-80,
+		-80,
+		-80,
+		-70,
+		-37,
+		-74,
+		-65
+	],
+	wcomma: [
+		-40,
+		-40,
+		-60,
+		-60,
+		-55,
+		-37,
+		-74,
+		-65
+	],
+	wo: [
+		-20,
+		-20,
+		-10,
+		-10,
+		-10,
+		-15,
+		0,
+		-10
+	],
+	woacute: [
+		-20,
+		-20,
+		-10,
+		-10,
+		-10,
+		-15,
+		0,
+		-10
+	],
+	wocircumflex: [
+		-20,
+		-20,
+		-10,
+		-10,
+		-10,
+		-15,
+		0,
+		-10
+	],
+	wodieresis: [
+		-20,
+		-20,
+		-10,
+		-10,
+		-10,
+		-15,
+		0,
+		-10
+	],
+	wograve: [
+		-20,
+		-20,
+		-10,
+		-10,
+		-10,
+		-15,
+		0,
+		-10
+	],
+	wohungarumlaut: [
+		-20,
+		-20,
+		-10,
+		-10,
+		-10,
+		-15,
+		0,
+		-10
+	],
+	womacron: [
+		-20,
+		-20,
+		-10,
+		-10,
+		-10,
+		-15,
+		0,
+		-10
+	],
+	woslash: [
+		-20,
+		-20,
+		-10,
+		-10,
+		-10,
+		-15,
+		0,
+		-10
+	],
+	wotilde: [
+		-20,
+		-20,
+		-10,
+		-10,
+		-10,
+		-15,
+		0,
+		-10
+	],
+	wperiod: [
+		-40,
+		-40,
+		-60,
+		-60,
+		-70,
+		-37,
+		-74,
+		-65
+	],
+	xe: [
+		-10,
+		-10,
+		-30,
+		-30,
+		0,
+		-10,
+		0,
+		-15
+	],
+	xeacute: [
+		-10,
+		-10,
+		-30,
+		-30,
+		0,
+		-10,
+		0,
+		-15
+	],
+	xecaron: [
+		-10,
+		-10,
+		-30,
+		-30,
+		0,
+		-10,
+		0,
+		-15
+	],
+	xecircumflex: [
+		-10,
+		-10,
+		-30,
+		-30,
+		0,
+		-10,
+		0,
+		-15
+	],
+	xedieresis: [
+		-10,
+		-10,
+		-30,
+		-30,
+		0,
+		-10,
+		0,
+		-15
+	],
+	xedotaccent: [
+		-10,
+		-10,
+		-30,
+		-30,
+		0,
+		-10,
+		0,
+		-15
+	],
+	xegrave: [
+		-10,
+		-10,
+		-30,
+		-30,
+		0,
+		-10,
+		0,
+		-15
+	],
+	xemacron: [
+		-10,
+		-10,
+		-30,
+		-30,
+		0,
+		-10,
+		0,
+		-15
+	],
+	xeogonek: [
+		-10,
+		-10,
+		-30,
+		-30,
+		0,
+		-10,
+		0,
+		-15
+	],
+	ya: [
+		-30,
+		-30,
+		-20,
+		-20
+	],
+	yaacute: [
+		-30,
+		-30,
+		-20,
+		-20
+	],
+	yabreve: [
+		-30,
+		-30,
+		-20,
+		-20
+	],
+	yacircumflex: [
+		-30,
+		-30,
+		-20,
+		-20
+	],
+	yadieresis: [
+		-30,
+		-30,
+		-20,
+		-20
+	],
+	yagrave: [
+		-30,
+		-30,
+		-20,
+		-20
+	],
+	yamacron: [
+		-30,
+		-30,
+		-20,
+		-20
+	],
+	yaogonek: [
+		-30,
+		-30,
+		-20,
+		-20
+	],
+	yaring: [
+		-30,
+		-30,
+		-20,
+		-20
+	],
+	yatilde: [
+		-30,
+		-30,
+		-20,
+		-20
+	],
+	ycomma: [
+		-80,
+		-80,
+		-100,
+		-100,
+		-55,
+		-37,
+		-55,
+		-65
+	],
+	ye: [
+		-10,
+		-10,
+		-20,
+		-20,
+		-10
+	],
+	yeacute: [
+		-10,
+		-10,
+		-20,
+		-20,
+		-10
+	],
+	yecaron: [
+		-10,
+		-10,
+		-20,
+		-20,
+		-10
+	],
+	yecircumflex: [
+		-10,
+		-10,
+		-20,
+		-20,
+		-10
+	],
+	yedieresis: [
+		-10,
+		-10,
+		-20,
+		-20,
+		-10
+	],
+	yedotaccent: [
+		-10,
+		-10,
+		-20,
+		-20,
+		-10
+	],
+	yegrave: [
+		-10,
+		-10,
+		-20,
+		-20,
+		-10
+	],
+	yemacron: [
+		-10,
+		-10,
+		-20,
+		-20,
+		-10
+	],
+	yeogonek: [
+		-10,
+		-10,
+		-20,
+		-20,
+		-10
+	],
+	yo: [
+		-25,
+		-25,
+		-20,
+		-20,
+		-25
+	],
+	yoacute: [
+		-25,
+		-25,
+		-20,
+		-20,
+		-25
+	],
+	yocircumflex: [
+		-25,
+		-25,
+		-20,
+		-20,
+		-25
+	],
+	yodieresis: [
+		-25,
+		-25,
+		-20,
+		-20,
+		-25
+	],
+	yograve: [
+		-25,
+		-25,
+		-20,
+		-20,
+		-25
+	],
+	yohungarumlaut: [
+		-25,
+		-25,
+		-20,
+		-20,
+		-25
+	],
+	yomacron: [
+		-25,
+		-25,
+		-20,
+		-20,
+		-25
+	],
+	yoslash: [
+		-25,
+		-25,
+		-20,
+		-20,
+		-25
+	],
+	yotilde: [
+		-25,
+		-25,
+		-20,
+		-20,
+		-25
+	],
+	yperiod: [
+		-80,
+		-80,
+		-100,
+		-100,
+		-70,
+		-37,
+		-55,
+		-65
+	],
+	yacutea: [
+		-30,
+		-30,
+		-20,
+		-20
+	],
+	yacuteaacute: [
+		-30,
+		-30,
+		-20,
+		-20
+	],
+	yacuteabreve: [
+		-30,
+		-30,
+		-20,
+		-20
+	],
+	yacuteacircumflex: [
+		-30,
+		-30,
+		-20,
+		-20
+	],
+	yacuteadieresis: [
+		-30,
+		-30,
+		-20,
+		-20
+	],
+	yacuteagrave: [
+		-30,
+		-30,
+		-20,
+		-20
+	],
+	yacuteamacron: [
+		-30,
+		-30,
+		-20,
+		-20
+	],
+	yacuteaogonek: [
+		-30,
+		-30,
+		-20,
+		-20
+	],
+	yacutearing: [
+		-30,
+		-30,
+		-20,
+		-20
+	],
+	yacuteatilde: [
+		-30,
+		-30,
+		-20,
+		-20
+	],
+	yacutecomma: [
+		-80,
+		-80,
+		-100,
+		-100,
+		-55,
+		-37,
+		-55,
+		-65
+	],
+	yacutee: [
+		-10,
+		-10,
+		-20,
+		-20,
+		-10
+	],
+	yacuteeacute: [
+		-10,
+		-10,
+		-20,
+		-20,
+		-10
+	],
+	yacuteecaron: [
+		-10,
+		-10,
+		-20,
+		-20,
+		-10
+	],
+	yacuteecircumflex: [
+		-10,
+		-10,
+		-20,
+		-20,
+		-10
+	],
+	yacuteedieresis: [
+		-10,
+		-10,
+		-20,
+		-20,
+		-10
+	],
+	yacuteedotaccent: [
+		-10,
+		-10,
+		-20,
+		-20,
+		-10
+	],
+	yacuteegrave: [
+		-10,
+		-10,
+		-20,
+		-20,
+		-10
+	],
+	yacuteemacron: [
+		-10,
+		-10,
+		-20,
+		-20,
+		-10
+	],
+	yacuteeogonek: [
+		-10,
+		-10,
+		-20,
+		-20,
+		-10
+	],
+	yacuteo: [
+		-25,
+		-25,
+		-20,
+		-20,
+		-25
+	],
+	yacuteoacute: [
+		-25,
+		-25,
+		-20,
+		-20,
+		-25
+	],
+	yacuteocircumflex: [
+		-25,
+		-25,
+		-20,
+		-20,
+		-25
+	],
+	yacuteodieresis: [
+		-25,
+		-25,
+		-20,
+		-20,
+		-25
+	],
+	yacuteograve: [
+		-25,
+		-25,
+		-20,
+		-20,
+		-25
+	],
+	yacuteohungarumlaut: [
+		-25,
+		-25,
+		-20,
+		-20,
+		-25
+	],
+	yacuteomacron: [
+		-25,
+		-25,
+		-20,
+		-20,
+		-25
+	],
+	yacuteoslash: [
+		-25,
+		-25,
+		-20,
+		-20,
+		-25
+	],
+	yacuteotilde: [
+		-25,
+		-25,
+		-20,
+		-20,
+		-25
+	],
+	yacuteperiod: [
+		-80,
+		-80,
+		-100,
+		-100,
+		-70,
+		-37,
+		-55,
+		-65
+	],
+	ydieresisa: [
+		-30,
+		-30,
+		-20,
+		-20
+	],
+	ydieresisaacute: [
+		-30,
+		-30,
+		-20,
+		-20
+	],
+	ydieresisabreve: [
+		-30,
+		-30,
+		-20,
+		-20
+	],
+	ydieresisacircumflex: [
+		-30,
+		-30,
+		-20,
+		-20
+	],
+	ydieresisadieresis: [
+		-30,
+		-30,
+		-20,
+		-20
+	],
+	ydieresisagrave: [
+		-30,
+		-30,
+		-20,
+		-20
+	],
+	ydieresisamacron: [
+		-30,
+		-30,
+		-20,
+		-20
+	],
+	ydieresisaogonek: [
+		-30,
+		-30,
+		-20,
+		-20
+	],
+	ydieresisaring: [
+		-30,
+		-30,
+		-20,
+		-20
+	],
+	ydieresisatilde: [
+		-30,
+		-30,
+		-20,
+		-20
+	],
+	ydieresiscomma: [
+		-80,
+		-80,
+		-100,
+		-100,
+		-55,
+		-37,
+		-55,
+		-65
+	],
+	ydieresise: [
+		-10,
+		-10,
+		-20,
+		-20,
+		-10
+	],
+	ydieresiseacute: [
+		-10,
+		-10,
+		-20,
+		-20,
+		-10
+	],
+	ydieresisecaron: [
+		-10,
+		-10,
+		-20,
+		-20,
+		-10
+	],
+	ydieresisecircumflex: [
+		-10,
+		-10,
+		-20,
+		-20,
+		-10
+	],
+	ydieresisedieresis: [
+		-10,
+		-10,
+		-20,
+		-20,
+		-10
+	],
+	ydieresisedotaccent: [
+		-10,
+		-10,
+		-20,
+		-20,
+		-10
+	],
+	ydieresisegrave: [
+		-10,
+		-10,
+		-20,
+		-20,
+		-10
+	],
+	ydieresisemacron: [
+		-10,
+		-10,
+		-20,
+		-20,
+		-10
+	],
+	ydieresiseogonek: [
+		-10,
+		-10,
+		-20,
+		-20,
+		-10
+	],
+	ydieresiso: [
+		-25,
+		-25,
+		-20,
+		-20,
+		-25
+	],
+	ydieresisoacute: [
+		-25,
+		-25,
+		-20,
+		-20,
+		-25
+	],
+	ydieresisocircumflex: [
+		-25,
+		-25,
+		-20,
+		-20,
+		-25
+	],
+	ydieresisodieresis: [
+		-25,
+		-25,
+		-20,
+		-20,
+		-25
+	],
+	ydieresisograve: [
+		-25,
+		-25,
+		-20,
+		-20,
+		-25
+	],
+	ydieresisohungarumlaut: [
+		-25,
+		-25,
+		-20,
+		-20,
+		-25
+	],
+	ydieresisomacron: [
+		-25,
+		-25,
+		-20,
+		-20,
+		-25
+	],
+	ydieresisoslash: [
+		-25,
+		-25,
+		-20,
+		-20,
+		-25
+	],
+	ydieresisotilde: [
+		-25,
+		-25,
+		-20,
+		-20,
+		-25
+	],
+	ydieresisperiod: [
+		-80,
+		-80,
+		-100,
+		-100,
+		-70,
+		-37,
+		-55,
+		-65
+	],
+	ze: [
+		10,
+		10,
+		-15,
+		-15
+	],
+	zeacute: [
+		10,
+		10,
+		-15,
+		-15
+	],
+	zecaron: [
+		10,
+		10,
+		-15,
+		-15
+	],
+	zecircumflex: [
+		10,
+		10,
+		-15,
+		-15
+	],
+	zedieresis: [
+		10,
+		10,
+		-15,
+		-15
+	],
+	zedotaccent: [
+		10,
+		10,
+		-15,
+		-15
+	],
+	zegrave: [
+		10,
+		10,
+		-15,
+		-15
+	],
+	zemacron: [
+		10,
+		10,
+		-15,
+		-15
+	],
+	zeogonek: [
+		10,
+		10,
+		-15,
+		-15
+	],
+	zacutee: [
+		10,
+		10,
+		-15,
+		-15
+	],
+	zacuteeacute: [
+		10,
+		10,
+		-15,
+		-15
+	],
+	zacuteecaron: [
+		10,
+		10,
+		-15,
+		-15
+	],
+	zacuteecircumflex: [
+		10,
+		10,
+		-15,
+		-15
+	],
+	zacuteedieresis: [
+		10,
+		10,
+		-15,
+		-15
+	],
+	zacuteedotaccent: [
+		10,
+		10,
+		-15,
+		-15
+	],
+	zacuteegrave: [
+		10,
+		10,
+		-15,
+		-15
+	],
+	zacuteemacron: [
+		10,
+		10,
+		-15,
+		-15
+	],
+	zacuteeogonek: [
+		10,
+		10,
+		-15,
+		-15
+	],
+	zcarone: [
+		10,
+		10,
+		-15,
+		-15
+	],
+	zcaroneacute: [
+		10,
+		10,
+		-15,
+		-15
+	],
+	zcaronecaron: [
+		10,
+		10,
+		-15,
+		-15
+	],
+	zcaronecircumflex: [
+		10,
+		10,
+		-15,
+		-15
+	],
+	zcaronedieresis: [
+		10,
+		10,
+		-15,
+		-15
+	],
+	zcaronedotaccent: [
+		10,
+		10,
+		-15,
+		-15
+	],
+	zcaronegrave: [
+		10,
+		10,
+		-15,
+		-15
+	],
+	zcaronemacron: [
+		10,
+		10,
+		-15,
+		-15
+	],
+	zcaroneogonek: [
+		10,
+		10,
+		-15,
+		-15
+	],
+	zdotaccente: [
+		10,
+		10,
+		-15,
+		-15
+	],
+	zdotaccenteacute: [
+		10,
+		10,
+		-15,
+		-15
+	],
+	zdotaccentecaron: [
+		10,
+		10,
+		-15,
+		-15
+	],
+	zdotaccentecircumflex: [
+		10,
+		10,
+		-15,
+		-15
+	],
+	zdotaccentedieresis: [
+		10,
+		10,
+		-15,
+		-15
+	],
+	zdotaccentedotaccent: [
+		10,
+		10,
+		-15,
+		-15
+	],
+	zdotaccentegrave: [
+		10,
+		10,
+		-15,
+		-15
+	],
+	zdotaccentemacron: [
+		10,
+		10,
+		-15,
+		-15
+	],
+	zdotaccenteogonek: [
+		10,
+		10,
+		-15,
+		-15
+	],
+	Bcomma: [
+		0,
+		0,
+		-20,
+		-20
+	],
+	Bperiod: [
+		0,
+		0,
+		-20,
+		-20
+	],
+	Ccomma: [
+		0,
+		0,
+		-30,
+		-30
+	],
+	Cperiod: [
+		0,
+		0,
+		-30,
+		-30
+	],
+	Cacutecomma: [
+		0,
+		0,
+		-30,
+		-30
+	],
+	Cacuteperiod: [
+		0,
+		0,
+		-30,
+		-30
+	],
+	Ccaroncomma: [
+		0,
+		0,
+		-30,
+		-30
+	],
+	Ccaronperiod: [
+		0,
+		0,
+		-30,
+		-30
+	],
+	Ccedillacomma: [
+		0,
+		0,
+		-30,
+		-30
+	],
+	Ccedillaperiod: [
+		0,
+		0,
+		-30,
+		-30
+	],
+	Fe: [
+		0,
+		0,
+		-30,
+		-30,
+		-25,
+		-100,
+		-75
+	],
+	Feacute: [
+		0,
+		0,
+		-30,
+		-30,
+		-25,
+		-100,
+		-75
+	],
+	Fecaron: [
+		0,
+		0,
+		-30,
+		-30,
+		-25,
+		-100,
+		-75
+	],
+	Fecircumflex: [
+		0,
+		0,
+		-30,
+		-30,
+		-25,
+		-100,
+		-75
+	],
+	Fedieresis: [
+		0,
+		0,
+		-30,
+		-30,
+		-25,
+		-100,
+		-75
+	],
+	Fedotaccent: [
+		0,
+		0,
+		-30,
+		-30,
+		-25,
+		-100,
+		-75
+	],
+	Fegrave: [
+		0,
+		0,
+		-30,
+		-30,
+		-25,
+		-100,
+		-75
+	],
+	Femacron: [
+		0,
+		0,
+		-30,
+		-30,
+		-25,
+		-100,
+		-75
+	],
+	Feogonek: [
+		0,
+		0,
+		-30,
+		-30,
+		-25,
+		-100,
+		-75
+	],
+	Fo: [
+		0,
+		0,
+		-30,
+		-30,
+		-25,
+		-70,
+		-105,
+		-15
+	],
+	Foacute: [
+		0,
+		0,
+		-30,
+		-30,
+		-25,
+		-70,
+		-105,
+		-15
+	],
+	Focircumflex: [
+		0,
+		0,
+		-30,
+		-30,
+		-25,
+		-70,
+		-105,
+		-15
+	],
+	Fodieresis: [
+		0,
+		0,
+		-30,
+		-30,
+		-25,
+		-70,
+		-105,
+		-15
+	],
+	Fograve: [
+		0,
+		0,
+		-30,
+		-30,
+		-25,
+		-70,
+		-105,
+		-15
+	],
+	Fohungarumlaut: [
+		0,
+		0,
+		-30,
+		-30,
+		-25,
+		-70,
+		-105,
+		-15
+	],
+	Fomacron: [
+		0,
+		0,
+		-30,
+		-30,
+		-25,
+		-70,
+		-105,
+		-15
+	],
+	Foslash: [
+		0,
+		0,
+		-30,
+		-30,
+		-25,
+		-70,
+		-105,
+		-15
+	],
+	Fotilde: [
+		0,
+		0,
+		-30,
+		-30,
+		-25,
+		-70,
+		-105,
+		-15
+	],
+	Fr: [
+		0,
+		0,
+		-45,
+		-45,
+		0,
+		-50,
+		-55
+	],
+	Fracute: [
+		0,
+		0,
+		-45,
+		-45,
+		0,
+		-50,
+		-55
+	],
+	Frcaron: [
+		0,
+		0,
+		-45,
+		-45,
+		0,
+		-50,
+		-55
+	],
+	Frcommaaccent: [
+		0,
+		0,
+		-45,
+		-45,
+		0,
+		-50,
+		-55
+	],
+	Ja: [
+		0,
+		0,
+		-20,
+		-20,
+		-15,
+		-40,
+		-35
+	],
+	Jaacute: [
+		0,
+		0,
+		-20,
+		-20,
+		-15,
+		-40,
+		-35
+	],
+	Jabreve: [
+		0,
+		0,
+		-20,
+		-20,
+		-15,
+		-40,
+		-35
+	],
+	Jacircumflex: [
+		0,
+		0,
+		-20,
+		-20,
+		-15,
+		-40,
+		-35
+	],
+	Jadieresis: [
+		0,
+		0,
+		-20,
+		-20,
+		-15,
+		-40,
+		-35
+	],
+	Jagrave: [
+		0,
+		0,
+		-20,
+		-20,
+		-15,
+		-40,
+		-35
+	],
+	Jamacron: [
+		0,
+		0,
+		-20,
+		-20,
+		-15,
+		-40,
+		-35
+	],
+	Jaogonek: [
+		0,
+		0,
+		-20,
+		-20,
+		-15,
+		-40,
+		-35
+	],
+	Jaring: [
+		0,
+		0,
+		-20,
+		-20,
+		-15,
+		-40,
+		-35
+	],
+	Jatilde: [
+		0,
+		0,
+		-20,
+		-20,
+		-15,
+		-40,
+		-35
+	],
+	LcaronT: [
+		0,
+		0,
+		-110,
+		-110
+	],
+	LcaronTcaron: [
+		0,
+		0,
+		-110,
+		-110
+	],
+	LcaronTcommaaccent: [
+		0,
+		0,
+		-110,
+		-110
+	],
+	LcaronV: [
+		0,
+		0,
+		-110,
+		-110
+	],
+	LcaronW: [
+		0,
+		0,
+		-70,
+		-70
+	],
+	LcaronY: [
+		0,
+		0,
+		-140,
+		-140
+	],
+	LcaronYacute: [
+		0,
+		0,
+		-140,
+		-140
+	],
+	LcaronYdieresis: [
+		0,
+		0,
+		-140,
+		-140
+	],
+	Lcaronquotedblright: [
+		0,
+		0,
+		-140,
+		-140
+	],
+	Lcaronquoteright: [
+		0,
+		0,
+		-160,
+		-160,
+		0,
+		0,
+		0,
+		-92
+	],
+	Lcarony: [
+		0,
+		0,
+		-30,
+		-30,
+		0,
+		0,
+		0,
+		-55
+	],
+	Lcaronyacute: [
+		0,
+		0,
+		-30,
+		-30,
+		0,
+		0,
+		0,
+		-55
+	],
+	Lcaronydieresis: [
+		0,
+		0,
+		-30,
+		-30,
+		0,
+		0,
+		0,
+		-55
+	],
+	Scomma: [
+		0,
+		0,
+		-20,
+		-20
+	],
+	Speriod: [
+		0,
+		0,
+		-20,
+		-20
+	],
+	Sacutecomma: [
+		0,
+		0,
+		-20,
+		-20
+	],
+	Sacuteperiod: [
+		0,
+		0,
+		-20,
+		-20
+	],
+	Scaroncomma: [
+		0,
+		0,
+		-20,
+		-20
+	],
+	Scaronperiod: [
+		0,
+		0,
+		-20,
+		-20
+	],
+	Scedillacomma: [
+		0,
+		0,
+		-20,
+		-20
+	],
+	Scedillaperiod: [
+		0,
+		0,
+		-20,
+		-20
+	],
+	Scommaaccentcomma: [
+		0,
+		0,
+		-20,
+		-20
+	],
+	Scommaaccentperiod: [
+		0,
+		0,
+		-20,
+		-20
+	],
+	Trcaron: [
+		0,
+		0,
+		-120,
+		-120,
+		-74,
+		-37,
+		-55,
+		-35
+	],
+	Tcaronrcaron: [
+		0,
+		0,
+		-120,
+		-120,
+		-74,
+		-37,
+		-55,
+		-35
+	],
+	Tcommaaccentrcaron: [
+		0,
+		0,
+		-120,
+		-120,
+		-74,
+		-37,
+		-55,
+		-35
+	],
+	Yhyphen: [
+		0,
+		0,
+		-140,
+		-140,
+		-92,
+		-92,
+		-74,
+		-111
+	],
+	Yi: [
+		0,
+		0,
+		-20,
+		-20,
+		-37,
+		-55,
+		-74,
+		-55
+	],
+	Yiacute: [
+		0,
+		0,
+		-20,
+		-20,
+		-37,
+		-55,
+		-74,
+		-55
+	],
+	Yiogonek: [
+		0,
+		0,
+		-20,
+		-20,
+		-37,
+		-55,
+		-74,
+		-55
+	],
+	Yacutehyphen: [
+		0,
+		0,
+		-140,
+		-140,
+		-92,
+		-92,
+		-74,
+		-111
+	],
+	Yacutei: [
+		0,
+		0,
+		-20,
+		-20,
+		-37,
+		-55,
+		-74,
+		-55
+	],
+	Yacuteiacute: [
+		0,
+		0,
+		-20,
+		-20,
+		-37,
+		-55,
+		-74,
+		-55
+	],
+	Yacuteiogonek: [
+		0,
+		0,
+		-20,
+		-20,
+		-37,
+		-55,
+		-74,
+		-55
+	],
+	Ydieresishyphen: [
+		0,
+		0,
+		-140,
+		-140,
+		-92,
+		-92,
+		-74,
+		-111
+	],
+	Ydieresisi: [
+		0,
+		0,
+		-20,
+		-20,
+		-37,
+		-55,
+		-74,
+		-55
+	],
+	Ydieresisiacute: [
+		0,
+		0,
+		-20,
+		-20,
+		-37,
+		-55,
+		-74,
+		-55
+	],
+	Ydieresisiogonek: [
+		0,
+		0,
+		-20,
+		-20,
+		-37,
+		-55,
+		-74,
+		-55
+	],
+	bb: [
+		0,
+		0,
+		-10,
+		-10,
+		-10,
+		-10
+	],
+	bcomma: [
+		0,
+		0,
+		-40,
+		-40
+	],
+	bperiod: [
+		0,
+		0,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40,
+		-40
+	],
+	ccomma: [
+		0,
+		0,
+		-15,
+		-15
+	],
+	cacutecomma: [
+		0,
+		0,
+		-15,
+		-15
+	],
+	ccaroncomma: [
+		0,
+		0,
+		-15,
+		-15
+	],
+	ccedillacomma: [
+		0,
+		0,
+		-15,
+		-15
+	],
+	fa: [
+		0,
+		0,
+		-30,
+		-30,
+		0,
+		0,
+		0,
+		-10
+	],
+	faacute: [
+		0,
+		0,
+		-30,
+		-30,
+		0,
+		0,
+		0,
+		-10
+	],
+	fabreve: [
+		0,
+		0,
+		-30,
+		-30,
+		0,
+		0,
+		0,
+		-10
+	],
+	facircumflex: [
+		0,
+		0,
+		-30,
+		-30,
+		0,
+		0,
+		0,
+		-10
+	],
+	fadieresis: [
+		0,
+		0,
+		-30,
+		-30,
+		0,
+		0,
+		0,
+		-10
+	],
+	fagrave: [
+		0,
+		0,
+		-30,
+		-30,
+		0,
+		0,
+		0,
+		-10
+	],
+	famacron: [
+		0,
+		0,
+		-30,
+		-30,
+		0,
+		0,
+		0,
+		-10
+	],
+	faogonek: [
+		0,
+		0,
+		-30,
+		-30,
+		0,
+		0,
+		0,
+		-10
+	],
+	faring: [
+		0,
+		0,
+		-30,
+		-30,
+		0,
+		0,
+		0,
+		-10
+	],
+	fatilde: [
+		0,
+		0,
+		-30,
+		-30,
+		0,
+		0,
+		0,
+		-10
+	],
+	fdotlessi: [
+		0,
+		0,
+		-28,
+		-28,
+		-35,
+		-30,
+		-60,
+		-50
+	],
+	gr: [
+		0,
+		0,
+		-10,
+		-10
+	],
+	gracute: [
+		0,
+		0,
+		-10,
+		-10
+	],
+	grcaron: [
+		0,
+		0,
+		-10,
+		-10
+	],
+	grcommaaccent: [
+		0,
+		0,
+		-10,
+		-10
+	],
+	gbrever: [
+		0,
+		0,
+		-10,
+		-10
+	],
+	gbreveracute: [
+		0,
+		0,
+		-10,
+		-10
+	],
+	gbrevercaron: [
+		0,
+		0,
+		-10,
+		-10
+	],
+	gbrevercommaaccent: [
+		0,
+		0,
+		-10,
+		-10
+	],
+	gcommaaccentr: [
+		0,
+		0,
+		-10,
+		-10
+	],
+	gcommaaccentracute: [
+		0,
+		0,
+		-10,
+		-10
+	],
+	gcommaaccentrcaron: [
+		0,
+		0,
+		-10,
+		-10
+	],
+	gcommaaccentrcommaaccent: [
+		0,
+		0,
+		-10,
+		-10
+	],
+	ke: [
+		0,
+		0,
+		-20,
+		-20,
+		-10,
+		-30,
+		-10,
+		-10
+	],
+	keacute: [
+		0,
+		0,
+		-20,
+		-20,
+		-10,
+		-30,
+		-10,
+		-10
+	],
+	kecaron: [
+		0,
+		0,
+		-20,
+		-20,
+		-10,
+		-30,
+		-10,
+		-10
+	],
+	kecircumflex: [
+		0,
+		0,
+		-20,
+		-20,
+		-10,
+		-30,
+		-10,
+		-10
+	],
+	kedieresis: [
+		0,
+		0,
+		-20,
+		-20,
+		-10,
+		-30,
+		-10,
+		-10
+	],
+	kedotaccent: [
+		0,
+		0,
+		-20,
+		-20,
+		-10,
+		-30,
+		-10,
+		-10
+	],
+	kegrave: [
+		0,
+		0,
+		-20,
+		-20,
+		-10,
+		-30,
+		-10,
+		-10
+	],
+	kemacron: [
+		0,
+		0,
+		-20,
+		-20,
+		-10,
+		-30,
+		-10,
+		-10
+	],
+	keogonek: [
+		0,
+		0,
+		-20,
+		-20,
+		-10,
+		-30,
+		-10,
+		-10
+	],
+	kcommaaccente: [
+		0,
+		0,
+		-20,
+		-20,
+		-10,
+		-30,
+		-10,
+		-10
+	],
+	kcommaaccenteacute: [
+		0,
+		0,
+		-20,
+		-20,
+		-10,
+		-30,
+		-10,
+		-10
+	],
+	kcommaaccentecaron: [
+		0,
+		0,
+		-20,
+		-20,
+		-10,
+		-30,
+		-10,
+		-10
+	],
+	kcommaaccentecircumflex: [
+		0,
+		0,
+		-20,
+		-20,
+		-10,
+		-30,
+		-10,
+		-10
+	],
+	kcommaaccentedieresis: [
+		0,
+		0,
+		-20,
+		-20,
+		-10,
+		-30,
+		-10,
+		-10
+	],
+	kcommaaccentedotaccent: [
+		0,
+		0,
+		-20,
+		-20,
+		-10,
+		-30,
+		-10,
+		-10
+	],
+	kcommaaccentegrave: [
+		0,
+		0,
+		-20,
+		-20,
+		-10,
+		-30,
+		-10,
+		-10
+	],
+	kcommaaccentemacron: [
+		0,
+		0,
+		-20,
+		-20,
+		-10,
+		-30,
+		-10,
+		-10
+	],
+	kcommaaccenteogonek: [
+		0,
+		0,
+		-20,
+		-20,
+		-10,
+		-30,
+		-10,
+		-10
+	],
+	ocomma: [
+		0,
+		0,
+		-40,
+		-40
+	],
+	operiod: [
+		0,
+		0,
+		-40,
+		-40
+	],
+	oacutecomma: [
+		0,
+		0,
+		-40,
+		-40
+	],
+	oacuteperiod: [
+		0,
+		0,
+		-40,
+		-40
+	],
+	ocircumflexcomma: [
+		0,
+		0,
+		-40,
+		-40
+	],
+	ocircumflexperiod: [
+		0,
+		0,
+		-40,
+		-40
+	],
+	odieresiscomma: [
+		0,
+		0,
+		-40,
+		-40
+	],
+	odieresisperiod: [
+		0,
+		0,
+		-40,
+		-40
+	],
+	ogravecomma: [
+		0,
+		0,
+		-40,
+		-40
+	],
+	ograveperiod: [
+		0,
+		0,
+		-40,
+		-40
+	],
+	ohungarumlautcomma: [
+		0,
+		0,
+		-40,
+		-40
+	],
+	ohungarumlautperiod: [
+		0,
+		0,
+		-40,
+		-40
+	],
+	omacroncomma: [
+		0,
+		0,
+		-40,
+		-40
+	],
+	omacronperiod: [
+		0,
+		0,
+		-40,
+		-40
+	],
+	oslasha: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashaacute: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashabreve: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashacircumflex: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashadieresis: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashagrave: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashamacron: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashaogonek: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslasharing: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashatilde: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashb: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashc: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashcacute: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashccaron: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashccedilla: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashcomma: [
+		0,
+		0,
+		-95,
+		-95
+	],
+	oslashd: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashdcroat: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashe: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslasheacute: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashecaron: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashecircumflex: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashedieresis: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashedotaccent: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashegrave: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashemacron: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslasheogonek: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashf: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashg: [
+		0,
+		0,
+		-55,
+		-55,
+		0,
+		0,
+		-10
+	],
+	oslashgbreve: [
+		0,
+		0,
+		-55,
+		-55,
+		0,
+		0,
+		-10
+	],
+	oslashgcommaaccent: [
+		0,
+		0,
+		-55,
+		-55,
+		0,
+		0,
+		-10
+	],
+	oslashh: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashi: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashiacute: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashicircumflex: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashidieresis: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashigrave: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashimacron: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashiogonek: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashj: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashk: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashkcommaaccent: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashl: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashlacute: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashlcommaaccent: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashlslash: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashm: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashn: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashnacute: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashncaron: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashncommaaccent: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashntilde: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslasho: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashoacute: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashocircumflex: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashodieresis: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashograve: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashohungarumlaut: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashomacron: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashoslash: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashotilde: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashp: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashperiod: [
+		0,
+		0,
+		-95,
+		-95
+	],
+	oslashq: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashr: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashracute: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashrcaron: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashrcommaaccent: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashs: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashsacute: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashscaron: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashscedilla: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashscommaaccent: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslasht: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashtcommaaccent: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashu: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashuacute: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashucircumflex: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashudieresis: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashugrave: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashuhungarumlaut: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashumacron: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashuogonek: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashuring: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashz: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashzacute: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashzcaron: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	oslashzdotaccent: [
+		0,
+		0,
+		-55,
+		-55
+	],
+	otildecomma: [
+		0,
+		0,
+		-40,
+		-40
+	],
+	otildeperiod: [
+		0,
+		0,
+		-40,
+		-40
+	],
+	pcomma: [
+		0,
+		0,
+		-35,
+		-35
+	],
+	pperiod: [
+		0,
+		0,
+		-35,
+		-35
+	],
+	ra: [
+		0,
+		0,
+		-10,
+		-10,
+		0,
+		0,
+		-15
+	],
+	raacute: [
+		0,
+		0,
+		-10,
+		-10,
+		0,
+		0,
+		-15
+	],
+	rabreve: [
+		0,
+		0,
+		-10,
+		-10,
+		0,
+		0,
+		-15
+	],
+	racircumflex: [
+		0,
+		0,
+		-10,
+		-10,
+		0,
+		0,
+		-15
+	],
+	radieresis: [
+		0,
+		0,
+		-10,
+		-10,
+		0,
+		0,
+		-15
+	],
+	ragrave: [
+		0,
+		0,
+		-10,
+		-10,
+		0,
+		0,
+		-15
+	],
+	ramacron: [
+		0,
+		0,
+		-10,
+		-10,
+		0,
+		0,
+		-15
+	],
+	raogonek: [
+		0,
+		0,
+		-10,
+		-10,
+		0,
+		0,
+		-15
+	],
+	raring: [
+		0,
+		0,
+		-10,
+		-10,
+		0,
+		0,
+		-15
+	],
+	ratilde: [
+		0,
+		0,
+		-10,
+		-10,
+		0,
+		0,
+		-15
+	],
+	rcolon: [
+		0,
+		0,
+		30,
+		30
+	],
+	ri: [
+		0,
+		0,
+		15,
+		15
+	],
+	riacute: [
+		0,
+		0,
+		15,
+		15
+	],
+	ricircumflex: [
+		0,
+		0,
+		15,
+		15
+	],
+	ridieresis: [
+		0,
+		0,
+		15,
+		15
+	],
+	rigrave: [
+		0,
+		0,
+		15,
+		15
+	],
+	rimacron: [
+		0,
+		0,
+		15,
+		15
+	],
+	riogonek: [
+		0,
+		0,
+		15,
+		15
+	],
+	rk: [
+		0,
+		0,
+		15,
+		15
+	],
+	rkcommaaccent: [
+		0,
+		0,
+		15,
+		15
+	],
+	rl: [
+		0,
+		0,
+		15,
+		15
+	],
+	rlacute: [
+		0,
+		0,
+		15,
+		15
+	],
+	rlcommaaccent: [
+		0,
+		0,
+		15,
+		15
+	],
+	rlslash: [
+		0,
+		0,
+		15,
+		15
+	],
+	rm: [
+		0,
+		0,
+		25,
+		25
+	],
+	rn: [
+		0,
+		0,
+		25,
+		25,
+		-15
+	],
+	rnacute: [
+		0,
+		0,
+		25,
+		25,
+		-15
+	],
+	rncaron: [
+		0,
+		0,
+		25,
+		25,
+		-15
+	],
+	rncommaaccent: [
+		0,
+		0,
+		25,
+		25,
+		-15
+	],
+	rntilde: [
+		0,
+		0,
+		25,
+		25,
+		-15
+	],
+	rp: [
+		0,
+		0,
+		30,
+		30,
+		-10
+	],
+	rsemicolon: [
+		0,
+		0,
+		30,
+		30
+	],
+	ru: [
+		0,
+		0,
+		15,
+		15
+	],
+	ruacute: [
+		0,
+		0,
+		15,
+		15
+	],
+	rucircumflex: [
+		0,
+		0,
+		15,
+		15
+	],
+	rudieresis: [
+		0,
+		0,
+		15,
+		15
+	],
+	rugrave: [
+		0,
+		0,
+		15,
+		15
+	],
+	ruhungarumlaut: [
+		0,
+		0,
+		15,
+		15
+	],
+	rumacron: [
+		0,
+		0,
+		15,
+		15
+	],
+	ruogonek: [
+		0,
+		0,
+		15,
+		15
+	],
+	ruring: [
+		0,
+		0,
+		15,
+		15
+	],
+	racutea: [
+		0,
+		0,
+		-10,
+		-10,
+		0,
+		0,
+		-15
+	],
+	racuteaacute: [
+		0,
+		0,
+		-10,
+		-10,
+		0,
+		0,
+		-15
+	],
+	racuteabreve: [
+		0,
+		0,
+		-10,
+		-10,
+		0,
+		0,
+		-15
+	],
+	racuteacircumflex: [
+		0,
+		0,
+		-10,
+		-10,
+		0,
+		0,
+		-15
+	],
+	racuteadieresis: [
+		0,
+		0,
+		-10,
+		-10,
+		0,
+		0,
+		-15
+	],
+	racuteagrave: [
+		0,
+		0,
+		-10,
+		-10,
+		0,
+		0,
+		-15
+	],
+	racuteamacron: [
+		0,
+		0,
+		-10,
+		-10,
+		0,
+		0,
+		-15
+	],
+	racuteaogonek: [
+		0,
+		0,
+		-10,
+		-10,
+		0,
+		0,
+		-15
+	],
+	racutearing: [
+		0,
+		0,
+		-10,
+		-10,
+		0,
+		0,
+		-15
+	],
+	racuteatilde: [
+		0,
+		0,
+		-10,
+		-10,
+		0,
+		0,
+		-15
+	],
+	racutecolon: [
+		0,
+		0,
+		30,
+		30
+	],
+	racutei: [
+		0,
+		0,
+		15,
+		15
+	],
+	racuteiacute: [
+		0,
+		0,
+		15,
+		15
+	],
+	racuteicircumflex: [
+		0,
+		0,
+		15,
+		15
+	],
+	racuteidieresis: [
+		0,
+		0,
+		15,
+		15
+	],
+	racuteigrave: [
+		0,
+		0,
+		15,
+		15
+	],
+	racuteimacron: [
+		0,
+		0,
+		15,
+		15
+	],
+	racuteiogonek: [
+		0,
+		0,
+		15,
+		15
+	],
+	racutek: [
+		0,
+		0,
+		15,
+		15
+	],
+	racutekcommaaccent: [
+		0,
+		0,
+		15,
+		15
+	],
+	racutel: [
+		0,
+		0,
+		15,
+		15
+	],
+	racutelacute: [
+		0,
+		0,
+		15,
+		15
+	],
+	racutelcommaaccent: [
+		0,
+		0,
+		15,
+		15
+	],
+	racutelslash: [
+		0,
+		0,
+		15,
+		15
+	],
+	racutem: [
+		0,
+		0,
+		25,
+		25
+	],
+	racuten: [
+		0,
+		0,
+		25,
+		25,
+		-15
+	],
+	racutenacute: [
+		0,
+		0,
+		25,
+		25,
+		-15
+	],
+	racutencaron: [
+		0,
+		0,
+		25,
+		25,
+		-15
+	],
+	racutencommaaccent: [
+		0,
+		0,
+		25,
+		25,
+		-15
+	],
+	racutentilde: [
+		0,
+		0,
+		25,
+		25,
+		-15
+	],
+	racutep: [
+		0,
+		0,
+		30,
+		30,
+		-10
+	],
+	racutesemicolon: [
+		0,
+		0,
+		30,
+		30
+	],
+	racuteu: [
+		0,
+		0,
+		15,
+		15
+	],
+	racuteuacute: [
+		0,
+		0,
+		15,
+		15
+	],
+	racuteucircumflex: [
+		0,
+		0,
+		15,
+		15
+	],
+	racuteudieresis: [
+		0,
+		0,
+		15,
+		15
+	],
+	racuteugrave: [
+		0,
+		0,
+		15,
+		15
+	],
+	racuteuhungarumlaut: [
+		0,
+		0,
+		15,
+		15
+	],
+	racuteumacron: [
+		0,
+		0,
+		15,
+		15
+	],
+	racuteuogonek: [
+		0,
+		0,
+		15,
+		15
+	],
+	racuteuring: [
+		0,
+		0,
+		15,
+		15
+	],
+	rcarona: [
+		0,
+		0,
+		-10,
+		-10,
+		0,
+		0,
+		-15
+	],
+	rcaronaacute: [
+		0,
+		0,
+		-10,
+		-10,
+		0,
+		0,
+		-15
+	],
+	rcaronabreve: [
+		0,
+		0,
+		-10,
+		-10,
+		0,
+		0,
+		-15
+	],
+	rcaronacircumflex: [
+		0,
+		0,
+		-10,
+		-10,
+		0,
+		0,
+		-15
+	],
+	rcaronadieresis: [
+		0,
+		0,
+		-10,
+		-10,
+		0,
+		0,
+		-15
+	],
+	rcaronagrave: [
+		0,
+		0,
+		-10,
+		-10,
+		0,
+		0,
+		-15
+	],
+	rcaronamacron: [
+		0,
+		0,
+		-10,
+		-10,
+		0,
+		0,
+		-15
+	],
+	rcaronaogonek: [
+		0,
+		0,
+		-10,
+		-10,
+		0,
+		0,
+		-15
+	],
+	rcaronaring: [
+		0,
+		0,
+		-10,
+		-10,
+		0,
+		0,
+		-15
+	],
+	rcaronatilde: [
+		0,
+		0,
+		-10,
+		-10,
+		0,
+		0,
+		-15
+	],
+	rcaroncolon: [
+		0,
+		0,
+		30,
+		30
+	],
+	rcaroni: [
+		0,
+		0,
+		15,
+		15
+	],
+	rcaroniacute: [
+		0,
+		0,
+		15,
+		15
+	],
+	rcaronicircumflex: [
+		0,
+		0,
+		15,
+		15
+	],
+	rcaronidieresis: [
+		0,
+		0,
+		15,
+		15
+	],
+	rcaronigrave: [
+		0,
+		0,
+		15,
+		15
+	],
+	rcaronimacron: [
+		0,
+		0,
+		15,
+		15
+	],
+	rcaroniogonek: [
+		0,
+		0,
+		15,
+		15
+	],
+	rcaronk: [
+		0,
+		0,
+		15,
+		15
+	],
+	rcaronkcommaaccent: [
+		0,
+		0,
+		15,
+		15
+	],
+	rcaronl: [
+		0,
+		0,
+		15,
+		15
+	],
+	rcaronlacute: [
+		0,
+		0,
+		15,
+		15
+	],
+	rcaronlcommaaccent: [
+		0,
+		0,
+		15,
+		15
+	],
+	rcaronlslash: [
+		0,
+		0,
+		15,
+		15
+	],
+	rcaronm: [
+		0,
+		0,
+		25,
+		25
+	],
+	rcaronn: [
+		0,
+		0,
+		25,
+		25,
+		-15
+	],
+	rcaronnacute: [
+		0,
+		0,
+		25,
+		25,
+		-15
+	],
+	rcaronncaron: [
+		0,
+		0,
+		25,
+		25,
+		-15
+	],
+	rcaronncommaaccent: [
+		0,
+		0,
+		25,
+		25,
+		-15
+	],
+	rcaronntilde: [
+		0,
+		0,
+		25,
+		25,
+		-15
+	],
+	rcaronp: [
+		0,
+		0,
+		30,
+		30,
+		-10
+	],
+	rcaronsemicolon: [
+		0,
+		0,
+		30,
+		30
+	],
+	rcaronu: [
+		0,
+		0,
+		15,
+		15
+	],
+	rcaronuacute: [
+		0,
+		0,
+		15,
+		15
+	],
+	rcaronucircumflex: [
+		0,
+		0,
+		15,
+		15
+	],
+	rcaronudieresis: [
+		0,
+		0,
+		15,
+		15
+	],
+	rcaronugrave: [
+		0,
+		0,
+		15,
+		15
+	],
+	rcaronuhungarumlaut: [
+		0,
+		0,
+		15,
+		15
+	],
+	rcaronumacron: [
+		0,
+		0,
+		15,
+		15
+	],
+	rcaronuogonek: [
+		0,
+		0,
+		15,
+		15
+	],
+	rcaronuring: [
+		0,
+		0,
+		15,
+		15
+	],
+	rcommaaccenta: [
+		0,
+		0,
+		-10,
+		-10,
+		0,
+		0,
+		-15
+	],
+	rcommaaccentaacute: [
+		0,
+		0,
+		-10,
+		-10,
+		0,
+		0,
+		-15
+	],
+	rcommaaccentabreve: [
+		0,
+		0,
+		-10,
+		-10,
+		0,
+		0,
+		-15
+	],
+	rcommaaccentacircumflex: [
+		0,
+		0,
+		-10,
+		-10,
+		0,
+		0,
+		-15
+	],
+	rcommaaccentadieresis: [
+		0,
+		0,
+		-10,
+		-10,
+		0,
+		0,
+		-15
+	],
+	rcommaaccentagrave: [
+		0,
+		0,
+		-10,
+		-10,
+		0,
+		0,
+		-15
+	],
+	rcommaaccentamacron: [
+		0,
+		0,
+		-10,
+		-10,
+		0,
+		0,
+		-15
+	],
+	rcommaaccentaogonek: [
+		0,
+		0,
+		-10,
+		-10,
+		0,
+		0,
+		-15
+	],
+	rcommaaccentaring: [
+		0,
+		0,
+		-10,
+		-10,
+		0,
+		0,
+		-15
+	],
+	rcommaaccentatilde: [
+		0,
+		0,
+		-10,
+		-10,
+		0,
+		0,
+		-15
+	],
+	rcommaaccentcolon: [
+		0,
+		0,
+		30,
+		30
+	],
+	rcommaaccenti: [
+		0,
+		0,
+		15,
+		15
+	],
+	rcommaaccentiacute: [
+		0,
+		0,
+		15,
+		15
+	],
+	rcommaaccenticircumflex: [
+		0,
+		0,
+		15,
+		15
+	],
+	rcommaaccentidieresis: [
+		0,
+		0,
+		15,
+		15
+	],
+	rcommaaccentigrave: [
+		0,
+		0,
+		15,
+		15
+	],
+	rcommaaccentimacron: [
+		0,
+		0,
+		15,
+		15
+	],
+	rcommaaccentiogonek: [
+		0,
+		0,
+		15,
+		15
+	],
+	rcommaaccentk: [
+		0,
+		0,
+		15,
+		15
+	],
+	rcommaaccentkcommaaccent: [
+		0,
+		0,
+		15,
+		15
+	],
+	rcommaaccentl: [
+		0,
+		0,
+		15,
+		15
+	],
+	rcommaaccentlacute: [
+		0,
+		0,
+		15,
+		15
+	],
+	rcommaaccentlcommaaccent: [
+		0,
+		0,
+		15,
+		15
+	],
+	rcommaaccentlslash: [
+		0,
+		0,
+		15,
+		15
+	],
+	rcommaaccentm: [
+		0,
+		0,
+		25,
+		25
+	],
+	rcommaaccentn: [
+		0,
+		0,
+		25,
+		25,
+		-15
+	],
+	rcommaaccentnacute: [
+		0,
+		0,
+		25,
+		25,
+		-15
+	],
+	rcommaaccentncaron: [
+		0,
+		0,
+		25,
+		25,
+		-15
+	],
+	rcommaaccentncommaaccent: [
+		0,
+		0,
+		25,
+		25,
+		-15
+	],
+	rcommaaccentntilde: [
+		0,
+		0,
+		25,
+		25,
+		-15
+	],
+	rcommaaccentp: [
+		0,
+		0,
+		30,
+		30,
+		-10
+	],
+	rcommaaccentsemicolon: [
+		0,
+		0,
+		30,
+		30
+	],
+	rcommaaccentu: [
+		0,
+		0,
+		15,
+		15
+	],
+	rcommaaccentuacute: [
+		0,
+		0,
+		15,
+		15
+	],
+	rcommaaccentucircumflex: [
+		0,
+		0,
+		15,
+		15
+	],
+	rcommaaccentudieresis: [
+		0,
+		0,
+		15,
+		15
+	],
+	rcommaaccentugrave: [
+		0,
+		0,
+		15,
+		15
+	],
+	rcommaaccentuhungarumlaut: [
+		0,
+		0,
+		15,
+		15
+	],
+	rcommaaccentumacron: [
+		0,
+		0,
+		15,
+		15
+	],
+	rcommaaccentuogonek: [
+		0,
+		0,
+		15,
+		15
+	],
+	rcommaaccenturing: [
+		0,
+		0,
+		15,
+		15
+	],
+	scomma: [
+		0,
+		0,
+		-15,
+		-15
+	],
+	speriod: [
+		0,
+		0,
+		-15,
+		-15
+	],
+	sacutecomma: [
+		0,
+		0,
+		-15,
+		-15
+	],
+	sacuteperiod: [
+		0,
+		0,
+		-15,
+		-15
+	],
+	scaroncomma: [
+		0,
+		0,
+		-15,
+		-15
+	],
+	scaronperiod: [
+		0,
+		0,
+		-15,
+		-15
+	],
+	scedillacomma: [
+		0,
+		0,
+		-15,
+		-15
+	],
+	scedillaperiod: [
+		0,
+		0,
+		-15,
+		-15
+	],
+	scommaaccentcomma: [
+		0,
+		0,
+		-15,
+		-15
+	],
+	scommaaccentperiod: [
+		0,
+		0,
+		-15,
+		-15
+	],
+	ve: [
+		0,
+		0,
+		-25,
+		-25,
+		-10,
+		-15,
+		0,
+		-15
+	],
+	veacute: [
+		0,
+		0,
+		-25,
+		-25,
+		-10,
+		-15,
+		0,
+		-15
+	],
+	vecaron: [
+		0,
+		0,
+		-25,
+		-25,
+		-10,
+		-15,
+		0,
+		-15
+	],
+	vecircumflex: [
+		0,
+		0,
+		-25,
+		-25,
+		-10,
+		-15,
+		0,
+		-15
+	],
+	vedieresis: [
+		0,
+		0,
+		-25,
+		-25,
+		-10,
+		-15,
+		0,
+		-15
+	],
+	vedotaccent: [
+		0,
+		0,
+		-25,
+		-25,
+		-10,
+		-15,
+		0,
+		-15
+	],
+	vegrave: [
+		0,
+		0,
+		-25,
+		-25,
+		-10,
+		-15,
+		0,
+		-15
+	],
+	vemacron: [
+		0,
+		0,
+		-25,
+		-25,
+		-10,
+		-15,
+		0,
+		-15
+	],
+	veogonek: [
+		0,
+		0,
+		-25,
+		-25,
+		-10,
+		-15,
+		0,
+		-15
+	],
+	wa: [
+		0,
+		0,
+		-15,
+		-15,
+		0,
+		-10,
+		0,
+		-10
+	],
+	waacute: [
+		0,
+		0,
+		-15,
+		-15,
+		0,
+		-10,
+		0,
+		-10
+	],
+	wabreve: [
+		0,
+		0,
+		-15,
+		-15,
+		0,
+		-10,
+		0,
+		-10
+	],
+	wacircumflex: [
+		0,
+		0,
+		-15,
+		-15,
+		0,
+		-10,
+		0,
+		-10
+	],
+	wadieresis: [
+		0,
+		0,
+		-15,
+		-15,
+		0,
+		-10,
+		0,
+		-10
+	],
+	wagrave: [
+		0,
+		0,
+		-15,
+		-15,
+		0,
+		-10,
+		0,
+		-10
+	],
+	wamacron: [
+		0,
+		0,
+		-15,
+		-15,
+		0,
+		-10,
+		0,
+		-10
+	],
+	waogonek: [
+		0,
+		0,
+		-15,
+		-15,
+		0,
+		-10,
+		0,
+		-10
+	],
+	waring: [
+		0,
+		0,
+		-15,
+		-15,
+		0,
+		-10,
+		0,
+		-10
+	],
+	watilde: [
+		0,
+		0,
+		-15,
+		-15,
+		0,
+		-10,
+		0,
+		-10
+	],
+	we: [
+		0,
+		0,
+		-10,
+		-10,
+		0,
+		-10
+	],
+	weacute: [
+		0,
+		0,
+		-10,
+		-10,
+		0,
+		-10
+	],
+	wecaron: [
+		0,
+		0,
+		-10,
+		-10,
+		0,
+		-10
+	],
+	wecircumflex: [
+		0,
+		0,
+		-10,
+		-10,
+		0,
+		-10
+	],
+	wedieresis: [
+		0,
+		0,
+		-10,
+		-10,
+		0,
+		-10
+	],
+	wedotaccent: [
+		0,
+		0,
+		-10,
+		-10,
+		0,
+		-10
+	],
+	wegrave: [
+		0,
+		0,
+		-10,
+		-10,
+		0,
+		-10
+	],
+	wemacron: [
+		0,
+		0,
+		-10,
+		-10,
+		0,
+		-10
+	],
+	weogonek: [
+		0,
+		0,
+		-10,
+		-10,
+		0,
+		-10
+	],
+	zo: [
+		0,
+		0,
+		-15,
+		-15
+	],
+	zoacute: [
+		0,
+		0,
+		-15,
+		-15
+	],
+	zocircumflex: [
+		0,
+		0,
+		-15,
+		-15
+	],
+	zodieresis: [
+		0,
+		0,
+		-15,
+		-15
+	],
+	zograve: [
+		0,
+		0,
+		-15,
+		-15
+	],
+	zohungarumlaut: [
+		0,
+		0,
+		-15,
+		-15
+	],
+	zomacron: [
+		0,
+		0,
+		-15,
+		-15
+	],
+	zoslash: [
+		0,
+		0,
+		-15,
+		-15
+	],
+	zotilde: [
+		0,
+		0,
+		-15,
+		-15
+	],
+	zacuteo: [
+		0,
+		0,
+		-15,
+		-15
+	],
+	zacuteoacute: [
+		0,
+		0,
+		-15,
+		-15
+	],
+	zacuteocircumflex: [
+		0,
+		0,
+		-15,
+		-15
+	],
+	zacuteodieresis: [
+		0,
+		0,
+		-15,
+		-15
+	],
+	zacuteograve: [
+		0,
+		0,
+		-15,
+		-15
+	],
+	zacuteohungarumlaut: [
+		0,
+		0,
+		-15,
+		-15
+	],
+	zacuteomacron: [
+		0,
+		0,
+		-15,
+		-15
+	],
+	zacuteoslash: [
+		0,
+		0,
+		-15,
+		-15
+	],
+	zacuteotilde: [
+		0,
+		0,
+		-15,
+		-15
+	],
+	zcarono: [
+		0,
+		0,
+		-15,
+		-15
+	],
+	zcaronoacute: [
+		0,
+		0,
+		-15,
+		-15
+	],
+	zcaronocircumflex: [
+		0,
+		0,
+		-15,
+		-15
+	],
+	zcaronodieresis: [
+		0,
+		0,
+		-15,
+		-15
+	],
+	zcaronograve: [
+		0,
+		0,
+		-15,
+		-15
+	],
+	zcaronohungarumlaut: [
+		0,
+		0,
+		-15,
+		-15
+	],
+	zcaronomacron: [
+		0,
+		0,
+		-15,
+		-15
+	],
+	zcaronoslash: [
+		0,
+		0,
+		-15,
+		-15
+	],
+	zcaronotilde: [
+		0,
+		0,
+		-15,
+		-15
+	],
+	zdotaccento: [
+		0,
+		0,
+		-15,
+		-15
+	],
+	zdotaccentoacute: [
+		0,
+		0,
+		-15,
+		-15
+	],
+	zdotaccentocircumflex: [
+		0,
+		0,
+		-15,
+		-15
+	],
+	zdotaccentodieresis: [
+		0,
+		0,
+		-15,
+		-15
+	],
+	zdotaccentograve: [
+		0,
+		0,
+		-15,
+		-15
+	],
+	zdotaccentohungarumlaut: [
+		0,
+		0,
+		-15,
+		-15
+	],
+	zdotaccentomacron: [
+		0,
+		0,
+		-15,
+		-15
+	],
+	zdotaccentoslash: [
+		0,
+		0,
+		-15,
+		-15
+	],
+	zdotaccentotilde: [
+		0,
+		0,
+		-15,
+		-15
+	],
+	Ap: [
+		0,
+		0,
+		0,
+		0,
+		-25
+	],
+	Aquoteright: [
+		0,
+		0,
+		0,
+		0,
+		-74,
+		-74,
+		-37,
+		-111
+	],
+	Aacutep: [
+		0,
+		0,
+		0,
+		0,
+		-25
+	],
+	Aacutequoteright: [
+		0,
+		0,
+		0,
+		0,
+		-74,
+		-74,
+		-37,
+		-111
+	],
+	Abrevep: [
+		0,
+		0,
+		0,
+		0,
+		-25
+	],
+	Abrevequoteright: [
+		0,
+		0,
+		0,
+		0,
+		-74,
+		-74,
+		-37,
+		-111
+	],
+	Acircumflexp: [
+		0,
+		0,
+		0,
+		0,
+		-25
+	],
+	Acircumflexquoteright: [
+		0,
+		0,
+		0,
+		0,
+		-74,
+		-74,
+		-37,
+		-111
+	],
+	Adieresisp: [
+		0,
+		0,
+		0,
+		0,
+		-25
+	],
+	Adieresisquoteright: [
+		0,
+		0,
+		0,
+		0,
+		-74,
+		-74,
+		-37,
+		-111
+	],
+	Agravep: [
+		0,
+		0,
+		0,
+		0,
+		-25
+	],
+	Agravequoteright: [
+		0,
+		0,
+		0,
+		0,
+		-74,
+		-74,
+		-37,
+		-111
+	],
+	Amacronp: [
+		0,
+		0,
+		0,
+		0,
+		-25
+	],
+	Amacronquoteright: [
+		0,
+		0,
+		0,
+		0,
+		-74,
+		-74,
+		-37,
+		-111
+	],
+	Aogonekp: [
+		0,
+		0,
+		0,
+		0,
+		-25
+	],
+	Aogonekquoteright: [
+		0,
+		0,
+		0,
+		0,
+		-74,
+		-74,
+		-37,
+		-111
+	],
+	Aringp: [
+		0,
+		0,
+		0,
+		0,
+		-25
+	],
+	Aringquoteright: [
+		0,
+		0,
+		0,
+		0,
+		-74,
+		-74,
+		-37,
+		-111
+	],
+	Atildep: [
+		0,
+		0,
+		0,
+		0,
+		-25
+	],
+	Atildequoteright: [
+		0,
+		0,
+		0,
+		0,
+		-74,
+		-74,
+		-37,
+		-111
+	],
+	Je: [
+		0,
+		0,
+		0,
+		0,
+		-15,
+		-40,
+		-25
+	],
+	Jeacute: [
+		0,
+		0,
+		0,
+		0,
+		-15,
+		-40,
+		-25
+	],
+	Jecaron: [
+		0,
+		0,
+		0,
+		0,
+		-15,
+		-40,
+		-25
+	],
+	Jecircumflex: [
+		0,
+		0,
+		0,
+		0,
+		-15,
+		-40,
+		-25
+	],
+	Jedieresis: [
+		0,
+		0,
+		0,
+		0,
+		-15,
+		-40,
+		-25
+	],
+	Jedotaccent: [
+		0,
+		0,
+		0,
+		0,
+		-15,
+		-40,
+		-25
+	],
+	Jegrave: [
+		0,
+		0,
+		0,
+		0,
+		-15,
+		-40,
+		-25
+	],
+	Jemacron: [
+		0,
+		0,
+		0,
+		0,
+		-15,
+		-40,
+		-25
+	],
+	Jeogonek: [
+		0,
+		0,
+		0,
+		0,
+		-15,
+		-40,
+		-25
+	],
+	Jo: [
+		0,
+		0,
+		0,
+		0,
+		-15,
+		-40,
+		-25
+	],
+	Joacute: [
+		0,
+		0,
+		0,
+		0,
+		-15,
+		-40,
+		-25
+	],
+	Jocircumflex: [
+		0,
+		0,
+		0,
+		0,
+		-15,
+		-40,
+		-25
+	],
+	Jodieresis: [
+		0,
+		0,
+		0,
+		0,
+		-15,
+		-40,
+		-25
+	],
+	Jograve: [
+		0,
+		0,
+		0,
+		0,
+		-15,
+		-40,
+		-25
+	],
+	Johungarumlaut: [
+		0,
+		0,
+		0,
+		0,
+		-15,
+		-40,
+		-25
+	],
+	Jomacron: [
+		0,
+		0,
+		0,
+		0,
+		-15,
+		-40,
+		-25
+	],
+	Joslash: [
+		0,
+		0,
+		0,
+		0,
+		-15,
+		-40,
+		-25
+	],
+	Jotilde: [
+		0,
+		0,
+		0,
+		0,
+		-15,
+		-40,
+		-25
+	],
+	NA: [
+		0,
+		0,
+		0,
+		0,
+		-20,
+		-30,
+		-27,
+		-35
+	],
+	NAacute: [
+		0,
+		0,
+		0,
+		0,
+		-20,
+		-30,
+		-27,
+		-35
+	],
+	NAbreve: [
+		0,
+		0,
+		0,
+		0,
+		-20,
+		-30,
+		-27,
+		-35
+	],
+	NAcircumflex: [
+		0,
+		0,
+		0,
+		0,
+		-20,
+		-30,
+		-27,
+		-35
+	],
+	NAdieresis: [
+		0,
+		0,
+		0,
+		0,
+		-20,
+		-30,
+		-27,
+		-35
+	],
+	NAgrave: [
+		0,
+		0,
+		0,
+		0,
+		-20,
+		-30,
+		-27,
+		-35
+	],
+	NAmacron: [
+		0,
+		0,
+		0,
+		0,
+		-20,
+		-30,
+		-27,
+		-35
+	],
+	NAogonek: [
+		0,
+		0,
+		0,
+		0,
+		-20,
+		-30,
+		-27,
+		-35
+	],
+	NAring: [
+		0,
+		0,
+		0,
+		0,
+		-20,
+		-30,
+		-27,
+		-35
+	],
+	NAtilde: [
+		0,
+		0,
+		0,
+		0,
+		-20,
+		-30,
+		-27,
+		-35
+	],
+	NacuteA: [
+		0,
+		0,
+		0,
+		0,
+		-20,
+		-30,
+		-27,
+		-35
+	],
+	NacuteAacute: [
+		0,
+		0,
+		0,
+		0,
+		-20,
+		-30,
+		-27,
+		-35
+	],
+	NacuteAbreve: [
+		0,
+		0,
+		0,
+		0,
+		-20,
+		-30,
+		-27,
+		-35
+	],
+	NacuteAcircumflex: [
+		0,
+		0,
+		0,
+		0,
+		-20,
+		-30,
+		-27,
+		-35
+	],
+	NacuteAdieresis: [
+		0,
+		0,
+		0,
+		0,
+		-20,
+		-30,
+		-27,
+		-35
+	],
+	NacuteAgrave: [
+		0,
+		0,
+		0,
+		0,
+		-20,
+		-30,
+		-27,
+		-35
+	],
+	NacuteAmacron: [
+		0,
+		0,
+		0,
+		0,
+		-20,
+		-30,
+		-27,
+		-35
+	],
+	NacuteAogonek: [
+		0,
+		0,
+		0,
+		0,
+		-20,
+		-30,
+		-27,
+		-35
+	],
+	NacuteAring: [
+		0,
+		0,
+		0,
+		0,
+		-20,
+		-30,
+		-27,
+		-35
+	],
+	NacuteAtilde: [
+		0,
+		0,
+		0,
+		0,
+		-20,
+		-30,
+		-27,
+		-35
+	],
+	NcaronA: [
+		0,
+		0,
+		0,
+		0,
+		-20,
+		-30,
+		-27,
+		-35
+	],
+	NcaronAacute: [
+		0,
+		0,
+		0,
+		0,
+		-20,
+		-30,
+		-27,
+		-35
+	],
+	NcaronAbreve: [
+		0,
+		0,
+		0,
+		0,
+		-20,
+		-30,
+		-27,
+		-35
+	],
+	NcaronAcircumflex: [
+		0,
+		0,
+		0,
+		0,
+		-20,
+		-30,
+		-27,
+		-35
+	],
+	NcaronAdieresis: [
+		0,
+		0,
+		0,
+		0,
+		-20,
+		-30,
+		-27,
+		-35
+	],
+	NcaronAgrave: [
+		0,
+		0,
+		0,
+		0,
+		-20,
+		-30,
+		-27,
+		-35
+	],
+	NcaronAmacron: [
+		0,
+		0,
+		0,
+		0,
+		-20,
+		-30,
+		-27,
+		-35
+	],
+	NcaronAogonek: [
+		0,
+		0,
+		0,
+		0,
+		-20,
+		-30,
+		-27,
+		-35
+	],
+	NcaronAring: [
+		0,
+		0,
+		0,
+		0,
+		-20,
+		-30,
+		-27,
+		-35
+	],
+	NcaronAtilde: [
+		0,
+		0,
+		0,
+		0,
+		-20,
+		-30,
+		-27,
+		-35
+	],
+	NcommaaccentA: [
+		0,
+		0,
+		0,
+		0,
+		-20,
+		-30,
+		-27,
+		-35
+	],
+	NcommaaccentAacute: [
+		0,
+		0,
+		0,
+		0,
+		-20,
+		-30,
+		-27,
+		-35
+	],
+	NcommaaccentAbreve: [
+		0,
+		0,
+		0,
+		0,
+		-20,
+		-30,
+		-27,
+		-35
+	],
+	NcommaaccentAcircumflex: [
+		0,
+		0,
+		0,
+		0,
+		-20,
+		-30,
+		-27,
+		-35
+	],
+	NcommaaccentAdieresis: [
+		0,
+		0,
+		0,
+		0,
+		-20,
+		-30,
+		-27,
+		-35
+	],
+	NcommaaccentAgrave: [
+		0,
+		0,
+		0,
+		0,
+		-20,
+		-30,
+		-27,
+		-35
+	],
+	NcommaaccentAmacron: [
+		0,
+		0,
+		0,
+		0,
+		-20,
+		-30,
+		-27,
+		-35
+	],
+	NcommaaccentAogonek: [
+		0,
+		0,
+		0,
+		0,
+		-20,
+		-30,
+		-27,
+		-35
+	],
+	NcommaaccentAring: [
+		0,
+		0,
+		0,
+		0,
+		-20,
+		-30,
+		-27,
+		-35
+	],
+	NcommaaccentAtilde: [
+		0,
+		0,
+		0,
+		0,
+		-20,
+		-30,
+		-27,
+		-35
+	],
+	NtildeA: [
+		0,
+		0,
+		0,
+		0,
+		-20,
+		-30,
+		-27,
+		-35
+	],
+	NtildeAacute: [
+		0,
+		0,
+		0,
+		0,
+		-20,
+		-30,
+		-27,
+		-35
+	],
+	NtildeAbreve: [
+		0,
+		0,
+		0,
+		0,
+		-20,
+		-30,
+		-27,
+		-35
+	],
+	NtildeAcircumflex: [
+		0,
+		0,
+		0,
+		0,
+		-20,
+		-30,
+		-27,
+		-35
+	],
+	NtildeAdieresis: [
+		0,
+		0,
+		0,
+		0,
+		-20,
+		-30,
+		-27,
+		-35
+	],
+	NtildeAgrave: [
+		0,
+		0,
+		0,
+		0,
+		-20,
+		-30,
+		-27,
+		-35
+	],
+	NtildeAmacron: [
+		0,
+		0,
+		0,
+		0,
+		-20,
+		-30,
+		-27,
+		-35
+	],
+	NtildeAogonek: [
+		0,
+		0,
+		0,
+		0,
+		-20,
+		-30,
+		-27,
+		-35
+	],
+	NtildeAring: [
+		0,
+		0,
+		0,
+		0,
+		-20,
+		-30,
+		-27,
+		-35
+	],
+	NtildeAtilde: [
+		0,
+		0,
+		0,
+		0,
+		-20,
+		-30,
+		-27,
+		-35
+	],
+	Ti: [
+		0,
+		0,
+		0,
+		0,
+		-18,
+		-37,
+		-55,
+		-35
+	],
+	Tiacute: [
+		0,
+		0,
+		0,
+		0,
+		-18,
+		-37,
+		-55,
+		-35
+	],
+	Tiogonek: [
+		0,
+		0,
+		0,
+		0,
+		-18,
+		-37,
+		-55,
+		-35
+	],
+	Tcaroni: [
+		0,
+		0,
+		0,
+		0,
+		-18,
+		-37,
+		-55,
+		-35
+	],
+	Tcaroniacute: [
+		0,
+		0,
+		0,
+		0,
+		-18,
+		-37,
+		-55,
+		-35
+	],
+	Tcaroniogonek: [
+		0,
+		0,
+		0,
+		0,
+		-18,
+		-37,
+		-55,
+		-35
+	],
+	Tcommaaccenti: [
+		0,
+		0,
+		0,
+		0,
+		-18,
+		-37,
+		-55,
+		-35
+	],
+	Tcommaaccentiacute: [
+		0,
+		0,
+		0,
+		0,
+		-18,
+		-37,
+		-55,
+		-35
+	],
+	Tcommaaccentiogonek: [
+		0,
+		0,
+		0,
+		0,
+		-18,
+		-37,
+		-55,
+		-35
+	],
+	Vi: [
+		0,
+		0,
+		0,
+		0,
+		-37,
+		-55,
+		-74,
+		-60
+	],
+	Viacute: [
+		0,
+		0,
+		0,
+		0,
+		-37,
+		-55,
+		-74,
+		-60
+	],
+	Vicircumflex: [
+		0,
+		0,
+		0,
+		0,
+		-37,
+		0,
+		-34,
+		-20
+	],
+	Vidieresis: [
+		0,
+		0,
+		0,
+		0,
+		-37,
+		0,
+		-34,
+		-20
+	],
+	Vigrave: [
+		0,
+		0,
+		0,
+		0,
+		-37,
+		0,
+		-34,
+		-20
+	],
+	Vimacron: [
+		0,
+		0,
+		0,
+		0,
+		-37,
+		0,
+		-34,
+		-20
+	],
+	Viogonek: [
+		0,
+		0,
+		0,
+		0,
+		-37,
+		-55,
+		-74,
+		-60
+	],
+	Wi: [
+		0,
+		0,
+		0,
+		0,
+		-18,
+		-37,
+		-55,
+		-40
+	],
+	Wiacute: [
+		0,
+		0,
+		0,
+		0,
+		-18,
+		-37,
+		-55,
+		-40
+	],
+	Wiogonek: [
+		0,
+		0,
+		0,
+		0,
+		-18,
+		-37,
+		-55,
+		-40
+	],
+	fi: [
+		0,
+		0,
+		0,
+		0,
+		-25,
+		0,
+		-20,
+		-20
+	],
+	gperiod: [
+		0,
+		0,
+		0,
+		0,
+		-15,
+		0,
+		-15
+	],
+	gbreveperiod: [
+		0,
+		0,
+		0,
+		0,
+		-15,
+		0,
+		-15
+	],
+	gcommaaccentperiod: [
+		0,
+		0,
+		0,
+		0,
+		-15,
+		0,
+		-15
+	],
+	iv: [
+		0,
+		0,
+		0,
+		0,
+		-10,
+		0,
+		0,
+		-25
+	],
+	iacutev: [
+		0,
+		0,
+		0,
+		0,
+		-10,
+		0,
+		0,
+		-25
+	],
+	icircumflexv: [
+		0,
+		0,
+		0,
+		0,
+		-10,
+		0,
+		0,
+		-25
+	],
+	idieresisv: [
+		0,
+		0,
+		0,
+		0,
+		-10,
+		0,
+		0,
+		-25
+	],
+	igravev: [
+		0,
+		0,
+		0,
+		0,
+		-10,
+		0,
+		0,
+		-25
+	],
+	imacronv: [
+		0,
+		0,
+		0,
+		0,
+		-10,
+		0,
+		0,
+		-25
+	],
+	iogonekv: [
+		0,
+		0,
+		0,
+		0,
+		-10,
+		0,
+		0,
+		-25
+	],
+	ky: [
+		0,
+		0,
+		0,
+		0,
+		-15,
+		0,
+		-10,
+		-15
+	],
+	kyacute: [
+		0,
+		0,
+		0,
+		0,
+		-15,
+		0,
+		-10,
+		-15
+	],
+	kydieresis: [
+		0,
+		0,
+		0,
+		0,
+		-15,
+		0,
+		-10,
+		-15
+	],
+	kcommaaccenty: [
+		0,
+		0,
+		0,
+		0,
+		-15,
+		0,
+		-10,
+		-15
+	],
+	kcommaaccentyacute: [
+		0,
+		0,
+		0,
+		0,
+		-15,
+		0,
+		-10,
+		-15
+	],
+	kcommaaccentydieresis: [
+		0,
+		0,
+		0,
+		0,
+		-15,
+		0,
+		-10,
+		-15
+	],
+	quotedblleftA: [
+		0,
+		0,
+		0,
+		0,
+		-10,
+		0,
+		0,
+		-80
+	],
+	quotedblleftAacute: [
+		0,
+		0,
+		0,
+		0,
+		-10,
+		0,
+		0,
+		-80
+	],
+	quotedblleftAbreve: [
+		0,
+		0,
+		0,
+		0,
+		-10,
+		0,
+		0,
+		-80
+	],
+	quotedblleftAcircumflex: [
+		0,
+		0,
+		0,
+		0,
+		-10,
+		0,
+		0,
+		-80
+	],
+	quotedblleftAdieresis: [
+		0,
+		0,
+		0,
+		0,
+		-10,
+		0,
+		0,
+		-80
+	],
+	quotedblleftAgrave: [
+		0,
+		0,
+		0,
+		0,
+		-10,
+		0,
+		0,
+		-80
+	],
+	quotedblleftAmacron: [
+		0,
+		0,
+		0,
+		0,
+		-10,
+		0,
+		0,
+		-80
+	],
+	quotedblleftAogonek: [
+		0,
+		0,
+		0,
+		0,
+		-10,
+		0,
+		0,
+		-80
+	],
+	quotedblleftAring: [
+		0,
+		0,
+		0,
+		0,
+		-10,
+		0,
+		0,
+		-80
+	],
+	quotedblleftAtilde: [
+		0,
+		0,
+		0,
+		0,
+		-10,
+		0,
+		0,
+		-80
+	],
+	quoteleftA: [
+		0,
+		0,
+		0,
+		0,
+		-10,
+		0,
+		0,
+		-80
+	],
+	quoteleftAacute: [
+		0,
+		0,
+		0,
+		0,
+		-10,
+		0,
+		0,
+		-80
+	],
+	quoteleftAbreve: [
+		0,
+		0,
+		0,
+		0,
+		-10,
+		0,
+		0,
+		-80
+	],
+	quoteleftAcircumflex: [
+		0,
+		0,
+		0,
+		0,
+		-10,
+		0,
+		0,
+		-80
+	],
+	quoteleftAdieresis: [
+		0,
+		0,
+		0,
+		0,
+		-10,
+		0,
+		0,
+		-80
+	],
+	quoteleftAgrave: [
+		0,
+		0,
+		0,
+		0,
+		-10,
+		0,
+		0,
+		-80
+	],
+	quoteleftAmacron: [
+		0,
+		0,
+		0,
+		0,
+		-10,
+		0,
+		0,
+		-80
+	],
+	quoteleftAogonek: [
+		0,
+		0,
+		0,
+		0,
+		-10,
+		0,
+		0,
+		-80
+	],
+	quoteleftAring: [
+		0,
+		0,
+		0,
+		0,
+		-10,
+		0,
+		0,
+		-80
+	],
+	quoteleftAtilde: [
+		0,
+		0,
+		0,
+		0,
+		-10,
+		0,
+		0,
+		-80
+	],
+	re: [
+		0,
+		0,
+		0,
+		0,
+		-18,
+		0,
+		-37
+	],
+	reacute: [
+		0,
+		0,
+		0,
+		0,
+		-18,
+		0,
+		-37
+	],
+	recaron: [
+		0,
+		0,
+		0,
+		0,
+		-18,
+		0,
+		-37
+	],
+	recircumflex: [
+		0,
+		0,
+		0,
+		0,
+		-18,
+		0,
+		-37
+	],
+	redieresis: [
+		0,
+		0,
+		0,
+		0,
+		-18,
+		0,
+		-37
+	],
+	redotaccent: [
+		0,
+		0,
+		0,
+		0,
+		-18,
+		0,
+		-37
+	],
+	regrave: [
+		0,
+		0,
+		0,
+		0,
+		-18,
+		0,
+		-37
+	],
+	remacron: [
+		0,
+		0,
+		0,
+		0,
+		-18,
+		0,
+		-37
+	],
+	reogonek: [
+		0,
+		0,
+		0,
+		0,
+		-18,
+		0,
+		-37
+	],
+	racutee: [
+		0,
+		0,
+		0,
+		0,
+		-18,
+		0,
+		-37
+	],
+	racuteeacute: [
+		0,
+		0,
+		0,
+		0,
+		-18,
+		0,
+		-37
+	],
+	racuteecaron: [
+		0,
+		0,
+		0,
+		0,
+		-18,
+		0,
+		-37
+	],
+	racuteecircumflex: [
+		0,
+		0,
+		0,
+		0,
+		-18,
+		0,
+		-37
+	],
+	racuteedieresis: [
+		0,
+		0,
+		0,
+		0,
+		-18,
+		0,
+		-37
+	],
+	racuteedotaccent: [
+		0,
+		0,
+		0,
+		0,
+		-18,
+		0,
+		-37
+	],
+	racuteegrave: [
+		0,
+		0,
+		0,
+		0,
+		-18,
+		0,
+		-37
+	],
+	racuteemacron: [
+		0,
+		0,
+		0,
+		0,
+		-18,
+		0,
+		-37
+	],
+	racuteeogonek: [
+		0,
+		0,
+		0,
+		0,
+		-18,
+		0,
+		-37
+	],
+	rcarone: [
+		0,
+		0,
+		0,
+		0,
+		-18,
+		0,
+		-37
+	],
+	rcaroneacute: [
+		0,
+		0,
+		0,
+		0,
+		-18,
+		0,
+		-37
+	],
+	rcaronecaron: [
+		0,
+		0,
+		0,
+		0,
+		-18,
+		0,
+		-37
+	],
+	rcaronecircumflex: [
+		0,
+		0,
+		0,
+		0,
+		-18,
+		0,
+		-37
+	],
+	rcaronedieresis: [
+		0,
+		0,
+		0,
+		0,
+		-18,
+		0,
+		-37
+	],
+	rcaronedotaccent: [
+		0,
+		0,
+		0,
+		0,
+		-18,
+		0,
+		-37
+	],
+	rcaronegrave: [
+		0,
+		0,
+		0,
+		0,
+		-18,
+		0,
+		-37
+	],
+	rcaronemacron: [
+		0,
+		0,
+		0,
+		0,
+		-18,
+		0,
+		-37
+	],
+	rcaroneogonek: [
+		0,
+		0,
+		0,
+		0,
+		-18,
+		0,
+		-37
+	],
+	rcommaaccente: [
+		0,
+		0,
+		0,
+		0,
+		-18,
+		0,
+		-37
+	],
+	rcommaaccenteacute: [
+		0,
+		0,
+		0,
+		0,
+		-18,
+		0,
+		-37
+	],
+	rcommaaccentecaron: [
+		0,
+		0,
+		0,
+		0,
+		-18,
+		0,
+		-37
+	],
+	rcommaaccentecircumflex: [
+		0,
+		0,
+		0,
+		0,
+		-18,
+		0,
+		-37
+	],
+	rcommaaccentedieresis: [
+		0,
+		0,
+		0,
+		0,
+		-18,
+		0,
+		-37
+	],
+	rcommaaccentedotaccent: [
+		0,
+		0,
+		0,
+		0,
+		-18,
+		0,
+		-37
+	],
+	rcommaaccentegrave: [
+		0,
+		0,
+		0,
+		0,
+		-18,
+		0,
+		-37
+	],
+	rcommaaccentemacron: [
+		0,
+		0,
+		0,
+		0,
+		-18,
+		0,
+		-37
+	],
+	rcommaaccenteogonek: [
+		0,
+		0,
+		0,
+		0,
+		-18,
+		0,
+		-37
+	],
+	spaceA: [
+		0,
+		0,
+		0,
+		0,
+		-55,
+		-37,
+		-18,
+		-55
+	],
+	spaceAacute: [
+		0,
+		0,
+		0,
+		0,
+		-55,
+		-37,
+		-18,
+		-55
+	],
+	spaceAbreve: [
+		0,
+		0,
+		0,
+		0,
+		-55,
+		-37,
+		-18,
+		-55
+	],
+	spaceAcircumflex: [
+		0,
+		0,
+		0,
+		0,
+		-55,
+		-37,
+		-18,
+		-55
+	],
+	spaceAdieresis: [
+		0,
+		0,
+		0,
+		0,
+		-55,
+		-37,
+		-18,
+		-55
+	],
+	spaceAgrave: [
+		0,
+		0,
+		0,
+		0,
+		-55,
+		-37,
+		-18,
+		-55
+	],
+	spaceAmacron: [
+		0,
+		0,
+		0,
+		0,
+		-55,
+		-37,
+		-18,
+		-55
+	],
+	spaceAogonek: [
+		0,
+		0,
+		0,
+		0,
+		-55,
+		-37,
+		-18,
+		-55
+	],
+	spaceAring: [
+		0,
+		0,
+		0,
+		0,
+		-55,
+		-37,
+		-18,
+		-55
+	],
+	spaceAtilde: [
+		0,
+		0,
+		0,
+		0,
+		-55,
+		-37,
+		-18,
+		-55
+	],
+	Fi: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		-40,
+		-45
+	],
+	Fiacute: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		-40,
+		-45
+	],
+	Ficircumflex: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		-40,
+		-45
+	],
+	Fidieresis: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		-40,
+		-45
+	],
+	Figrave: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		-40,
+		-45
+	],
+	Fimacron: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		-40,
+		-45
+	],
+	Fiogonek: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		-40,
+		-45
+	],
+	eb: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	eacuteb: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	ecaronb: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	ecircumflexb: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	edieresisb: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	edotaccentb: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	egraveb: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	emacronb: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	eogonekb: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	ff: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		-18,
+		-18,
+		-25
+	],
+	quoterightt: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		-37,
+		-30,
+		-18
+	],
+	quoterighttcommaaccent: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		-37,
+		-30,
+		-18
+	],
+	Yicircumflex: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-34
+	],
+	Yidieresis: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-34
+	],
+	Yigrave: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-34
+	],
+	Yimacron: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-34
+	],
+	Yacuteicircumflex: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-34
+	],
+	Yacuteidieresis: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-34
+	],
+	Yacuteigrave: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-34
+	],
+	Yacuteimacron: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-34
+	],
+	Ydieresisicircumflex: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-34
+	],
+	Ydieresisidieresis: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-34
+	],
+	Ydieresisigrave: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-34
+	],
+	Ydieresisimacron: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-34
+	],
+	eg: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-40,
+		-15
+	],
+	egbreve: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-40,
+		-15
+	],
+	egcommaaccent: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-40,
+		-15
+	],
+	eacuteg: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-40,
+		-15
+	],
+	eacutegbreve: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-40,
+		-15
+	],
+	eacutegcommaaccent: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-40,
+		-15
+	],
+	ecarong: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-40,
+		-15
+	],
+	ecarongbreve: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-40,
+		-15
+	],
+	ecarongcommaaccent: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-40,
+		-15
+	],
+	ecircumflexg: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-40,
+		-15
+	],
+	ecircumflexgbreve: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-40,
+		-15
+	],
+	ecircumflexgcommaaccent: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-40,
+		-15
+	],
+	edieresisg: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-40,
+		-15
+	],
+	edieresisgbreve: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-40,
+		-15
+	],
+	edieresisgcommaaccent: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-40,
+		-15
+	],
+	edotaccentg: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-40,
+		-15
+	],
+	edotaccentgbreve: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-40,
+		-15
+	],
+	edotaccentgcommaaccent: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-40,
+		-15
+	],
+	egraveg: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-40,
+		-15
+	],
+	egravegbreve: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-40,
+		-15
+	],
+	egravegcommaaccent: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-40,
+		-15
+	],
+	emacrong: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-40,
+		-15
+	],
+	emacrongbreve: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-40,
+		-15
+	],
+	emacrongcommaaccent: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-40,
+		-15
+	],
+	eogonekg: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-40,
+		-15
+	],
+	eogonekgbreve: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-40,
+		-15
+	],
+	eogonekgcommaaccent: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-40,
+		-15
+	],
+	fiogonek: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-20
+	],
+	gcomma: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	gbrevecomma: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	gcommaaccentcomma: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	og: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	ogbreve: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	ogcommaaccent: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	oacuteg: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	oacutegbreve: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	oacutegcommaaccent: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	ocircumflexg: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	ocircumflexgbreve: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	ocircumflexgcommaaccent: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	odieresisg: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	odieresisgbreve: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	odieresisgcommaaccent: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	ograveg: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	ogravegbreve: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	ogravegcommaaccent: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	ohungarumlautg: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	ohungarumlautgbreve: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	ohungarumlautgcommaaccent: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	omacrong: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	omacrongbreve: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	omacrongcommaaccent: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	otildeg: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	otildegbreve: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	otildegcommaaccent: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-10
+	],
+	fiacute: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-20
+	],
+	ga: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-5
+	],
+	gaacute: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-5
+	],
+	gabreve: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-5
+	],
+	gacircumflex: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-5
+	],
+	gadieresis: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-5
+	],
+	gagrave: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-5
+	],
+	gamacron: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-5
+	],
+	gaogonek: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-5
+	],
+	garing: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-5
+	],
+	gatilde: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-5
+	],
+	gbrevea: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-5
+	],
+	gbreveaacute: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-5
+	],
+	gbreveabreve: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-5
+	],
+	gbreveacircumflex: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-5
+	],
+	gbreveadieresis: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-5
+	],
+	gbreveagrave: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-5
+	],
+	gbreveamacron: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-5
+	],
+	gbreveaogonek: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-5
+	],
+	gbrevearing: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-5
+	],
+	gbreveatilde: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-5
+	],
+	gcommaaccenta: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-5
+	],
+	gcommaaccentaacute: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-5
+	],
+	gcommaaccentabreve: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-5
+	],
+	gcommaaccentacircumflex: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-5
+	],
+	gcommaaccentadieresis: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-5
+	],
+	gcommaaccentagrave: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-5
+	],
+	gcommaaccentamacron: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-5
+	],
+	gcommaaccentaogonek: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-5
+	],
+	gcommaaccentaring: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-5
+	],
+	gcommaaccentatilde: [
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		-5
+	]
 };
 var data = {
-  attributes: attributes,
-  glyphWidths: glyphWidths,
-  kernPairs: kernPairs
+	attributes: attributes,
+	glyphWidths: glyphWidths,
+	kernPairs: kernPairs
 };
 
 var initFont = function initFont(font) {
-  return [
-    font.FontName,
-    {
-      attributes: font,
-      glyphWidths: {},
-      kernPairs: {}
-    }
-  ];
+  return [font.FontName, {
+    attributes: font,
+    glyphWidths: {},
+    kernPairs: {}
+  }];
 };
 
 var expandData = function expandData(data) {
   var attributes = data.attributes,
-    glyphWidths = data.glyphWidths,
-    kernPairs = data.kernPairs;
+      glyphWidths = data.glyphWidths,
+      kernPairs = data.kernPairs;
   var fonts = attributes.map(initFont);
-  Object.keys(glyphWidths).forEach(function(key) {
-    glyphWidths[key].forEach(function(value, index) {
+  Object.keys(glyphWidths).forEach(function (key) {
+    glyphWidths[key].forEach(function (value, index) {
       if (value) fonts[index][1].glyphWidths[key] = value;
     });
   });
-  Object.keys(kernPairs).forEach(function(key) {
-    kernPairs[key].forEach(function(value, index) {
+  Object.keys(kernPairs).forEach(function (key) {
+    kernPairs[key].forEach(function (value, index) {
       if (value) fonts[index][1].kernPairs[key] = value;
     });
   });
@@ -21632,8 +50168,8 @@ var expandData = function expandData(data) {
 var STANDARD_FONTS = expandData(data);
 
 var createStandardFont = function createStandardFont(PDFFont) {
-  return /*#__PURE__*/ (function(_PDFFont) {
-    _inheritsLoose__default['default'](StandardFont, _PDFFont);
+  return /*#__PURE__*/function (_PDFFont) {
+    _inheritsLoose__default["default"](StandardFont, _PDFFont);
 
     function StandardFont(document, name, id) {
       var _this;
@@ -21664,7 +50200,7 @@ var createStandardFont = function createStandardFont(PDFFont) {
 
     _proto.encode = function encode(text) {
       var encoded = this.font.encodeText(text);
-      var glyphs = this.font.glyphsForString('' + text);
+      var glyphs = this.font.glyphsForString("" + text);
       var advances = this.font.advancesForGlyphs(glyphs);
       var positions = [];
 
@@ -21685,28 +50221,20 @@ var createStandardFont = function createStandardFont(PDFFont) {
     _proto.encodeGlyphs = function encodeGlyphs(glyphs) {
       var res = [];
 
-      for (
-        var _i = 0, _Array$from = Array.from(glyphs);
-        _i < _Array$from.length;
-        _i++
-      ) {
+      for (var _i = 0, _Array$from = Array.from(glyphs); _i < _Array$from.length; _i++) {
         var glyph = _Array$from[_i];
-        res.push(('00' + glyph.id.toString(16)).slice(-2));
+        res.push(("00" + glyph.id.toString(16)).slice(-2));
       }
 
       return res;
     };
 
     _proto.widthOfString = function widthOfString(string, size) {
-      var glyphs = this.font.glyphsForString('' + string);
+      var glyphs = this.font.glyphsForString("" + string);
       var advances = this.font.advancesForGlyphs(glyphs);
       var width = 0;
 
-      for (
-        var _i2 = 0, _Array$from2 = Array.from(advances);
-        _i2 < _Array$from2.length;
-        _i2++
-      ) {
+      for (var _i2 = 0, _Array$from2 = Array.from(advances); _i2 < _Array$from2.length; _i2++) {
         var advance = _Array$from2[_i2];
         width += advance;
       }
@@ -21720,27 +50248,23 @@ var createStandardFont = function createStandardFont(PDFFont) {
     };
 
     return StandardFont;
-  })(PDFFont);
+  }(PDFFont);
 };
 
 var toHex = function toHex() {
-  for (
-    var _len = arguments.length, codePoints = new Array(_len), _key = 0;
-    _key < _len;
-    _key++
-  ) {
+  for (var _len = arguments.length, codePoints = new Array(_len), _key = 0; _key < _len; _key++) {
     codePoints[_key] = arguments[_key];
   }
 
-  var codes = Array.from(codePoints).map(function(code) {
-    return ('0000' + code.toString(16)).slice(-4);
+  var codes = Array.from(codePoints).map(function (code) {
+    return ("0000" + code.toString(16)).slice(-4);
   });
   return codes.join('');
 };
 
 var createEmbeddedFont = function createEmbeddedFont(PDFFont) {
-  return /*#__PURE__*/ (function(_PDFFont) {
-    _inheritsLoose__default['default'](EmbeddedFont, _PDFFont);
+  return /*#__PURE__*/function (_PDFFont) {
+    _inheritsLoose__default["default"](EmbeddedFont, _PDFFont);
 
     function EmbeddedFont(document, font, id) {
       var _this;
@@ -21785,7 +50309,7 @@ var createEmbeddedFont = function createEmbeddedFont(PDFFont) {
     _proto.layoutCached = function layoutCached(text) {
       var cached;
 
-      if ((cached = this.layoutCache[text])) {
+      if (cached = this.layoutCache[text]) {
         return cached;
       }
 
@@ -21815,10 +50339,7 @@ var createEmbeddedFont = function createEmbeddedFont(PDFFont) {
       while (index <= text.length) {
         var needle;
 
-        if (
-          (index === text.length && last < index) ||
-          ((needle = text.charAt(index)), [' ', '\t'].includes(needle))
-        ) {
+        if (index === text.length && last < index || (needle = text.charAt(index), [' ', '\t'].includes(needle))) {
           var run = this.layoutCached(text.slice(last, ++index));
 
           if (!onlyWidth) {
@@ -21842,24 +50363,22 @@ var createEmbeddedFont = function createEmbeddedFont(PDFFont) {
 
     _proto.encode = function encode(text, features) {
       var _this$layout = this.layout(text, features),
-        glyphs = _this$layout.glyphs,
-        positions = _this$layout.positions;
+          glyphs = _this$layout.glyphs,
+          positions = _this$layout.positions;
 
       var res = [];
 
       for (var i = 0; i < glyphs.length; i++) {
         var glyph = glyphs[i];
         var gid = this.subset.includeGlyph(glyph.id);
-        res.push(('0000' + gid.toString(16)).slice(-4));
+        res.push(("0000" + gid.toString(16)).slice(-4));
 
         if (this.widths[gid] == null) {
           this.widths[gid] = glyph.advanceWidth * this.scale;
         }
 
         if (this.unicode[gid] == null) {
-          this.unicode[gid] = this.font._cmapProcessor.codePointsForGlyph(
-            glyph.id
-          );
+          this.unicode[gid] = this.font._cmapProcessor.codePointsForGlyph(glyph.id);
         }
       }
 
@@ -21872,16 +50391,14 @@ var createEmbeddedFont = function createEmbeddedFont(PDFFont) {
       for (var i = 0; i < glyphs.length; i++) {
         var glyph = glyphs[i];
         var gid = this.subset.includeGlyph(glyph.id);
-        res.push(('0000' + gid.toString(16)).slice(-4));
+        res.push(("0000" + gid.toString(16)).slice(-4));
 
         if (this.widths[gid] == null) {
           this.widths[gid] = glyph.advanceWidth * this.scale;
         }
 
         if (this.unicode[gid] == null) {
-          this.unicode[gid] = this.font._cmapProcessor.codePointsForGlyph(
-            glyph.id
-          );
+          this.unicode[gid] = this.font._cmapProcessor.codePointsForGlyph(glyph.id);
         }
       }
 
@@ -21903,10 +50420,7 @@ var createEmbeddedFont = function createEmbeddedFont(PDFFont) {
       }
 
       fontFile.end(this.subset.encode());
-      var familyClass =
-        ((this.font['OS/2'] != null
-          ? this.font['OS/2'].sFamilyClass
-          : undefined) || 0) >> 8;
+      var familyClass = ((this.font['OS/2'] != null ? this.font['OS/2'].sFamilyClass : undefined) || 0) >> 8;
       var flags = 0;
 
       if (this.font.post.isFixedPitch) {
@@ -21927,23 +50441,17 @@ var createEmbeddedFont = function createEmbeddedFont(PDFFont) {
         flags |= 1 << 6;
       } // generate a random tag (6 uppercase letters. 65 is the char code for 'A')
 
-      var tag = [0, 1, 2, 3, 4, 5]
-        .map(function(i) {
-          return String.fromCharCode(Math.random() * 26 + 65);
-        })
-        .join('');
+
+      var tag = [0, 1, 2, 3, 4, 5].map(function (i) {
+        return String.fromCharCode(Math.random() * 26 + 65);
+      }).join('');
       var name = tag + '+' + this.font.postscriptName;
       var bbox = this.font.bbox;
       var descriptor = this.document.ref({
         Type: 'FontDescriptor',
         FontName: name,
         Flags: flags,
-        FontBBox: [
-          bbox.minX * this.scale,
-          bbox.minY * this.scale,
-          bbox.maxX * this.scale,
-          bbox.maxY * this.scale
-        ],
+        FontBBox: [bbox.minX * this.scale, bbox.minY * this.scale, bbox.maxX * this.scale, bbox.maxY * this.scale],
         ItalicAngle: this.font.italicAngle,
         Ascent: this.ascender,
         Descent: this.descender,
@@ -21981,55 +50489,42 @@ var createEmbeddedFont = function createEmbeddedFont(PDFFont) {
         ToUnicode: this.toUnicodeCmap()
       };
       return this.dictionary.end();
-    }; // Maps the glyph ids encoded in the PDF back to unicode strings
+    } // Maps the glyph ids encoded in the PDF back to unicode strings
     // Because of ligature substitutions and the like, there may be one or more
     // unicode characters represented by each glyph.
+    ;
 
     _proto.toUnicodeCmap = function toUnicodeCmap() {
       var cmap = this.document.ref();
       var entries = [];
 
-      for (
-        var _i = 0, _Array$from = Array.from(this.unicode);
-        _i < _Array$from.length;
-        _i++
-      ) {
+      for (var _i = 0, _Array$from = Array.from(this.unicode); _i < _Array$from.length; _i++) {
         var codePoints = _Array$from[_i];
         var encoded = [];
 
-        for (
-          var _i2 = 0, _Array$from2 = Array.from(codePoints);
-          _i2 < _Array$from2.length;
-          _i2++
-        ) {
+        for (var _i2 = 0, _Array$from2 = Array.from(codePoints); _i2 < _Array$from2.length; _i2++) {
           var value = _Array$from2[_i2];
 
           if (value > 0xffff) {
             value -= 0x10000;
-            encoded.push(toHex(((value >>> 10) & 0x3ff) | 0xd800));
-            value = 0xdc00 | (value & 0x3ff);
+            encoded.push(toHex(value >>> 10 & 0x3ff | 0xd800));
+            value = 0xdc00 | value & 0x3ff;
           }
 
           encoded.push(toHex(value));
-          entries.push('<' + encoded.join(' ') + '>');
+          entries.push("<" + encoded.join(' ') + ">");
         }
       }
 
-      cmap.end(
-        '  /CIDInit /ProcSet findresource begin\n  12 dict begin\n  begincmap\n  /CIDSystemInfo <<\n  /Registry (Adobe)\n  /Ordering (UCS)\n  /Supplement 0\n  >> def\n  /CMapName /Adobe-Identity-UCS def\n  /CMapType 2 def\n  1 begincodespacerange\n  <0000><ffff>\n  endcodespacerange\n  1 beginbfrange\n  <0000> <' +
-          toHex(entries.length - 1) +
-          '> [' +
-          entries.join(' ') +
-          ']\n  endbfrange\n  endcmap\n  CMapName currentdict /CMap defineresource pop\n  end\n  end  '
-      );
+      cmap.end("  /CIDInit /ProcSet findresource begin\n  12 dict begin\n  begincmap\n  /CIDSystemInfo <<\n  /Registry (Adobe)\n  /Ordering (UCS)\n  /Supplement 0\n  >> def\n  /CMapName /Adobe-Identity-UCS def\n  /CMapType 2 def\n  1 begincodespacerange\n  <0000><ffff>\n  endcodespacerange\n  1 beginbfrange\n  <0000> <" + toHex(entries.length - 1) + "> [" + entries.join(' ') + "]\n  endbfrange\n  endcmap\n  CMapName currentdict /CMap defineresource pop\n  end\n  end  ");
       return cmap;
     };
 
     return EmbeddedFont;
-  })(PDFFont);
+  }(PDFFont);
 };
 
-var PDFFont = /*#__PURE__*/ (function() {
+var PDFFont = /*#__PURE__*/function () {
   function PDFFont() {}
 
   PDFFont.open = function open(document, src, family, id) {
@@ -22041,7 +50536,7 @@ var PDFFont = /*#__PURE__*/ (function() {
       }
 
       {
-        throw new Error("Can't open " + src + ' in browser build');
+        throw new Error("Can't open " + src + " in browser build");
       }
     } else if (src instanceof Uint8Array) {
       font = fontkit__namespace.create(src, family);
@@ -22069,9 +50564,7 @@ var PDFFont = /*#__PURE__*/ (function() {
   };
 
   _proto.ref = function ref() {
-    return this.dictionary != null
-      ? this.dictionary
-      : (this.dictionary = this.document.ref());
+    return this.dictionary != null ? this.dictionary : this.dictionary = this.document.ref();
   };
 
   _proto.finalize = function finalize() {
@@ -22080,7 +50573,7 @@ var PDFFont = /*#__PURE__*/ (function() {
     }
 
     this.embed();
-    return (this.embedded = true);
+    return this.embedded = true;
   };
 
   _proto.embed = function embed() {
@@ -22093,11 +50586,11 @@ var PDFFont = /*#__PURE__*/ (function() {
     }
 
     var gap = includeGap ? this.lineGap : 0;
-    return ((this.ascender + gap - this.descender) / 1000) * size;
+    return (this.ascender + gap - this.descender) / 1000 * size;
   };
 
   return PDFFont;
-})();
+}();
 var StandardFont = createStandardFont(PDFFont);
 var EmbeddedFont = createEmbeddedFont(PDFFont);
 
@@ -22121,6 +50614,7 @@ var FontsMixin = {
       family = null;
     } // check registered fonts if src is a string
 
+
     if (typeof src === 'string' && this._registeredFonts[src]) {
       cacheKey = src;
       var _this$_registeredFont = this._registeredFonts[src];
@@ -22138,19 +50632,22 @@ var FontsMixin = {
       this.fontSize(size);
     } // fast path: check if the font is already in the PDF
 
-    if ((font = this._fontFamilies[cacheKey])) {
+
+    if (font = this._fontFamilies[cacheKey]) {
       this._font = font;
       return this;
     } // load the font
 
-    var id = 'F' + ++this._fontCount;
+
+    var id = "F" + ++this._fontCount;
     this._font = PDFFont.open(this, src, family, id); // check for existing font familes with the same name already in the PDF
     // useful if the font was passed as a buffer
 
-    if ((font = this._fontFamilies[this._font.name])) {
+    if (font = this._fontFamilies[this._font.name]) {
       this._font = font;
       return this;
     } // save the font for reuse later
+
 
     if (cacheKey) {
       this._fontFamilies[cacheKey] = this._font;
@@ -22189,14 +50686,14 @@ var TextMixin = {
 
     this.x = 0;
     this.y = 0;
-    return (this._lineGap = 0);
+    return this._lineGap = 0;
   },
   _text: function _text(text, x, y, options, lineCallback) {
     var _this = this;
 
     options = this._initOptions(x, y, options); // Convert text to a string
 
-    text = text == null ? '' : '' + text; // if the wordSpacing option is specified, remove multiple consecutive spaces
+    text = text == null ? '' : "" + text; // if the wordSpacing option is specified, remove multiple consecutive spaces
 
     if (options.wordSpacing) {
       text = text.replace(/\s{2,}/g, ' ');
@@ -22204,22 +50701,11 @@ var TextMixin = {
 
     var addStructure = function addStructure() {
       if (options.structParent) {
-        options.structParent.add(
-          _this.struct(options.structType || 'P', [
-            _this.markStructureContent(options.structType || 'P')
-          ])
-        );
+        options.structParent.add(_this.struct(options.structType || 'P', [_this.markStructureContent(options.structType || 'P')]));
       }
     };
 
-    for (
-      var _iterator = _createForOfIteratorHelperLoose__default['default'](
-          text.split('\n')
-        ),
-        _step;
-      !(_step = _iterator()).done;
-
-    ) {
+    for (var _iterator = _createForOfIteratorHelperLoose__default["default"](text.split('\n')), _step; !(_step = _iterator()).done;) {
       var line = _step.value;
       addStructure();
       lineCallback(line, options);
@@ -22235,10 +50721,7 @@ var TextMixin = {
       options = {};
     }
 
-    return (
-      this._font.widthOfString(string, this._fontSize, options.features) +
-      (options.characterSpacing || 0) * (string.length - 1)
-    );
+    return this._font.widthOfString(string, this._fontSize, options.features) + (options.characterSpacing || 0) * (string.length - 1);
   },
   _initOptions: function _initOptions(x, y, options) {
     if (x === void 0) {
@@ -22254,6 +50737,7 @@ var TextMixin = {
       x = null;
     } // clone options object
 
+
     var result = Object.assign({}, options); // extend options with previous values for continued text
 
     if (this._textOptions) {
@@ -22268,6 +50752,7 @@ var TextMixin = {
       }
     } // Update the current position
 
+
     if (x != null) {
       this.x = x;
     }
@@ -22275,6 +50760,7 @@ var TextMixin = {
     if (y != null) {
       this.y = y;
     } // wrap to margins if no x or y position passed
+
 
     if (result.lineBreak !== false) {
       if (result.width == null) {
@@ -22292,6 +50778,7 @@ var TextMixin = {
       result.columnGap = 18;
     } // 1/4 inch
 
+
     return result;
   },
   _line: function _line(text, options) {
@@ -22301,17 +50788,17 @@ var TextMixin = {
 
     this._fragment(text, this.x, this.y, options);
 
-    return (this.x += this.widthOfString(text));
+    return this.x += this.widthOfString(text);
   },
   _fragment: function _fragment(text, x, y, options) {
-    text = ('' + text).replace(/\n/g, '');
+    text = ("" + text).replace(/\n/g, '');
     if (text.length === 0) return;
 
     var _this$_font$encode = this._font.encode(text, options.features),
-      encoded = _this$_font$encode[0],
-      positions = _this$_font$encode[1];
+        encoded = _this$_font$encode[0],
+        positions = _this$_font$encode[1];
 
-    var dy = (this._font.ascender / 1000) * this._fontSize;
+    var dy = this._font.ascender / 1000 * this._fontSize;
 
     this._glyphs(encoded, positions, x, y + dy, options);
   },
@@ -22332,36 +50819,38 @@ var TextMixin = {
       this.page.fonts[this._font.id] = this._font.ref();
     } // begin the text object
 
+
     this.addContent('BT'); // text position
 
-    this.addContent('1 0 0 1 ' + number(x) + ' ' + number(y) + ' Tm'); // font and font size
+    this.addContent("1 0 0 1 " + number(x) + " " + number(y) + " Tm"); // font and font size
 
-    this.addContent('/' + this._font.id + ' ' + number(this._fontSize) + ' Tf'); // rendering mode
+    this.addContent("/" + this._font.id + " " + number(this._fontSize) + " Tf"); // rendering mode
 
     var mode = options.fill && options.stroke ? 2 : options.stroke ? 1 : 0;
 
     if (mode) {
-      this.addContent(mode + ' Tr');
+      this.addContent(mode + " Tr");
     } // Adds a segment of text to the TJ command buffer
+
 
     var addSegment = function addSegment(cur) {
       if (last < cur) {
         var hex = encoded.slice(last, cur).join('');
-        var advance =
-          positions[cur - 1].xAdvance - positions[cur - 1].advanceWidth;
-        commands.push('<' + hex + '> ' + number(-advance));
+        var advance = positions[cur - 1].xAdvance - positions[cur - 1].advanceWidth;
+        commands.push("<" + hex + "> " + number(-advance));
       }
 
-      return (last = cur);
+      return last = cur;
     }; // Flushes the current TJ commands to the output stream
+
 
     var flush = function flush(i) {
       addSegment(i);
 
       if (commands.length > 0) {
-        _this2.addContent('[' + commands.join(' ') + '] TJ');
+        _this2.addContent("[" + commands.join(' ') + "] TJ");
 
-        return (commands.length = 0);
+        return commands.length = 0;
       }
     };
 
@@ -22374,21 +50863,16 @@ var TextMixin = {
         // Flush the current buffer
         flush(i); // Move the text position and flush just the current character
 
-        this.addContent(
-          '1 0 0 1 ' +
-            number(x + pos.xOffset * scale) +
-            ' ' +
-            number(y + pos.yOffset * scale) +
-            ' Tm'
-        );
+        this.addContent("1 0 0 1 " + number(x + pos.xOffset * scale) + " " + number(y + pos.yOffset * scale) + " Tm");
         flush(i + 1);
         hadOffset = true;
       } else {
         // If the last character had an offset, reset the text position
         if (hadOffset) {
-          this.addContent('1 0 0 1 ' + number(x) + ' ' + number(y) + ' Tm');
+          this.addContent("1 0 0 1 " + number(x) + " " + number(y) + " Tm");
           hadOffset = false;
         } // Group segments that don't have any advance adjustments
+
 
         if (pos.xAdvance - pos.advanceWidth !== 0) {
           addSegment(i + 1);
@@ -22398,6 +50882,7 @@ var TextMixin = {
       x += pos.xAdvance * scale;
     } // Flush any remaining commands
 
+
     flush(i); // end the text object
 
     this.addContent('ET'); // restore flipped coordinate system
@@ -22406,25 +50891,9 @@ var TextMixin = {
   }
 };
 
-var MARKERS = [
-  0xffc0,
-  0xffc1,
-  0xffc2,
-  0xffc3,
-  0xffc5,
-  0xffc6,
-  0xffc7,
-  0xffc8,
-  0xffc9,
-  0xffca,
-  0xffcb,
-  0xffcc,
-  0xffcd,
-  0xffce,
-  0xffcf
-];
+var MARKERS = [0xffc0, 0xffc1, 0xffc2, 0xffc3, 0xffc5, 0xffc6, 0xffc7, 0xffc8, 0xffc9, 0xffca, 0xffcb, 0xffcc, 0xffcd, 0xffce, 0xffcf];
 
-var JPEG = /*#__PURE__*/ (function() {
+var JPEG = /*#__PURE__*/function () {
   function JPEG(data, label) {
     var marker;
     this.data = data;
@@ -22459,7 +50928,7 @@ var JPEG = /*#__PURE__*/ (function() {
     pos += 2;
     var channels = this.data[pos++];
 
-    this.colorSpace = (function() {
+    this.colorSpace = function () {
       switch (channels) {
         case 1:
           return 'DeviceGray';
@@ -22470,7 +50939,7 @@ var JPEG = /*#__PURE__*/ (function() {
         case 4:
           return 'DeviceCMYK';
       }
-    })();
+    }();
 
     this.obj = null;
   }
@@ -22504,12 +50973,12 @@ var JPEG = /*#__PURE__*/ (function() {
   };
 
   return JPEG;
-})();
+}();
 
-var PNGImage = /*#__PURE__*/ (function() {
+var PNGImage = /*#__PURE__*/function () {
   function PNGImage(data, label) {
     this.label = label;
-    this.image = new PNG__default['default'](data);
+    this.image = new PNG__default["default"](data);
     this.width = this.image.width;
     this.height = this.image.height;
     this.imgData = this.image.imgData;
@@ -22551,14 +51020,10 @@ var PNGImage = /*#__PURE__*/ (function() {
       var palette = this.document.ref();
       palette.end(Buffer$4.from(this.image.palette)); // build the color space array for the image
 
-      this.obj.data['ColorSpace'] = [
-        'Indexed',
-        'DeviceRGB',
-        this.image.palette.length / 3 - 1,
-        palette
-      ];
+      this.obj.data['ColorSpace'] = ['Indexed', 'DeviceRGB', this.image.palette.length / 3 - 1, palette];
     } // For PNG color types 0, 2 and 3, the transparency data is stored in
     // a dedicated PNG chunk.
+
 
     if (this.image.transparency.grayscale != null) {
       // Use Color Key Masking (spec section 4.8.5)
@@ -22571,14 +51036,7 @@ var PNGImage = /*#__PURE__*/ (function() {
       var rgb = this.image.transparency.rgb;
       var mask = [];
 
-      for (
-        var _iterator = _createForOfIteratorHelperLoose__default['default'](
-            rgb
-          ),
-          _step;
-        !(_step = _iterator()).done;
-
-      ) {
+      for (var _iterator = _createForOfIteratorHelperLoose__default["default"](rgb), _step; !(_step = _iterator()).done;) {
         var x = _step.value;
         mask.push(x, x);
       }
@@ -22620,6 +51078,7 @@ var PNGImage = /*#__PURE__*/ (function() {
       this.obj.data['SMask'] = sMask;
     } // add the actual image data
 
+
     this.obj.end(this.imgData); // free memory
 
     this.image = null;
@@ -22629,14 +51088,14 @@ var PNGImage = /*#__PURE__*/ (function() {
   _proto.splitAlphaChannel = function splitAlphaChannel() {
     var _this = this;
 
-    return this.image.decodePixels(function(pixels) {
+    return this.image.decodePixels(function (pixels) {
       var a;
       var p;
       var colorCount = _this.image.colors;
       var pixelCount = _this.width * _this.height;
       var imgData = Buffer$4.alloc(pixelCount * colorCount);
       var alphaChannel = Buffer$4.alloc(pixelCount);
-      var i = (p = a = 0);
+      var i = p = a = 0;
       var len = pixels.length; // For 16bit images copy only most significant byte (MSB) - PNG data is always stored in network byte order (MSB first)
 
       var skipByteCount = _this.image.bits === 16 ? 1 : 0;
@@ -22661,7 +51120,7 @@ var PNGImage = /*#__PURE__*/ (function() {
     var _this2 = this;
 
     var transparency = this.image.transparency.indexed;
-    return this.image.decodePixels(function(pixels) {
+    return this.image.decodePixels(function (pixels) {
       var alphaChannel = Buffer$4.alloc(_this2.width * _this2.height);
       var i = 0;
 
@@ -22677,7 +51136,7 @@ var PNGImage = /*#__PURE__*/ (function() {
   _proto.decodeData = function decodeData() {
     var _this3 = this;
 
-    this.image.decodePixels(function(pixels) {
+    this.image.decodePixels(function (pixels) {
       _this3.imgData = lib.deflateSync(pixels);
 
       _this3.finalize();
@@ -22685,9 +51144,9 @@ var PNGImage = /*#__PURE__*/ (function() {
   };
 
   return PNGImage;
-})();
+}();
 
-var PDFImage = /*#__PURE__*/ (function() {
+var PDFImage = /*#__PURE__*/function () {
   function PDFImage() {}
 
   PDFImage.open = function open(src, label) {
@@ -22717,7 +51176,7 @@ var PDFImage = /*#__PURE__*/ (function() {
   };
 
   return PDFImage;
-})();
+}();
 
 var ImagesMixin = {
   initImages: function initImages() {
@@ -22801,13 +51260,14 @@ var ImagesMixin = {
       }
     } // Set the current y position to below the image if it is in the document flow
 
+
     if (this.y === y) {
       this.y += h;
     }
 
     this.save();
     this.transform(w, 0, 0, -h, x, y + h);
-    this.addContent('/' + image.label + ' Do');
+    this.addContent("/" + image.label + " Do");
     this.restore();
     return this;
   },
@@ -22819,7 +51279,7 @@ var ImagesMixin = {
     }
 
     if (!image) {
-      image = PDFImage.open(src, 'I' + ++this._imageCount);
+      image = PDFImage.open(src, "I" + ++this._imageCount);
 
       if (typeof src === 'string') {
         this._imageRegistry[src] = image;
@@ -22846,11 +51306,13 @@ var AnnotationsMixin = {
       }
     } // convert colors
 
+
     delete options.color;
 
     if (typeof options.Dest === 'string') {
       options.Dest = new String(options.Dest);
     } // Capitalize keys
+
 
     for (var key in options) {
       var val = options[key];
@@ -22910,7 +51372,7 @@ var AnnotationsMixin = {
         });
         options.A.end();
       } else {
-        throw new Error('The document has no page ' + url);
+        throw new Error("The document has no page " + url);
       }
     } else {
       // Link to an external url
@@ -22929,10 +51391,10 @@ var AnnotationsMixin = {
     }
 
     var _this$_convertRect = this._convertRect(x, y, w, h),
-      x1 = _this$_convertRect[0],
-      y1 = _this$_convertRect[1],
-      x2 = _this$_convertRect[2],
-      y2 = _this$_convertRect[3];
+        x1 = _this$_convertRect[0],
+        y1 = _this$_convertRect[1],
+        x2 = _this$_convertRect[2],
+        y2 = _this$_convertRect[3];
 
     options.QuadPoints = [x1, y2, x2, y2, x1, y1, x2, y1];
     options.Contents = new String();
@@ -22961,15 +51423,9 @@ var AnnotationsMixin = {
     }
 
     // create hidden file
-    var filespec = this.file(
-      file.src,
-      Object.assign(
-        {
-          hidden: true
-        },
-        file
-      )
-    );
+    var filespec = this.file(file.src, Object.assign({
+      hidden: true
+    }, file));
     options.Subtype = 'FileAttachment';
     options.FS = filespec; // add description from filespec unless description (Contents) has already been set
 
@@ -22989,12 +51445,12 @@ var AnnotationsMixin = {
     var x2 = x1 + w; // apply current transformation matrix to points
 
     var _this$_ctm = this._ctm,
-      m0 = _this$_ctm[0],
-      m1 = _this$_ctm[1],
-      m2 = _this$_ctm[2],
-      m3 = _this$_ctm[3],
-      m4 = _this$_ctm[4],
-      m5 = _this$_ctm[5];
+        m0 = _this$_ctm[0],
+        m1 = _this$_ctm[1],
+        m2 = _this$_ctm[2],
+        m3 = _this$_ctm[3],
+        m4 = _this$_ctm[4],
+        m5 = _this$_ctm[5];
     x1 = m0 * x1 + m2 * y1 + m4;
     y1 = m1 * x1 + m3 * y1 + m5;
     x2 = m0 * x2 + m2 * y2 + m4;
@@ -23012,7 +51468,7 @@ var DEFAULT_OPTIONS = {
   expanded: false
 };
 
-var PDFOutline = /*#__PURE__*/ (function() {
+var PDFOutline = /*#__PURE__*/function () {
   function PDFOutline(document, parent, title, dest, options) {
     if (options === void 0) {
       options = DEFAULT_OPTIONS;
@@ -23028,9 +51484,7 @@ var PDFOutline = /*#__PURE__*/ (function() {
       var top = destHeight - (options.top || 0);
       var left = destWidth - (options.left || 0);
       var zoom = options.zoom || 0;
-      this.outlineData.Dest = options.fit
-        ? [dest, 'Fit']
-        : [dest, 'XYZ', left, top, zoom];
+      this.outlineData.Dest = options.fit ? [dest, 'Fit'] : [dest, 'XYZ', left, top, zoom];
     }
 
     if (parent !== null) {
@@ -23053,17 +51507,8 @@ var PDFOutline = /*#__PURE__*/ (function() {
     }
 
     var pages = this.document._root.data.Pages.data.Kids;
-    var dest =
-      options.pageNumber !== null
-        ? pages[options.pageNumber]
-        : this.document.page.dictionary;
-    var result = new PDFOutline(
-      this.document,
-      this.dictionary,
-      title,
-      dest,
-      options
-    );
+    var dest = options.pageNumber !== null ? pages[options.pageNumber] : this.document.page.dictionary;
+    var result = new PDFOutline(this.document, this.dictionary, title, dest, options);
     this.children.push(result);
     return result;
   };
@@ -23098,7 +51543,7 @@ var PDFOutline = /*#__PURE__*/ (function() {
   };
 
   return PDFOutline;
-})();
+}();
 
 var OutlineMixin = {
   initOutline: function initOutline() {
@@ -23176,7 +51621,7 @@ var AcroFormMixin = {
     var data = {
       Fields: [],
       NeedAppearances: true,
-      DA: new String('/' + this._font.id + ' 0 Tf 0 g'),
+      DA: new String("/" + this._font.id + " 0 Tf 0 g"),
       DR: {
         Font: {}
       }
@@ -23194,19 +51639,16 @@ var AcroFormMixin = {
     var _this = this;
 
     if (this._root.data.AcroForm) {
-      if (
-        !Object.keys(this._acroform.fonts).length &&
-        !this._acroform.defaultFont
-      ) {
+      if (!Object.keys(this._acroform.fonts).length && !this._acroform.defaultFont) {
         throw new Error('No fonts specified for PDF form');
       }
 
       var fontDict = this._root.data.AcroForm.data.DR.Font;
-      Object.keys(this._acroform.fonts).forEach(function(name) {
+      Object.keys(this._acroform.fonts).forEach(function (name) {
         fontDict[name] = _this._acroform.fonts[name];
       });
 
-      this._root.data.AcroForm.data.Fields.forEach(function(fieldRef) {
+      this._root.data.AcroForm.data.Fields.forEach(function (fieldRef) {
         _this._endChild(fieldRef);
       });
 
@@ -23219,7 +51661,7 @@ var AcroFormMixin = {
     var _this2 = this;
 
     if (Array.isArray(ref.data.Kids)) {
-      ref.data.Kids.forEach(function(childRef) {
+      ref.data.Kids.forEach(function (childRef) {
         _this2._endChild(childRef);
       });
       ref.end();
@@ -23272,6 +51714,7 @@ var AcroFormMixin = {
     if (fieldDict.F === undefined) {
       fieldDict.F = 4; // print the annotation
     } // Add Field annot to page, and get it's ref
+
 
     this.annotate(x, y, w, h, fieldDict);
     var annotRef = this.page.annotations[this.page.annotations.length - 1];
@@ -23340,9 +51783,7 @@ var AcroFormMixin = {
     }
 
     if (!this._acroform) {
-      throw new Error(
-        'Call document.initForms() method before adding form elements to document'
-      );
+      throw new Error('Call document.initForms() method before adding form elements to document');
     }
 
     var opts = Object.assign({}, options);
@@ -23397,13 +51838,13 @@ var AcroFormMixin = {
       var params = '';
 
       if (FORMAT_SPECIAL[f.type] !== undefined) {
-        fnKeystroke = 'AFSpecial_Keystroke';
-        fnFormat = 'AFSpecial_Format';
+        fnKeystroke = "AFSpecial_Keystroke";
+        fnFormat = "AFSpecial_Format";
         params = FORMAT_SPECIAL[f.type];
       } else {
         var format = f.type.charAt(0).toUpperCase() + f.type.slice(1);
-        fnKeystroke = 'AF' + format + '_Keystroke';
-        fnFormat = 'AF' + format + '_Format';
+        fnKeystroke = "AF" + format + "_Keystroke";
+        fnFormat = "AF" + format + "_Format";
 
         if (f.type === 'date') {
           fnKeystroke += 'Ex';
@@ -23412,16 +51853,7 @@ var AcroFormMixin = {
           params = String(f.param);
         } else if (f.type === 'number') {
           var p = Object.assign({}, FORMAT_DEFAULT.number, f);
-          params = String(
-            [
-              String(p.nDec),
-              p.sepComma ? '0' : '1',
-              '"' + p.negStyle + '"',
-              'null',
-              '"' + p.currency + '"',
-              String(p.currencyPrepend)
-            ].join(',')
-          );
+          params = String([String(p.nDec), p.sepComma ? '0' : '1', '"' + p.negStyle + '"', 'null', '"' + p.currency + '"', String(p.currencyPrepend)].join(','));
         } else if (f.type === 'percent') {
           var _p = Object.assign({}, FORMAT_DEFAULT.percent, f);
 
@@ -23432,11 +51864,11 @@ var AcroFormMixin = {
       opts.AA = opts.AA ? opts.AA : {};
       opts.AA.K = {
         S: 'JavaScript',
-        JS: new String(fnKeystroke + '(' + params + ');')
+        JS: new String(fnKeystroke + "(" + params + ");")
       };
       opts.AA.F = {
         S: 'JavaScript',
-        JS: new String(fnFormat + '(' + params + ');')
+        JS: new String(fnFormat + "(" + params + ");")
       };
     }
 
@@ -23470,7 +51902,7 @@ var AcroFormMixin = {
   },
   _resolveFlags: function _resolveFlags(options) {
     var result = 0;
-    Object.keys(options).forEach(function(key) {
+    Object.keys(options).forEach(function (key) {
       if (FIELD_FLAGS[key]) {
         result |= FIELD_FLAGS[key];
         delete options[key];
@@ -23507,6 +51939,7 @@ var AcroFormMixin = {
       this._acroform.fonts[this._font.id] = this._font.ref();
     } // add current font to field's resource dict (RD) if not the default acroform font
 
+
     if (this._acroform.defaultFont !== this._font.name) {
       options.DR = {
         Font: {}
@@ -23514,7 +51947,7 @@ var AcroFormMixin = {
 
       var fontSize = options.fontSize || 0;
       options.DR.Font[this._font.id] = this._font.ref();
-      options.DA = new String('/' + this._font.id + ' ' + fontSize + ' Tf 0 g');
+      options.DA = new String("/" + this._font.id + " " + fontSize + " Tf 0 g");
     }
 
     return options;
@@ -23545,13 +51978,13 @@ var AcroFormMixin = {
       options.Opt = select;
     }
 
-    Object.keys(VALUE_MAP).forEach(function(key) {
+    Object.keys(VALUE_MAP).forEach(function (key) {
       if (options[key] !== undefined) {
         options[VALUE_MAP[key]] = options[key];
         delete options[key];
       }
     });
-    ['V', 'DV'].forEach(function(key) {
+    ['V', 'DV'].forEach(function (key) {
       if (typeof options[key] === 'string') {
         options[key] = new String(options[key]);
       }
@@ -23607,16 +52040,17 @@ var AttachmentsMixin = {
     } else {
       var match;
 
-      if ((match = /^data:(.*);base64,(.*)$/.exec(src))) {
+      if (match = /^data:(.*);base64,(.*)$/.exec(src)) {
         if (match[1]) {
           refBody.Subtype = match[1].replace('/', '#2F');
         }
 
         data = Buffer$4.from(match[2], 'base64');
       } else {
-        throw new Error('Could not find file ' + src);
+        throw new Error("Could not find file " + src);
       }
     } // override creation date and modified date
+
 
     if (options.creationDate instanceof Date) {
       refBody.Params.CreationDate = options.creationDate;
@@ -23626,13 +52060,13 @@ var AttachmentsMixin = {
       refBody.Params.ModDate = options.modifiedDate;
     } // add optional subtype
 
+
     if (options.type) {
       refBody.Subtype = options.type.replace('/', '#2F');
     } // add checksum and size information
 
-    var checksum = CryptoJS__default['default'].MD5(
-      CryptoJS__default['default'].lib.WordArray.create(new Uint8Array(data))
-    );
+
+    var checksum = CryptoJS__default["default"].MD5(CryptoJS__default["default"].lib.WordArray.create(new Uint8Array(data)));
     refBody.Params.CheckSum = new String(checksum);
     refBody.Params.Size = data.byteLength; // save some space when embedding the same file again
     // if a file with the same name and metadata exists, reuse its reference
@@ -23646,14 +52080,11 @@ var AttachmentsMixin = {
     } else {
       ref = this.ref(refBody);
       ref.end(data);
-      this._fileRegistry[options.name] = _extends__default['default'](
-        {},
-        refBody,
-        {
-          ref: ref
-        }
-      );
+      this._fileRegistry[options.name] = _extends__default["default"]({}, refBody, {
+        ref: ref
+      });
     } // add filespec for embedded file
+
 
     var fileSpecBody = {
       Type: 'Filespec',
@@ -23681,13 +52112,7 @@ var AttachmentsMixin = {
 /** check two embedded file metadata objects for equality */
 
 function isEqual(a, b) {
-  if (
-    a.Subtype !== b.Subtype ||
-    a.Params.CheckSum.toString() !== b.Params.CheckSum.toString() ||
-    a.Params.Size !== b.Params.Size ||
-    a.Params.CreationDate !== b.Params.CreationDate ||
-    a.Params.ModDate !== b.Params.ModDate
-  ) {
+  if (a.Subtype !== b.Subtype || a.Params.CheckSum.toString() !== b.Params.CheckSum.toString() || a.Params.Size !== b.Params.Size || a.Params.CreationDate !== b.Params.CreationDate || a.Params.ModDate !== b.Params.ModDate) {
     return false;
   }
 
@@ -23698,8 +52123,8 @@ var capitalize = function capitalize(v) {
   return v[0].toUpperCase() + v.slice(1);
 };
 
-var PDFDocument = /*#__PURE__*/ (function(_stream$Readable) {
-  _inheritsLoose__default['default'](PDFDocument, _stream$Readable);
+var PDFDocument = /*#__PURE__*/function (_stream$Readable) {
+  _inheritsLoose__default["default"](PDFDocument, _stream$Readable);
 
   function PDFDocument(options) {
     var _this;
@@ -23734,8 +52159,8 @@ var PDFDocument = /*#__PURE__*/ (function(_stream$Readable) {
         break;
     } // Whether streams should be compressed
 
-    _this.compress =
-      _this.options.compress != null ? _this.options.compress : true;
+
+    _this.compress = _this.options.compress != null ? _this.options.compress : true;
     _this._pageBuffer = [];
     _this._pageBufferStart = 0; // The PDF object store
 
@@ -23772,6 +52197,7 @@ var PDFDocument = /*#__PURE__*/ (function(_stream$Readable) {
       _this._root.data.PageMode = capitalize(_this.options.pageMode);
     } // The current page
 
+
     _this.page = null; // Initialize mixins
 
     _this.initColor();
@@ -23786,6 +52212,7 @@ var PDFDocument = /*#__PURE__*/ (function(_stream$Readable) {
 
     _this.initOutline(); // this.initMarkings(options)
     // Initialize the metadata
+
 
     _this.info = {
       Producer: 'PDFKit',
@@ -23806,13 +52233,16 @@ var PDFDocument = /*#__PURE__*/ (function(_stream$Readable) {
       });
     } // Generate file ID
 
+
     _this._id = PDFSecurity.generateFileID(_this.info); // Initialize security settings
     // this._security = PDFSecurity.create(this, options);
     // Write the header PDF version
 
-    _this._write('%PDF-' + _this.version); // 4 binary chars, as recommended by the spec
+    _this._write("%PDF-" + _this.version); // 4 binary chars, as recommended by the spec
+
 
     _this._write('%\xFF\xFF\xFF\xFF'); // Add the first page
+
 
     if (_this.options.autoFirstPage !== false) {
       _this.addPage();
@@ -23829,13 +52259,16 @@ var PDFDocument = /*#__PURE__*/ (function(_stream$Readable) {
       options = this.options;
     } // end the current page if needed
 
+
     if (!this.options.bufferPages) {
       this.flushPages();
     } // create a page object
 
+
     this.page = new PDFPage(this, options);
 
     this._pageBuffer.push(this.page); // add the page to the object store
+
 
     var pages = this._root.data.Pages.data;
     pages.Kids.push(this.page.dictionary);
@@ -23855,11 +52288,7 @@ var PDFDocument = /*#__PURE__*/ (function(_stream$Readable) {
     this._pageBuffer = [];
     this._pageBufferStart += pages.length;
 
-    for (
-      var _i = 0, _Array$from = Array.from(pages);
-      _i < _Array$from.length;
-      _i++
-    ) {
+    for (var _i = 0, _Array$from = Array.from(pages); _i < _Array$from.length; _i++) {
       var page = _Array$from[_i];
       // this.endPageMarkings(page);
       page.end();
@@ -23867,13 +52296,7 @@ var PDFDocument = /*#__PURE__*/ (function(_stream$Readable) {
   };
 
   _proto.addNamedDestination = function addNamedDestination(name) {
-    for (
-      var _len = arguments.length,
-        args = new Array(_len > 1 ? _len - 1 : 0),
-        _key = 1;
-      _key < _len;
-      _key++
-    ) {
+    for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
       args[_key - 1] = arguments[_key];
     }
 
@@ -23898,6 +52321,7 @@ var PDFDocument = /*#__PURE__*/ (function(_stream$Readable) {
       });
     } // add filespec to EmbeddedFiles
 
+
     this._root.data.Names.data.EmbeddedFiles.add(name, ref);
   };
 
@@ -23919,12 +52343,12 @@ var PDFDocument = /*#__PURE__*/ (function(_stream$Readable) {
 
     this._offsets.push(null); // placeholder for this object's offset once it is finalized
 
+
     this._waiting++;
     return ref;
   };
 
-  _proto._read = function _read() {
-    // do nothing, but this method is required by node
+  _proto._read = function _read() {// do nothing, but this method is required by node
   };
 
   _proto._write = function _write(data) {
@@ -23933,7 +52357,7 @@ var PDFDocument = /*#__PURE__*/ (function(_stream$Readable) {
     }
 
     this.push(data);
-    return (this._offset += data.length);
+    return this._offset += data.length;
   };
 
   _proto.addContent = function addContent(data) {
@@ -23947,7 +52371,7 @@ var PDFDocument = /*#__PURE__*/ (function(_stream$Readable) {
     if (--this._waiting === 0 && this._ended) {
       this._finalize();
 
-      return (this._ended = false);
+      return this._ended = false;
     }
   };
 
@@ -23990,6 +52414,7 @@ var PDFDocument = /*#__PURE__*/ (function(_stream$Readable) {
     //   this._security.end();
     // }
 
+
     if (this._waiting === 0) {
       return this._finalize();
     }
@@ -24003,20 +52428,17 @@ var PDFDocument = /*#__PURE__*/ (function(_stream$Readable) {
 
     this._write('xref');
 
-    this._write('0 ' + (this._offsets.length + 1));
+    this._write("0 " + (this._offsets.length + 1));
 
     this._write('0000000000 65535 f ');
 
-    for (
-      var _i2 = 0, _Array$from2 = Array.from(this._offsets);
-      _i2 < _Array$from2.length;
-      _i2++
-    ) {
+    for (var _i2 = 0, _Array$from2 = Array.from(this._offsets); _i2 < _Array$from2.length; _i2++) {
       var offset = _Array$from2[_i2];
-      offset = ('0000000000' + offset).slice(-10);
+      offset = ("0000000000" + offset).slice(-10);
 
       this._write(offset + ' 00000 n ');
     } // trailer
+
 
     var trailer = {
       Size: this._offsets.length + 1,
@@ -24033,9 +52455,10 @@ var PDFDocument = /*#__PURE__*/ (function(_stream$Readable) {
 
     this._write('startxref');
 
-    this._write('' + xRefOffset);
+    this._write("" + xRefOffset);
 
     this._write('%%EOF'); // end the stream
+
 
     return this.push(null);
   };
@@ -24045,11 +52468,12 @@ var PDFDocument = /*#__PURE__*/ (function(_stream$Readable) {
   };
 
   return PDFDocument;
-})(stream.Readable);
+}(stream.Readable);
 
 var mixin = function mixin(methods) {
   Object.assign(PDFDocument.prototype, methods);
 }; // Load mixins
+
 
 mixin(ColorMixin);
 mixin(VectorMixin);
@@ -24065,4 +52489,4 @@ mixin(AttachmentsMixin);
 exports.EmbeddedFont = EmbeddedFont;
 exports.PDFFont = PDFFont;
 exports.StandardFont = StandardFont;
-exports['default'] = PDFDocument;
+exports["default"] = PDFDocument;

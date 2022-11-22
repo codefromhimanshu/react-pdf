@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 exports.__esModule = true;
 exports.default = void 0;
@@ -53,7 +53,7 @@ var PAGE_SIZES = {
   LEGAL: [612.0, 1008.0],
   LETTER: [612.0, 792.0],
   TABLOID: [792.0, 1224.0],
-  ID1: [153, 243],
+  ID1: [153, 243]
 };
 /**
  * Transforms array into size object
@@ -65,7 +65,7 @@ var PAGE_SIZES = {
 var toSizeObject = function toSizeObject(v) {
   return {
     width: v[0],
-    height: v[1],
+    height: v[1]
   };
 };
 /**
@@ -75,10 +75,11 @@ var toSizeObject = function toSizeObject(v) {
  * @returns {Object} flipped size object
  */
 
+
 var flipSizeObject = function flipSizeObject(v) {
   return {
     width: v.height,
-    height: v.width,
+    height: v.width
   };
 };
 /**
@@ -87,6 +88,7 @@ var flipSizeObject = function flipSizeObject(v) {
  * @param {String} page size string
  * @returns {Object} size object with width and height
  */
+
 
 var getStringSize = function getStringSize(v) {
   return toSizeObject(PAGE_SIZES[v.toUpperCase()]);
@@ -98,6 +100,7 @@ var getStringSize = function getStringSize(v) {
  * @returns {Object} size object with width and height
  */
 
+
 var getNumberSize = function getNumberSize(n) {
   return toSizeObject([n]);
 };
@@ -108,6 +111,7 @@ var getNumberSize = function getNumberSize(n) {
  * @param {Object} page instance
  * @returns {Object} size object with width and height
  */
+
 
 var getSize = function getSize(value, orientation) {
   var size = value;

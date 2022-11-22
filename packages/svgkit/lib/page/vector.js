@@ -1,16 +1,15 @@
-'use strict';
+"use strict";
 
-var _interopRequireDefault = require('@babel/runtime/helpers/interopRequireDefault')
-  .default;
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault").default;
 
 exports.__esModule = true;
 exports.default = void 0;
 
-var _uuid = _interopRequireDefault(require('../utils/uuid'));
+var _uuid = _interopRequireDefault(require("../utils/uuid"));
 
-var _gradient2 = require('../gradient');
+var _gradient2 = require("../gradient");
 
-var _element = require('./element');
+var _element = require("./element");
 
 /* eslint-disable no-param-reassign */
 
@@ -39,40 +38,38 @@ var _default = {
     if (this.currentElement.nodeName !== 'path') this.beginPath();
     this.currentPosition = {
       x: x,
-      y: y,
+      y: y
     };
-    this.addPathCommand('M ' + x + ' ' + y);
+    this.addPathCommand("M " + x + " " + y);
   },
   lineTo: function lineTo(x, y) {
     if (!this.currentPath) this.beginPath();
     this.currentPosition = {
       x: x,
-      y: y,
+      y: y
     };
 
     if (this.currentPath.indexOf('M') > -1) {
-      this.addPathCommand('L ' + x + ' ' + y);
+      this.addPathCommand("L " + x + " " + y);
     } else {
-      this.addPathCommand('M ' + x + ' ' + y);
+      this.addPathCommand("M " + x + " " + y);
     }
   },
   bezierCurveTo: function bezierCurveTo(cp1x, cp1y, cp2x, cp2y, x, y) {
     if (!this.currentPath) this.beginPath();
     this.currentPosition = {
       x: x,
-      y: y,
+      y: y
     };
-    this.addPathCommand(
-      'C ' + cp1x + ' ' + cp1y + ' ' + cp2x + ' ' + cp2y + ' ' + x + ' ' + y,
-    );
+    this.addPathCommand("C " + cp1x + " " + cp1y + " " + cp2x + " " + cp2y + " " + x + " " + y);
   },
   quadraticCurveTo: function quadraticCurveTo(cpx, cpy, x, y) {
     if (!this.currentPath) this.beginPath();
     this.currentPosition = {
       x: x,
-      y: y,
+      y: y
     };
-    this.addPathCommand('Q ' + cpx + ' ' + cpy + ' ' + x + ' ' + y);
+    this.addPathCommand("Q " + cpx + " " + cpy + " " + x + " " + y);
   },
   rect: function rect(x, y, width, height) {
     this.beginPath();
@@ -88,19 +85,14 @@ var _default = {
     var startX = x + radius * Math.cos(0);
     var startY = y + radius * Math.sin(0);
     this.lineTo(startX, startY);
-    this.addPathCommand(
-      'A ' + radius + ' ' + radius + ' 0 1 1 ' + startX + ' ' + (startY - 0.5),
-    );
+    this.addPathCommand("A " + radius + " " + radius + " 0 1 1 " + startX + " " + (startY - 0.5));
     this.closePath();
   },
   gradient: function gradient(_gradient) {
     if (_gradient.added) return;
-    var element = (0, _element.createElement)(
-      _gradient.type,
-      _gradient.attributes,
-    );
+    var element = (0, _element.createElement)(_gradient.type, _gradient.attributes);
 
-    _gradient.stops.forEach(function(stop) {
+    _gradient.stops.forEach(function (stop) {
       var stopChild = (0, _element.createElement)('stop');
       stopChild.setAttribute('offset', stop.offset);
       stopChild.setAttribute('stop-color', stop.color);
@@ -181,9 +173,9 @@ var _default = {
     clipPath.setAttribute('id', id);
     clipPath.appendChild(this.currentElement);
     this.defs.appendChild(clipPath);
-    group.setAttribute('clip-path', 'url(#' + id + ')');
+    group.setAttribute('clip-path', "url(#" + id + ")");
     group.appendChild(newGroup);
     this.currentElement = newGroup;
-  },
+  }
 };
 exports.default = _default;

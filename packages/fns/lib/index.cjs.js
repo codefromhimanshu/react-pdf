@@ -5,16 +5,10 @@ Object.defineProperty(exports, '__esModule', { value: true });
 var _asyncToGenerator = require('@babel/runtime/helpers/asyncToGenerator');
 var _regeneratorRuntime = require('@babel/runtime/regenerator');
 
-function _interopDefaultLegacy(e) {
-  return e && typeof e === 'object' && 'default' in e ? e : { default: e };
-}
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
-var _asyncToGenerator__default = /*#__PURE__*/ _interopDefaultLegacy(
-  _asyncToGenerator,
-);
-var _regeneratorRuntime__default = /*#__PURE__*/ _interopDefaultLegacy(
-  _regeneratorRuntime,
-);
+var _asyncToGenerator__default = /*#__PURE__*/_interopDefaultLegacy(_asyncToGenerator);
+var _regeneratorRuntime__default = /*#__PURE__*/_interopDefaultLegacy(_regeneratorRuntime);
 
 /**
  * Applies a function to the value at the given index of an array
@@ -30,13 +24,7 @@ var adjust = function adjust(index, fn, collection) {
   if (index >= 0 && index >= collection.length) return collection;
   if (index < 0 && Math.abs(index) > collection.length) return collection;
   var i = index < 0 ? collection.length + index : index;
-  return Object.assign(
-    [],
-    collection,
-    ((_Object$assign = {}),
-    (_Object$assign[i] = fn(collection[i])),
-    _Object$assign),
-  );
+  return Object.assign([], collection, (_Object$assign = {}, _Object$assign[i] = fn(collection[i]), _Object$assign));
 };
 
 var reverse = function reverse(list) {
@@ -50,84 +38,67 @@ var reverse = function reverse(list) {
  */
 
 var asyncCompose = function asyncCompose() {
-  for (
-    var _len = arguments.length, fns = new Array(_len), _key = 0;
-    _key < _len;
-    _key++
-  ) {
+  for (var _len = arguments.length, fns = new Array(_len), _key = 0; _key < _len; _key++) {
     fns[_key] = arguments[_key];
   }
 
-  return /*#__PURE__*/ (function() {
-    var _ref = _asyncToGenerator__default['default'](
-      /*#__PURE__*/ _regeneratorRuntime__default['default'].mark(
-        function _callee(value) {
-          var result,
-            reversedFns,
-            _len2,
-            args,
-            _key2,
-            i,
-            fn,
-            _args = arguments;
+  return /*#__PURE__*/function () {
+    var _ref = _asyncToGenerator__default["default"]( /*#__PURE__*/_regeneratorRuntime__default["default"].mark(function _callee(value) {
+      var result,
+          reversedFns,
+          _len2,
+          args,
+          _key2,
+          i,
+          fn,
+          _args = arguments;
 
-          return _regeneratorRuntime__default['default'].wrap(function _callee$(
-            _context,
-          ) {
-            while (1) {
-              switch ((_context.prev = _context.next)) {
-                case 0:
-                  result = value;
-                  reversedFns = reverse(fns);
+      return _regeneratorRuntime__default["default"].wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              result = value;
+              reversedFns = reverse(fns);
 
-                  for (
-                    _len2 = _args.length,
-                      args = new Array(_len2 > 1 ? _len2 - 1 : 0),
-                      _key2 = 1;
-                    _key2 < _len2;
-                    _key2++
-                  ) {
-                    args[_key2 - 1] = _args[_key2];
-                  }
-
-                  i = 0;
-
-                case 4:
-                  if (!(i < reversedFns.length)) {
-                    _context.next = 12;
-                    break;
-                  }
-
-                  fn = reversedFns[i];
-                  _context.next = 8;
-                  return fn.apply(void 0, [result].concat(args));
-
-                case 8:
-                  result = _context.sent;
-
-                case 9:
-                  i += 1;
-                  _context.next = 4;
-                  break;
-
-                case 12:
-                  return _context.abrupt('return', result);
-
-                case 13:
-                case 'end':
-                  return _context.stop();
+              for (_len2 = _args.length, args = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+                args[_key2 - 1] = _args[_key2];
               }
-            }
-          },
-          _callee);
-        },
-      ),
-    );
 
-    return function(_x) {
+              i = 0;
+
+            case 4:
+              if (!(i < reversedFns.length)) {
+                _context.next = 12;
+                break;
+              }
+
+              fn = reversedFns[i];
+              _context.next = 8;
+              return fn.apply(void 0, [result].concat(args));
+
+            case 8:
+              result = _context.sent;
+
+            case 9:
+              i += 1;
+              _context.next = 4;
+              break;
+
+            case 12:
+              return _context.abrupt("return", result);
+
+            case 13:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }));
+
+    return function (_x) {
       return _ref.apply(this, arguments);
     };
-  })();
+  }();
 };
 
 /**
@@ -138,7 +109,7 @@ var asyncCompose = function asyncCompose() {
  */
 var capitalize = function capitalize(value) {
   if (!value) return value;
-  return value.replace(/(^|\s)\S/g, function(l) {
+  return value.replace(/(^|\s)\S/g, function (l) {
     return l.toUpperCase();
   });
 };
@@ -161,25 +132,15 @@ var castArray = function castArray(value) {
  */
 
 var compose = function compose() {
-  for (
-    var _len = arguments.length, fns = new Array(_len), _key = 0;
-    _key < _len;
-    _key++
-  ) {
+  for (var _len = arguments.length, fns = new Array(_len), _key = 0; _key < _len; _key++) {
     fns[_key] = arguments[_key];
   }
 
-  return function(value) {
+  return function (value) {
     var result = value;
     var reversedFns = reverse(fns);
 
-    for (
-      var _len2 = arguments.length,
-        args = new Array(_len2 > 1 ? _len2 - 1 : 0),
-        _key2 = 1;
-      _key2 < _len2;
-      _key2++
-    ) {
+    for (var _len2 = arguments.length, args = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
       args[_key2 - 1] = arguments[_key2];
     }
 
@@ -240,9 +201,9 @@ var last = function last(value) {
 
 var mapValues = function mapValues(object, fn) {
   var entries = Object.entries(object);
-  return entries.reduce(function(acc, _ref, index) {
+  return entries.reduce(function (acc, _ref, index) {
     var key = _ref[0],
-      value = _ref[1];
+        value = _ref[1];
     acc[key] = fn(value, key, index);
     return acc;
   }, {});
@@ -258,6 +219,7 @@ var isPercent = function isPercent(value) {
  * @returns {Object} percent value (if matches)
  */
 
+
 var matchPercent = function matchPercent(value) {
   var match = isPercent(value);
 
@@ -266,7 +228,7 @@ var matchPercent = function matchPercent(value) {
     var percent = f / 100;
     return {
       percent: percent,
-      value: f,
+      value: f
     };
   }
 
@@ -278,7 +240,7 @@ var omit = function omit(keys, object) {
 
   var copy = Object.assign({}, object);
 
-  _keys.forEach(function(key) {
+  _keys.forEach(function (key) {
     delete copy[key];
   });
 

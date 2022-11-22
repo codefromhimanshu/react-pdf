@@ -1,17 +1,14 @@
-'use strict';
+"use strict";
 
-var _interopRequireDefault = require('@babel/runtime/helpers/interopRequireDefault')
-  .default;
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault").default;
 
 exports.__esModule = true;
 exports.createElement = void 0;
 
-var _createClass2 = _interopRequireDefault(
-  require('@babel/runtime/helpers/createClass'),
-);
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
 
 /* eslint-disable import/prefer-default-export */
-var Element = /*#__PURE__*/ (function() {
+var Element = /*#__PURE__*/function () {
   function Element(type, attributes) {
     if (attributes === void 0) {
       attributes = {};
@@ -60,28 +57,24 @@ var Element = /*#__PURE__*/ (function() {
     }
   };
 
-  (0, _createClass2.default)(Element, [
-    {
-      key: 'nodeName',
-      get: function get() {
-        return this.type;
-      },
-    },
-    {
-      key: 'childNodes',
-      get: function get() {
-        return this.children;
-      },
-    },
-    {
-      key: 'parentNode',
-      get: function get() {
-        return this.parent;
-      },
-    },
-  ]);
+  (0, _createClass2.default)(Element, [{
+    key: "nodeName",
+    get: function get() {
+      return this.type;
+    }
+  }, {
+    key: "childNodes",
+    get: function get() {
+      return this.children;
+    }
+  }, {
+    key: "parentNode",
+    get: function get() {
+      return this.parent;
+    }
+  }]);
   return Element;
-})();
+}();
 
 var createElement = function createElement(type, attributes) {
   return new Element(type, attributes);

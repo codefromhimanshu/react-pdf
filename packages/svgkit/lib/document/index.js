@@ -1,16 +1,15 @@
-'use strict';
+"use strict";
 
-var _interopRequireDefault = require('@babel/runtime/helpers/interopRequireDefault')
-  .default;
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault").default;
 
 exports.__esModule = true;
 exports.default = void 0;
 
-var _page = _interopRequireDefault(require('../page'));
+var _page = _interopRequireDefault(require("../page"));
 
-var _serialize = _interopRequireDefault(require('./serialize'));
+var _serialize = _interopRequireDefault(require("./serialize"));
 
-var _gradient = require('../gradient');
+var _gradient = require("../gradient");
 
 /* eslint-disable no-param-reassign */
 
@@ -18,10 +17,10 @@ var _gradient = require('../gradient');
 
 /* eslint-disable class-methods-use-this */
 // import { PDFFont } from '@react-pdf/pdfkit';
-var SVGDocument = /*#__PURE__*/ (function() {
+var SVGDocument = /*#__PURE__*/function () {
   function SVGDocument(_temp) {
     var _ref = _temp === void 0 ? {} : _temp,
-      font = _ref.font;
+        font = _ref.font;
 
     this.info = {};
     this.pages = [];
@@ -73,7 +72,7 @@ var SVGDocument = /*#__PURE__*/ (function() {
     }
 
     var _options = options,
-      origin = _options.origin;
+        origin = _options.origin;
     this.currentPage.rotate(angle, origin);
     return this;
   };
@@ -151,32 +150,18 @@ var SVGDocument = /*#__PURE__*/ (function() {
   _proto.polygon = function polygon() {
     var _this$currentPage;
 
-    for (
-      var _len = arguments.length, points = new Array(_len), _key = 0;
-      _key < _len;
-      _key++
-    ) {
+    for (var _len = arguments.length, points = new Array(_len), _key = 0; _key < _len; _key++) {
       points[_key] = arguments[_key];
     }
 
-    (_this$currentPage = this.currentPage).moveTo.apply(
-      _this$currentPage,
-      Array.from(points.shift() || []),
-    );
+    (_this$currentPage = this.currentPage).moveTo.apply(_this$currentPage, Array.from(points.shift() || []));
 
-    for (
-      var _i = 0, _Array$from = Array.from(points);
-      _i < _Array$from.length;
-      _i++
-    ) {
+    for (var _i = 0, _Array$from = Array.from(points); _i < _Array$from.length; _i++) {
       var _this$currentPage2;
 
       var point = _Array$from[_i];
 
-      (_this$currentPage2 = this.currentPage).lineTo.apply(
-        _this$currentPage2,
-        Array.from(point || []),
-      );
+      (_this$currentPage2 = this.currentPage).lineTo.apply(_this$currentPage2, Array.from(point || []));
     }
 
     return this.currentPage.closePath();
@@ -205,11 +190,7 @@ var SVGDocument = /*#__PURE__*/ (function() {
     return this;
   };
 
-  _proto.fillAndStroke = function fillAndStroke(
-    fillColor,
-    strokeColor,
-    fillRule,
-  ) {
+  _proto.fillAndStroke = function fillAndStroke(fillColor, strokeColor, fillRule) {
     if (fillColor) this.fillColor(fillColor);
     if (strokeColor) this.strokeColor(strokeColor);
     if (fillRule) this.currentPage.fillRule(fillRule);
@@ -260,13 +241,10 @@ var SVGDocument = /*#__PURE__*/ (function() {
     }
 
     var _opts = opts,
-      width = _opts.width,
-      height = _opts.height;
-    if (!width || !height)
-      throw new Error(
-        'svgkit only supports image rendering with explicit width and height',
-      );
-    var href = 'data:image;base64,' + Buffer.from(data).toString('base64');
+        width = _opts.width,
+        height = _opts.height;
+    if (!width || !height) throw new Error('svgkit only supports image rendering with explicit width and height');
+    var href = "data:image;base64," + Buffer.from(data).toString('base64');
     return this.currentPage.image(href, x, y, width, height);
   };
 
@@ -289,6 +267,7 @@ var SVGDocument = /*#__PURE__*/ (function() {
     // };
     // this._font = { ...PDFFont.open(null, font), encodeGlyphs };
 
+
     return this;
   };
 
@@ -300,10 +279,11 @@ var SVGDocument = /*#__PURE__*/ (function() {
   _proto.text = function text(_text, x, y) {
     this.currentPage.text(_text, x, y);
     return this;
-  }; // _glyphs(glyphs, positions, x, y, options) {
+  } // _glyphs(glyphs, positions, x, y, options) {
   //   this.currentPage.text(glyphs, positions, x, y, options);
   //   return this;
   // }
+  ;
 
   _proto.note = function note() {
     console.warn('note is not yet supported on svgkit');
@@ -311,15 +291,13 @@ var SVGDocument = /*#__PURE__*/ (function() {
   };
 
   _proto.end = function end() {
-    this.serialized = this.pages
-      .map(function(page) {
-        return (0, _serialize.default)(page.root);
-      })
-      .join('');
+    this.serialized = this.pages.map(function (page) {
+      return (0, _serialize.default)(page.root);
+    }).join('');
   };
 
   return SVGDocument;
-})();
+}();
 
 var _default = SVGDocument;
 exports.default = _default;

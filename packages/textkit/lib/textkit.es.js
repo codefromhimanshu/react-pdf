@@ -1,10 +1,4 @@
-import {
-  isNil,
-  last,
-  dropLast as dropLast$2,
-  adjust,
-  compose,
-} from '@react-pdf/fns';
+import { isNil, last, dropLast as dropLast$2, adjust, compose } from '@react-pdf/fns';
 import _extends from '@babel/runtime/helpers/extends';
 import _objectWithoutPropertiesLoose from '@babel/runtime/helpers/objectWithoutPropertiesLoose';
 import _createForOfIteratorHelperLoose from '@babel/runtime/helpers/createForOfIteratorHelperLoose';
@@ -22,18 +16,18 @@ var fromFragments = function fromFragments(fragments) {
   var offset = 0;
   var string = '';
   var runs = [];
-  fragments.forEach(function(fragment) {
+  fragments.forEach(function (fragment) {
     string += fragment.string;
     runs.push({
       start: offset,
       end: offset + fragment.string.length,
-      attributes: fragment.attributes || {},
+      attributes: fragment.attributes || {}
     });
     offset += fragment.string.length;
   });
   return {
     string: string,
-    runs: runs,
+    runs: runs
   };
 };
 
@@ -57,6 +51,7 @@ var defaultHyphenationEngine = function defaultHyphenationEngine(word) {
  * @return {Object} attributed string including syllables
  */
 
+
 var wrapWords = function wrapWords(engines, options) {
   if (engines === void 0) {
     engines = {};
@@ -66,26 +61,17 @@ var wrapWords = function wrapWords(engines, options) {
     options = {};
   }
 
-  return function(attributedString) {
+  return function (attributedString) {
     var _engines$wordHyphenat, _engines;
 
     var syllables = [];
     var fragments = [];
-    var hyphenateWord =
-      options.hyphenationCallback ||
-      ((_engines$wordHyphenat = (_engines = engines).wordHyphenation) ===
-        null || _engines$wordHyphenat === void 0
-        ? void 0
-        : _engines$wordHyphenat.call(_engines, options)) ||
-      defaultHyphenationEngine;
+    var hyphenateWord = options.hyphenationCallback || ((_engines$wordHyphenat = (_engines = engines).wordHyphenation) === null || _engines$wordHyphenat === void 0 ? void 0 : _engines$wordHyphenat.call(_engines, options)) || defaultHyphenationEngine;
 
     for (var i = 0; i < attributedString.runs.length; i += 1) {
       var string = '';
       var run = attributedString.runs[i];
-      var words = attributedString.string
-        .slice(run.start, run.end)
-        .split(/([ ]+)/g)
-        .filter(Boolean);
+      var words = attributedString.string.slice(run.start, run.end).split(/([ ]+)/g).filter(Boolean);
 
       for (var j = 0; j < words.length; j += 1) {
         var word = words[j];
@@ -96,12 +82,12 @@ var wrapWords = function wrapWords(engines, options) {
 
       fragments.push({
         string: string,
-        attributes: run.attributes,
+        attributes: run.attributes
       });
     }
 
     return _extends({}, fromFragments(fragments), {
-      syllables: syllables,
+      syllables: syllables
     });
   };
 };
@@ -118,11 +104,11 @@ var copy = function copy(rect) {
 
 var partition = function partition(rect, height) {
   var a = Object.assign({}, rect, {
-    height: height,
+    height: height
   });
   var b = Object.assign({}, rect, {
     y: rect.y + height,
-    height: rect.height - height,
+    height: rect.height - height
   });
   return [a, b];
 };
@@ -136,7 +122,7 @@ var partition = function partition(rect, height) {
 
 var crop = function crop(height, rect) {
   var _partition = partition(rect, height),
-    result = _partition[1];
+      result = _partition[1];
 
   return result;
 };
@@ -148,7 +134,7 @@ var crop = function crop(height, rect) {
  * @return {number} paragraph block height
  */
 var height$2 = function height(paragraph) {
-  return paragraph.reduce(function(acc, block) {
+  return paragraph.reduce(function (acc, block) {
     return acc + block.box.height;
   }, 0);
 };
@@ -164,10 +150,7 @@ var calculateScale = function calculateScale(run) {
 
   var attributes = run.attributes || {};
   var fontSize = attributes.fontSize || 12;
-  var unitsPerEm =
-    (_attributes$font = attributes.font) === null || _attributes$font === void 0
-      ? void 0
-      : _attributes$font.unitsPerEm;
+  var unitsPerEm = (_attributes$font = attributes.font) === null || _attributes$font === void 0 ? void 0 : _attributes$font.unitsPerEm;
   return unitsPerEm ? fontSize / unitsPerEm : 0;
 };
 /**
@@ -177,14 +160,11 @@ var calculateScale = function calculateScale(run) {
  * @return {number} scale
  */
 
+
 var scale = function scale(run) {
   var _run$attributes;
 
-  return (
-    ((_run$attributes = run.attributes) === null || _run$attributes === void 0
-      ? void 0
-      : _run$attributes.scale) || calculateScale(run)
-  );
+  return ((_run$attributes = run.attributes) === null || _run$attributes === void 0 ? void 0 : _run$attributes.scale) || calculateScale(run);
 };
 
 /**
@@ -204,7 +184,7 @@ var offset = function offset(index, run) {
   if (!run) return 0;
   var glyphIndices = run.glyphIndices || [];
   var value = glyphIndices[index];
-  return glyphIndices.slice(0, index).filter(function(i) {
+  return glyphIndices.slice(0, index).filter(function (i) {
     return i === value;
   }).length;
 };
@@ -218,11 +198,7 @@ var offset = function offset(index, run) {
 var getFont = function getFont(run) {
   var _run$attributes;
 
-  return (
-    ((_run$attributes = run.attributes) === null || _run$attributes === void 0
-      ? void 0
-      : _run$attributes.font) || null
-  );
+  return ((_run$attributes = run.attributes) === null || _run$attributes === void 0 ? void 0 : _run$attributes.font) || null;
 };
 
 /**
@@ -256,13 +232,7 @@ var slice$2 = function slice(start, end, font, glyph) {
 var glyphIndexAt = function glyphIndexAt(index, run) {
   var _run$glyphIndices;
 
-  var result =
-    run === null || run === void 0
-      ? void 0
-      : (_run$glyphIndices = run.glyphIndices) === null ||
-        _run$glyphIndices === void 0
-      ? void 0
-      : _run$glyphIndices[index];
+  var result = run === null || run === void 0 ? void 0 : (_run$glyphIndices = run.glyphIndices) === null || _run$glyphIndices === void 0 ? void 0 : _run$glyphIndices[index];
   return isNil(result) ? index : result;
 };
 
@@ -274,7 +244,7 @@ var glyphIndexAt = function glyphIndexAt(index, run) {
  */
 var normalize = function normalize(array) {
   var head = array[0];
-  return array.map(function(value) {
+  return array.map(function (value) {
     return value - head;
   });
 };
@@ -297,18 +267,11 @@ var slice$1 = function slice(start, end, run) {
   var startIndex = glyphIndexAt(start, run);
   var endIndex = glyphIndexAt(end, run); // Get start and end glyph
 
-  var startGlyph =
-    (_run$glyphs = run.glyphs) === null || _run$glyphs === void 0
-      ? void 0
-      : _run$glyphs[startIndex];
-  var endGlyph =
-    (_run$glyphs2 = run.glyphs) === null || _run$glyphs2 === void 0
-      ? void 0
-      : _run$glyphs2[endIndex]; // Get start ligature chunks (if any)
+  var startGlyph = (_run$glyphs = run.glyphs) === null || _run$glyphs === void 0 ? void 0 : _run$glyphs[startIndex];
+  var endGlyph = (_run$glyphs2 = run.glyphs) === null || _run$glyphs2 === void 0 ? void 0 : _run$glyphs2[endIndex]; // Get start ligature chunks (if any)
 
   var startOffset = offset(start, run);
-  var startGlyphs =
-    startOffset > 0 ? slice$2(startOffset, Infinity, font, startGlyph) : []; // Get end ligature chunks (if any)
+  var startGlyphs = startOffset > 0 ? slice$2(startOffset, Infinity, font, startGlyph) : []; // Get end ligature chunks (if any)
 
   var endOffset = offset(end, run);
   var endGlyphs = slice$2(0, endOffset, font, endGlyph); // Compute new glyphs
@@ -318,7 +281,7 @@ var slice$1 = function slice(start, end, run) {
 
   var glyphPosition = function glyphPosition(g) {
     return {
-      xAdvance: g.advanceWidth * runScale,
+      xAdvance: g.advanceWidth * runScale
     };
   };
 
@@ -330,7 +293,7 @@ var slice$1 = function slice(start, end, run) {
     end: Math.min(run.end, run.start + end),
     glyphIndices: normalize((run.glyphIndices || []).slice(start, end)),
     glyphs: [startGlyphs, glyphs, endGlyphs].flat(),
-    positions: [startPositions, positions, endPositions].flat(),
+    positions: [startPositions, positions, endPositions].flat()
   });
 };
 
@@ -343,7 +306,7 @@ var slice$1 = function slice(start, end, run) {
  */
 var runIndexAt$1 = function runIndexAt(n, runs) {
   if (!runs) return -1;
-  return runs.findIndex(function(run) {
+  return runs.findIndex(function (run) {
     return run.start <= n && n < run.end;
   });
 };
@@ -375,7 +338,7 @@ var subtract = function subtract(n, run) {
   var end = run.end - n;
   return Object.assign({}, run, {
     start: start,
-    end: end,
+    end: end
   });
 };
 
@@ -397,7 +360,7 @@ var sliceRuns = function sliceRuns(start, end, runs) {
     return slice$1(0, end - a.start, a);
   };
 
-  return runs.map(function(run, i) {
+  return runs.map(function (run, i) {
     var result = run;
     var isFirst = i === 0;
     var isLast = !isFirst && i === runs.length - 1;
@@ -415,6 +378,7 @@ var sliceRuns = function sliceRuns(start, end, runs) {
  * @return {Object} attributedString
  */
 
+
 var slice = function slice(start, end, attributedString) {
   if (attributedString.string.length === 0) return attributedString;
   var string = attributedString.string.slice(start, end);
@@ -422,7 +386,7 @@ var slice = function slice(start, end, attributedString) {
   var slicedRuns = sliceRuns(start, end, filteredRuns);
   return Object.assign({}, attributedString, {
     string: string,
-    runs: slicedRuns,
+    runs: slicedRuns
   });
 };
 
@@ -440,6 +404,7 @@ var findLastCharIndex = function findLastCharIndex(string) {
  * @param  {Object}  attributedString
  * @return {Object} attributedString
  */
+
 
 var trim = function trim(attributedString) {
   var start = findCharIndex(attributedString.string);
@@ -459,7 +424,7 @@ var empty$1 = function empty() {
     glyphIndices: [],
     glyphs: [],
     positions: [],
-    attributes: {},
+    attributes: {}
   };
 };
 
@@ -506,28 +471,23 @@ var fromCodePoint = function fromCodePoint(value, font) {
 var appendGlyph = function appendGlyph(glyph, run) {
   var _glyph$codePoints;
 
-  var glyphLength =
-    ((_glyph$codePoints = glyph.codePoints) === null ||
-    _glyph$codePoints === void 0
-      ? void 0
-      : _glyph$codePoints.length) || 0;
+  var glyphLength = ((_glyph$codePoints = glyph.codePoints) === null || _glyph$codePoints === void 0 ? void 0 : _glyph$codePoints.length) || 0;
   var end = run.end + glyphLength;
   var glyphs = run.glyphs.concat(glyph);
   var glyphIndices = appendIndices(glyphLength, run.glyphIndices);
-  if (!run.positions)
-    return Object.assign({}, run, {
-      end: end,
-      glyphs: glyphs,
-      glyphIndices: glyphIndices,
-    });
+  if (!run.positions) return Object.assign({}, run, {
+    end: end,
+    glyphs: glyphs,
+    glyphIndices: glyphIndices
+  });
   var positions = run.positions.concat({
-    xAdvance: glyph.advanceWidth * scale(run),
+    xAdvance: glyph.advanceWidth * scale(run)
   });
   return Object.assign({}, run, {
     end: end,
     glyphs: glyphs,
     glyphIndices: glyphIndices,
-    positions: positions,
+    positions: positions
   });
 };
 /**
@@ -537,6 +497,7 @@ var appendGlyph = function appendGlyph(glyph, run) {
  * @param  {Object}  run
  * @return {Object} run with glyph
  */
+
 
 var append$1 = function append(value, run) {
   if (!value) return run;
@@ -564,8 +525,7 @@ var stringFromCodePoints = function stringFromCodePoints(codePoints) {
  */
 
 var append = function append(glyph, attributedString) {
-  var codePoints =
-    (glyph === null || glyph === void 0 ? void 0 : glyph.codePoints) || [];
+  var codePoints = (glyph === null || glyph === void 0 ? void 0 : glyph.codePoints) || [];
   var codePointsString = stringFromCodePoints(codePoints);
   var string = attributedString.string + codePointsString;
   var firstRuns = attributedString.runs.slice(0, -1);
@@ -573,7 +533,7 @@ var append = function append(glyph, attributedString) {
   var runs = firstRuns.concat(append$1(glyph, lastRun));
   return Object.assign({}, attributedString, {
     string: string,
-    runs: runs,
+    runs: runs
   });
 };
 
@@ -590,7 +550,7 @@ var getEllipsisCodePoint = function getEllipsisCodePoint(font) {
   if (!font.encode) return ELLIPSIS_UNICODE;
 
   var _font$encode = font.encode(ELLIPSIS_STRING),
-    codePoints = _font$encode[0];
+      codePoints = _font$encode[0];
 
   return parseInt(codePoints[0], 16);
 };
@@ -602,20 +562,12 @@ var getEllipsisCodePoint = function getEllipsisCodePoint(font) {
  * @return {Object} sliced paragraph block
  */
 
+
 var truncate = function truncate(block) {
   var _last, _last2, _last2$attributes;
 
-  var runs =
-    ((_last = last(block)) === null || _last === void 0
-      ? void 0
-      : _last.runs) || [];
-  var font =
-    (_last2 = last(runs)) === null || _last2 === void 0
-      ? void 0
-      : (_last2$attributes = _last2.attributes) === null ||
-        _last2$attributes === void 0
-      ? void 0
-      : _last2$attributes.font;
+  var runs = ((_last = last(block)) === null || _last === void 0 ? void 0 : _last.runs) || [];
+  var font = (_last2 = last(runs)) === null || _last2 === void 0 ? void 0 : (_last2$attributes = _last2.attributes) === null || _last2$attributes === void 0 ? void 0 : _last2$attributes.font;
 
   if (font) {
     var _Object$assign;
@@ -624,13 +576,7 @@ var truncate = function truncate(block) {
     var codePoint = getEllipsisCodePoint(font);
     var glyph = font.glyphForCodePoint(codePoint);
     var lastBlock = append(glyph, trim(block[index]));
-    return Object.assign(
-      [],
-      block,
-      ((_Object$assign = {}),
-      (_Object$assign[index] = lastBlock),
-      _Object$assign),
-    );
+    return Object.assign([], block, (_Object$assign = {}, _Object$assign[index] = lastBlock, _Object$assign));
   }
 
   return block;
@@ -646,7 +592,7 @@ var omit = function omit(value, run) {
   var attributes = Object.assign({}, run.attributes);
   delete attributes[value];
   return Object.assign({}, run, {
-    attributes: attributes,
+    attributes: attributes
   });
 };
 
@@ -658,25 +604,10 @@ var omit = function omit(value, run) {
  */
 
 var ascent$1 = function ascent(run) {
-  var _run$attributes,
-    _run$attributes$attac,
-    _run$attributes2,
-    _run$attributes2$font;
+  var _run$attributes, _run$attributes$attac, _run$attributes2, _run$attributes2$font;
 
-  var attachmentHeight =
-    ((_run$attributes = run.attributes) === null || _run$attributes === void 0
-      ? void 0
-      : (_run$attributes$attac = _run$attributes.attachment) === null ||
-        _run$attributes$attac === void 0
-      ? void 0
-      : _run$attributes$attac.height) || 0;
-  var fontAscent =
-    ((_run$attributes2 = run.attributes) === null || _run$attributes2 === void 0
-      ? void 0
-      : (_run$attributes2$font = _run$attributes2.font) === null ||
-        _run$attributes2$font === void 0
-      ? void 0
-      : _run$attributes2$font.ascent) || 0;
+  var attachmentHeight = ((_run$attributes = run.attributes) === null || _run$attributes === void 0 ? void 0 : (_run$attributes$attac = _run$attributes.attachment) === null || _run$attributes$attac === void 0 ? void 0 : _run$attributes$attac.height) || 0;
+  var fontAscent = ((_run$attributes2 = run.attributes) === null || _run$attributes2 === void 0 ? void 0 : (_run$attributes2$font = _run$attributes2.font) === null || _run$attributes2$font === void 0 ? void 0 : _run$attributes2$font.ascent) || 0;
   return Math.max(attachmentHeight, fontAscent * scale(run));
 };
 
@@ -690,13 +621,7 @@ var ascent$1 = function ascent(run) {
 var descent = function descent(run) {
   var _run$attributes, _run$attributes$font;
 
-  var fontDescent =
-    ((_run$attributes = run.attributes) === null || _run$attributes === void 0
-      ? void 0
-      : (_run$attributes$font = _run$attributes.font) === null ||
-        _run$attributes$font === void 0
-      ? void 0
-      : _run$attributes$font.descent) || 0;
+  var fontDescent = ((_run$attributes = run.attributes) === null || _run$attributes === void 0 ? void 0 : (_run$attributes$font = _run$attributes.font) === null || _run$attributes$font === void 0 ? void 0 : _run$attributes$font.descent) || 0;
   return scale(run) * fontDescent;
 };
 
@@ -710,14 +635,7 @@ var descent = function descent(run) {
 var lineGap = function lineGap(run) {
   var _run$attributes, _run$attributes$font;
 
-  return (
-    (((_run$attributes = run.attributes) === null || _run$attributes === void 0
-      ? void 0
-      : (_run$attributes$font = _run$attributes.font) === null ||
-        _run$attributes$font === void 0
-      ? void 0
-      : _run$attributes$font.lineGap) || 0) * scale(run)
-  );
+  return (((_run$attributes = run.attributes) === null || _run$attributes === void 0 ? void 0 : (_run$attributes$font = _run$attributes.font) === null || _run$attributes$font === void 0 ? void 0 : _run$attributes$font.lineGap) || 0) * scale(run);
 };
 
 /**
@@ -730,10 +648,7 @@ var lineGap = function lineGap(run) {
 var height$1 = function height(run) {
   var _run$attributes;
 
-  var lineHeight =
-    (_run$attributes = run.attributes) === null || _run$attributes === void 0
-      ? void 0
-      : _run$attributes.lineHeight;
+  var lineHeight = (_run$attributes = run.attributes) === null || _run$attributes === void 0 ? void 0 : _run$attributes.lineHeight;
   return lineHeight || lineGap(run) + ascent$1(run) - descent(run);
 };
 
@@ -767,7 +682,7 @@ var intersects = function intersects(a, b) {
   return num1 >= x && num2 >= y;
 };
 
-var _excluded = ['excludeRects'];
+var _excluded = ["excludeRects"];
 
 var getLineFragment = function getLineFragment(lineRect, excludeRect) {
   if (!intersects(excludeRect, lineRect)) return [lineRect];
@@ -776,13 +691,13 @@ var getLineFragment = function getLineFragment(lineRect, excludeRect) {
   var lStart = lineRect.x;
   var lEnd = lineRect.x + lineRect.width;
   var a = Object.assign({}, lineRect, {
-    width: eStart - lStart,
+    width: eStart - lStart
   });
   var b = Object.assign({}, lineRect, {
     x: eEnd,
-    width: lEnd - eEnd,
+    width: lEnd - eEnd
   });
-  return [a, b].filter(function(r) {
+  return [a, b].filter(function (r) {
     return r.width > 0;
   });
 };
@@ -792,7 +707,7 @@ var getLineFragments = function getLineFragments(rect, excludeRects) {
 
   var _loop = function _loop(i) {
     var excludeRect = excludeRects[i];
-    fragments = fragments.reduce(function(acc, fragment) {
+    fragments = fragments.reduce(function (acc, fragment) {
       var pieces = getLineFragment(fragment, excludeRect);
       return acc.concat(pieces);
     }, []);
@@ -807,22 +722,19 @@ var getLineFragments = function getLineFragments(rect, excludeRects) {
 
 var generateLineRects = function generateLineRects(container, height) {
   var excludeRects = container.excludeRects,
-    rect = _objectWithoutPropertiesLoose(container, _excluded);
+      rect = _objectWithoutPropertiesLoose(container, _excluded);
 
   if (!excludeRects) return [rect];
   var lineRects = [];
-  var maxY = Math.max.apply(
-    Math,
-    excludeRects.map(function(r) {
-      return r.y + r.height;
-    }),
-  );
+  var maxY = Math.max.apply(Math, excludeRects.map(function (r) {
+    return r.y + r.height;
+  }));
   var currentRect = rect;
 
   while (currentRect.y < maxY) {
     var _partition = partition(currentRect, height),
-      lineRect = _partition[0],
-      rest = _partition[1];
+        lineRect = _partition[0],
+        rest = _partition[1];
 
     var lineRectFragments = getLineFragments(lineRect, excludeRects);
     currentRect = rest;
@@ -832,7 +744,7 @@ var generateLineRects = function generateLineRects(container, height) {
   return [].concat(lineRects, [currentRect]);
 };
 
-var ATTACHMENT_CODE$1 = '\uFFFC'; // 65532
+var ATTACHMENT_CODE$1 = "\uFFFC"; // 65532
 
 /**
  * Remove attachment attribute if no char present
@@ -844,11 +756,11 @@ var ATTACHMENT_CODE$1 = '\uFFFC'; // 65532
 var purgeAttachments = function purgeAttachments(attributedString) {
   var shouldPurge = !attributedString.string.includes(ATTACHMENT_CODE$1);
   if (!shouldPurge) return attributedString;
-  var runs = attributedString.runs.map(function(run) {
+  var runs = attributedString.runs.map(function (run) {
     return omit('attachment', run);
   });
   return Object.assign({}, attributedString, {
-    runs: runs,
+    runs: runs
   });
 };
 /**
@@ -859,19 +771,15 @@ var purgeAttachments = function purgeAttachments(attributedString) {
  * @return {Object} layout blocks
  */
 
+
 var layoutLines = function layoutLines(rects, lines, indent) {
   var rect = rects.shift();
   var currentY = rect.y;
-  return lines.map(function(line, i) {
+  return lines.map(function (line, i) {
     var _line$runs, _line$runs$;
 
     var lineIndent = i === 0 ? indent : 0;
-    var style =
-      ((_line$runs = line.runs) === null || _line$runs === void 0
-        ? void 0
-        : (_line$runs$ = _line$runs[0]) === null || _line$runs$ === void 0
-        ? void 0
-        : _line$runs$.attributes) || {};
+    var style = ((_line$runs = line.runs) === null || _line$runs === void 0 ? void 0 : (_line$runs$ = _line$runs[0]) === null || _line$runs$ === void 0 ? void 0 : _line$runs$.attributes) || {};
     var height$1 = Math.max(height(line), style.lineHeight);
 
     if (currentY + height$1 > rect.y + rect.height && rects.length > 0) {
@@ -885,7 +793,7 @@ var layoutLines = function layoutLines(rects, lines, indent) {
       x: rect.x + lineIndent,
       y: currentY,
       width: rect.width - lineIndent,
-      height: height$1,
+      height: height$1
     };
     currentY += height$1;
     return purgeAttachments(newLine);
@@ -901,23 +809,15 @@ var layoutLines = function layoutLines(rects, lines, indent) {
  * @return {Object} layout block
  */
 
+
 var layoutParagraph = function layoutParagraph(engines, options) {
-  return function(container, paragraph) {
+  return function (container, paragraph) {
     var _paragraph$runs, _paragraph$runs$, _paragraph$runs$$attr;
 
     var height$1 = height(paragraph);
-    var indent =
-      ((_paragraph$runs = paragraph.runs) === null || _paragraph$runs === void 0
-        ? void 0
-        : (_paragraph$runs$ = _paragraph$runs[0]) === null ||
-          _paragraph$runs$ === void 0
-        ? void 0
-        : (_paragraph$runs$$attr = _paragraph$runs$.attributes) === null ||
-          _paragraph$runs$$attr === void 0
-        ? void 0
-        : _paragraph$runs$$attr.indent) || 0;
+    var indent = ((_paragraph$runs = paragraph.runs) === null || _paragraph$runs === void 0 ? void 0 : (_paragraph$runs$ = _paragraph$runs[0]) === null || _paragraph$runs$ === void 0 ? void 0 : (_paragraph$runs$$attr = _paragraph$runs$.attributes) === null || _paragraph$runs$$attr === void 0 ? void 0 : _paragraph$runs$$attr.indent) || 0;
     var rects = generateLineRects(container, height$1);
-    var availableWidths = rects.map(function(r) {
+    var availableWidths = rects.map(function (r) {
       return r.width;
     });
     availableWidths[0] -= indent;
@@ -963,7 +863,7 @@ var sliceAtHeight = function sliceAtHeight(height, block) {
  */
 
 var typesetter = function typesetter(engines, options, container) {
-  return function(attributedStrings) {
+  return function (attributedStrings) {
     var blocks = [];
     var paragraphs = [].concat(attributedStrings);
     var layoutBlock = layoutParagraph(engines, options);
@@ -977,8 +877,7 @@ var typesetter = function typesetter(engines, options, container) {
       var block = layoutBlock(paragraphRect, nextParagraph);
       var slicedBlock = block.slice(0, linesCount);
       var linesHeight = height$2(slicedBlock);
-      var shouldTruncate =
-        truncateEllipsis && block.length !== slicedBlock.length;
+      var shouldTruncate = truncateEllipsis && block.length !== slicedBlock.length;
       linesCount -= slicedBlock.length;
 
       if (paragraphRect.height >= linesHeight) {
@@ -1008,16 +907,13 @@ var resolve = function resolve(glyphs) {
     glyphs = [];
   }
 
-  return glyphs.reduce(function(acc, glyph) {
-    var codePoints = (glyph === null || glyph === void 0
-      ? void 0
-      : glyph.codePoints) || [DUMMY_CODEPOINT];
-    if (acc.length === 0)
-      return codePoints.map(function() {
-        return 0;
-      });
+  return glyphs.reduce(function (acc, glyph) {
+    var codePoints = (glyph === null || glyph === void 0 ? void 0 : glyph.codePoints) || [DUMMY_CODEPOINT];
+    if (acc.length === 0) return codePoints.map(function () {
+      return 0;
+    });
     var last = acc[acc.length - 1];
-    var next = codePoints.map(function() {
+    var next = codePoints.map(function () {
       return last + 1;
     });
     return [].concat(acc, next);
@@ -1027,11 +923,7 @@ var resolve = function resolve(glyphs) {
 var getCharacterSpacing = function getCharacterSpacing(run) {
   var _run$attributes;
 
-  return (
-    ((_run$attributes = run.attributes) === null || _run$attributes === void 0
-      ? void 0
-      : _run$attributes.characterSpacing) || 0
-  );
+  return ((_run$attributes = run.attributes) === null || _run$attributes === void 0 ? void 0 : _run$attributes.characterSpacing) || 0;
 };
 /**
  * Scale run positions
@@ -1041,17 +933,18 @@ var getCharacterSpacing = function getCharacterSpacing(run) {
  * @return {Array} scaled positions
  */
 
+
 var scalePositions = function scalePositions(run, positions) {
   var runScale = scale(run);
   var characterSpacing = getCharacterSpacing(run);
-  return positions.map(function(position, i) {
+  return positions.map(function (position, i) {
     var isLast = i === positions.length;
     var xSpacing = isLast ? 0 : characterSpacing;
     return Object.assign({}, position, {
       xAdvance: position.xAdvance * runScale + xSpacing,
       yAdvance: position.yAdvance * runScale,
       xOffset: position.xOffset * runScale,
-      yOffset: position.yOffset * runScale,
+      yOffset: position.yOffset * runScale
     });
   });
 };
@@ -1063,19 +956,19 @@ var scalePositions = function scalePositions(run, positions) {
  * @return {Object}  glyph run
  */
 
+
 var layoutRun = function layoutRun(string) {
-  return function(run) {
+  return function (run) {
     var start = run.start,
-      end = run.end,
-      _run$attributes2 = run.attributes,
-      attributes = _run$attributes2 === void 0 ? {} : _run$attributes2;
+        end = run.end,
+        _run$attributes2 = run.attributes,
+        attributes = _run$attributes2 === void 0 ? {} : _run$attributes2;
     var font = attributes.font;
-    if (!font)
-      return _extends({}, run, {
-        glyphs: [],
-        glyphIndices: [],
-        positions: [],
-      });
+    if (!font) return _extends({}, run, {
+      glyphs: [],
+      glyphIndices: [],
+      positions: []
+    });
     var runString = string.slice(start, end);
     var glyphRun = font.layout(runString);
     var positions = scalePositions(run, glyphRun.positions);
@@ -1083,7 +976,7 @@ var layoutRun = function layoutRun(string) {
     return _extends({}, run, {
       positions: positions,
       glyphIndices: glyphIndices,
-      glyphs: glyphRun.glyphs,
+      glyphs: glyphRun.glyphs
     });
   };
 };
@@ -1096,11 +989,12 @@ var layoutRun = function layoutRun(string) {
  * @return {Array} attributed string with glyphs
  */
 
+
 var generateGlyphs = function generateGlyphs() {
-  return function(attributedString) {
+  return function (attributedString) {
     var runs = attributedString.runs.map(layoutRun(attributedString.string));
     return Object.assign({}, attributedString, {
-      runs: runs,
+      runs: runs
     });
   };
 };
@@ -1115,25 +1009,15 @@ var resolveRunYOffset = function resolveRunYOffset(run) {
   var _run$attributes, _run$attributes$font, _run$attributes2;
 
   if (!run.positions) return run;
-  var unitsPerEm =
-    ((_run$attributes = run.attributes) === null || _run$attributes === void 0
-      ? void 0
-      : (_run$attributes$font = _run$attributes.font) === null ||
-        _run$attributes$font === void 0
-      ? void 0
-      : _run$attributes$font.unitsPerEm) || 0;
-  var yOffset =
-    (((_run$attributes2 = run.attributes) === null ||
-    _run$attributes2 === void 0
-      ? void 0
-      : _run$attributes2.yOffset) || 0) * unitsPerEm;
-  var positions = run.positions.map(function(p) {
+  var unitsPerEm = ((_run$attributes = run.attributes) === null || _run$attributes === void 0 ? void 0 : (_run$attributes$font = _run$attributes.font) === null || _run$attributes$font === void 0 ? void 0 : _run$attributes$font.unitsPerEm) || 0;
+  var yOffset = (((_run$attributes2 = run.attributes) === null || _run$attributes2 === void 0 ? void 0 : _run$attributes2.yOffset) || 0) * unitsPerEm;
+  var positions = run.positions.map(function (p) {
     return Object.assign({}, p, {
-      yOffset: yOffset,
+      yOffset: yOffset
     });
   });
   return Object.assign({}, run, {
-    positions: positions,
+    positions: positions
   });
 };
 /**
@@ -1145,11 +1029,12 @@ var resolveRunYOffset = function resolveRunYOffset(run) {
  * @return {Array} attributed strings (paragraphs)
  */
 
+
 var resolveYOffset = function resolveYOffset() {
-  return function(attributedString) {
+  return function (attributedString) {
     var runs = attributedString.runs.map(resolveRunYOffset);
     return Object.assign({}, attributedString, {
-      runs: runs,
+      runs: runs
     });
   };
 };
@@ -1161,7 +1046,7 @@ var resolveYOffset = function resolveYOffset() {
  * @return {Array} sorted runs
  */
 var sort = function sort(runs) {
-  return runs.sort(function(a, b) {
+  return runs.sort(function (a, b) {
     return a.start - b.start || a.end - b.end;
   });
 };
@@ -1181,26 +1066,23 @@ var sortPoints = function sortPoints(a, b) {
 };
 
 var generatePoints = function generatePoints(runs) {
-  var result = runs.reduce(function(acc, run, i) {
-    return acc.concat([
-      ['start', run.start, run.attributes, i],
-      ['end', run.end, run.attributes, i],
-    ]);
+  var result = runs.reduce(function (acc, run, i) {
+    return acc.concat([['start', run.start, run.attributes, i], ['end', run.end, run.attributes, i]]);
   }, []);
   return result.sort(sortPoints);
 };
 
 var mergeRuns = function mergeRuns(runs) {
-  return runs.reduce(function(acc, run) {
+  return runs.reduce(function (acc, run) {
     var attributes = Object.assign({}, acc.attributes, run.attributes);
     return Object.assign({}, run, {
-      attributes: attributes,
+      attributes: attributes
     });
   }, {});
 };
 
 var groupEmptyRuns = function groupEmptyRuns(runs) {
-  var groups = runs.reduce(function(acc, run) {
+  var groups = runs.reduce(function (acc, run) {
     if (!acc[run.start]) acc[run.start] = [];
     acc[run.start].push(run);
     return acc;
@@ -1221,15 +1103,15 @@ var flattenRegularRuns = function flattenRegularRuns(runs) {
 
   for (var i = 0; i < points.length; i += 1) {
     var _points$i = points[i],
-      type = _points$i[0],
-      offset = _points$i[1],
-      attributes = _points$i[2];
+        type = _points$i[0],
+        offset = _points$i[1],
+        attributes = _points$i[2];
 
     if (start !== -1 && start < offset) {
       res.push({
         start: start,
         end: offset,
-        attributes: attrs,
+        attributes: attrs
       });
     }
 
@@ -1261,21 +1143,18 @@ var flattenRegularRuns = function flattenRegularRuns(runs) {
  * @return {Array} flatten runs
  */
 
+
 var flatten = function flatten(runs) {
   if (runs === void 0) {
     runs = [];
   }
 
-  var emptyRuns = flattenEmptyRuns(
-    runs.filter(function(run) {
-      return isEmpty(run);
-    }),
-  );
-  var regularRuns = flattenRegularRuns(
-    runs.filter(function(run) {
-      return !isEmpty(run);
-    }),
-  );
+  var emptyRuns = flattenEmptyRuns(runs.filter(function (run) {
+    return isEmpty(run);
+  }));
+  var regularRuns = flattenRegularRuns(runs.filter(function (run) {
+    return !isEmpty(run);
+  }));
   return sort(emptyRuns.concat(regularRuns));
 };
 
@@ -1287,16 +1166,16 @@ var flatten = function flatten(runs) {
 var empty = function empty() {
   return {
     string: '',
-    runs: [],
+    runs: []
   };
 };
 
 var omitFont = function omitFont(attributedString) {
-  var runs = attributedString.runs.map(function(run) {
+  var runs = attributedString.runs.map(function (run) {
     return omit('font', run);
   });
   return Object.assign({}, attributedString, {
-    runs: runs,
+    runs: runs
   });
 };
 /**
@@ -1308,26 +1187,27 @@ var omitFont = function omitFont(attributedString) {
  * @return {Object} processed attributed string
  */
 
+
 var preprocessRuns = function preprocessRuns(engines, options) {
-  return function(attributedString) {
+  return function (attributedString) {
     if (isNil(attributedString)) return empty();
     var string = attributedString.string;
     var fontSubstitution = engines.fontSubstitution,
-      scriptItemizer = engines.scriptItemizer;
+        scriptItemizer = engines.scriptItemizer;
 
     var _omitFont = omitFont(attributedString),
-      omittedFontRuns = _omitFont.runs;
+        omittedFontRuns = _omitFont.runs;
 
     var _fontSubstitution = fontSubstitution(options)(attributedString),
-      substitutedRuns = _fontSubstitution.runs;
+        substitutedRuns = _fontSubstitution.runs;
 
     var _scriptItemizer = scriptItemizer(options)(attributedString),
-      itemizationRuns = _scriptItemizer.runs;
+        itemizationRuns = _scriptItemizer.runs;
 
     var runs = substitutedRuns.concat(itemizationRuns).concat(omittedFontRuns);
     return {
       string: string,
-      runs: flatten(runs),
+      runs: flatten(runs)
     };
   };
 };
@@ -1376,7 +1256,7 @@ var length$1 = function length(attributedString) {
  */
 
 var splitParagraphs = function splitParagraphs() {
-  return function(attributedString) {
+  return function (attributedString) {
     var res = [];
     var start = 0;
     var breakPoint = attributedString.string.indexOf('\n') + 1;
@@ -1404,7 +1284,7 @@ var splitParagraphs = function splitParagraphs() {
  * @return {number} advance width
  */
 var advanceWidth$2 = function advanceWidth(positions) {
-  return positions.reduce(function(acc, pos) {
+  return positions.reduce(function (acc, pos) {
     return acc + (pos.xAdvance || 0);
   }, 0);
 };
@@ -1444,8 +1324,7 @@ var WHITE_SPACES_CODE = 32;
  * */
 
 var isWhiteSpace = function isWhiteSpace(glyph) {
-  var codePoints =
-    (glyph === null || glyph === void 0 ? void 0 : glyph.codePoints) || [];
+  var codePoints = (glyph === null || glyph === void 0 ? void 0 : glyph.codePoints) || [];
   return codePoints.includes(WHITE_SPACES_CODE);
 };
 
@@ -1459,7 +1338,7 @@ var isWhiteSpace = function isWhiteSpace(glyph) {
 var leadingPositions = function leadingPositions(run) {
   var glyphs = run.glyphs || [];
   var positions = run.positions || [];
-  var leadingWhitespaces = glyphs.findIndex(function(g) {
+  var leadingWhitespaces = glyphs.findIndex(function (g) {
     return !isWhiteSpace(g);
   });
   return positions.slice(0, leadingWhitespaces);
@@ -1471,9 +1350,10 @@ var leadingPositions = function leadingPositions(run) {
  * @return {number} leading white space offset
  */
 
+
 var leadingOffset$1 = function leadingOffset(run) {
   var positions = leadingPositions(run);
-  return positions.reduce(function(acc, pos) {
+  return positions.reduce(function (acc, pos) {
     return acc + (pos.xAdvance || 0);
   }, 0);
 };
@@ -1500,10 +1380,11 @@ var reverse = function reverse(array) {
  * @return {Array} white space trailing positions
  */
 
+
 var trailingPositions = function trailingPositions(run) {
   var glyphs = reverse(run.glyphs || []);
   var positions = reverse(run.positions || []);
-  var leadingWhitespaces = glyphs.findIndex(function(g) {
+  var leadingWhitespaces = glyphs.findIndex(function (g) {
     return !isWhiteSpace(g);
   });
   return positions.slice(0, leadingWhitespaces);
@@ -1515,9 +1396,10 @@ var trailingPositions = function trailingPositions(run) {
  * @return {number} trailing white space offset
  */
 
+
 var trailingOffset$1 = function trailingOffset(run) {
   var positions = trailingPositions(run);
-  return positions.reduce(function(acc, pos) {
+  return positions.reduce(function (acc, pos) {
     return acc + (pos.xAdvance || 0);
   }, 0);
 };
@@ -1557,13 +1439,13 @@ var dropLast = function dropLast(attributeString) {
   var runs = adjust(-1, dropLast$1, attributeString.runs);
   return Object.assign({}, attributeString, {
     string: string,
-    runs: runs,
+    runs: runs
   });
 };
 
 var ALIGNMENT_FACTORS = {
   center: 0.5,
-  right: 1,
+  right: 1
 };
 /**
  * Remove new line char at the end of line if present
@@ -1590,6 +1472,7 @@ var getOverflowRight = function getOverflowRight(line) {
  * @return {Object} line
  */
 
+
 var adjustOverflow = function adjustOverflow(line) {
   var overflowLeft = getOverflowLeft(line);
   var overflowRight = getOverflowRight(line);
@@ -1597,12 +1480,12 @@ var adjustOverflow = function adjustOverflow(line) {
   var width = line.box.width + overflowLeft + overflowRight;
   var box = Object.assign({}, line.box, {
     x: x,
-    width: width,
+    width: width
   });
   return Object.assign({}, line, {
     box: box,
     overflowLeft: overflowLeft,
-    overflowRight: overflowRight,
+    overflowRight: overflowRight
   });
 };
 /**
@@ -1615,18 +1498,19 @@ var adjustOverflow = function adjustOverflow(line) {
  * @return {Object} line
  */
 
+
 var justifyLine$1 = function justifyLine(engines, options, align) {
-  return function(line) {
+  return function (line) {
     var lineWidth = advanceWidth(line);
     var alignFactor = ALIGNMENT_FACTORS[align] || 0;
     var remainingWidth = Math.max(0, line.box.width - lineWidth);
     var shouldJustify = align === 'justify' || lineWidth > line.box.width;
     var x = line.box.x + remainingWidth * alignFactor;
     var box = Object.assign({}, line.box, {
-      x: x,
+      x: x
     });
     var newLine = Object.assign({}, line, {
-      box: box,
+      box: box
     });
     return shouldJustify ? engines.justification(options)(newLine) : newLine;
   };
@@ -1637,7 +1521,7 @@ var finalizeLine = function finalizeLine(line) {
   var lineDescent = 0;
   var lineHeight = 0;
   var lineXAdvance = 0;
-  var runs = line.runs.map(function(run) {
+  var runs = line.runs.map(function (run) {
     var height = height$1(run);
     var ascent = ascent$1(run);
     var descent$1 = descent(run);
@@ -1650,7 +1534,7 @@ var finalizeLine = function finalizeLine(line) {
       height: height,
       ascent: ascent,
       descent: descent$1,
-      xAdvance: xAdvance,
+      xAdvance: xAdvance
     });
   });
   return Object.assign({}, line, {
@@ -1658,7 +1542,7 @@ var finalizeLine = function finalizeLine(line) {
     height: lineHeight,
     ascent: lineAscent,
     descent: lineDescent,
-    xAdvance: lineXAdvance,
+    xAdvance: lineXAdvance
   });
 };
 /**
@@ -1673,29 +1557,19 @@ var finalizeLine = function finalizeLine(line) {
  * @return {Object} line
  */
 
+
 var finalizeBlock = function finalizeBlock(engines, options) {
   if (engines === void 0) {
     engines = {};
   }
 
-  return function(line, i, lines) {
+  return function (line, i, lines) {
     var _line$runs, _line$runs$;
 
     var isLastFragment = i === lines.length - 1;
-    var style =
-      ((_line$runs = line.runs) === null || _line$runs === void 0
-        ? void 0
-        : (_line$runs$ = _line$runs[0]) === null || _line$runs$ === void 0
-        ? void 0
-        : _line$runs$.attributes) || {};
+    var style = ((_line$runs = line.runs) === null || _line$runs === void 0 ? void 0 : (_line$runs$ = _line$runs[0]) === null || _line$runs$ === void 0 ? void 0 : _line$runs$.attributes) || {};
     var align = isLastFragment ? style.alignLastLine : style.align;
-    return compose(
-      finalizeLine,
-      engines.textDecoration(options),
-      justifyLine$1(engines, options, align),
-      adjustOverflow,
-      removeNewLine,
-    )(line);
+    return compose(finalizeLine, engines.textDecoration(options), justifyLine$1(engines, options, align), adjustOverflow, removeNewLine)(line);
   };
 };
 /**
@@ -1708,10 +1582,11 @@ var finalizeBlock = function finalizeBlock(engines, options) {
  * @return {Array} line blocks
  */
 
+
 var finalizeFragments = function finalizeFragments(engines, options) {
-  return function(blocks) {
+  return function (blocks) {
     var blockFinalizer = finalizeBlock(engines, options);
-    return blocks.map(function(block) {
+    return blocks.map(function (block) {
       return block.map(blockFinalizer);
     });
   };
@@ -1729,28 +1604,26 @@ var isReplaceGlyph = function isReplaceGlyph(glyph) {
  * @return {Object} run
  */
 
+
 var resolveRunAttachments = function resolveRunAttachments(run) {
   var _run$attributes;
 
   if (!run.positions) return run;
   var glyphs = run.glyphs || [];
-  var attachment =
-    ((_run$attributes = run.attributes) === null || _run$attributes === void 0
-      ? void 0
-      : _run$attributes.attachment) || {};
-  var positions = run.positions.map(function(position, i) {
+  var attachment = ((_run$attributes = run.attributes) === null || _run$attributes === void 0 ? void 0 : _run$attributes.attachment) || {};
+  var positions = run.positions.map(function (position, i) {
     var glyph = glyphs[i];
 
     if (attachment && attachment.width && isReplaceGlyph(glyph)) {
       return Object.assign({}, position, {
-        xAdvance: attachment.width,
+        xAdvance: attachment.width
       });
     }
 
     return Object.assign({}, position);
   });
   return Object.assign({}, run, {
-    positions: positions,
+    positions: positions
   });
 };
 /**
@@ -1762,11 +1635,12 @@ var resolveRunAttachments = function resolveRunAttachments(run) {
  * @return {Array} attributed strings (paragraphs)
  */
 
+
 var resolveAttachments = function resolveAttachments() {
-  return function(attributedString) {
+  return function (attributedString) {
     var runs = attributedString.runs.map(resolveRunAttachments);
     return Object.assign({}, attributedString, {
-      runs: runs,
+      runs: runs
     });
   };
 };
@@ -1774,8 +1648,7 @@ var resolveAttachments = function resolveAttachments() {
 var applyAttributes = function applyAttributes(a) {
   return {
     align: a.align || 'left',
-    alignLastLine:
-      a.alignLastLine || (a.align === 'justify' ? 'left' : a.align || 'left'),
+    alignLastLine: a.alignLastLine || (a.align === 'justify' ? 'left' : a.align || 'left'),
     attachment: a.attachment || null,
     backgroundColor: a.backgroundColor || null,
     bidiLevel: a.bidiLevel || null,
@@ -1808,7 +1681,7 @@ var applyAttributes = function applyAttributes(a) {
     strikeStyle: a.strikeStyle || 'solid',
     stroke: a.stroke || false,
     wordSpacing: a.wordSpacing || 0,
-    yOffset: a.yOffset || 0,
+    yOffset: a.yOffset || 0
   };
 };
 /**
@@ -1818,10 +1691,11 @@ var applyAttributes = function applyAttributes(a) {
  * @return {Object} run with styles
  */
 
+
 var applyRunStyles = function applyRunStyles(run) {
   var attributes = applyAttributes(run.attributes);
   return Object.assign({}, run, {
-    attributes: attributes,
+    attributes: attributes
   });
 };
 /**
@@ -1833,13 +1707,14 @@ var applyRunStyles = function applyRunStyles(run) {
  * @return {Object} attributed string
  */
 
+
 var applyDefaultStyles = function applyDefaultStyles() {
-  return function(attributedString) {
+  return function (attributedString) {
     var string = attributedString.string || '';
     var runs = (attributedString.runs || []).map(applyRunStyles);
     return {
       string: string,
-      runs: runs,
+      runs: runs
     };
   };
 };
@@ -1859,61 +1734,41 @@ var applyDefaultStyles = function applyDefaultStyles() {
  */
 
 var layoutEngine = function layoutEngine(engines) {
-  return function(attributedString, container, options) {
+  return function (attributedString, container, options) {
     if (options === void 0) {
       options = {};
     }
 
-    var processParagraph = compose(
-      resolveYOffset(),
-      resolveAttachments(),
-      generateGlyphs(),
-      wrapWords(engines, options),
-    );
+    var processParagraph = compose(resolveYOffset(), resolveAttachments(), generateGlyphs(), wrapWords(engines, options));
 
     var processParagraphs = function processParagraphs(paragraphs) {
       return paragraphs.map(processParagraph);
     };
 
-    return compose(
-      finalizeFragments(engines, options),
-      typesetter(engines, options, container),
-      processParagraphs,
-      splitParagraphs(),
-      preprocessRuns(engines, options),
-      applyDefaultStyles(),
-    )(attributedString);
+    return compose(finalizeFragments(engines, options), typesetter(engines, options, container), processParagraphs, splitParagraphs(), preprocessRuns(engines, options), applyDefaultStyles())(attributedString);
   };
 };
 
 /* eslint-disable no-plusplus */
 var INFINITY = 10000;
 
-var getNextBreakpoint = function getNextBreakpoint(
-  subnodes,
-  widths,
-  lineNumber,
-) {
+var getNextBreakpoint = function getNextBreakpoint(subnodes, widths, lineNumber) {
   var position = null;
   var minimumBadness = Infinity;
   var sum = {
     width: 0,
     stretch: 0,
-    shrink: 0,
+    shrink: 0
   };
   var lineLength = widths[Math.min(lineNumber, widths.length - 1)];
 
   var calculateRatio = function calculateRatio(node) {
     if (sum.width < lineLength) {
-      return sum.stretch - node.stretch > 0
-        ? (lineLength - sum.width) / sum.stretch
-        : INFINITY;
+      return sum.stretch - node.stretch > 0 ? (lineLength - sum.width) / sum.stretch : INFINITY;
     }
 
     if (sum.width > lineLength) {
-      return sum.shrink - node.shrink > 0
-        ? (lineLength - sum.width) / sum.shrink
-        : INFINITY;
+      return sum.shrink - node.shrink > 0 ? (lineLength - sum.width) / sum.shrink : INFINITY;
     }
 
     return 0;
@@ -1934,10 +1789,7 @@ var getNextBreakpoint = function getNextBreakpoint(
       if (position === null) {
         var j = i === 0 ? i + 1 : i;
 
-        while (
-          j < subnodes.length &&
-          (subnodes[j].type === 'glue' || subnodes[j].type === 'penalty')
-        ) {
+        while (j < subnodes.length && (subnodes[j].type === 'glue' || subnodes[j].type === 'penalty')) {
           j++;
         }
 
@@ -1966,11 +1818,9 @@ var applyBestFit = function applyBestFit(nodes, widths) {
   var count = 0;
   var lineNumber = 0;
   var subnodes = nodes;
-  var breakpoints = [
-    {
-      position: 0,
-    },
-  ];
+  var breakpoints = [{
+    position: 0
+  }];
 
   while (subnodes.length > 0) {
     var breakpoint = getNextBreakpoint(subnodes, widths, lineNumber);
@@ -1978,7 +1828,7 @@ var applyBestFit = function applyBestFit(nodes, widths) {
     if (breakpoint !== null) {
       count += breakpoint;
       breakpoints.push({
-        position: count,
+        position: count
       });
       subnodes = subnodes.slice(breakpoint + 1, subnodes.length);
       count++;
@@ -1994,7 +1844,7 @@ var applyBestFit = function applyBestFit(nodes, widths) {
 /* eslint-disable no-param-reassign */
 
 /* eslint-disable max-classes-per-file */
-var Node = /*#__PURE__*/ (function() {
+var Node = /*#__PURE__*/function () {
   function Node(data) {
     this.prev = null;
     this.next = null;
@@ -2008,9 +1858,9 @@ var Node = /*#__PURE__*/ (function() {
   };
 
   return Node;
-})();
+}();
 
-var LinkedList = /*#__PURE__*/ (function() {
+var LinkedList = /*#__PURE__*/function () {
   function LinkedList() {
     this.head = null;
     this.tail = null;
@@ -2020,14 +1870,7 @@ var LinkedList = /*#__PURE__*/ (function() {
   var _proto2 = LinkedList.prototype;
 
   _proto2.isLinked = function isLinked(node) {
-    return !(
-      (node &&
-        node.prev === null &&
-        node.next === null &&
-        this.tail !== node &&
-        this.head !== node) ||
-      this.isEmpty()
-    );
+    return !(node && node.prev === null && node.next === null && this.tail !== node && this.head !== node || this.isEmpty());
   };
 
   _proto2.size = function size() {
@@ -2213,7 +2056,7 @@ var LinkedList = /*#__PURE__*/ (function() {
   };
 
   return LinkedList;
-})();
+}();
 
 LinkedList.Node = Node;
 
@@ -2229,37 +2072,27 @@ LinkedList.Node = Node;
 var linebreak = function linebreak(nodes, lines, settings) {
   var options = {
     demerits: {
-      line: (settings && settings.demerits && settings.demerits.line) || 10,
-      flagged:
-        (settings && settings.demerits && settings.demerits.flagged) || 100,
-      fitness:
-        (settings && settings.demerits && settings.demerits.fitness) || 3000,
+      line: settings && settings.demerits && settings.demerits.line || 10,
+      flagged: settings && settings.demerits && settings.demerits.flagged || 100,
+      fitness: settings && settings.demerits && settings.demerits.fitness || 3000
     },
-    tolerance: (settings && settings.tolerance) || 3,
+    tolerance: settings && settings.tolerance || 3
   };
   var activeNodes = new LinkedList();
   var sum = {
     width: 0,
     stretch: 0,
-    shrink: 0,
+    shrink: 0
   };
   var lineLengths = lines;
   var breaks = [];
   var tmp = {
     data: {
-      demerits: Infinity,
-    },
+      demerits: Infinity
+    }
   };
 
-  function breakpoint(
-    position,
-    demerits,
-    ratio,
-    line,
-    fitnessClass,
-    totals,
-    previous,
-  ) {
+  function breakpoint(position, demerits, ratio, line, fitnessClass, totals, previous) {
     return {
       position: position,
       demerits: demerits,
@@ -2269,9 +2102,9 @@ var linebreak = function linebreak(nodes, lines, settings) {
       totals: totals || {
         width: 0,
         stretch: 0,
-        shrink: 0,
+        shrink: 0
       },
-      previous: previous,
+      previous: previous
     };
   }
 
@@ -2281,10 +2114,7 @@ var linebreak = function linebreak(nodes, lines, settings) {
     var shrink = 0; // If the current line index is within the list of linelengths, use it, otherwise use
     // the last line length of the list.
 
-    var lineLength =
-      currentLine < lineLengths.length
-        ? lineLengths[currentLine - 1]
-        : lineLengths[lineLengths.length - 1];
+    var lineLength = currentLine < lineLengths.length ? lineLengths[currentLine - 1] : lineLengths[lineLengths.length - 1];
 
     if (nodes[end].type === 'penalty') {
       width += nodes[end].width;
@@ -2312,15 +2142,17 @@ var linebreak = function linebreak(nodes, lines, settings) {
       return linebreak.infinity;
     } // perfect match
 
+
     return 0;
   } // Add width, stretch and shrink values from the current
   // break point up to the next box or forced penalty.
+
 
   function computeSum(breakPointIndex) {
     var result = {
       width: sum.width,
       stretch: sum.stretch,
-      shrink: sum.shrink,
+      shrink: sum.shrink
     };
 
     for (var i = breakPointIndex; i < nodes.length; i += 1) {
@@ -2328,12 +2160,7 @@ var linebreak = function linebreak(nodes, lines, settings) {
         result.width += nodes[i].width;
         result.stretch += nodes[i].stretch;
         result.shrink += nodes[i].shrink;
-      } else if (
-        nodes[i].type === 'box' ||
-        (nodes[i].type === 'penalty' &&
-          nodes[i].penalty === -linebreak.infinity &&
-          i > breakPointIndex)
-      ) {
+      } else if (nodes[i].type === 'box' || nodes[i].type === 'penalty' && nodes[i].penalty === -linebreak.infinity && i > breakPointIndex) {
         break;
       }
     }
@@ -2341,6 +2168,7 @@ var linebreak = function linebreak(nodes, lines, settings) {
     return result;
   } // The main loop of the algorithm
   // eslint-disable-next-line no-shadow
+
 
   function mainLoop(node, index, nodes) {
     var active = activeNodes.first();
@@ -2360,71 +2188,47 @@ var linebreak = function linebreak(nodes, lines, settings) {
     // sorted by line number.
 
     while (active !== null) {
-      candidates = [
-        {
-          demerits: Infinity,
-        },
-        {
-          demerits: Infinity,
-        },
-        {
-          demerits: Infinity,
-        },
-        {
-          demerits: Infinity,
-        },
-      ]; // Iterate through the linked list of active nodes to find new potential active nodes
+      candidates = [{
+        demerits: Infinity
+      }, {
+        demerits: Infinity
+      }, {
+        demerits: Infinity
+      }, {
+        demerits: Infinity
+      }]; // Iterate through the linked list of active nodes to find new potential active nodes
       // and deactivate current active nodes.
 
       while (active !== null) {
         next = active.next;
         currentLine = active.data.line + 1;
-        ratio = computeCost(
-          active.data.position,
-          index,
-          active.data,
-          currentLine,
-        ); // Deactive nodes when the distance between the current active node and the
+        ratio = computeCost(active.data.position, index, active.data, currentLine); // Deactive nodes when the distance between the current active node and the
         // current node becomes too large (i.e. it exceeds the stretch limit and the stretch
         // ratio becomes negative) or when the current node is a forced break (i.e. the end
         // of the paragraph when we want to remove all active nodes, but possibly have a final
         // candidate active node---if the paragraph can be set using the given tolerance value.)
 
-        if (
-          ratio < -1 ||
-          (node.type === 'penalty' && node.penalty === -linebreak.infinity)
-        ) {
+        if (ratio < -1 || node.type === 'penalty' && node.penalty === -linebreak.infinity) {
           activeNodes.remove(active);
         } // If the ratio is within the valid range of -1 <= ratio <= tolerance calculate the
         // total demerits and record a candidate active node.
+
 
         if (ratio >= -1 && ratio <= options.tolerance) {
           badness = 100 * Math.pow(Math.abs(ratio), 3); // Positive penalty
 
           if (node.type === 'penalty' && node.penalty >= 0) {
-            demerits =
-              Math.pow(options.demerits.line + badness, 2) +
-              Math.pow(node.penalty, 2); // Negative penalty but not a forced break
-          } else if (
-            node.type === 'penalty' &&
-            node.penalty !== -linebreak.infinity
-          ) {
-            demerits =
-              Math.pow(options.demerits.line + badness, 2) -
-              Math.pow(node.penalty, 2); // All other cases
+            demerits = Math.pow(options.demerits.line + badness, 2) + Math.pow(node.penalty, 2); // Negative penalty but not a forced break
+          } else if (node.type === 'penalty' && node.penalty !== -linebreak.infinity) {
+            demerits = Math.pow(options.demerits.line + badness, 2) - Math.pow(node.penalty, 2); // All other cases
           } else {
             demerits = Math.pow(options.demerits.line + badness, 2);
           }
 
-          if (
-            node.type === 'penalty' &&
-            nodes[active.data.position].type === 'penalty'
-          ) {
-            demerits +=
-              options.demerits.flagged *
-              node.flagged *
-              nodes[active.data.position].flagged;
+          if (node.type === 'penalty' && nodes[active.data.position].type === 'penalty') {
+            demerits += options.demerits.flagged * node.flagged * nodes[active.data.position].flagged;
           } // Calculate the fitness class for this candidate active node.
+
 
           if (ratio < -0.5) {
             currentClass = 0;
@@ -2437,9 +2241,11 @@ var linebreak = function linebreak(nodes, lines, settings) {
           } // Add a fitness penalty to the demerits if the fitness classes of two adjacent lines
           // differ too much.
 
+
           if (Math.abs(currentClass - active.data.fitnessClass) > 1) {
             demerits += options.demerits.fitness;
           } // Add the total demerits of the active node to get the total demerits of this candidate node.
+
 
           demerits += active.data.demerits; // Only store the best candidate for each fitness class
 
@@ -2447,7 +2253,7 @@ var linebreak = function linebreak(nodes, lines, settings) {
             candidates[currentClass] = {
               active: active,
               demerits: demerits,
-              ratio: ratio,
+              ratio: ratio
             };
           }
         }
@@ -2466,25 +2272,11 @@ var linebreak = function linebreak(nodes, lines, settings) {
 
       tmpSum = computeSum(index);
 
-      for (
-        fitnessClass = 0;
-        fitnessClass < candidates.length;
-        fitnessClass += 1
-      ) {
+      for (fitnessClass = 0; fitnessClass < candidates.length; fitnessClass += 1) {
         candidate = candidates[fitnessClass];
 
         if (candidate.demerits < Infinity) {
-          newNode = new LinkedList.Node(
-            breakpoint(
-              index,
-              candidate.demerits,
-              candidate.ratio,
-              candidate.active.data.line + 1,
-              fitnessClass,
-              tmpSum,
-              candidate.active,
-            ),
-          );
+          newNode = new LinkedList.Node(breakpoint(index, candidate.demerits, candidate.ratio, candidate.active.data.line + 1, fitnessClass, tmpSum, candidate.active));
 
           if (active !== null) {
             activeNodes.insertBefore(active, newNode);
@@ -2496,11 +2288,10 @@ var linebreak = function linebreak(nodes, lines, settings) {
     }
   } // Add an active node for the start of the paragraph.
 
-  activeNodes.push(
-    new LinkedList.Node(breakpoint(0, 0, 0, 0, 0, undefined, null)),
-  ); // eslint-disable-next-line no-shadow
 
-  nodes.forEach(function(node, index, nodes) {
+  activeNodes.push(new LinkedList.Node(breakpoint(0, 0, 0, 0, 0, undefined, null))); // eslint-disable-next-line no-shadow
+
+  nodes.forEach(function (node, index, nodes) {
     if (node.type === 'box') {
       sum.width += node.width;
     } else if (node.type === 'glue') {
@@ -2518,7 +2309,7 @@ var linebreak = function linebreak(nodes, lines, settings) {
 
   if (activeNodes.size() !== 0) {
     // Find the best active node (the one with the least total demerits.)
-    activeNodes.forEach(function(node) {
+    activeNodes.forEach(function (node) {
       if (node.data.demerits < tmp.data.demerits) {
         tmp = node;
       }
@@ -2527,7 +2318,7 @@ var linebreak = function linebreak(nodes, lines, settings) {
     while (tmp !== null) {
       breaks.push({
         position: tmp.data.position,
-        ratio: tmp.data.ratio,
+        ratio: tmp.data.ratio
       });
       tmp = tmp.data.previous;
     }
@@ -2540,17 +2331,17 @@ var linebreak = function linebreak(nodes, lines, settings) {
 
 linebreak.infinity = 10000;
 
-linebreak.glue = function(width, value, stretch, shrink) {
+linebreak.glue = function (width, value, stretch, shrink) {
   return {
     type: 'glue',
     value: value,
     width: width,
     stretch: stretch,
-    shrink: shrink,
+    shrink: shrink
   };
 };
 
-linebreak.box = function(width, value, hyphenated) {
+linebreak.box = function (width, value, hyphenated) {
   if (hyphenated === void 0) {
     hyphenated = false;
   }
@@ -2559,16 +2350,16 @@ linebreak.box = function(width, value, hyphenated) {
     type: 'box',
     width: width,
     value: value,
-    hyphenated: hyphenated,
+    hyphenated: hyphenated
   };
 };
 
-linebreak.penalty = function(width, penalty, flagged) {
+linebreak.penalty = function (width, penalty, flagged) {
   return {
     type: 'penalty',
     width: width,
     penalty: penalty,
-    flagged: flagged,
+    flagged: flagged
   };
 };
 
@@ -2584,7 +2375,7 @@ var add = function add(n, run) {
   var end = run.end + n;
   return Object.assign({}, run, {
     start: start,
-    end: end,
+    end: end
   });
 };
 
@@ -2613,7 +2404,7 @@ var concat = function concat(runA, runB) {
   var attributes = Object.assign({}, runA.attributes, runB.attributes);
   var runAIndices = runA.glyphIndices || [];
   var runALastIndex = last(runAIndices) || 0;
-  var runBIndices = (runB.glyphIndices || []).map(function(i) {
+  var runBIndices = (runB.glyphIndices || []).map(function (i) {
     return i + runALastIndex + 1;
   });
   var glyphIndices = normalize(runAIndices.concat(runBIndices));
@@ -2622,7 +2413,7 @@ var concat = function concat(runA, runB) {
     glyphs: glyphs,
     positions: positions,
     attributes: attributes,
-    glyphIndices: glyphIndices,
+    glyphIndices: glyphIndices
   });
 };
 
@@ -2650,6 +2441,7 @@ var insertGlyph$1 = function insertGlyph(index, glyph, run) {
  * @param  {Object}  run
  * @return {Object}  run with glyph
  */
+
 
 var insert = function insert(index, value, run) {
   var font = getFont(run);
@@ -2682,20 +2474,16 @@ var insertGlyph = function insertGlyph(index, glyph, attributedString) {
   var runIndex = runIndexAt(index, attributedString); // Add glyph to the end if run index invalid
 
   if (runIndex === -1) return append(glyph, attributedString);
-  var codePoints =
-    (glyph === null || glyph === void 0 ? void 0 : glyph.codePoints) || [];
-  var string =
-    attributedString.string.slice(0, index) +
-    stringFromCodePoints(codePoints) +
-    attributedString.string.slice(index);
-  var runs = attributedString.runs.map(function(run, i) {
+  var codePoints = (glyph === null || glyph === void 0 ? void 0 : glyph.codePoints) || [];
+  var string = attributedString.string.slice(0, index) + stringFromCodePoints(codePoints) + attributedString.string.slice(index);
+  var runs = attributedString.runs.map(function (run, i) {
     if (i === runIndex) return insert(index - run.start, glyph, run);
     if (i > runIndex) return add(codePoints.length, run);
     return run;
   });
   return Object.assign({}, attributedString, {
     string: string,
-    runs: runs,
+    runs: runs
   });
 };
 
@@ -2727,13 +2515,9 @@ var advanceWidthBetween$1 = function advanceWidthBetween(start, end, run) {
  * @return {number} advance width
  */
 
-var advanceWidthBetween = function advanceWidthBetween(
-  start,
-  end,
-  attributedString,
-) {
+var advanceWidthBetween = function advanceWidthBetween(start, end, attributedString) {
   var runs = filter(start, end, attributedString.runs);
-  return runs.reduce(function(acc, run) {
+  return runs.reduce(function (acc, run) {
     return acc + advanceWidthBetween$1(start, end, run);
   }, 0);
 };
@@ -2744,7 +2528,7 @@ var TOLERANCE_LIMIT = 50;
 var opts = {
   width: 3,
   stretch: 6,
-  shrink: 9,
+  shrink: 9
 };
 /**
  * Slice attributed string to many lines
@@ -2758,7 +2542,7 @@ var opts = {
 var breakLines = function breakLines(string, nodes, breaks) {
   var start = 0;
   var end = null;
-  var lines = breaks.reduce(function(acc, breakPoint) {
+  var lines = breaks.reduce(function (acc, breakPoint) {
     var node = nodes[breakPoint.position];
     var prevNode = nodes[breakPoint.position - 1]; // Last breakpoint corresponds to K&P mandatory final glue
 
@@ -2790,29 +2574,29 @@ var breakLines = function breakLines(string, nodes, breaks) {
  * @return {Array} attributed strings
  */
 
+
 var getNodes = function getNodes(attributedString, _ref, options) {
   var align = _ref.align;
   var start = 0;
   var hyphenWidth = 5;
   var syllables = attributedString.syllables;
-  var hyphenPenalty =
-    options.hyphenationPenalty || (align === 'justify' ? 100 : 600);
-  var result = syllables.reduce(function(acc, s, index) {
+  var hyphenPenalty = options.hyphenationPenalty || (align === 'justify' ? 100 : 600);
+  var result = syllables.reduce(function (acc, s, index) {
     var width = advanceWidthBetween(start, start + s.length, attributedString);
 
     if (s.trim() === '') {
-      var stretch = (width * opts.width) / opts.stretch;
-      var shrink = (width * opts.width) / opts.shrink;
+      var stretch = width * opts.width / opts.stretch;
+      var shrink = width * opts.width / opts.shrink;
       var value = {
         start: start,
-        end: start + s.length,
+        end: start + s.length
       };
       acc.push(linebreak.glue(width, value, stretch, shrink));
     } else {
       var hyphenated = syllables[index + 1] !== ' ';
       var _value = {
         start: start,
-        end: start + s.length,
+        end: start + s.length
       };
       acc.push(linebreak.box(width, _value, hyphenated));
 
@@ -2832,15 +2616,7 @@ var getNodes = function getNodes(attributedString, _ref, options) {
 var getStyles = function getStyles(attributedString) {
   var _attributedString$run, _attributedString$run2;
 
-  return (
-    ((_attributedString$run = attributedString.runs) === null ||
-    _attributedString$run === void 0
-      ? void 0
-      : (_attributedString$run2 = _attributedString$run[0]) === null ||
-        _attributedString$run2 === void 0
-      ? void 0
-      : _attributedString$run2.attributes) || {}
-  );
+  return ((_attributedString$run = attributedString.runs) === null || _attributedString$run === void 0 ? void 0 : (_attributedString$run2 = _attributedString$run[0]) === null || _attributedString$run2 === void 0 ? void 0 : _attributedString$run2.attributes) || {};
 };
 /**
  * Performs Knuth & Plass line breaking algorithm
@@ -2852,26 +2628,24 @@ var getStyles = function getStyles(attributedString) {
  * @return {Array} attributed strings
  */
 
+
 var linebreaker = function linebreaker(options) {
-  return function(attributedString, availableWidths) {
+  return function (attributedString, availableWidths) {
     var tolerance = options.tolerance || 4;
     var style = getStyles(attributedString);
     var nodes = getNodes(attributedString, style, options);
     var breaks = linebreak(nodes, availableWidths, {
-      tolerance: tolerance,
+      tolerance: tolerance
     }); // Try again with a higher tolerance if the line breaking failed.
 
     while (breaks.length === 0 && tolerance < TOLERANCE_LIMIT) {
       tolerance += TOLERANCE_STEPS;
       breaks = linebreak(nodes, availableWidths, {
-        tolerance: tolerance,
+        tolerance: tolerance
       });
     }
 
-    if (
-      breaks.length === 0 ||
-      (breaks.length === 1 && breaks[0].position === 0)
-    ) {
+    if (breaks.length === 0 || breaks.length === 1 && breaks[0].position === 0) {
       breaks = applyBestFit(nodes, availableWidths);
     }
 
@@ -2885,47 +2659,43 @@ var EXPAND_WHITESPACE_FACTOR = {
   before: 0.5,
   after: 0.5,
   priority: WHITESPACE_PRIORITY,
-  unconstrained: false,
+  unconstrained: false
 };
 var EXPAND_CHAR_FACTOR = {
   before: 0.14453125,
   // 37/256
   after: 0.14453125,
   priority: LETTER_PRIORITY,
-  unconstrained: false,
+  unconstrained: false
 };
 var SHRINK_WHITESPACE_FACTOR = {
   before: -0.04296875,
   // -11/256
   after: -0.04296875,
   priority: WHITESPACE_PRIORITY,
-  unconstrained: false,
+  unconstrained: false
 };
 var SHRINK_CHAR_FACTOR = {
   before: -0.04296875,
   after: -0.04296875,
   priority: LETTER_PRIORITY,
-  unconstrained: false,
+  unconstrained: false
 };
 
 var getCharFactor = function getCharFactor(direction, options) {
   var expandCharFactor = options.expandCharFactor || {};
   var shrinkCharFactor = options.shrinkCharFactor || {};
-  return direction === 'GROW'
-    ? Object.assign({}, EXPAND_CHAR_FACTOR, expandCharFactor)
-    : Object.assign({}, SHRINK_CHAR_FACTOR, shrinkCharFactor);
+  return direction === 'GROW' ? Object.assign({}, EXPAND_CHAR_FACTOR, expandCharFactor) : Object.assign({}, SHRINK_CHAR_FACTOR, shrinkCharFactor);
 };
 
 var getWhitespaceFactor = function getWhitespaceFactor(direction, options) {
   var expandWhitespaceFactor = options.expandWhitespaceFactor || {};
   var shrinkWhitespaceFactor = options.shrinkWhitespaceFactor || {};
-  return direction === 'GROW'
-    ? Object.assign({}, EXPAND_WHITESPACE_FACTOR, expandWhitespaceFactor)
-    : Object.assign({}, SHRINK_WHITESPACE_FACTOR, shrinkWhitespaceFactor);
+  return direction === 'GROW' ? Object.assign({}, EXPAND_WHITESPACE_FACTOR, expandWhitespaceFactor) : Object.assign({}, SHRINK_WHITESPACE_FACTOR, shrinkWhitespaceFactor);
 };
 
 var factor = function factor(direction, options) {
-  return function(glyphs) {
+  return function (glyphs) {
     var charFactor = getCharFactor(direction, options);
     var whitespaceFactor = getWhitespaceFactor(direction, options);
     var factors = [];
@@ -2962,7 +2732,7 @@ var factor = function factor(direction, options) {
 var getFactors = function getFactors(gap, line, options) {
   var direction = gap > 0 ? 'GROW' : 'SHRINK';
   var getFactor = factor(direction, options);
-  var factors = line.runs.reduce(function(acc, run) {
+  var factors = line.runs.reduce(function (acc, run) {
     return acc.concat(getFactor(run.glyphs));
   }, []);
   factors[0].before = 0;
@@ -2979,13 +2749,10 @@ var getDistances = function getDistances(gap, factors) {
   var priorities = [];
   var unconstrained = [];
 
-  for (
-    var _priority = KASHIDA_PRIORITY;
-    _priority <= NULL_PRIORITY;
-    _priority += 1
-  ) {
+  for (var _priority = KASHIDA_PRIORITY; _priority <= NULL_PRIORITY; _priority += 1) {
     priorities[_priority] = unconstrained[_priority] = 0;
   } // sum the factors at each priority
+
 
   for (var j = 0; j < factors.length; j += 1) {
     var f = factors[j];
@@ -2997,6 +2764,7 @@ var getDistances = function getDistances(gap, factors) {
       unconstrained[f.priority] += sum;
     }
   } // choose the priorities that need to be applied
+
 
   var highestPriority = -1;
   var highestPrioritySum = 0;
@@ -3012,6 +2780,7 @@ var getDistances = function getDistances(gap, factors) {
         highestPrioritySum = prioritySum;
       } // if this priority covers the remaining gap, we're done
 
+
       if (Math.abs(remainingGap) <= Math.abs(prioritySum)) {
         priorities[priority] = remainingGap / prioritySum;
         unconstrained[priority] = 0;
@@ -3019,6 +2788,7 @@ var getDistances = function getDistances(gap, factors) {
         break;
       } // mark that we need to use 100% of the adjustment from
       // this priority, and subtract the space that it consumes
+
 
       priorities[priority] = 1;
       remainingGap -= prioritySum; // if this priority has unconstrained glyphs, let them consume the remaining space
@@ -3031,16 +2801,18 @@ var getDistances = function getDistances(gap, factors) {
     }
   } // zero out remaining priorities (if any)
 
+
   for (var p = priority + 1; p <= NULL_PRIORITY; p += 1) {
     priorities[p] = 0;
     unconstrained[p] = 0;
   } // if there is still space left over, assign it to the highest priority that we saw.
   // this violates their factors, but it only happens in extreme cases
 
+
   if (remainingGap > 0 && highestPriority > -1) {
-    priorities[highestPriority] =
-      (highestPrioritySum + (gap - total)) / highestPrioritySum;
+    priorities[highestPriority] = (highestPrioritySum + (gap - total)) / highestPrioritySum;
   } // create and return an array of distances to add to each glyph's advance
+
 
   var distances = [];
 
@@ -3054,6 +2826,7 @@ var getDistances = function getDistances(gap, factors) {
     if (next) {
       dist += next.before * priorities[next.priority];
     } // if this glyph is unconstrained, add the unconstrained distance as well
+
 
     if (_f.unconstrained) {
       dist += _f.after * unconstrained[_f.priority];
@@ -3080,18 +2853,10 @@ var getDistances = function getDistances(gap, factors) {
 var justifyLine = function justifyLine(distances, line) {
   var index = 0;
 
-  for (
-    var _iterator = _createForOfIteratorHelperLoose(line.runs), _step;
-    !(_step = _iterator()).done;
-
-  ) {
+  for (var _iterator = _createForOfIteratorHelperLoose(line.runs), _step; !(_step = _iterator()).done;) {
     var run = _step.value;
 
-    for (
-      var _iterator2 = _createForOfIteratorHelperLoose(run.positions), _step2;
-      !(_step2 = _iterator2()).done;
-
-    ) {
+    for (var _iterator2 = _createForOfIteratorHelperLoose(run.positions), _step2; !(_step2 = _iterator2()).done;) {
       var position = _step2.value;
       position.xAdvance += distances[index++];
     }
@@ -3111,8 +2876,9 @@ var justifyLine = function justifyLine(distances, line) {
  * @returns {Object} line
  */
 
+
 var justification = function justification(options) {
-  return function(line) {
+  return function (line) {
     var gap = line.box.width - advanceWidth(line);
     if (gap === 0) return; // Exact fit
 
@@ -3147,7 +2913,7 @@ var BASE_FONT_SIZE = 12;
  */
 
 var textDecoration = function textDecoration() {
-  return function(lineFragment) {
+  return function (lineFragment) {
     var x = lineFragment.overflowLeft || 0;
     var overflowRight = lineFragment.overflowRight || 0;
     var maxX = advanceWidth(lineFragment) - overflowRight;
@@ -3156,23 +2922,20 @@ var textDecoration = function textDecoration() {
     for (var i = 0; i < lineFragment.runs.length; i += 1) {
       var run = lineFragment.runs[i];
       var width = Math.min(maxX - x, advanceWidth$1(run));
-      var thickness = Math.max(
-        0.5,
-        Math.floor(run.attributes.fontSize / BASE_FONT_SIZE),
-      );
+      var thickness = Math.max(0.5, Math.floor(run.attributes.fontSize / BASE_FONT_SIZE));
 
       if (run.attributes.underline) {
         var rect = {
           x: x,
           y: ascent(lineFragment) + thickness * 2,
           width: width,
-          height: thickness,
+          height: thickness
         };
         var line = {
           rect: rect,
           opacity: run.attributes.opacity,
           color: run.attributes.underlineColor || 'black',
-          style: run.attributes.underlineStyle || 'solid',
+          style: run.attributes.underlineStyle || 'solid'
         };
         lineFragment.decorationLines.push(line);
       }
@@ -3183,13 +2946,13 @@ var textDecoration = function textDecoration() {
           x: x,
           y: y,
           width: width,
-          height: thickness,
+          height: thickness
         };
         var _line = {
           rect: _rect,
           opacity: run.attributes.opacity,
           color: run.attributes.strikeColor || 'black',
-          style: run.attributes.strikeStyle || 'solid',
+          style: run.attributes.strikeStyle || 'solid'
         };
         lineFragment.decorationLines.push(_line);
       }
@@ -3211,7 +2974,7 @@ var ignoredScripts = ['Common', 'Inherited', 'Unknown'];
  */
 
 var scriptItemizer = function scriptItemizer() {
-  return function(attributedString) {
+  return function (attributedString) {
     var string = attributedString.string;
     var lastScript = 'Unknown';
     var lastIndex = 0;
@@ -3230,8 +2993,8 @@ var scriptItemizer = function scriptItemizer() {
             start: lastIndex,
             end: index,
             attributes: {
-              script: lastScript,
-            },
+              script: lastScript
+            }
           });
         }
 
@@ -3247,19 +3010,19 @@ var scriptItemizer = function scriptItemizer() {
         start: lastIndex,
         end: string.length,
         attributes: {
-          script: lastScript,
-        },
+          script: lastScript
+        }
       });
     }
 
     return {
       string: string,
-      runs: res,
+      runs: res
     };
   };
 };
 
-var SOFT_HYPHEN = '\xAD';
+var SOFT_HYPHEN = "\xAD";
 var hyphenator = hyphen(pattern);
 
 var splitHyphen = function splitHyphen(word) {
@@ -3274,8 +3037,8 @@ var getParts = function getParts(word) {
 };
 
 var wordHyphenation = function wordHyphenation() {
-  return function(word) {
-    var cacheKey = '_' + word;
+  return function (word) {
+    var cacheKey = "_" + word;
     if (isNil(word)) return [];
     if (cache[cacheKey]) return cache[cacheKey];
     cache[cacheKey] = getParts(word);
@@ -3295,21 +3058,18 @@ var getFontSize = function getFontSize(value) {
  * @return {Object} attributed string
  */
 
+
 var fontSubstitution = function fontSubstitution() {
-  return function(attributedString) {
+  return function (attributedString) {
     var string = attributedString.string,
-      runs = attributedString.runs;
+        runs = attributedString.runs;
     var lastFont = null;
     var lastIndex = 0;
     var index = 0;
     var res = [];
     if (!string) return empty();
 
-    for (
-      var _iterator = _createForOfIteratorHelperLoose(runs), _step;
-      !(_step = _iterator()).done;
-
-    ) {
+    for (var _iterator = _createForOfIteratorHelperLoose(runs), _step; !(_step = _iterator()).done;) {
       var run = _step.value;
 
       var _fontSize = getFontSize(run);
@@ -3321,20 +3081,13 @@ var fontSubstitution = function fontSubstitution() {
           start: 0,
           end: 0,
           attributes: {
-            font: defaultFont,
-          },
+            font: defaultFont
+          }
         });
         break;
       }
 
-      for (
-        var _iterator2 = _createForOfIteratorHelperLoose(
-            string.slice(run.start, run.end),
-          ),
-          _step2;
-        !(_step2 = _iterator2()).done;
-
-      ) {
+      for (var _iterator2 = _createForOfIteratorHelperLoose(string.slice(run.start, run.end)), _step2; !(_step2 = _iterator2()).done;) {
         var char = _step2.value;
         var font = defaultFont;
 
@@ -3345,8 +3098,8 @@ var fontSubstitution = function fontSubstitution() {
               end: index,
               attributes: {
                 font: lastFont,
-                scale: lastFont ? _fontSize / lastFont.unitsPerEm : 0,
-              },
+                scale: lastFont ? _fontSize / lastFont.unitsPerEm : 0
+              }
             });
           }
 
@@ -3365,24 +3118,16 @@ var fontSubstitution = function fontSubstitution() {
         end: string.length,
         attributes: {
           font: lastFont,
-          scale: lastFont ? fontSize / lastFont.unitsPerEm : 0,
-        },
+          scale: lastFont ? fontSize / lastFont.unitsPerEm : 0
+        }
       });
     }
 
     return {
       string: string,
-      runs: res,
+      runs: res
     };
   };
 };
 
-export {
-  layoutEngine as default,
-  fontSubstitution,
-  justification,
-  linebreaker,
-  scriptItemizer,
-  textDecoration,
-  wordHyphenation,
-};
+export { layoutEngine as default, fontSubstitution, justification, linebreaker, scriptItemizer, textDecoration, wordHyphenation };

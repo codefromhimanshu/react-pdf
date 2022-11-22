@@ -1,24 +1,23 @@
-'use strict';
+"use strict";
 
-var _interopRequireDefault = require('@babel/runtime/helpers/interopRequireDefault')
-  .default;
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault").default;
 
 exports.__esModule = true;
 exports.default = void 0;
 
-var _text = _interopRequireDefault(require('./text'));
+var _text = _interopRequireDefault(require("./text"));
 
-var _vector = _interopRequireDefault(require('./vector'));
+var _vector = _interopRequireDefault(require("./vector"));
 
-var _images = _interopRequireDefault(require('./images'));
+var _images = _interopRequireDefault(require("./images"));
 
-var _styles = _interopRequireDefault(require('./styles'));
+var _styles = _interopRequireDefault(require("./styles"));
 
-var _transform = _interopRequireDefault(require('./transform'));
+var _transform = _interopRequireDefault(require("./transform"));
 
-var _element = require('./element');
+var _element = require("./element");
 
-var _getPageSize = _interopRequireDefault(require('../utils/getPageSize'));
+var _getPageSize = _interopRequireDefault(require("../utils/getPageSize"));
 
 /* eslint-disable guard-for-in */
 
@@ -33,17 +32,17 @@ var _getPageSize = _interopRequireDefault(require('../utils/getPageSize'));
 //   bottom: 0,
 //   right: 0,
 // };
-var SVGPage = /*#__PURE__*/ (function() {
+var SVGPage = /*#__PURE__*/function () {
   function SVGPage(_temp) {
     var _ref = _temp === void 0 ? {} : _temp,
-      _ref$size = _ref.size,
-      size = _ref$size === void 0 ? 'letter' : _ref$size,
-      _ref$orientation = _ref.orientation,
-      orientation = _ref$orientation === void 0 ? 'portrait' : _ref$orientation;
+        _ref$size = _ref.size,
+        size = _ref$size === void 0 ? 'letter' : _ref$size,
+        _ref$orientation = _ref.orientation,
+        orientation = _ref$orientation === void 0 ? 'portrait' : _ref$orientation;
 
     var _getSize = (0, _getPageSize.default)(size, orientation),
-      width = _getSize.width,
-      height = _getSize.height;
+        width = _getSize.width,
+        height = _getSize.height;
 
     this.width = width;
     this.height = height;
@@ -90,19 +89,19 @@ var SVGPage = /*#__PURE__*/ (function() {
   };
 
   return SVGPage;
-})();
+}();
 
 var mixin = function mixin(methods) {
-  return (function() {
+  return function () {
     var result = [];
 
     for (var name in methods) {
       var method = methods[name];
-      result.push((SVGPage.prototype[name] = method));
+      result.push(SVGPage.prototype[name] = method);
     }
 
     return result;
-  })();
+  }();
 };
 
 mixin(_text.default);

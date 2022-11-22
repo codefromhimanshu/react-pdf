@@ -5,19 +5,17 @@ Object.defineProperty(exports, '__esModule', { value: true });
 var fs = require('fs');
 var zlib = require('zlib');
 
-function _interopDefaultLegacy(e) {
-  return e && typeof e === 'object' && 'default' in e ? e : { default: e };
-}
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
-var fs__default = /*#__PURE__*/ _interopDefaultLegacy(fs);
-var zlib__default = /*#__PURE__*/ _interopDefaultLegacy(zlib);
+var fs__default = /*#__PURE__*/_interopDefaultLegacy(fs);
+var zlib__default = /*#__PURE__*/_interopDefaultLegacy(zlib);
 
-var PNG = /*#__PURE__*/ (function() {
+var PNG = /*#__PURE__*/function () {
   PNG.decode = function decode(path, fn) {
     {
-      return fs__default['default'].readFile(path, function(err, file) {
+      return fs__default["default"].readFile(path, function (err, file) {
         var png = new PNG(file);
-        return png.decode(function(pixels) {
+        return png.decode(function (pixels) {
           return fn(pixels);
         });
       });
@@ -26,7 +24,7 @@ var PNG = /*#__PURE__*/ (function() {
 
   PNG.load = function load(path) {
     {
-      var file = fs__default['default'].readFileSync(path);
+      var file = fs__default["default"].readFileSync(path);
       return new PNG(file);
     }
   };
@@ -112,10 +110,7 @@ var PNG = /*#__PURE__*/ (function() {
           var text = this.read(chunkSize);
           var index = text.indexOf(0);
           var key = String.fromCharCode.apply(String, text.slice(0, index));
-          this.text[key] = String.fromCharCode.apply(
-            String,
-            text.slice(index + 1),
-          );
+          this.text[key] = String.fromCharCode.apply(String, text.slice(index + 1));
           break;
 
         case 'IEND':
@@ -192,11 +187,11 @@ var PNG = /*#__PURE__*/ (function() {
   _proto.decodePixels = function decodePixels(fn) {
     var _this = this;
 
-    return zlib__default['default'].inflate(this.imgData, function(err, data) {
+    return zlib__default["default"].inflate(this.imgData, function (err, data) {
       if (err) throw err;
       var pos = 0;
       var width = _this.width,
-        height = _this.height;
+          height = _this.height;
       var pixelBytes = _this.pixelBitlength / 8;
       var pixels = Buffer.alloc(width * height * pixelBytes);
 
@@ -242,14 +237,8 @@ var PNG = /*#__PURE__*/ (function() {
               // Up
               for (i = 0; i < scanlineLength; i++) {
                 byte = data[pos++];
-                col = (i - (i % pixelBytes)) / pixelBytes;
-                upper =
-                  row &&
-                  buffer[
-                    (row - 1) * scanlineLength +
-                      col * pixelBytes +
-                      (i % pixelBytes)
-                  ];
+                col = (i - i % pixelBytes) / pixelBytes;
+                upper = row && buffer[(row - 1) * scanlineLength + col * pixelBytes + i % pixelBytes];
                 buffer[c++] = (upper + byte) % 256;
               }
 
@@ -259,15 +248,9 @@ var PNG = /*#__PURE__*/ (function() {
               // Average
               for (i = 0; i < scanlineLength; i++) {
                 byte = data[pos++];
-                col = (i - (i % pixelBytes)) / pixelBytes;
+                col = (i - i % pixelBytes) / pixelBytes;
                 left = i < pixelBytes ? 0 : buffer[c - pixelBytes];
-                upper =
-                  row &&
-                  buffer[
-                    (row - 1) * scanlineLength +
-                      col * pixelBytes +
-                      (i % pixelBytes)
-                  ];
+                upper = row && buffer[(row - 1) * scanlineLength + col * pixelBytes + i % pixelBytes];
                 buffer[c++] = (byte + Math.floor((left + upper) / 2)) % 256;
               }
 
@@ -279,25 +262,14 @@ var PNG = /*#__PURE__*/ (function() {
                 var paeth;
                 var upperLeft;
                 byte = data[pos++];
-                col = (i - (i % pixelBytes)) / pixelBytes;
+                col = (i - i % pixelBytes) / pixelBytes;
                 left = i < pixelBytes ? 0 : buffer[c - pixelBytes];
 
                 if (row === 0) {
                   upper = upperLeft = 0;
                 } else {
-                  upper =
-                    buffer[
-                      (row - 1) * scanlineLength +
-                        col * pixelBytes +
-                        (i % pixelBytes)
-                    ];
-                  upperLeft =
-                    col &&
-                    buffer[
-                      (row - 1) * scanlineLength +
-                        (col - 1) * pixelBytes +
-                        (i % pixelBytes)
-                    ];
+                  upper = buffer[(row - 1) * scanlineLength + col * pixelBytes + i % pixelBytes];
+                  upperLeft = col && buffer[(row - 1) * scanlineLength + (col - 1) * pixelBytes + i % pixelBytes];
                 }
 
                 var p = left + upper - upperLeft;
@@ -319,7 +291,7 @@ var PNG = /*#__PURE__*/ (function() {
               break;
 
             default:
-              throw new Error('Invalid filter algorithm: ' + data[pos - 1]);
+              throw new Error("Invalid filter algorithm: " + data[pos - 1]);
           }
 
           if (!singlePass) {
@@ -398,8 +370,7 @@ var PNG = /*#__PURE__*/ (function() {
     var alpha = this.hasAlphaChannel;
 
     if (this.palette.length) {
-      palette =
-        this._decodedPalette || (this._decodedPalette = this.decodePalette());
+      palette = this._decodedPalette || (this._decodedPalette = this.decodePalette());
       colors = 4;
       alpha = true;
     }
@@ -407,7 +378,7 @@ var PNG = /*#__PURE__*/ (function() {
     var data = imageData.data || imageData;
     var length = data.length;
     var input = palette || pixels;
-    var i = (j = 0);
+    var i = j = 0;
 
     if (colors === 1) {
       while (i < length) {
@@ -435,7 +406,7 @@ var PNG = /*#__PURE__*/ (function() {
     var _this2 = this;
 
     var ret = Buffer.alloc(this.width * this.height * 4);
-    return this.decodePixels(function(pixels) {
+    return this.decodePixels(function (pixels) {
       _this2.copyToImageData(ret, pixels);
 
       return fn(ret);
@@ -443,6 +414,6 @@ var PNG = /*#__PURE__*/ (function() {
   };
 
   return PNG;
-})();
+}();
 
-exports['default'] = PNG;
+exports["default"] = PNG;

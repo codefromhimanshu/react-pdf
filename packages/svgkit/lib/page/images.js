@@ -1,9 +1,9 @@
-'use strict';
+"use strict";
 
 exports.__esModule = true;
 exports.default = void 0;
 
-var _element = require('./element');
+var _element = require("./element");
 
 var _default = {
   image: function image(href, x, y, width, height) {
@@ -16,6 +16,6 @@ var _default = {
     image.setAttribute('xlink:href', href);
     image.setAttribute('preserveAspectRatio', 'none');
     parent.appendChild(image);
-  },
+  }
 };
 exports.default = _default;

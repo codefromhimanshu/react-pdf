@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 exports.__esModule = true;
 exports.default = void 0;
@@ -14,7 +14,7 @@ var STYLES = {
   strokeOpacityStyle: 1,
   opacityStyle: 1,
   fontSizeStyle: 12,
-  fontFamilyStyle: 'Helvetica',
+  fontFamilyStyle: 'Helvetica'
 };
 var _default = {
   setDefaultStyles: function setDefaultStyles() {
@@ -72,13 +72,13 @@ var _default = {
     this.lineWidthStyle = width;
   },
   lineDash: function lineDash(length, space) {
-    this.lineDashStyle = (length + ' ' + (space || '')).trim();
+    this.lineDashStyle = (length + " " + (space || '')).trim();
   },
   fontSize: function fontSize(size) {
     this.fontSizeStyle = size;
   },
   fontFamily: function fontFamily(_fontFamily) {
     this.fontFamilyStyle = _fontFamily;
-  },
+  }
 };
 exports.default = _default;

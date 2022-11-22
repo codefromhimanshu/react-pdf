@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 exports.__esModule = true;
 exports.View = exports.Tspan = exports.TextInstance = exports.Text = exports.Svg = exports.Stop = exports.Rect = exports.RadialGradient = exports.Polyline = exports.Polygon = exports.Path = exports.Page = exports.Note = exports.Link = exports.LinearGradient = exports.Line = exports.Image = exports.G = exports.Ellipse = exports.Document = exports.Defs = exports.ClipPath = exports.Circle = exports.Canvas = void 0;

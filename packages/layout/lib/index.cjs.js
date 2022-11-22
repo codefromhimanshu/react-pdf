@@ -16,53 +16,37 @@ var resolveImage = require('@react-pdf/image');
 var Yoga = require('@react-pdf/yoga');
 var _objectWithoutPropertiesLoose = require('@babel/runtime/helpers/objectWithoutPropertiesLoose');
 
-function _interopDefaultLegacy(e) {
-  return e && typeof e === 'object' && 'default' in e ? e : { default: e };
-}
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
 function _interopNamespace(e) {
   if (e && e.__esModule) return e;
   var n = Object.create(null);
   if (e) {
-    Object.keys(e).forEach(function(k) {
+    Object.keys(e).forEach(function (k) {
       if (k !== 'default') {
         var d = Object.getOwnPropertyDescriptor(e, k);
-        Object.defineProperty(
-          n,
-          k,
-          d.get
-            ? d
-            : {
-                enumerable: true,
-                get: function() {
-                  return e[k];
-                },
-              },
-        );
+        Object.defineProperty(n, k, d.get ? d : {
+          enumerable: true,
+          get: function () { return e[k]; }
+        });
       }
     });
   }
-  n['default'] = e;
+  n["default"] = e;
   return Object.freeze(n);
 }
 
-var P__namespace = /*#__PURE__*/ _interopNamespace(P);
-var stylesheet__default = /*#__PURE__*/ _interopDefaultLegacy(stylesheet);
-var layoutEngine__default = /*#__PURE__*/ _interopDefaultLegacy(layoutEngine);
-var _createClass__default = /*#__PURE__*/ _interopDefaultLegacy(_createClass);
-var _asyncToGenerator__default = /*#__PURE__*/ _interopDefaultLegacy(
-  _asyncToGenerator,
-);
-var _regeneratorRuntime__default = /*#__PURE__*/ _interopDefaultLegacy(
-  _regeneratorRuntime,
-);
-var _extends__default = /*#__PURE__*/ _interopDefaultLegacy(_extends);
-var emojiRegex__default = /*#__PURE__*/ _interopDefaultLegacy(emojiRegex);
-var resolveImage__default = /*#__PURE__*/ _interopDefaultLegacy(resolveImage);
-var Yoga__default = /*#__PURE__*/ _interopDefaultLegacy(Yoga);
-var _objectWithoutPropertiesLoose__default = /*#__PURE__*/ _interopDefaultLegacy(
-  _objectWithoutPropertiesLoose,
-);
+var P__namespace = /*#__PURE__*/_interopNamespace(P);
+var stylesheet__default = /*#__PURE__*/_interopDefaultLegacy(stylesheet);
+var layoutEngine__default = /*#__PURE__*/_interopDefaultLegacy(layoutEngine);
+var _createClass__default = /*#__PURE__*/_interopDefaultLegacy(_createClass);
+var _asyncToGenerator__default = /*#__PURE__*/_interopDefaultLegacy(_asyncToGenerator);
+var _regeneratorRuntime__default = /*#__PURE__*/_interopDefaultLegacy(_regeneratorRuntime);
+var _extends__default = /*#__PURE__*/_interopDefaultLegacy(_extends);
+var emojiRegex__default = /*#__PURE__*/_interopDefaultLegacy(emojiRegex);
+var resolveImage__default = /*#__PURE__*/_interopDefaultLegacy(resolveImage);
+var Yoga__default = /*#__PURE__*/_interopDefaultLegacy(Yoga);
+var _objectWithoutPropertiesLoose__default = /*#__PURE__*/_interopDefaultLegacy(_objectWithoutPropertiesLoose);
 
 /**
  * Create attributed string from text fragments
@@ -74,18 +58,18 @@ var fromFragments = function fromFragments(fragments) {
   var offset = 0;
   var string = '';
   var runs = [];
-  fragments.forEach(function(fragment) {
+  fragments.forEach(function (fragment) {
     string += fragment.string;
     runs.push({
       start: offset,
       end: offset + fragment.string.length,
-      attributes: fragment.attributes || {},
+      attributes: fragment.attributes || {}
     });
     offset += fragment.string.length;
   });
   return {
     string: string,
-    runs: runs,
+    runs: runs
   };
 };
 
@@ -116,7 +100,7 @@ var transformText = function transformText(text, transformation) {
   }
 };
 
-var StandardFont = /*#__PURE__*/ (function() {
+var StandardFont = /*#__PURE__*/function () {
   function StandardFont(src) {
     this.name = src;
     this.src = pdfkit.PDFFont.open(null, src);
@@ -132,20 +116,20 @@ var StandardFont = /*#__PURE__*/ (function() {
     var _this = this;
 
     var _this$encode = this.encode(str),
-      encoded = _this$encode[0],
-      positions = _this$encode[1];
+        encoded = _this$encode[0],
+        positions = _this$encode[1];
 
     return {
       positions: positions,
-      stringIndices: positions.map(function(_, i) {
+      stringIndices: positions.map(function (_, i) {
         return i;
       }),
-      glyphs: encoded.map(function(g, i) {
+      glyphs: encoded.map(function (g, i) {
         var glyph = _this.getGlyph(parseInt(g, 16));
 
         glyph.advanceWidth = positions[i].advanceWidth;
         return glyph;
-      }),
+      })
     };
   };
 
@@ -161,100 +145,97 @@ var StandardFont = /*#__PURE__*/ (function() {
       _font: this.src,
       codePoints: [id],
       isLigature: false,
-      name: this.src.font.characterToGlyph(id),
+      name: this.src.font.characterToGlyph(id)
     };
   };
 
   _proto.hasGlyphForCodePoint = function hasGlyphForCodePoint(codePoint) {
     return this.src.font.characterToGlyph(codePoint) !== '.notdef';
-  }; // Based on empirical observation
+  } // Based on empirical observation
+  ;
 
-  _createClass__default['default'](StandardFont, [
-    {
-      key: 'ascent',
-      get: function get() {
-        return 900;
-      }, // Based on empirical observation
-    },
-    {
-      key: 'capHeight',
-      get: function get() {
-        switch (this.name) {
-          case 'Times-Roman':
-          case 'Times-Bold':
-          case 'Times-Italic':
-          case 'Times-BoldItalic':
-            return 650;
+  _createClass__default["default"](StandardFont, [{
+    key: "ascent",
+    get: function get() {
+      return 900;
+    } // Based on empirical observation
 
-          case 'Courier':
-          case 'Courier-Bold':
-          case 'Courier-Oblique':
-          case 'Courier-BoldOblique':
-            return 550;
+  }, {
+    key: "capHeight",
+    get: function get() {
+      switch (this.name) {
+        case 'Times-Roman':
+        case 'Times-Bold':
+        case 'Times-Italic':
+        case 'Times-BoldItalic':
+          return 650;
 
-          default:
-            return 690;
-        }
-      }, // Based on empirical observation
-    },
-    {
-      key: 'xHeight',
-      get: function get() {
-        switch (this.name) {
-          case 'Times-Roman':
-          case 'Times-Bold':
-          case 'Times-Italic':
-          case 'Times-BoldItalic':
-            return 440;
+        case 'Courier':
+        case 'Courier-Bold':
+        case 'Courier-Oblique':
+        case 'Courier-BoldOblique':
+          return 550;
 
-          case 'Courier':
-          case 'Courier-Bold':
-          case 'Courier-Oblique':
-          case 'Courier-BoldOblique':
-            return 390;
+        default:
+          return 690;
+      }
+    } // Based on empirical observation
 
-          default:
-            return 490;
-        }
-      }, // Based on empirical observation
-    },
-    {
-      key: 'descent',
-      get: function get() {
-        switch (this.name) {
-          case 'Times-Roman':
-          case 'Times-Bold':
-          case 'Times-Italic':
-          case 'Times-BoldItalic':
-            return -220;
+  }, {
+    key: "xHeight",
+    get: function get() {
+      switch (this.name) {
+        case 'Times-Roman':
+        case 'Times-Bold':
+        case 'Times-Italic':
+        case 'Times-BoldItalic':
+          return 440;
 
-          case 'Courier':
-          case 'Courier-Bold':
-          case 'Courier-Oblique':
-          case 'Courier-BoldOblique':
-            return -230;
+        case 'Courier':
+        case 'Courier-Bold':
+        case 'Courier-Oblique':
+        case 'Courier-BoldOblique':
+          return 390;
 
-          default:
-            return -200;
-        }
-      },
-    },
-    {
-      key: 'lineGap',
-      get: function get() {
-        return 0;
-      },
-    },
-    {
-      key: 'unitsPerEm',
-      get: function get() {
-        return 1000;
-      },
-    },
-  ]);
+        default:
+          return 490;
+      }
+    } // Based on empirical observation
+
+  }, {
+    key: "descent",
+    get: function get() {
+      switch (this.name) {
+        case 'Times-Roman':
+        case 'Times-Bold':
+        case 'Times-Italic':
+        case 'Times-BoldItalic':
+          return -220;
+
+        case 'Courier':
+        case 'Courier-Bold':
+        case 'Courier-Oblique':
+        case 'Courier-BoldOblique':
+          return -230;
+
+        default:
+          return -200;
+      }
+    }
+  }, {
+    key: "lineGap",
+    get: function get() {
+      return 0;
+    }
+  }, {
+    key: "unitsPerEm",
+    get: function get() {
+      return 1000;
+    }
+  }]);
 
   return StandardFont;
-})();
+}();
 
 var fontCache = {};
 var IGNORED_CODE_POINTS = [173];
@@ -275,18 +256,13 @@ var getFallbackFont = function getFallbackFont() {
 };
 
 var shouldFallbackToFont = function shouldFallbackToFont(codePoint, font) {
-  return (
-    !font ||
-    (!IGNORED_CODE_POINTS.includes(codePoint) &&
-      !font.hasGlyphForCodePoint(codePoint) &&
-      getFallbackFont().hasGlyphForCodePoint(codePoint))
-  );
+  return !font || !IGNORED_CODE_POINTS.includes(codePoint) && !font.hasGlyphForCodePoint(codePoint) && getFallbackFont().hasGlyphForCodePoint(codePoint);
 };
 
 var fontSubstitution = function fontSubstitution() {
-  return function(_ref) {
+  return function (_ref) {
     var string = _ref.string,
-      runs = _ref.runs;
+        runs = _ref.runs;
     var lastFont = null;
     var lastFontSize = null;
     var lastIndex = 0;
@@ -295,18 +271,15 @@ var fontSubstitution = function fontSubstitution() {
 
     for (var i = 0; i < runs.length; i += 1) {
       var run = runs[i];
-      var defaultFont =
-        typeof run.attributes.font === 'string'
-          ? getOrCreateFont(run.attributes.font)
-          : run.attributes.font;
+      var defaultFont = typeof run.attributes.font === 'string' ? getOrCreateFont(run.attributes.font) : run.attributes.font;
 
       if (string.length === 0) {
         res.push({
           start: 0,
           end: 0,
           attributes: {
-            font: defaultFont,
-          },
+            font: defaultFont
+          }
         });
         break;
       }
@@ -321,19 +294,15 @@ var fontSubstitution = function fontSubstitution() {
         var font = shouldFallback ? getFallbackFont() : defaultFont;
         var fontSize = getFontSize(run); // If anything that would impact res has changed, update it
 
-        if (
-          font !== lastFont ||
-          fontSize !== lastFontSize ||
-          font.unitsPerEm !== lastFont.unitsPerEm
-        ) {
+        if (font !== lastFont || fontSize !== lastFontSize || font.unitsPerEm !== lastFont.unitsPerEm) {
           if (lastFont) {
             res.push({
               start: lastIndex,
               end: index,
               attributes: {
                 font: lastFont,
-                scale: lastFontSize / lastFont.unitsPerEm,
-              },
+                scale: lastFontSize / lastFont.unitsPerEm
+              }
             });
           }
 
@@ -354,14 +323,14 @@ var fontSubstitution = function fontSubstitution() {
         end: string.length,
         attributes: {
           font: lastFont,
-          scale: _fontSize / lastFont.unitsPerEm,
-        },
+          scale: _fontSize / lastFont.unitsPerEm
+        }
       });
     }
 
     return {
       string: string,
-      runs: res,
+      runs: res
     };
   };
 };
@@ -376,40 +345,34 @@ var engines$1 = {
   textDecoration: layoutEngine.textDecoration,
   scriptItemizer: layoutEngine.scriptItemizer,
   wordHyphenation: layoutEngine.wordHyphenation,
-  fontSubstitution: fontSubstitution,
+  fontSubstitution: fontSubstitution
 };
-var engine$1 = layoutEngine__default['default'](engines$1);
+var engine$1 = layoutEngine__default["default"](engines$1);
 
 var getFragments$1 = function getFragments(fontStore, instance) {
-  if (!instance)
-    return [
-      {
-        string: '',
-      },
-    ];
+  if (!instance) return [{
+    string: ''
+  }];
   var fragments = [];
   var _instance$props = instance.props,
-    _instance$props$fill = _instance$props.fill,
-    fill = _instance$props$fill === void 0 ? 'black' : _instance$props$fill,
-    _instance$props$fontF = _instance$props.fontFamily,
-    fontFamily =
-      _instance$props$fontF === void 0 ? 'Helvetica' : _instance$props$fontF,
-    fontWeight = _instance$props.fontWeight,
-    fontStyle = _instance$props.fontStyle,
-    _instance$props$fontS = _instance$props.fontSize,
-    fontSize = _instance$props$fontS === void 0 ? 18 : _instance$props$fontS,
-    textDecorationColor = _instance$props.textDecorationColor,
-    textDecorationStyle = _instance$props.textDecorationStyle,
-    textTransform = _instance$props.textTransform,
-    opacity = _instance$props.opacity;
+      _instance$props$fill = _instance$props.fill,
+      fill = _instance$props$fill === void 0 ? 'black' : _instance$props$fill,
+      _instance$props$fontF = _instance$props.fontFamily,
+      fontFamily = _instance$props$fontF === void 0 ? 'Helvetica' : _instance$props$fontF,
+      fontWeight = _instance$props.fontWeight,
+      fontStyle = _instance$props.fontStyle,
+      _instance$props$fontS = _instance$props.fontSize,
+      fontSize = _instance$props$fontS === void 0 ? 18 : _instance$props$fontS,
+      textDecorationColor = _instance$props.textDecorationColor,
+      textDecorationStyle = _instance$props.textDecorationStyle,
+      textTransform = _instance$props.textTransform,
+      opacity = _instance$props.opacity;
   var _textDecoration = instance.props.textDecoration;
-  var obj = fontStore
-    ? fontStore.getFont({
-        fontFamily: fontFamily,
-        fontWeight: fontWeight,
-        fontStyle: fontStyle,
-      })
-    : null;
+  var obj = fontStore ? fontStore.getFont({
+    fontFamily: fontFamily,
+    fontWeight: fontWeight,
+    fontStyle: fontStyle
+  }) : null;
   var font = obj ? obj.data : fontFamily;
   var attributes = {
     font: font,
@@ -417,17 +380,11 @@ var getFragments$1 = function getFragments(fontStore, instance) {
     fontSize: fontSize,
     color: fill,
     underlineStyle: textDecorationStyle,
-    underline:
-      _textDecoration === 'underline' ||
-      _textDecoration === 'underline line-through' ||
-      _textDecoration === 'line-through underline',
+    underline: _textDecoration === 'underline' || _textDecoration === 'underline line-through' || _textDecoration === 'line-through underline',
     underlineColor: textDecorationColor || fill,
-    strike:
-      _textDecoration === 'line-through' ||
-      _textDecoration === 'underline line-through' ||
-      _textDecoration === 'line-through underline',
+    strike: _textDecoration === 'line-through' || _textDecoration === 'underline line-through' || _textDecoration === 'line-through underline',
     strikeStyle: textDecorationStyle,
-    strikeColor: textDecorationColor || fill,
+    strikeColor: textDecorationColor || fill
   };
 
   for (var i = 0; i < instance.children.length; i += 1) {
@@ -436,7 +393,7 @@ var getFragments$1 = function getFragments(fontStore, instance) {
     if (isTextInstance$4(child)) {
       fragments.push({
         string: transformText(child.value, textTransform),
-        attributes: attributes,
+        attributes: attributes
       });
     } else if (child) {
       fragments.push.apply(fragments, getFragments(child));
@@ -453,41 +410,30 @@ var getAttributedString$1 = function getAttributedString(fontStore, instance) {
 var AlmostInfinity = 999999999999;
 var shrinkWhitespaceFactor = {
   before: -0.5,
-  after: -0.5,
+  after: -0.5
 };
 
 var layoutTspan = function layoutTspan(fontStore) {
-  return function(node) {
+  return function (node) {
     var _node$props, _node$props2;
 
     var attributedString = getAttributedString$1(fontStore, node);
-    var x =
-      ((_node$props = node.props) === null || _node$props === void 0
-        ? void 0
-        : _node$props.x) || 0;
-    var y =
-      ((_node$props2 = node.props) === null || _node$props2 === void 0
-        ? void 0
-        : _node$props2.y) || 0;
+    var x = ((_node$props = node.props) === null || _node$props === void 0 ? void 0 : _node$props.x) || 0;
+    var y = ((_node$props2 = node.props) === null || _node$props2 === void 0 ? void 0 : _node$props2.y) || 0;
     var container = {
       x: x,
       y: y,
       width: AlmostInfinity,
-      height: AlmostInfinity,
+      height: AlmostInfinity
     };
-    var hyphenationCallback =
-      node.props.hyphenationCallback ||
-      (fontStore === null || fontStore === void 0
-        ? void 0
-        : fontStore.getHyphenationCallback()) ||
-      null;
+    var hyphenationCallback = node.props.hyphenationCallback || (fontStore === null || fontStore === void 0 ? void 0 : fontStore.getHyphenationCallback()) || null;
     var layoutOptions = {
       hyphenationCallback: hyphenationCallback,
-      shrinkWhitespaceFactor: shrinkWhitespaceFactor,
+      shrinkWhitespaceFactor: shrinkWhitespaceFactor
     };
     var lines = engine$1(attributedString, container, layoutOptions).flat();
     return Object.assign({}, node, {
-      lines: lines,
+      lines: lines
     });
   };
 };
@@ -496,7 +442,7 @@ var layoutText$1 = function layoutText(fontStore, node) {
   if (!node.children) return node;
   var children = node.children.map(layoutTspan(fontStore));
   return Object.assign({}, node, {
-    children: children,
+    children: children
   });
 };
 
@@ -508,13 +454,10 @@ var getDefs = function getDefs(node) {
   var children = node.children || [];
   var defs = children.find(isDefs) || {};
   var values = defs.children || [];
-  return values.reduce(function(acc, value) {
+  return values.reduce(function (acc, value) {
     var _value$props;
 
-    var id =
-      (_value$props = value.props) === null || _value$props === void 0
-        ? void 0
-        : _value$props.id;
+    var id = (_value$props = value.props) === null || _value$props === void 0 ? void 0 : _value$props.id;
     if (id) acc[id] = value;
     return acc;
   }, {});
@@ -528,7 +471,7 @@ var detachDefs = function detachDefs(node) {
   if (!node.children) return node;
   var children = node.children.filter(isNotDefs);
   return Object.assign({}, node, {
-    children: children,
+    children: children
   });
 };
 
@@ -542,31 +485,19 @@ var replaceDef = function replaceDef(defs, value) {
 };
 
 var parseNodeDefs = function parseNodeDefs(defs) {
-  return function(node) {
+  return function (node) {
     var _node$props, _node$props2;
 
-    var fill = replaceDef(
-      defs,
-      (_node$props = node.props) === null || _node$props === void 0
-        ? void 0
-        : _node$props.fill,
-    );
-    var clipPath = replaceDef(
-      defs,
-      (_node$props2 = node.props) === null || _node$props2 === void 0
-        ? void 0
-        : _node$props2.clipPath,
-    );
+    var fill = replaceDef(defs, (_node$props = node.props) === null || _node$props === void 0 ? void 0 : _node$props.fill);
+    var clipPath = replaceDef(defs, (_node$props2 = node.props) === null || _node$props2 === void 0 ? void 0 : _node$props2.clipPath);
     var props = Object.assign({}, node.props, {
       fill: fill,
-      clipPath: clipPath,
+      clipPath: clipPath
     });
-    var children = node.children
-      ? node.children.map(parseNodeDefs(defs))
-      : undefined;
+    var children = node.children ? node.children.map(parseNodeDefs(defs)) : undefined;
     return Object.assign({}, node, {
       props: props,
-      children: children,
+      children: children
     });
   };
 };
@@ -576,7 +507,7 @@ var parseDefs = function parseDefs(root) {
   var defs = getDefs(root);
   var children = root.children.map(parseNodeDefs(defs));
   return Object.assign({}, root, {
-    children: children,
+    children: children
   });
 };
 
@@ -592,7 +523,7 @@ var parseViewbox = function parseViewbox(value) {
     minX: values[0],
     minY: values[1],
     maxX: values[2],
-    maxY: values[3],
+    maxY: values[3]
   };
 };
 
@@ -602,52 +533,24 @@ var getContainer$1 = function getContainer(node) {
   if (viewbox) {
     return {
       width: viewbox.maxX,
-      height: viewbox.maxY,
+      height: viewbox.maxY
     };
   }
 
   if (node.props.width && node.props.height) {
     return {
       width: parseFloat(node.props.width),
-      height: parseFloat(node.props.height),
+      height: parseFloat(node.props.height)
     };
   }
 
   return {
     width: 0,
-    height: 0,
+    height: 0
   };
 };
 
-var SVG_INHERITED_PROPS = [
-  'x',
-  'y',
-  'clipPath',
-  'clipRule',
-  'opacity',
-  'fill',
-  'fillOpacity',
-  'fillRule',
-  'stroke',
-  'strokeLinecap',
-  'strokeLinejoin',
-  'strokeOpacity',
-  'strokeWidth',
-  'textAnchor',
-  'dominantBaseline',
-  'color',
-  'fontFamily',
-  'fontSize',
-  'fontStyle',
-  'fontWeight',
-  'letterSpacing',
-  'opacity',
-  'textDecoration',
-  'lineHeight',
-  'textAlign',
-  'visibility',
-  'wordSpacing',
-];
+var SVG_INHERITED_PROPS = ['x', 'y', 'clipPath', 'clipRule', 'opacity', 'fill', 'fillOpacity', 'fillRule', 'stroke', 'strokeLinecap', 'strokeLinejoin', 'strokeOpacity', 'strokeWidth', 'textAnchor', 'dominantBaseline', 'color', 'fontFamily', 'fontSize', 'fontStyle', 'fontWeight', 'letterSpacing', 'opacity', 'textDecoration', 'lineHeight', 'textAlign', 'visibility', 'wordSpacing'];
 
 var getInheritProps = function getInheritProps(node) {
   var props = node.props || {};
@@ -657,54 +560,34 @@ var getInheritProps = function getInheritProps(node) {
 var inheritProps = function inheritProps(node) {
   if (!node.children) return node;
   var inheritedProps = getInheritProps(node);
-  var children = node.children.map(function(child) {
+  var children = node.children.map(function (child) {
     var props = Object.assign({}, inheritedProps, child.props || {});
     var newChild = Object.assign({}, child, {
-      props: props,
+      props: props
     });
     return inheritProps(newChild);
   });
   return Object.assign({}, node, {
-    children: children,
+    children: children
   });
 };
 
 var parseAspectRatio = function parseAspectRatio(value) {
-  var match = value
-    .replace(/[\s\r\t\n]+/gm, ' ')
-    .replace(/^defer\s/, '')
-    .split(' ');
+  var match = value.replace(/[\s\r\t\n]+/gm, ' ').replace(/^defer\s/, '').split(' ');
   var align = match[0] || 'xMidYMid';
   var meetOrSlice = match[1] || 'meet';
   return {
     align: align,
-    meetOrSlice: meetOrSlice,
+    meetOrSlice: meetOrSlice
   };
 };
 
-var STYLE_PROPS = [
-  'width',
-  'height',
-  'color',
-  'stroke',
-  'strokeWidth',
-  'opacity',
-  'fillOpacity',
-  'strokeOpacity',
-  'fill',
-  'fillRule',
-  'clipPath',
-  'offset',
-  'transform',
-  'strokeLinejoin',
-  'strokeLinecap',
-  'strokeDasharray',
-];
+var STYLE_PROPS = ['width', 'height', 'color', 'stroke', 'strokeWidth', 'opacity', 'fillOpacity', 'strokeOpacity', 'fill', 'fillRule', 'clipPath', 'offset', 'transform', 'strokeLinejoin', 'strokeLinecap', 'strokeDasharray'];
 var VERTICAL_PROPS = ['y', 'y1', 'y2', 'height', 'cy', 'ry'];
 var HORIZONTAL_PROPS = ['x', 'x1', 'x2', 'width', 'cx', 'rx'];
 
 var isType$3 = function isType(type) {
-  return function(node) {
+  return function (node) {
     return node.type === type;
   };
 };
@@ -714,8 +597,8 @@ var isText$4 = isType$3(P__namespace.Text);
 var isTextInstance$3 = isType$3(P__namespace.TextInstance);
 
 var transformPercent = function transformPercent(container) {
-  return function(props) {
-    return fns.mapValues(props, function(value, key) {
+  return function (props) {
+    return fns.mapValues(props, function (value, key) {
       var match = fns.matchPercent(value);
 
       if (match && VERTICAL_PROPS.includes(key)) {
@@ -737,35 +620,32 @@ var parsePercent = function parsePercent(value) {
 };
 
 var parseProps = function parseProps(container) {
-  return function(node) {
+  return function (node) {
     var props = transformPercent(container)(node.props);
-    props = fns.evolve(
-      {
-        x: parseFloat,
-        x1: parseFloat,
-        x2: parseFloat,
-        y: parseFloat,
-        y1: parseFloat,
-        y2: parseFloat,
-        r: parseFloat,
-        rx: parseFloat,
-        ry: parseFloat,
-        cx: parseFloat,
-        cy: parseFloat,
-        width: parseFloat,
-        height: parseFloat,
-        offset: parsePercent,
-        fill: stylesheet.transformColor,
-        opacity: parsePercent,
-        stroke: stylesheet.transformColor,
-        stopOpacity: parsePercent,
-        stopColor: stylesheet.transformColor,
-        transform: stylesheet.processTransform,
-      },
-      props,
-    );
+    props = fns.evolve({
+      x: parseFloat,
+      x1: parseFloat,
+      x2: parseFloat,
+      y: parseFloat,
+      y1: parseFloat,
+      y2: parseFloat,
+      r: parseFloat,
+      rx: parseFloat,
+      ry: parseFloat,
+      cx: parseFloat,
+      cy: parseFloat,
+      width: parseFloat,
+      height: parseFloat,
+      offset: parsePercent,
+      fill: stylesheet.transformColor,
+      opacity: parsePercent,
+      stroke: stylesheet.transformColor,
+      stopOpacity: parsePercent,
+      stopColor: stylesheet.transformColor,
+      transform: stylesheet.processTransform
+    }, props);
     return Object.assign({}, node, {
-      props: props,
+      props: props
     });
   };
 };
@@ -774,7 +654,7 @@ var mergeStyles$1 = function mergeStyles(node) {
   var style = node.style || {};
   var props = Object.assign({}, style, node.props);
   return Object.assign({}, node, {
-    props: props,
+    props: props
   });
 };
 
@@ -785,7 +665,7 @@ var removeNoneValues = function removeNoneValues(node) {
 
   var props = fns.mapValues(node.props, removeNone);
   return Object.assign({}, node, {
-    props: props,
+    props: props
   });
 };
 
@@ -794,22 +674,19 @@ var pickStyleProps = function pickStyleProps(node) {
   var styleProps = fns.pick(STYLE_PROPS, props);
   var style = Object.assign({}, styleProps, node.style || {});
   return Object.assign({}, node, {
-    style: style,
+    style: style
   });
 };
 
 var parseSvgProps = function parseSvgProps(node) {
-  var props = fns.evolve(
-    {
-      width: parseFloat,
-      height: parseFloat,
-      viewBox: parseViewbox,
-      preserveAspectRatio: parseAspectRatio,
-    },
-    node.props,
-  );
+  var props = fns.evolve({
+    width: parseFloat,
+    height: parseFloat,
+    viewBox: parseViewbox,
+    preserveAspectRatio: parseAspectRatio
+  }, node.props);
   return Object.assign({}, node, {
-    props: props,
+    props: props
   });
 };
 
@@ -817,7 +694,7 @@ var wrapBetweenTspan = function wrapBetweenTspan(node) {
   return {
     type: P__namespace.Tspan,
     props: {},
-    children: [node],
+    children: [node]
   };
 };
 
@@ -831,54 +708,39 @@ var addMissingTspan = function addMissingTspan(node) {
 
   var children = node.children.map(resolveChild);
   return Object.assign({}, node, {
-    children: children,
+    children: children
   });
 };
 
 var parseText = function parseText(fontStore) {
-  return function(node) {
+  return function (node) {
     if (isText$4(node)) return layoutText$1(fontStore, node);
     if (!node.children) return node;
     var children = node.children.map(parseText(fontStore));
     return Object.assign({}, node, {
-      children: children,
+      children: children
     });
   };
 };
 
 var resolveSvgNode = function resolveSvgNode(container) {
-  return fns.compose(
-    parseProps(container),
-    addMissingTspan,
-    removeNoneValues,
-    mergeStyles$1,
-  );
+  return fns.compose(parseProps(container), addMissingTspan, removeNoneValues, mergeStyles$1);
 };
 
 var resolveChildren = function resolveChildren(container) {
-  return function(node) {
+  return function (node) {
     if (!node.children) return node;
-    var resolveChild = fns.compose(
-      resolveChildren(container),
-      resolveSvgNode(container),
-    );
+    var resolveChild = fns.compose(resolveChildren(container), resolveSvgNode(container));
     var children = node.children.map(resolveChild);
     return Object.assign({}, node, {
-      children: children,
+      children: children
     });
   };
 };
 
 var resolveSvgRoot = function resolveSvgRoot(node, fontStore) {
   var container = getContainer$1(node);
-  return fns.compose(
-    replaceDefs,
-    parseText(fontStore),
-    parseSvgProps,
-    pickStyleProps,
-    inheritProps,
-    resolveChildren(container),
-  )(node);
+  return fns.compose(replaceDefs, parseText(fontStore), parseSvgProps, pickStyleProps, inheritProps, resolveChildren(container))(node);
 };
 /**
  * Pre-process SVG nodes so they can be rendered in the next steps
@@ -887,6 +749,7 @@ var resolveSvgRoot = function resolveSvgRoot(node, fontStore) {
  * @param {Object} fontStore font store
  * @returns {Object} root node
  */
+
 
 var resolveSvg = function resolveSvg(node, fontStore) {
   if (!node.children) return node;
@@ -898,7 +761,7 @@ var resolveSvg = function resolveSvg(node, fontStore) {
   var root = isSvg$3(node) ? resolveSvgRoot(node, fontStore) : node;
   var children = root.children.map(resolveChild);
   return Object.assign({}, root, {
-    children: children,
+    children: children
   });
 };
 
@@ -925,35 +788,32 @@ var sortZIndex = function sortZIndex(a, b) {
  * @returns {Object} node
  */
 
+
 var resolveZIndex = function resolveZIndex(node) {
   if (!node.children) return node;
-  var sortedChildren = shouldSort(node)
-    ? node.children.sort(sortZIndex)
-    : node.children;
+  var sortedChildren = shouldSort(node) ? node.children.sort(sortZIndex) : node.children;
   var children = sortedChildren.map(resolveZIndex);
   return Object.assign({}, node, {
-    children: children,
+    children: children
   });
 };
 
 var emojis = {};
-var regex = emojiRegex__default['default']();
+var regex = emojiRegex__default["default"]();
 
 var reflect = function reflect(promise) {
-  return function() {
-    return promise.apply(void 0, arguments).then(
-      function(v) {
-        return v;
-      },
-      function(e) {
-        return e;
-      },
-    );
+  return function () {
+    return promise.apply(void 0, arguments).then(function (v) {
+      return v;
+    }, function (e) {
+      return e;
+    });
   };
 }; // Returns a function to be able to mock resolveImage.
 
+
 var makeFetchEmojiImage = function makeFetchEmojiImage() {
-  return reflect(resolveImage__default['default']);
+  return reflect(resolveImage__default["default"]);
 };
 /**
  * When an emoji as no color, it might still have 2 parts,
@@ -966,23 +826,21 @@ var makeFetchEmojiImage = function makeFetchEmojiImage() {
  * url will be incorect.
  */
 
+
 var _removeNoColor = function _removeNoColor(x) {
   return x !== '️';
 };
 
 var getCodePoints = function getCodePoints(string) {
-  return Array.from(string)
-    .filter(_removeNoColor)
-    .map(function(char) {
-      return char.codePointAt(0).toString(16);
-    })
-    .join('-');
+  return Array.from(string).filter(_removeNoColor).map(function (char) {
+    return char.codePointAt(0).toString(16);
+  }).join('-');
 };
 
 var buildEmojiUrl = function buildEmojiUrl(emoji, source) {
   var url = source.url,
-    format = source.format;
-  return '' + url + getCodePoints(emoji) + '.' + format;
+      format = source.format;
+  return "" + url + getCodePoints(emoji) + "." + format;
 };
 
 var fetchEmojis = function fetchEmojis(string, source) {
@@ -996,21 +854,19 @@ var fetchEmojis = function fetchEmojis(string, source) {
     if (!emojis[emoji] || emojis[emoji].loading) {
       var emojiUrl = buildEmojiUrl(emoji, source);
       emojis[emoji] = {
-        loading: true,
+        loading: true
       };
       var fetchEmojiImage = makeFetchEmojiImage();
-      promises.push(
-        fetchEmojiImage({
-          uri: emojiUrl,
-        }).then(function(image) {
-          emojis[emoji].loading = false;
-          emojis[emoji].data = image.data;
-        }),
-      );
+      promises.push(fetchEmojiImage({
+        uri: emojiUrl
+      }).then(function (image) {
+        emojis[emoji].loading = false;
+        emojis[emoji].data = image.data;
+      }));
     }
   };
 
-  while ((match = regex.exec(string))) {
+  while (match = regex.exec(string)) {
     _loop();
   }
 
@@ -1024,9 +880,9 @@ var embedEmojis = function embedEmojis(fragments) {
     var match = void 0;
     var lastIndex = 0;
 
-    while ((match = regex.exec(fragment.string))) {
+    while (match = regex.exec(fragment.string)) {
       var _match = match,
-        index = _match.index;
+          index = _match.index;
       var emoji = match[0];
       var emojiSize = fragment.attributes.fontSize;
       var chunk = fragment.string.slice(lastIndex, index + match[0].length); // If emoji image was found, we create a new fragment with the
@@ -1035,20 +891,20 @@ var embedEmojis = function embedEmojis(fragments) {
       if (emojis[emoji] && emojis[emoji].data) {
         result.push({
           string: chunk.replace(match, String.fromCharCode(0xfffc)),
-          attributes: _extends__default['default']({}, fragment.attributes, {
+          attributes: _extends__default["default"]({}, fragment.attributes, {
             attachment: {
               width: emojiSize,
               height: emojiSize,
               yOffset: Math.floor(emojiSize * 0.1),
-              image: emojis[emoji].data,
-            },
-          }),
+              image: emojis[emoji].data
+            }
+          })
         });
       } else {
         // If no emoji data, we just replace the emoji with a nodef char
         result.push({
           string: chunk.replace(match, String.fromCharCode(0)),
-          attributes: fragment.attributes,
+          attributes: fragment.attributes
         });
       }
 
@@ -1058,7 +914,7 @@ var embedEmojis = function embedEmojis(fragments) {
     if (lastIndex < fragment.string.length) {
       result.push({
         string: fragment.string.slice(lastIndex),
-        attributes: fragment.attributes,
+        attributes: fragment.attributes
       });
     }
   }
@@ -1075,17 +931,7 @@ var embedEmojis = function embedEmojis(fragments) {
 var getSource = function getSource(node) {
   var _node$props, _node$props2, _node$props3;
 
-  return (
-    ((_node$props = node.props) === null || _node$props === void 0
-      ? void 0
-      : _node$props.src) ||
-    ((_node$props2 = node.props) === null || _node$props2 === void 0
-      ? void 0
-      : _node$props2.source) ||
-    ((_node$props3 = node.props) === null || _node$props3 === void 0
-      ? void 0
-      : _node$props3.href)
-  );
+  return ((_node$props = node.props) === null || _node$props === void 0 ? void 0 : _node$props.src) || ((_node$props2 = node.props) === null || _node$props2 === void 0 ? void 0 : _node$props2.source) || ((_node$props3 = node.props) === null || _node$props3 === void 0 ? void 0 : _node$props3.href);
 };
 
 /**
@@ -1096,63 +942,51 @@ var getSource = function getSource(node) {
  * @param {string | Object | Function} src
  * @returns {object} resolved src
  */
-var resolveSource = /*#__PURE__*/ (function() {
-  var _ref = _asyncToGenerator__default['default'](
-    /*#__PURE__*/ _regeneratorRuntime__default['default'].mark(function _callee(
-      src,
-    ) {
-      var source;
-      return _regeneratorRuntime__default['default'].wrap(function _callee$(
-        _context,
-      ) {
-        while (1) {
-          switch ((_context.prev = _context.next)) {
-            case 0:
-              if (!(typeof src === 'function')) {
-                _context.next = 6;
-                break;
-              }
-
-              _context.next = 3;
-              return src();
-
-            case 3:
-              _context.t0 = _context.sent;
-              _context.next = 9;
+var resolveSource = /*#__PURE__*/function () {
+  var _ref = _asyncToGenerator__default["default"]( /*#__PURE__*/_regeneratorRuntime__default["default"].mark(function _callee(src) {
+    var source;
+    return _regeneratorRuntime__default["default"].wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            if (!(typeof src === 'function')) {
+              _context.next = 6;
               break;
+            }
 
-            case 6:
-              _context.next = 8;
-              return src;
+            _context.next = 3;
+            return src();
 
-            case 8:
-              _context.t0 = _context.sent;
+          case 3:
+            _context.t0 = _context.sent;
+            _context.next = 9;
+            break;
 
-            case 9:
-              source = _context.t0;
-              return _context.abrupt(
-                'return',
-                typeof source === 'string'
-                  ? {
-                      uri: source,
-                    }
-                  : source,
-              );
+          case 6:
+            _context.next = 8;
+            return src;
 
-            case 11:
-            case 'end':
-              return _context.stop();
-          }
+          case 8:
+            _context.t0 = _context.sent;
+
+          case 9:
+            source = _context.t0;
+            return _context.abrupt("return", typeof source === 'string' ? {
+              uri: source
+            } : source);
+
+          case 11:
+          case "end":
+            return _context.stop();
         }
-      },
-      _callee);
-    }),
-  );
+      }
+    }, _callee);
+  }));
 
   return function resolveSource(_x) {
     return _ref.apply(this, arguments);
   };
-})();
+}();
 
 /**
  * Fetches image and append data to node
@@ -1161,89 +995,73 @@ var resolveSource = /*#__PURE__*/ (function() {
  * @param {Object} node
  */
 
-var fetchImage = /*#__PURE__*/ (function() {
-  var _ref = _asyncToGenerator__default['default'](
-    /*#__PURE__*/ _regeneratorRuntime__default['default'].mark(function _callee(
-      node,
-    ) {
-      var src, cache, source;
-      return _regeneratorRuntime__default['default'].wrap(
-        function _callee$(_context) {
-          while (1) {
-            switch ((_context.prev = _context.next)) {
-              case 0:
-                src = getSource(node);
-                cache = node.props.cache;
+var fetchImage = /*#__PURE__*/function () {
+  var _ref = _asyncToGenerator__default["default"]( /*#__PURE__*/_regeneratorRuntime__default["default"].mark(function _callee(node) {
+    var src, cache, source;
+    return _regeneratorRuntime__default["default"].wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            src = getSource(node);
+            cache = node.props.cache;
 
-                if (src) {
-                  _context.next = 5;
-                  break;
-                }
-
-                console.warn(
-                  false,
-                  'Image should receive either a "src" or "source" prop',
-                );
-                return _context.abrupt('return');
-
-              case 5:
-                _context.prev = 5;
-                _context.next = 8;
-                return resolveSource(src);
-
-              case 8:
-                source = _context.sent;
-
-                if (source) {
-                  _context.next = 11;
-                  break;
-                }
-
-                throw new Error(
-                  'Image\'s "src" or "source" prop returned ' + source,
-                );
-
-              case 11:
-                _context.next = 13;
-                return resolveImage__default['default'](source, {
-                  cache: cache,
-                });
-
-              case 13:
-                node.image = _context.sent;
-                node.image.key = source.data
-                  ? source.data.toString()
-                  : source.uri;
-                _context.next = 21;
-                break;
-
-              case 17:
-                _context.prev = 17;
-                _context.t0 = _context['catch'](5);
-                node.image = {
-                  width: 0,
-                  height: 0,
-                  key: null,
-                };
-                console.warn(_context.t0.message);
-
-              case 21:
-              case 'end':
-                return _context.stop();
+            if (src) {
+              _context.next = 5;
+              break;
             }
-          }
-        },
-        _callee,
-        null,
-        [[5, 17]],
-      );
-    }),
-  );
+
+            console.warn(false, 'Image should receive either a "src" or "source" prop');
+            return _context.abrupt("return");
+
+          case 5:
+            _context.prev = 5;
+            _context.next = 8;
+            return resolveSource(src);
+
+          case 8:
+            source = _context.sent;
+
+            if (source) {
+              _context.next = 11;
+              break;
+            }
+
+            throw new Error("Image's \"src\" or \"source\" prop returned " + source);
+
+          case 11:
+            _context.next = 13;
+            return resolveImage__default["default"](source, {
+              cache: cache
+            });
+
+          case 13:
+            node.image = _context.sent;
+            node.image.key = source.data ? source.data.toString() : source.uri;
+            _context.next = 21;
+            break;
+
+          case 17:
+            _context.prev = 17;
+            _context.t0 = _context["catch"](5);
+            node.image = {
+              width: 0,
+              height: 0,
+              key: null
+            };
+            console.warn(_context.t0.message);
+
+          case 21:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee, null, [[5, 17]]);
+  }));
 
   return function fetchImage(_x) {
     return _ref.apply(this, arguments);
   };
-})();
+}();
 
 var isImage$2 = function isImage(node) {
   return node.type === P__namespace.Image;
@@ -1255,14 +1073,12 @@ var isImage$2 = function isImage(node) {
  * @returns {Array} asset promises
  */
 
+
 var fetchAssets = function fetchAssets(fontStore, node) {
   var _node$children;
 
   var promises = [];
-  var listToExplore =
-    ((_node$children = node.children) === null || _node$children === void 0
-      ? void 0
-      : _node$children.slice(0)) || [];
+  var listToExplore = ((_node$children = node.children) === null || _node$children === void 0 ? void 0 : _node$children.slice(0)) || [];
   var emojiSource = fontStore ? fontStore.getEmojiSource() : null;
 
   while (listToExplore.length > 0) {
@@ -1274,12 +1090,7 @@ var fetchAssets = function fetchAssets(fontStore, node) {
       promises.push(fetchImage(n));
     }
 
-    if (
-      fontStore &&
-      (_n$style = n.style) !== null &&
-      _n$style !== void 0 &&
-      _n$style.fontFamily
-    ) {
+    if (fontStore && (_n$style = n.style) !== null && _n$style !== void 0 && _n$style.fontFamily) {
       promises.push(fontStore.load(n.style));
     }
 
@@ -1292,7 +1103,7 @@ var fetchAssets = function fetchAssets(fontStore, node) {
     }
 
     if (n.children) {
-      n.children.forEach(function(childNode) {
+      n.children.forEach(function (childNode) {
         listToExplore.push(childNode);
       });
     }
@@ -1309,40 +1120,33 @@ var fetchAssets = function fetchAssets(fontStore, node) {
  * @returns {Object} root node
  */
 
-var resolveAssets = /*#__PURE__*/ (function() {
-  var _ref = _asyncToGenerator__default['default'](
-    /*#__PURE__*/ _regeneratorRuntime__default['default'].mark(function _callee(
-      node,
-      fontStore,
-    ) {
-      var promises;
-      return _regeneratorRuntime__default['default'].wrap(function _callee$(
-        _context,
-      ) {
-        while (1) {
-          switch ((_context.prev = _context.next)) {
-            case 0:
-              promises = fetchAssets(fontStore, node);
-              _context.next = 3;
-              return Promise.all(promises);
 
-            case 3:
-              return _context.abrupt('return', node);
+var resolveAssets = /*#__PURE__*/function () {
+  var _ref = _asyncToGenerator__default["default"]( /*#__PURE__*/_regeneratorRuntime__default["default"].mark(function _callee(node, fontStore) {
+    var promises;
+    return _regeneratorRuntime__default["default"].wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            promises = fetchAssets(fontStore, node);
+            _context.next = 3;
+            return Promise.all(promises);
 
-            case 4:
-            case 'end':
-              return _context.stop();
-          }
+          case 3:
+            return _context.abrupt("return", node);
+
+          case 4:
+          case "end":
+            return _context.stop();
         }
-      },
-      _callee);
-    }),
-  );
+      }
+    }, _callee);
+  }));
 
   return function resolveAssets(_x, _x2) {
     return _ref.apply(this, arguments);
   };
-})();
+}();
 
 var isLink$1 = function isLink(node) {
   return node.type === P__namespace.Link;
@@ -1350,7 +1154,7 @@ var isLink$1 = function isLink(node) {
 
 var DEFAULT_LINK_STYLES = {
   color: 'blue',
-  textDecoration: 'underline',
+  textDecoration: 'underline'
 };
 /**
  * Computes styles using stylesheet
@@ -1364,12 +1168,10 @@ var computeStyle = function computeStyle(container, node) {
   var baseStyle = node.style;
 
   if (isLink$1(node)) {
-    baseStyle = Array.isArray(node.style)
-      ? [DEFAULT_LINK_STYLES].concat(node.style)
-      : [DEFAULT_LINK_STYLES, node.style];
+    baseStyle = Array.isArray(node.style) ? [DEFAULT_LINK_STYLES].concat(node.style) : [DEFAULT_LINK_STYLES, node.style];
   }
 
-  return stylesheet__default['default'](container, baseStyle);
+  return stylesheet__default["default"](container, baseStyle);
 };
 /**
  * Resolves node styles
@@ -1379,17 +1181,17 @@ var computeStyle = function computeStyle(container, node) {
  * @returns {Object} node (and subnodes) with resolved styles
  */
 
+
 var resolveNodeStyles = function resolveNodeStyles(container) {
-  return function(node) {
+  return function (node) {
     var style = computeStyle(container, node);
-    if (!node.children)
-      return Object.assign({}, node, {
-        style: style,
-      });
+    if (!node.children) return Object.assign({}, node, {
+      style: style
+    });
     var children = node.children.map(resolveNodeStyles(container));
     return Object.assign({}, node, {
       style: style,
-      children: children,
+      children: children
     });
   };
 };
@@ -1400,30 +1202,19 @@ var resolveNodeStyles = function resolveNodeStyles(container) {
  * @returns {Object} document page with resolved styles
  */
 
+
 var resolvePageStyles = function resolvePageStyles(page) {
   var _page$props, _page$box, _page$box2, _page$props2;
 
-  var dpi =
-    ((_page$props = page.props) === null || _page$props === void 0
-      ? void 0
-      : _page$props.dpi) || 72;
-  var width =
-    ((_page$box = page.box) === null || _page$box === void 0
-      ? void 0
-      : _page$box.width) || page.style.width;
-  var height =
-    ((_page$box2 = page.box) === null || _page$box2 === void 0
-      ? void 0
-      : _page$box2.height) || page.style.height;
-  var orientation =
-    ((_page$props2 = page.props) === null || _page$props2 === void 0
-      ? void 0
-      : _page$props2.orientation) || 'portrait';
+  var dpi = ((_page$props = page.props) === null || _page$props === void 0 ? void 0 : _page$props.dpi) || 72;
+  var width = ((_page$box = page.box) === null || _page$box === void 0 ? void 0 : _page$box.width) || page.style.width;
+  var height = ((_page$box2 = page.box) === null || _page$box2 === void 0 ? void 0 : _page$box2.height) || page.style.height;
+  var orientation = ((_page$props2 = page.props) === null || _page$props2 === void 0 ? void 0 : _page$props2.orientation) || 'portrait';
   var container = {
     width: width,
     height: height,
     orientation: orientation,
-    dpi: dpi,
+    dpi: dpi
   };
   return resolveNodeStyles(container)(page);
 };
@@ -1434,27 +1225,20 @@ var resolvePageStyles = function resolvePageStyles(page) {
  * @returns {Object} document root with resolved styles
  */
 
+
 var resolveStyles = function resolveStyles(root) {
   if (!root.children) return root;
   var children = root.children.map(resolvePageStyles);
   return Object.assign({}, root, {
-    children: children,
+    children: children
   });
 };
 
 var getTransformStyle = function getTransformStyle(s) {
-  return function(node) {
+  return function (node) {
     var _node$style, _node$style2;
 
-    return fns.isNil(
-      (_node$style = node.style) === null || _node$style === void 0
-        ? void 0
-        : _node$style[s],
-    )
-      ? '50%'
-      : (_node$style2 = node.style) === null || _node$style2 === void 0
-      ? void 0
-      : _node$style2[s];
+    return fns.isNil((_node$style = node.style) === null || _node$style === void 0 ? void 0 : _node$style[s]) ? '50%' : (_node$style2 = node.style) === null || _node$style2 === void 0 ? void 0 : _node$style2[s];
   };
 };
 /**
@@ -1464,13 +1248,14 @@ var getTransformStyle = function getTransformStyle(s) {
  * @returns {Object} node origin
  */
 
+
 var getOrigin = function getOrigin(node) {
   if (!node.box) return {};
   var _node$box = node.box,
-    left = _node$box.left,
-    top = _node$box.top,
-    width = _node$box.width,
-    height = _node$box.height;
+      left = _node$box.left,
+      top = _node$box.top,
+      width = _node$box.width,
+      height = _node$box.height;
   var transformOriginX = getTransformStyle('transformOriginX')(node);
   var transformOriginY = getTransformStyle('transformOriginY')(node);
   var percentX = fns.matchPercent(transformOriginX);
@@ -1479,7 +1264,7 @@ var getOrigin = function getOrigin(node) {
   var offsetY = percentY ? height * percentY.percent : transformOriginY;
   return {
     left: left + offsetX,
-    top: top + offsetY,
+    top: top + offsetY
   };
 };
 
@@ -1493,12 +1278,12 @@ var getOrigin = function getOrigin(node) {
 var resolveNodeOrigin = function resolveNodeOrigin(node) {
   var origin = getOrigin(node);
   var newNode = Object.assign({}, node, {
-    origin: origin,
+    origin: origin
   });
   if (!node.children) return newNode;
   var children = node.children.map(resolveNodeOrigin);
   return Object.assign({}, newNode, {
-    children: children,
+    children: children
   });
 };
 /**
@@ -1508,11 +1293,12 @@ var resolveNodeOrigin = function resolveNodeOrigin(node) {
  * @returns {Object} documrnt root
  */
 
+
 var resolveOrigin = function resolveOrigin(root) {
   if (!root.children) return root;
   var children = root.children.map(resolveNodeOrigin);
   return Object.assign({}, root, {
-    children: children,
+    children: children
   });
 };
 
@@ -1522,22 +1308,20 @@ var resolveOrigin = function resolveOrigin(root) {
 
 /* eslint-disable prefer-destructuring */
 var getBookmarkValue = function getBookmarkValue(title) {
-  return typeof title === 'string'
-    ? {
-        title: title,
-        fit: false,
-        expanded: false,
-      }
-    : title;
+  return typeof title === 'string' ? {
+    title: title,
+    fit: false,
+    expanded: false
+  } : title;
 };
 
 var resolveBookmarks = function resolveBookmarks(node) {
   var refs = 0;
   var children = (node.children || []).slice(0);
-  var listToExplore = children.map(function(value) {
+  var listToExplore = children.map(function (value) {
     return {
       value: value,
-      parent: null,
+      parent: null
     };
   });
 
@@ -1548,36 +1332,26 @@ var resolveBookmarks = function resolveBookmarks(node) {
     var child = element.value;
     var parent = element.parent;
 
-    if (
-      (_child$props = child.props) !== null &&
-      _child$props !== void 0 &&
-      _child$props.bookmark
-    ) {
+    if ((_child$props = child.props) !== null && _child$props !== void 0 && _child$props.bookmark) {
       var _parent;
 
       var bookmark = getBookmarkValue(child.props.bookmark);
       var ref = refs++;
 
-      var newHierarchy = _extends__default['default'](
-        {
-          ref: ref,
-          parent:
-            (_parent = parent) === null || _parent === void 0
-              ? void 0
-              : _parent.ref,
-        },
-        bookmark,
-      );
+      var newHierarchy = _extends__default["default"]({
+        ref: ref,
+        parent: (_parent = parent) === null || _parent === void 0 ? void 0 : _parent.ref
+      }, bookmark);
 
       child.props.bookmark = newHierarchy;
       parent = newHierarchy;
     }
 
     if (child.children) {
-      child.children.forEach(function(childNode) {
+      child.children.forEach(function (childNode) {
         listToExplore.push({
           value: childNode,
-          parent: parent,
+          parent: parent
         });
       });
     }
@@ -1601,10 +1375,7 @@ var VALID_ORIENTATIONS = ['portrait', 'landscape'];
 var getOrientation = function getOrientation(page) {
   var _page$props;
 
-  var value =
-    ((_page$props = page.props) === null || _page$props === void 0
-      ? void 0
-      : _page$props.orientation) || 'portrait';
+  var value = ((_page$props = page.props) === null || _page$props === void 0 ? void 0 : _page$props.orientation) || 'portrait';
   return VALID_ORIENTATIONS.includes(value) ? value : 'portrait';
 };
 
@@ -1670,7 +1441,7 @@ var PAGE_SIZES = {
   LEGAL: [612.0, 1008.0],
   LETTER: [612.0, 792.0],
   TABLOID: [792.0, 1224.0],
-  ID1: [153, 243],
+  ID1: [153, 243]
 };
 /**
  * Transforms array into size object
@@ -1682,7 +1453,7 @@ var PAGE_SIZES = {
 var toSizeObject = function toSizeObject(v) {
   return {
     width: v[0],
-    height: v[1],
+    height: v[1]
   };
 };
 /**
@@ -1692,10 +1463,11 @@ var toSizeObject = function toSizeObject(v) {
  * @returns {Object} flipped size object
  */
 
+
 var flipSizeObject = function flipSizeObject(v) {
   return {
     width: v.height,
-    height: v.width,
+    height: v.width
   };
 };
 /**
@@ -1706,10 +1478,11 @@ var flipSizeObject = function flipSizeObject(v) {
  * @returns {Object} adjusted size object
  */
 
+
 var adjustDpi = function adjustDpi(v, dpi) {
   return {
     width: v.width ? v.width * dpi : v.width,
-    height: v.height ? v.height * dpi : v.height,
+    height: v.height ? v.height * dpi : v.height
   };
 };
 /**
@@ -1718,6 +1491,7 @@ var adjustDpi = function adjustDpi(v, dpi) {
  * @param {String} page size string
  * @returns {Object} size object with width and height
  */
+
 
 var getStringSize = function getStringSize(v) {
   return toSizeObject(PAGE_SIZES[v.toUpperCase()]);
@@ -1729,6 +1503,7 @@ var getStringSize = function getStringSize(v) {
  * @returns {Object} size object with width and height
  */
 
+
 var getNumberSize = function getNumberSize(n) {
   return toSizeObject([n]);
 };
@@ -1739,18 +1514,12 @@ var getNumberSize = function getNumberSize(n) {
  * @returns {Object} size object with width and height
  */
 
+
 var getSize = function getSize(page) {
   var _page$props, _page$props2;
 
-  var value =
-    ((_page$props = page.props) === null || _page$props === void 0
-      ? void 0
-      : _page$props.size) || 'A4';
-  var dpi = parseFloat(
-    ((_page$props2 = page.props) === null || _page$props2 === void 0
-      ? void 0
-      : _page$props2.dpi) || 72,
-  );
+  var value = ((_page$props = page.props) === null || _page$props === void 0 ? void 0 : _page$props.size) || 'A4';
+  var dpi = parseFloat(((_page$props2 = page.props) === null || _page$props2 === void 0 ? void 0 : _page$props2.dpi) || 72);
   var type = typeof value;
   var size = value;
 
@@ -1776,8 +1545,8 @@ var getSize = function getSize(page) {
 var resolvePageSize = function resolvePageSize(page) {
   var size = getSize(page);
   var style = stylesheet.flatten(page.style || {});
-  return _extends__default['default']({}, page, {
-    style: _extends__default['default']({}, style, size),
+  return _extends__default["default"]({}, page, {
+    style: _extends__default["default"]({}, style, size)
   });
 };
 /**
@@ -1791,18 +1560,14 @@ var resolvePageSizes = function resolvePageSizes(root) {
   if (!root.children) return root;
   var children = root.children.map(resolvePageSize);
   return Object.assign({}, root, {
-    children: children,
+    children: children
   });
 };
 
 var isFixed = function isFixed(node) {
   var _node$props;
 
-  return (
-    ((_node$props = node.props) === null || _node$props === void 0
-      ? void 0
-      : _node$props.fixed) === true
-  );
+  return ((_node$props = node.props) === null || _node$props === void 0 ? void 0 : _node$props.fixed) === true;
 };
 
 /**
@@ -1873,38 +1638,39 @@ var getLineBreak = function getLineBreak(node, height) {
   return slicedLine;
 }; // Also receives contentArea in case it's needed
 
+
 var splitText = function splitText(node, height) {
   var slicedLineIndex = getLineBreak(node, height);
   var currentHeight = heightAtLineIndex(node, slicedLineIndex);
   var nextHeight = node.box.height - currentHeight;
   var current = Object.assign({}, node, {
-    box: _extends__default['default']({}, node.box, {
+    box: _extends__default["default"]({}, node.box, {
       height: currentHeight,
-      borderBottomWidth: 0,
+      borderBottomWidth: 0
     }),
-    style: _extends__default['default']({}, node.style, {
+    style: _extends__default["default"]({}, node.style, {
       marginBottom: 0,
       paddingBottom: 0,
       borderBottomWidth: 0,
       borderBottomLeftRadius: 0,
-      borderBottomRightRadius: 0,
+      borderBottomRightRadius: 0
     }),
-    lines: node.lines.slice(0, slicedLineIndex),
+    lines: node.lines.slice(0, slicedLineIndex)
   });
   var next = Object.assign({}, node, {
-    box: _extends__default['default']({}, node.box, {
+    box: _extends__default["default"]({}, node.box, {
       top: 0,
       height: nextHeight,
-      borderTopWidth: 0,
+      borderTopWidth: 0
     }),
-    style: _extends__default['default']({}, node.style, {
+    style: _extends__default["default"]({}, node.style, {
       marginTop: 0,
       paddingTop: 0,
       borderTopWidth: 0,
       borderTopLeftRadius: 0,
-      borderTopRightRadius: 0,
+      borderTopRightRadius: 0
     }),
-    lines: node.lines.slice(slicedLineIndex),
+    lines: node.lines.slice(slicedLineIndex)
   });
   return [current, next];
 };
@@ -1912,54 +1678,44 @@ var splitText = function splitText(node, height) {
 var getTop$1 = function getTop(node) {
   var _node$box;
 
-  return (
-    ((_node$box = node.box) === null || _node$box === void 0
-      ? void 0
-      : _node$box.top) || 0
-  );
+  return ((_node$box = node.box) === null || _node$box === void 0 ? void 0 : _node$box.top) || 0;
 };
 
 var hasFixedHeight = function hasFixedHeight(node) {
   var _node$style;
 
-  return !fns.isNil(
-    (_node$style = node.style) === null || _node$style === void 0
-      ? void 0
-      : _node$style.height,
-  );
+  return !fns.isNil((_node$style = node.style) === null || _node$style === void 0 ? void 0 : _node$style.height);
 };
 
 var splitNode = function splitNode(node, height) {
   if (!node) return [null, null];
   var nodeTop = getTop$1(node);
   var current = Object.assign({}, node, {
-    box: _extends__default['default']({}, node.box, {
-      borderBottomWidth: 0,
+    box: _extends__default["default"]({}, node.box, {
+      borderBottomWidth: 0
     }),
-    style: _extends__default['default']({}, node.style, {
+    style: _extends__default["default"]({}, node.style, {
       marginBottom: 0,
       paddingBottom: 0,
       borderBottomWidth: 0,
       borderBottomLeftRadius: 0,
-      borderBottomRightRadius: 0,
-    }),
+      borderBottomRightRadius: 0
+    })
   });
   current.style.height = height - nodeTop;
-  var nextHeight = hasFixedHeight(node)
-    ? node.box.height - (height - nodeTop)
-    : null;
+  var nextHeight = hasFixedHeight(node) ? node.box.height - (height - nodeTop) : null;
   var next = Object.assign({}, node, {
-    box: _extends__default['default']({}, node.box, {
+    box: _extends__default["default"]({}, node.box, {
       top: 0,
-      borderTopWidth: 0,
+      borderTopWidth: 0
     }),
-    style: _extends__default['default']({}, node.style, {
+    style: _extends__default["default"]({}, node.style, {
       marginTop: 0,
       paddingTop: 0,
       borderTopWidth: 0,
       borderTopLeftRadius: 0,
-      borderTopRightRadius: 0,
-    }),
+      borderTopRightRadius: 0
+    })
   });
 
   if (nextHeight) {
@@ -1969,24 +1725,13 @@ var splitNode = function splitNode(node, height) {
   return [current, next];
 };
 
-var NON_WRAP_TYPES = [
-  P__namespace.Svg,
-  P__namespace.Note,
-  P__namespace.Image,
-  P__namespace.Canvas,
-];
+var NON_WRAP_TYPES = [P__namespace.Svg, P__namespace.Note, P__namespace.Image, P__namespace.Canvas];
 
 var getWrap = function getWrap(node) {
   var _node$props;
 
   if (NON_WRAP_TYPES.includes(node.type)) return false;
-  return fns.isNil(
-    (_node$props = node.props) === null || _node$props === void 0
-      ? void 0
-      : _node$props.wrap,
-  )
-    ? true
-    : node.props.wrap;
+  return fns.isNil((_node$props = node.props) === null || _node$props === void 0 ? void 0 : _node$props.wrap) ? true : node.props.wrap;
 };
 
 var getComputedPadding = function getComputedPadding(node, edge) {
@@ -2000,42 +1745,19 @@ var getComputedPadding = function getComputedPadding(node, edge) {
  * @return {Object} paddings
  */
 
+
 var getPadding = function getPadding(node) {
   var style = node.style,
-    box = node.box;
-  var paddingTop =
-    getComputedPadding(node, Yoga__default['default'].EDGE_TOP) ||
-    (box === null || box === void 0 ? void 0 : box.paddingTop) ||
-    (style === null || style === void 0 ? void 0 : style.paddingTop) ||
-    (style === null || style === void 0 ? void 0 : style.paddingVertical) ||
-    (style === null || style === void 0 ? void 0 : style.padding) ||
-    0;
-  var paddingRight =
-    getComputedPadding(node, Yoga__default['default'].EDGE_RIGHT) ||
-    (box === null || box === void 0 ? void 0 : box.paddingRight) ||
-    (style === null || style === void 0 ? void 0 : style.paddingRight) ||
-    (style === null || style === void 0 ? void 0 : style.paddingHorizontal) ||
-    (style === null || style === void 0 ? void 0 : style.padding) ||
-    0;
-  var paddingBottom =
-    getComputedPadding(node, Yoga__default['default'].EDGE_BOTTOM) ||
-    (box === null || box === void 0 ? void 0 : box.paddingBottom) ||
-    (style === null || style === void 0 ? void 0 : style.paddingBottom) ||
-    (style === null || style === void 0 ? void 0 : style.paddingVertical) ||
-    (style === null || style === void 0 ? void 0 : style.padding) ||
-    0;
-  var paddingLeft =
-    getComputedPadding(node, Yoga__default['default'].EDGE_LEFT) ||
-    (box === null || box === void 0 ? void 0 : box.paddingLeft) ||
-    (style === null || style === void 0 ? void 0 : style.paddingLeft) ||
-    (style === null || style === void 0 ? void 0 : style.paddingHorizontal) ||
-    (style === null || style === void 0 ? void 0 : style.padding) ||
-    0;
+      box = node.box;
+  var paddingTop = getComputedPadding(node, Yoga__default["default"].EDGE_TOP) || (box === null || box === void 0 ? void 0 : box.paddingTop) || (style === null || style === void 0 ? void 0 : style.paddingTop) || (style === null || style === void 0 ? void 0 : style.paddingVertical) || (style === null || style === void 0 ? void 0 : style.padding) || 0;
+  var paddingRight = getComputedPadding(node, Yoga__default["default"].EDGE_RIGHT) || (box === null || box === void 0 ? void 0 : box.paddingRight) || (style === null || style === void 0 ? void 0 : style.paddingRight) || (style === null || style === void 0 ? void 0 : style.paddingHorizontal) || (style === null || style === void 0 ? void 0 : style.padding) || 0;
+  var paddingBottom = getComputedPadding(node, Yoga__default["default"].EDGE_BOTTOM) || (box === null || box === void 0 ? void 0 : box.paddingBottom) || (style === null || style === void 0 ? void 0 : style.paddingBottom) || (style === null || style === void 0 ? void 0 : style.paddingVertical) || (style === null || style === void 0 ? void 0 : style.padding) || 0;
+  var paddingLeft = getComputedPadding(node, Yoga__default["default"].EDGE_LEFT) || (box === null || box === void 0 ? void 0 : box.paddingLeft) || (style === null || style === void 0 ? void 0 : style.paddingLeft) || (style === null || style === void 0 ? void 0 : style.paddingHorizontal) || (style === null || style === void 0 ? void 0 : style.padding) || 0;
   return {
     paddingTop: paddingTop,
     paddingRight: paddingRight,
     paddingBottom: paddingBottom,
-    paddingLeft: paddingLeft,
+    paddingLeft: paddingLeft
   };
 };
 
@@ -2043,31 +1765,25 @@ var getWrapArea = function getWrapArea(page) {
   var _page$style;
 
   var _getPadding = getPadding(page),
-    paddingBottom = _getPadding.paddingBottom;
+      paddingBottom = _getPadding.paddingBottom;
 
-  var height =
-    (_page$style = page.style) === null || _page$style === void 0
-      ? void 0
-      : _page$style.height;
+  var height = (_page$style = page.style) === null || _page$style === void 0 ? void 0 : _page$style.height;
   return height - paddingBottom;
 };
 
 var getContentArea = function getContentArea(page) {
   var _page$style;
 
-  var height =
-    (_page$style = page.style) === null || _page$style === void 0
-      ? void 0
-      : _page$style.height;
+  var height = (_page$style = page.style) === null || _page$style === void 0 ? void 0 : _page$style.height;
 
   var _getPadding = getPadding(page),
-    paddingTop = _getPadding.paddingTop,
-    paddingBottom = _getPadding.paddingBottom;
+      paddingTop = _getPadding.paddingTop,
+      paddingBottom = _getPadding.paddingBottom;
 
   return height - paddingBottom - paddingTop;
 };
 
-var _excluded = ['style', 'children'];
+var _excluded = ["style", "children"];
 
 var isString = function isString(value) {
   return typeof value === 'string';
@@ -2089,16 +1805,15 @@ var isFragment = function isFragment(value) {
  * @returns {Array} parsed react elements
  */
 
+
 var createInstances = function createInstances(element) {
   if (!element) return [];
 
   if (isString(element) || isNumber(element)) {
-    return [
-      {
-        type: P.TextInstance,
-        value: '' + element,
-      },
-    ];
+    return [{
+      type: P.TextInstance,
+      value: "" + element
+    }];
   }
 
   if (isFragment(element)) {
@@ -2106,7 +1821,7 @@ var createInstances = function createInstances(element) {
   }
 
   if (Array.isArray(element)) {
-    return element.reduce(function(acc, el) {
+    return element.reduce(function (acc, el) {
       return acc.concat(createInstances(el));
     }, []);
   }
@@ -2116,28 +1831,23 @@ var createInstances = function createInstances(element) {
   }
 
   var type = element.type,
-    _element$props = element.props,
-    _element$props$style = _element$props.style,
-    style = _element$props$style === void 0 ? {} : _element$props$style,
-    _element$props$childr = _element$props.children,
-    children = _element$props$childr === void 0 ? [] : _element$props$childr,
-    props = _objectWithoutPropertiesLoose__default['default'](
-      _element$props,
-      _excluded,
-    );
+      _element$props = element.props,
+      _element$props$style = _element$props.style,
+      style = _element$props$style === void 0 ? {} : _element$props$style,
+      _element$props$childr = _element$props.children,
+      children = _element$props$childr === void 0 ? [] : _element$props$childr,
+      props = _objectWithoutPropertiesLoose__default["default"](_element$props, _excluded);
 
-  var nextChildren = fns.castArray(children).reduce(function(acc, child) {
+  var nextChildren = fns.castArray(children).reduce(function (acc, child) {
     return acc.concat(createInstances(child));
   }, []);
-  return [
-    {
-      type: type,
-      style: style,
-      props: props,
-      box: {},
-      children: nextChildren,
-    },
-  ];
+  return [{
+    type: type,
+    style: style,
+    props: props,
+    box: {},
+    children: nextChildren
+  }];
 };
 
 /**
@@ -2165,23 +1875,17 @@ var getNodesHeight = function getNodesHeight(nodes) {
 var getBreak = function getBreak(node) {
   var _node$props;
 
-  return (
-    ((_node$props = node.props) === null || _node$props === void 0
-      ? void 0
-      : _node$props.break) || false
-  );
+  return ((_node$props = node.props) === null || _node$props === void 0 ? void 0 : _node$props.break) || false;
 };
 
 var getMinPresenceAhead = function getMinPresenceAhead(node) {
   var _node$props2;
 
-  return (_node$props2 = node.props) === null || _node$props2 === void 0
-    ? void 0
-    : _node$props2.minPresenceAhead;
+  return (_node$props2 = node.props) === null || _node$props2 === void 0 ? void 0 : _node$props2.minPresenceAhead;
 };
 
 var defaultPresenceAhead = function defaultPresenceAhead(element) {
-  return function(height) {
+  return function (height) {
     return Math.min(element.box.height, height);
   };
 };
@@ -2193,8 +1897,7 @@ var getPresenceAhead = function getPresenceAhead(elements, height) {
     var element = elements[i];
     if (!element.box) continue;
     var isElementInside = height > element.box.top;
-    var presenceAhead =
-      element.props.presenceAhead || defaultPresenceAhead(element);
+    var presenceAhead = element.props.presenceAhead || defaultPresenceAhead(element);
 
     if (element && isElementInside) {
       result += presenceAhead(height - element.box.top);
@@ -2210,25 +1913,16 @@ var shouldBreak = function shouldBreak(child, futureElements, height) {
   var futureHeight = getNodesHeight(futureElements);
   var shouldSplit = height < child.box.top + child.box.height;
   var shouldWrap = getWrap(child);
-  return (
-    getBreak(child) ||
-    (!shouldWrap && shouldSplit) ||
-    (minPresenceAhead < futureHeight && presenceAhead < minPresenceAhead)
-  );
+  return getBreak(child) || !shouldWrap && shouldSplit || minPresenceAhead < futureHeight && presenceAhead < minPresenceAhead;
 };
 
-var IGNORABLE_CODEPOINTS = [
-  8232, // LINE_SEPARATOR
-  8233, // PARAGRAPH_SEPARATOR
+var IGNORABLE_CODEPOINTS = [8232, // LINE_SEPARATOR
+8233 // PARAGRAPH_SEPARATOR
 ];
 
 var buildSubsetForFont = function buildSubsetForFont(font) {
-  return IGNORABLE_CODEPOINTS.reduce(function(acc, codePoint) {
-    if (
-      font &&
-      font.hasGlyphForCodePoint &&
-      font.hasGlyphForCodePoint(codePoint)
-    ) {
+  return IGNORABLE_CODEPOINTS.reduce(function (acc, codePoint) {
+    if (font && font.hasGlyphForCodePoint && font.hasGlyphForCodePoint(codePoint)) {
       return acc;
     }
 
@@ -2237,12 +1931,12 @@ var buildSubsetForFont = function buildSubsetForFont(font) {
 };
 
 var ignoreChars = function ignoreChars(fragments) {
-  return fragments.map(function(fragment) {
+  return fragments.map(function (fragment) {
     var charSubset = buildSubsetForFont(fragment.attributes.font);
     var subsetRegex = new RegExp(charSubset.join('|'));
     return {
       string: fragment.string.replace(subsetRegex, ''),
-      attributes: fragment.attributes,
+      attributes: fragment.attributes
     };
   });
 };
@@ -2264,50 +1958,41 @@ var isTextInstance$2 = function isTextInstance(node) {
  * @returns {Array} text fragments
  */
 
-var getFragments = function getFragments(
-  fontStore,
-  instance,
-  parentLink,
-  level,
-) {
+
+var getFragments = function getFragments(fontStore, instance, parentLink, level) {
   var _instance$props, _instance$props2;
 
   if (level === void 0) {
     level = 0;
   }
 
-  if (!instance)
-    return [
-      {
-        string: '',
-      },
-    ];
+  if (!instance) return [{
+    string: ''
+  }];
   var fragments = [];
   var _instance$style = instance.style,
-    _instance$style$color = _instance$style.color,
-    color = _instance$style$color === void 0 ? 'black' : _instance$style$color,
-    _instance$style$fontF = _instance$style.fontFamily,
-    fontFamily =
-      _instance$style$fontF === void 0 ? 'Helvetica' : _instance$style$fontF,
-    fontWeight = _instance$style.fontWeight,
-    fontStyle = _instance$style.fontStyle,
-    _instance$style$fontS = _instance$style.fontSize,
-    fontSize = _instance$style$fontS === void 0 ? 18 : _instance$style$fontS,
-    _instance$style$textA = _instance$style.textAlign,
-    textAlign =
-      _instance$style$textA === void 0 ? 'left' : _instance$style$textA,
-    lineHeight = _instance$style.lineHeight,
-    textDecoration = _instance$style.textDecoration,
-    textDecorationColor = _instance$style.textDecorationColor,
-    textDecorationStyle = _instance$style.textDecorationStyle,
-    textTransform = _instance$style.textTransform,
-    letterSpacing = _instance$style.letterSpacing,
-    textIndent = _instance$style.textIndent,
-    opacity = _instance$style.opacity;
+      _instance$style$color = _instance$style.color,
+      color = _instance$style$color === void 0 ? 'black' : _instance$style$color,
+      _instance$style$fontF = _instance$style.fontFamily,
+      fontFamily = _instance$style$fontF === void 0 ? 'Helvetica' : _instance$style$fontF,
+      fontWeight = _instance$style.fontWeight,
+      fontStyle = _instance$style.fontStyle,
+      _instance$style$fontS = _instance$style.fontSize,
+      fontSize = _instance$style$fontS === void 0 ? 18 : _instance$style$fontS,
+      _instance$style$textA = _instance$style.textAlign,
+      textAlign = _instance$style$textA === void 0 ? 'left' : _instance$style$textA,
+      lineHeight = _instance$style.lineHeight,
+      textDecoration = _instance$style.textDecoration,
+      textDecorationColor = _instance$style.textDecorationColor,
+      textDecorationStyle = _instance$style.textDecorationStyle,
+      textTransform = _instance$style.textTransform,
+      letterSpacing = _instance$style.letterSpacing,
+      textIndent = _instance$style.textIndent,
+      opacity = _instance$style.opacity;
   var opts = {
     fontFamily: fontFamily,
     fontWeight: fontWeight,
-    fontStyle: fontStyle,
+    fontStyle: fontStyle
   };
   var obj = fontStore ? fontStore.getFont(opts) : null;
   var font = obj ? obj.data : fontFamily; // Don't pass main background color to textkit. Will be rendered by the render package instead
@@ -2324,26 +2009,12 @@ var getFragments = function getFragments(
     characterSpacing: letterSpacing,
     strikeStyle: textDecorationStyle,
     underlineStyle: textDecorationStyle,
-    underline:
-      textDecoration === 'underline' ||
-      textDecoration === 'underline line-through' ||
-      textDecoration === 'line-through underline',
-    strike:
-      textDecoration === 'line-through' ||
-      textDecoration === 'underline line-through' ||
-      textDecoration === 'line-through underline',
+    underline: textDecoration === 'underline' || textDecoration === 'underline line-through' || textDecoration === 'line-through underline',
+    strike: textDecoration === 'line-through' || textDecoration === 'underline line-through' || textDecoration === 'line-through underline',
     strikeColor: textDecorationColor || color,
     underlineColor: textDecorationColor || color,
-    link:
-      parentLink ||
-      ((_instance$props = instance.props) === null || _instance$props === void 0
-        ? void 0
-        : _instance$props.src) ||
-      ((_instance$props2 = instance.props) === null ||
-      _instance$props2 === void 0
-        ? void 0
-        : _instance$props2.href),
-    lineHeight: lineHeight ? lineHeight * fontSize : null,
+    link: parentLink || ((_instance$props = instance.props) === null || _instance$props === void 0 ? void 0 : _instance$props.src) || ((_instance$props2 = instance.props) === null || _instance$props2 === void 0 ? void 0 : _instance$props2.href),
+    lineHeight: lineHeight ? lineHeight * fontSize : null
   };
 
   for (var i = 0; i < instance.children.length; i += 1) {
@@ -2352,26 +2023,23 @@ var getFragments = function getFragments(
     if (isImage$1(child)) {
       fragments.push({
         string: String.fromCharCode(0xfffc),
-        attributes: _extends__default['default']({}, attributes, {
+        attributes: _extends__default["default"]({}, attributes, {
           attachment: {
             width: child.style.width || fontSize,
             height: child.style.height || fontSize,
-            image: child.image.data,
-          },
-        }),
+            image: child.image.data
+          }
+        })
       });
     } else if (isTextInstance$2(child)) {
       fragments.push({
         string: transformText(child.value, textTransform),
-        attributes: attributes,
+        attributes: attributes
       });
     } else if (child) {
       var _fragments;
 
-      (_fragments = fragments).push.apply(
-        _fragments,
-        getFragments(fontStore, child, attributes.link, level + 1),
-      );
+      (_fragments = fragments).push.apply(_fragments, getFragments(fontStore, child, attributes.link, level + 1));
     }
   }
 
@@ -2390,6 +2058,7 @@ var getFragments = function getFragments(
  * @returns {Object} attributed string
  */
 
+
 var getAttributedString = function getAttributedString(fontStore, instance) {
   var fragments = getFragments(fontStore, instance);
   return fromFragments(fragments);
@@ -2401,24 +2070,20 @@ var engines = {
   textDecoration: layoutEngine.textDecoration,
   scriptItemizer: layoutEngine.scriptItemizer,
   wordHyphenation: layoutEngine.wordHyphenation,
-  fontSubstitution: fontSubstitution,
+  fontSubstitution: fontSubstitution
 };
-var engine = layoutEngine__default['default'](engines);
+var engine = layoutEngine__default["default"](engines);
 
 var getMaxLines = function getMaxLines(node) {
   var _node$style;
 
-  return (_node$style = node.style) === null || _node$style === void 0
-    ? void 0
-    : _node$style.maxLines;
+  return (_node$style = node.style) === null || _node$style === void 0 ? void 0 : _node$style.maxLines;
 };
 
 var getTextOverflow = function getTextOverflow(node) {
   var _node$style2;
 
-  return (_node$style2 = node.style) === null || _node$style2 === void 0
-    ? void 0
-    : _node$style2.textOverflow;
+  return (_node$style2 = node.style) === null || _node$style2 === void 0 ? void 0 : _node$style2.textOverflow;
 };
 /**
  * Get layout container for specific text node
@@ -2429,6 +2094,7 @@ var getTextOverflow = function getTextOverflow(node) {
  * @returns {Object} layout container
  */
 
+
 var getContainer = function getContainer(width, height, node) {
   var maxLines = getMaxLines(node);
   var textOverflow = getTextOverflow(node);
@@ -2438,7 +2104,7 @@ var getContainer = function getContainer(width, height, node) {
     width: width,
     maxLines: maxLines,
     height: height || Infinity,
-    truncateMode: textOverflow,
+    truncateMode: textOverflow
   };
 };
 /**
@@ -2448,19 +2114,15 @@ var getContainer = function getContainer(width, height, node) {
  * @returns {Object} layout options
  */
 
+
 var getLayoutOptions = function getLayoutOptions(fontStore, node) {
   return {
     hyphenationPenalty: node.props.hyphenationPenalty,
     shrinkWhitespaceFactor: {
       before: -0.5,
-      after: -0.5,
+      after: -0.5
     },
-    hyphenationCallback:
-      node.props.hyphenationCallback ||
-      (fontStore === null || fontStore === void 0
-        ? void 0
-        : fontStore.getHyphenationCallback()) ||
-      null,
+    hyphenationCallback: node.props.hyphenationCallback || (fontStore === null || fontStore === void 0 ? void 0 : fontStore.getHyphenationCallback()) || null
   };
 };
 /**
@@ -2473,18 +2135,19 @@ var getLayoutOptions = function getLayoutOptions(fontStore, node) {
  * @returns {Array} layout lines
  */
 
+
 var layoutText = function layoutText(node, width, height, fontStore) {
   var attributedString = getAttributedString(fontStore, node);
   var container = getContainer(width, height, node);
   var options = getLayoutOptions(fontStore, node);
   var lines = engine(attributedString, container, options);
-  return lines.reduce(function(acc, line) {
+  return lines.reduce(function (acc, line) {
     return [].concat(acc, line);
   }, []);
 };
 
 var isType$2 = function isType(type) {
-  return function(node) {
+  return function (node) {
     return node.type === type;
   };
 };
@@ -2508,11 +2171,11 @@ var shouldLayoutText = function shouldLayoutText(node) {
  * @returns {Object} layout node
  */
 
+
 var resolveTextLayout = function resolveTextLayout(node, fontStore) {
   if (shouldLayoutText(node)) {
     var width = node.box.width - (node.box.paddingRight + node.box.paddingLeft);
-    var height =
-      node.box.height - (node.box.paddingTop + node.box.paddingBottom); // eslint-disable-next-line no-param-reassign
+    var height = node.box.height - (node.box.paddingTop + node.box.paddingBottom); // eslint-disable-next-line no-param-reassign
 
     node.lines = layoutText(node, width, height, fontStore);
   }
@@ -2526,60 +2189,43 @@ var resolveTextLayout = function resolveTextLayout(node, fontStore) {
 
     var children = node.children.map(mapChild);
     return Object.assign({}, node, {
-      children: children,
+      children: children
     });
   }
 
   return node;
 };
 
-var INHERITED_PROPERTIES = [
-  'color',
-  'fontFamily',
-  'fontSize',
-  'fontStyle',
-  'fontWeight',
-  'letterSpacing',
-  'opacity',
-  'textDecoration',
-  'textTransform',
-  'lineHeight',
-  'textAlign',
-  'visibility',
-  'wordSpacing',
-];
+var INHERITED_PROPERTIES = ['color', 'fontFamily', 'fontSize', 'fontStyle', 'fontWeight', 'letterSpacing', 'opacity', 'textDecoration', 'textTransform', 'lineHeight', 'textAlign', 'visibility', 'wordSpacing'];
 
 var isSvg$1 = function isSvg(node) {
   return node.type === P__namespace.Svg;
 }; // Merge style values
 
+
 var mergeValues = function mergeValues(styleName, value, inheritedValue) {
   switch (styleName) {
-    case 'textDecoration': {
-      // merge not none and not false textDecoration values to one rule
-      return [inheritedValue, value]
-        .filter(function(v) {
+    case 'textDecoration':
+      {
+        // merge not none and not false textDecoration values to one rule
+        return [inheritedValue, value].filter(function (v) {
           return v && v !== 'none';
-        })
-        .join(' ');
-    }
+        }).join(' ');
+      }
 
     default:
       return value;
   }
 }; // Merge inherited and node styles
 
-var merge = function merge(inheritedStyles, style) {
-  var mergedStyles = _extends__default['default']({}, inheritedStyles);
 
-  Object.entries(style).forEach(function(_ref) {
+var merge = function merge(inheritedStyles, style) {
+  var mergedStyles = _extends__default["default"]({}, inheritedStyles);
+
+  Object.entries(style).forEach(function (_ref) {
     var styleName = _ref[0],
-      value = _ref[1];
-    mergedStyles[styleName] = mergeValues(
-      styleName,
-      value,
-      inheritedStyles[styleName],
-    );
+        value = _ref[1];
+    mergedStyles[styleName] = mergeValues(styleName, value, inheritedStyles[styleName]);
   });
   return mergedStyles;
 };
@@ -2591,11 +2237,12 @@ var merge = function merge(inheritedStyles, style) {
  * @returns {Object} node with styles merged
  */
 
+
 var mergeStyles = function mergeStyles(inheritedStyles) {
-  return function(node) {
+  return function (node) {
     var style = merge(inheritedStyles, node.style || {});
     return Object.assign({}, node, {
-      style: style,
+      style: style
     });
   };
 };
@@ -2607,17 +2254,15 @@ var mergeStyles = function mergeStyles(inheritedStyles) {
  *
  */
 
+
 var resolveInheritance = function resolveInheritance(node) {
   if (isSvg$1(node)) return node;
   if (!node.children) return node;
   var inheritStyles = fns.pick(INHERITED_PROPERTIES, node.style || {});
-  var resolveChild = fns.compose(
-    resolveInheritance,
-    mergeStyles(inheritStyles),
-  );
+  var resolveChild = fns.compose(resolveInheritance, mergeStyles(inheritStyles));
   var children = node.children.map(resolveChild);
   return Object.assign({}, node, {
-    children: children,
+    children: children
   });
 };
 
@@ -2632,42 +2277,19 @@ var getComputedMargin = function getComputedMargin(node, edge) {
  * @return {Object} margins
  */
 
+
 var getMargin = function getMargin(node) {
   var style = node.style,
-    box = node.box;
-  var marginTop =
-    getComputedMargin(node, Yoga__default['default'].EDGE_TOP) ||
-    (box === null || box === void 0 ? void 0 : box.marginTop) ||
-    (style === null || style === void 0 ? void 0 : style.marginTop) ||
-    (style === null || style === void 0 ? void 0 : style.marginVertical) ||
-    (style === null || style === void 0 ? void 0 : style.margin) ||
-    0;
-  var marginRight =
-    getComputedMargin(node, Yoga__default['default'].EDGE_RIGHT) ||
-    (box === null || box === void 0 ? void 0 : box.marginRight) ||
-    (style === null || style === void 0 ? void 0 : style.marginRight) ||
-    (style === null || style === void 0 ? void 0 : style.marginHorizontal) ||
-    (style === null || style === void 0 ? void 0 : style.margin) ||
-    0;
-  var marginBottom =
-    getComputedMargin(node, Yoga__default['default'].EDGE_BOTTOM) ||
-    (box === null || box === void 0 ? void 0 : box.marginBottom) ||
-    (style === null || style === void 0 ? void 0 : style.marginBottom) ||
-    (style === null || style === void 0 ? void 0 : style.marginVertical) ||
-    (style === null || style === void 0 ? void 0 : style.margin) ||
-    0;
-  var marginLeft =
-    getComputedMargin(node, Yoga__default['default'].EDGE_LEFT) ||
-    (box === null || box === void 0 ? void 0 : box.marginLeft) ||
-    (style === null || style === void 0 ? void 0 : style.marginLeft) ||
-    (style === null || style === void 0 ? void 0 : style.marginHorizontal) ||
-    (style === null || style === void 0 ? void 0 : style.margin) ||
-    0;
+      box = node.box;
+  var marginTop = getComputedMargin(node, Yoga__default["default"].EDGE_TOP) || (box === null || box === void 0 ? void 0 : box.marginTop) || (style === null || style === void 0 ? void 0 : style.marginTop) || (style === null || style === void 0 ? void 0 : style.marginVertical) || (style === null || style === void 0 ? void 0 : style.margin) || 0;
+  var marginRight = getComputedMargin(node, Yoga__default["default"].EDGE_RIGHT) || (box === null || box === void 0 ? void 0 : box.marginRight) || (style === null || style === void 0 ? void 0 : style.marginRight) || (style === null || style === void 0 ? void 0 : style.marginHorizontal) || (style === null || style === void 0 ? void 0 : style.margin) || 0;
+  var marginBottom = getComputedMargin(node, Yoga__default["default"].EDGE_BOTTOM) || (box === null || box === void 0 ? void 0 : box.marginBottom) || (style === null || style === void 0 ? void 0 : style.marginBottom) || (style === null || style === void 0 ? void 0 : style.marginVertical) || (style === null || style === void 0 ? void 0 : style.margin) || 0;
+  var marginLeft = getComputedMargin(node, Yoga__default["default"].EDGE_LEFT) || (box === null || box === void 0 ? void 0 : box.marginLeft) || (style === null || style === void 0 ? void 0 : style.marginLeft) || (style === null || style === void 0 ? void 0 : style.marginHorizontal) || (style === null || style === void 0 ? void 0 : style.margin) || 0;
   return {
     marginTop: marginTop,
     marginRight: marginRight,
     marginBottom: marginBottom,
-    marginLeft: marginLeft,
+    marginLeft: marginLeft
   };
 };
 
@@ -2680,28 +2302,16 @@ var getMargin = function getMargin(node) {
 var getPosition = function getPosition(node) {
   var yogaNode = node.yogaNode;
   return {
-    top:
-      (yogaNode === null || yogaNode === void 0
-        ? void 0
-        : yogaNode.getComputedTop()) || 0,
-    right:
-      (yogaNode === null || yogaNode === void 0
-        ? void 0
-        : yogaNode.getComputedRight()) || 0,
-    bottom:
-      (yogaNode === null || yogaNode === void 0
-        ? void 0
-        : yogaNode.getComputedBottom()) || 0,
-    left:
-      (yogaNode === null || yogaNode === void 0
-        ? void 0
-        : yogaNode.getComputedLeft()) || 0,
+    top: (yogaNode === null || yogaNode === void 0 ? void 0 : yogaNode.getComputedTop()) || 0,
+    right: (yogaNode === null || yogaNode === void 0 ? void 0 : yogaNode.getComputedRight()) || 0,
+    bottom: (yogaNode === null || yogaNode === void 0 ? void 0 : yogaNode.getComputedBottom()) || 0,
+    left: (yogaNode === null || yogaNode === void 0 ? void 0 : yogaNode.getComputedLeft()) || 0
   };
 };
 
 var DEFAULT_DIMENSION = {
   width: 0,
-  height: 0,
+  height: 0
 };
 /**
  * Get Yoga computed dimensions. Zero otherwise
@@ -2715,7 +2325,7 @@ var getDimension = function getDimension(node) {
   if (!yogaNode) return DEFAULT_DIMENSION;
   return {
     width: yogaNode.getComputedWidth(),
-    height: yogaNode.getComputedHeight() || 600,
+    height: yogaNode.getComputedHeight() || 600
   };
 };
 
@@ -2729,25 +2339,14 @@ var getComputedBorder = function getComputedBorder(yogaNode, edge) {
  * @return {Object} border widths
  */
 
+
 var getBorderWidth = function getBorderWidth(node) {
   var yogaNode = node.yogaNode;
   return {
-    borderTopWidth: getComputedBorder(
-      yogaNode,
-      Yoga__default['default'].EDGE_TOP,
-    ),
-    borderRightWidth: getComputedBorder(
-      yogaNode,
-      Yoga__default['default'].EDGE_RIGHT,
-    ),
-    borderBottomWidth: getComputedBorder(
-      yogaNode,
-      Yoga__default['default'].EDGE_BOTTOM,
-    ),
-    borderLeftWidth: getComputedBorder(
-      yogaNode,
-      Yoga__default['default'].EDGE_LEFT,
-    ),
+    borderTopWidth: getComputedBorder(yogaNode, Yoga__default["default"].EDGE_TOP),
+    borderRightWidth: getComputedBorder(yogaNode, Yoga__default["default"].EDGE_RIGHT),
+    borderBottomWidth: getComputedBorder(yogaNode, Yoga__default["default"].EDGE_BOTTOM),
+    borderLeftWidth: getComputedBorder(yogaNode, Yoga__default["default"].EDGE_LEFT)
   };
 };
 
@@ -2760,15 +2359,11 @@ var getBorderWidth = function getBorderWidth(node) {
  */
 
 var setDisplay = function setDisplay(value) {
-  return function(node) {
+  return function (node) {
     var yogaNode = node.yogaNode;
 
     if (yogaNode) {
-      yogaNode.setDisplay(
-        value === 'none'
-          ? Yoga__default['default'].DISPLAY_NONE
-          : Yoga__default['default'].DISPLAY_FLEX,
-      );
+      yogaNode.setDisplay(value === 'none' ? Yoga__default["default"].DISPLAY_NONE : Yoga__default["default"].DISPLAY_FLEX);
     }
 
     return node;
@@ -2776,8 +2371,8 @@ var setDisplay = function setDisplay(value) {
 };
 
 var OVERFLOW = {
-  hidden: Yoga__default['default'].OVERFLOW_HIDDEN,
-  scroll: Yoga__default['default'].OVERFLOW_SCROLL,
+  hidden: Yoga__default["default"].OVERFLOW_HIDDEN,
+  scroll: Yoga__default["default"].OVERFLOW_SCROLL
 };
 /**
  * Set overflow attribute to node's Yoga instance
@@ -2788,12 +2383,11 @@ var OVERFLOW = {
  */
 
 var setOverflow = function setOverflow(value) {
-  return function(node) {
+  return function (node) {
     var yogaNode = node.yogaNode;
 
     if (!fns.isNil(value) && yogaNode) {
-      var overflow =
-        OVERFLOW[value] || Yoga__default['default'].OVERFLOW_VISIBLE;
+      var overflow = OVERFLOW[value] || Yoga__default["default"].OVERFLOW_VISIBLE;
       yogaNode.setOverflow(overflow);
     }
 
@@ -2802,8 +2396,8 @@ var setOverflow = function setOverflow(value) {
 };
 
 var FLEX_WRAP = {
-  wrap: Yoga__default['default'].WRAP_WRAP,
-  'wrap-reverse': Yoga__default['default'].WRAP_WRAP_REVERSE,
+  wrap: Yoga__default["default"].WRAP_WRAP,
+  'wrap-reverse': Yoga__default["default"].WRAP_WRAP_REVERSE
 };
 /**
  * Set flex wrap attribute to node's Yoga instance
@@ -2814,11 +2408,11 @@ var FLEX_WRAP = {
  */
 
 var setFlexWrap = function setFlexWrap(value) {
-  return function(node) {
+  return function (node) {
     var yogaNode = node.yogaNode;
 
     if (yogaNode) {
-      var flexWrap = FLEX_WRAP[value] || Yoga__default['default'].WRAP_NO_WRAP;
+      var flexWrap = FLEX_WRAP[value] || Yoga__default["default"].WRAP_NO_WRAP;
       yogaNode.setFlexWrap(flexWrap);
     }
 
@@ -2838,72 +2432,52 @@ var setFlexWrap = function setFlexWrap(value) {
  */
 
 var setYogaValue = function setYogaValue(attr, edge) {
-  return function(value) {
-    return function(node) {
+  return function (value) {
+    return function (node) {
       var yogaNode = node.yogaNode;
 
       if (!fns.isNil(value) && yogaNode) {
         var hasEdge = !fns.isNil(edge);
-        var fixedMethod = 'set' + fns.upperFirst(attr);
-        var autoMethod = fixedMethod + 'Auto';
-        var percentMethod = fixedMethod + 'Percent';
+        var fixedMethod = "set" + fns.upperFirst(attr);
+        var autoMethod = fixedMethod + "Auto";
+        var percentMethod = fixedMethod + "Percent";
         var percent = fns.matchPercent(value);
 
         if (percent && !yogaNode[percentMethod]) {
-          throw new Error(
-            "You can't pass percentage values to " + attr + ' property',
-          );
+          throw new Error("You can't pass percentage values to " + attr + " property");
         }
 
         if (percent) {
           if (hasEdge) {
             var _yogaNode$percentMeth;
 
-            (_yogaNode$percentMeth = yogaNode[percentMethod]) === null ||
-            _yogaNode$percentMeth === void 0
-              ? void 0
-              : _yogaNode$percentMeth.call(yogaNode, edge, percent.value);
+            (_yogaNode$percentMeth = yogaNode[percentMethod]) === null || _yogaNode$percentMeth === void 0 ? void 0 : _yogaNode$percentMeth.call(yogaNode, edge, percent.value);
           } else {
             var _yogaNode$percentMeth2;
 
-            (_yogaNode$percentMeth2 = yogaNode[percentMethod]) === null ||
-            _yogaNode$percentMeth2 === void 0
-              ? void 0
-              : _yogaNode$percentMeth2.call(yogaNode, percent.value);
+            (_yogaNode$percentMeth2 = yogaNode[percentMethod]) === null || _yogaNode$percentMeth2 === void 0 ? void 0 : _yogaNode$percentMeth2.call(yogaNode, percent.value);
           }
         } else if (value === 'auto') {
           if (hasEdge) {
             var _yogaNode$autoMethod;
 
-            (_yogaNode$autoMethod = yogaNode[autoMethod]) === null ||
-            _yogaNode$autoMethod === void 0
-              ? void 0
-              : _yogaNode$autoMethod.call(yogaNode, edge);
+            (_yogaNode$autoMethod = yogaNode[autoMethod]) === null || _yogaNode$autoMethod === void 0 ? void 0 : _yogaNode$autoMethod.call(yogaNode, edge);
           } else if (attr === 'flexBasis') {
             // YogaNode.setFlexBasisAuto is missing (#766)
-            yogaNode.setFlexBasis(Yoga__default['default'].UNIT_AUTO);
+            yogaNode.setFlexBasis(Yoga__default["default"].UNIT_AUTO);
           } else {
             var _yogaNode$autoMethod2;
 
-            (_yogaNode$autoMethod2 = yogaNode[autoMethod]) === null ||
-            _yogaNode$autoMethod2 === void 0
-              ? void 0
-              : _yogaNode$autoMethod2.call(yogaNode);
+            (_yogaNode$autoMethod2 = yogaNode[autoMethod]) === null || _yogaNode$autoMethod2 === void 0 ? void 0 : _yogaNode$autoMethod2.call(yogaNode);
           }
         } else if (hasEdge) {
           var _yogaNode$fixedMethod;
 
-          (_yogaNode$fixedMethod = yogaNode[fixedMethod]) === null ||
-          _yogaNode$fixedMethod === void 0
-            ? void 0
-            : _yogaNode$fixedMethod.call(yogaNode, edge, value);
+          (_yogaNode$fixedMethod = yogaNode[fixedMethod]) === null || _yogaNode$fixedMethod === void 0 ? void 0 : _yogaNode$fixedMethod.call(yogaNode, edge, value);
         } else {
           var _yogaNode$fixedMethod2;
 
-          (_yogaNode$fixedMethod2 = yogaNode[fixedMethod]) === null ||
-          _yogaNode$fixedMethod2 === void 0
-            ? void 0
-            : _yogaNode$fixedMethod2.call(yogaNode, value);
+          (_yogaNode$fixedMethod2 = yogaNode[fixedMethod]) === null || _yogaNode$fixedMethod2 === void 0 ? void 0 : _yogaNode$fixedMethod2.call(yogaNode, value);
         }
       }
 
@@ -2921,7 +2495,7 @@ var setYogaValue = function setYogaValue(attr, edge) {
  */
 
 var setFlexGrow = function setFlexGrow(value) {
-  return function(node) {
+  return function (node) {
     return setYogaValue('flexGrow')(value || 0)(node);
   };
 };
@@ -2937,13 +2511,13 @@ var setFlexGrow = function setFlexGrow(value) {
 var setFlexBasis = setYogaValue('flexBasis');
 
 var ALIGN = {
-  'flex-start': Yoga__default['default'].ALIGN_FLEX_START,
-  center: Yoga__default['default'].ALIGN_CENTER,
-  'flex-end': Yoga__default['default'].ALIGN_FLEX_END,
-  stretch: Yoga__default['default'].ALIGN_STRETCH,
-  baseline: Yoga__default['default'].ALIGN_BASELINE,
-  'space-between': Yoga__default['default'].ALIGN_SPACE_BETWEEN,
-  'space-around': Yoga__default['default'].ALIGN_SPACE_AROUND,
+  'flex-start': Yoga__default["default"].ALIGN_FLEX_START,
+  center: Yoga__default["default"].ALIGN_CENTER,
+  'flex-end': Yoga__default["default"].ALIGN_FLEX_END,
+  stretch: Yoga__default["default"].ALIGN_STRETCH,
+  baseline: Yoga__default["default"].ALIGN_BASELINE,
+  'space-between': Yoga__default["default"].ALIGN_SPACE_BETWEEN,
+  'space-around': Yoga__default["default"].ALIGN_SPACE_AROUND
 };
 /**
  * Set generic align attribute to node's Yoga instance
@@ -2955,17 +2529,14 @@ var ALIGN = {
  */
 
 var setAlign = function setAlign(attr) {
-  return function(value) {
-    return function(node) {
+  return function (value) {
+    return function (node) {
       var yogaNode = node.yogaNode;
-      var defaultValue =
-        attr === 'items'
-          ? Yoga__default['default'].ALIGN_STRETCH
-          : Yoga__default['default'].ALIGN_AUTO;
+      var defaultValue = attr === 'items' ? Yoga__default["default"].ALIGN_STRETCH : Yoga__default["default"].ALIGN_AUTO;
 
       if (yogaNode) {
         var align = ALIGN[value] || defaultValue;
-        yogaNode['setAlign' + fns.upperFirst(attr)](align);
+        yogaNode["setAlign" + fns.upperFirst(attr)](align);
       }
 
       return node;
@@ -3002,7 +2573,7 @@ var setAlignItems = setAlign('items');
  */
 
 var setFlexShrink = function setFlexShrink(value) {
-  return function(node) {
+  return function (node) {
     return setYogaValue('flexShrink')(value || 1)(node);
   };
 };
@@ -3016,7 +2587,7 @@ var setFlexShrink = function setFlexShrink(value) {
  */
 
 var setAspectRatio = function setAspectRatio(value) {
-  return function(node) {
+  return function (node) {
     var yogaNode = node.yogaNode;
 
     if (!fns.isNil(value) && yogaNode) {
@@ -3046,15 +2617,11 @@ var setAlignContent = setAlign('content');
  */
 
 var setPositionType = function setPositionType(value) {
-  return function(node) {
+  return function (node) {
     var yogaNode = node.yogaNode;
 
     if (!fns.isNil(value) && yogaNode) {
-      yogaNode.setPositionType(
-        value === 'absolute'
-          ? Yoga__default['default'].POSITION_TYPE_ABSOLUTE
-          : Yoga__default['default'].POSITION_TYPE_RELATIVE,
-      );
+      yogaNode.setPositionType(value === 'absolute' ? Yoga__default["default"].POSITION_TYPE_ABSOLUTE : Yoga__default["default"].POSITION_TYPE_RELATIVE);
     }
 
     return node;
@@ -3062,9 +2629,9 @@ var setPositionType = function setPositionType(value) {
 };
 
 var FLEX_DIRECTIONS = {
-  row: Yoga__default['default'].FLEX_DIRECTION_ROW,
-  'row-reverse': Yoga__default['default'].FLEX_DIRECTION_ROW_REVERSE,
-  'column-reverse': Yoga__default['default'].FLEX_DIRECTION_COLUMN_REVERSE,
+  row: Yoga__default["default"].FLEX_DIRECTION_ROW,
+  'row-reverse': Yoga__default["default"].FLEX_DIRECTION_ROW_REVERSE,
+  'column-reverse': Yoga__default["default"].FLEX_DIRECTION_COLUMN_REVERSE
 };
 /**
  * Set flex direction attribute to node's Yoga instance
@@ -3075,13 +2642,11 @@ var FLEX_DIRECTIONS = {
  */
 
 var setFlexDirection = function setFlexDirection(value) {
-  return function(node) {
+  return function (node) {
     var yogaNode = node.yogaNode;
 
     if (yogaNode) {
-      var flexDirection =
-        FLEX_DIRECTIONS[value] ||
-        Yoga__default['default'].FLEX_DIRECTION_COLUMN;
+      var flexDirection = FLEX_DIRECTIONS[value] || Yoga__default["default"].FLEX_DIRECTION_COLUMN;
       yogaNode.setFlexDirection(flexDirection);
     }
 
@@ -3090,11 +2655,11 @@ var setFlexDirection = function setFlexDirection(value) {
 };
 
 var JUSTIFY_CONTENT = {
-  center: Yoga__default['default'].JUSTIFY_CENTER,
-  'flex-end': Yoga__default['default'].JUSTIFY_FLEX_END,
-  'space-between': Yoga__default['default'].JUSTIFY_SPACE_BETWEEN,
-  'space-around': Yoga__default['default'].JUSTIFY_SPACE_AROUND,
-  'space-evenly': Yoga__default['default'].JUSTIFY_SPACE_EVENLY,
+  center: Yoga__default["default"].JUSTIFY_CENTER,
+  'flex-end': Yoga__default["default"].JUSTIFY_FLEX_END,
+  'space-between': Yoga__default["default"].JUSTIFY_SPACE_BETWEEN,
+  'space-around': Yoga__default["default"].JUSTIFY_SPACE_AROUND,
+  'space-evenly': Yoga__default["default"].JUSTIFY_SPACE_EVENLY
 };
 /**
  * Set justify content attribute to node's Yoga instance
@@ -3105,12 +2670,11 @@ var JUSTIFY_CONTENT = {
  */
 
 var setJustifyContent = function setJustifyContent(value) {
-  return function(node) {
+  return function (node) {
     var yogaNode = node.yogaNode;
 
     if (!fns.isNil(value) && yogaNode) {
-      var justifyContent =
-        JUSTIFY_CONTENT[value] || Yoga__default['default'].JUSTIFY_FLEX_START;
+      var justifyContent = JUSTIFY_CONTENT[value] || Yoga__default["default"].JUSTIFY_FLEX_START;
       yogaNode.setJustifyContent(justifyContent);
     }
 
@@ -3126,7 +2690,7 @@ var setJustifyContent = function setJustifyContent(value) {
  * @return {Object} node instance
  */
 
-var setMarginTop = setYogaValue('margin', Yoga__default['default'].EDGE_TOP);
+var setMarginTop = setYogaValue('margin', Yoga__default["default"].EDGE_TOP);
 /**
  * Set margin right attribute to node's Yoga instance
  *
@@ -3135,10 +2699,7 @@ var setMarginTop = setYogaValue('margin', Yoga__default['default'].EDGE_TOP);
  * @return {Object} node instance
  */
 
-var setMarginRight = setYogaValue(
-  'margin',
-  Yoga__default['default'].EDGE_RIGHT,
-);
+var setMarginRight = setYogaValue('margin', Yoga__default["default"].EDGE_RIGHT);
 /**
  * Set margin bottom attribute to node's Yoga instance
  *
@@ -3147,10 +2708,7 @@ var setMarginRight = setYogaValue(
  * @return {Object} node instance
  */
 
-var setMarginBottom = setYogaValue(
-  'margin',
-  Yoga__default['default'].EDGE_BOTTOM,
-);
+var setMarginBottom = setYogaValue('margin', Yoga__default["default"].EDGE_BOTTOM);
 /**
  * Set margin left attribute to node's Yoga instance
  *
@@ -3159,7 +2717,7 @@ var setMarginBottom = setYogaValue(
  * @return {Object} node instance
  */
 
-var setMarginLeft = setYogaValue('margin', Yoga__default['default'].EDGE_LEFT);
+var setMarginLeft = setYogaValue('margin', Yoga__default["default"].EDGE_LEFT);
 
 /**
  * Set padding top attribute to node's Yoga instance
@@ -3169,7 +2727,7 @@ var setMarginLeft = setYogaValue('margin', Yoga__default['default'].EDGE_LEFT);
  * @return {Object} node instance
  */
 
-var setPaddingTop = setYogaValue('padding', Yoga__default['default'].EDGE_TOP);
+var setPaddingTop = setYogaValue('padding', Yoga__default["default"].EDGE_TOP);
 /**
  * Set padding right attribute to node's Yoga instance
  *
@@ -3178,10 +2736,7 @@ var setPaddingTop = setYogaValue('padding', Yoga__default['default'].EDGE_TOP);
  * @return {Object} node instance
  */
 
-var setPaddingRight = setYogaValue(
-  'padding',
-  Yoga__default['default'].EDGE_RIGHT,
-);
+var setPaddingRight = setYogaValue('padding', Yoga__default["default"].EDGE_RIGHT);
 /**
  * Set padding bottom attribute to node's Yoga instance
  *
@@ -3190,10 +2745,7 @@ var setPaddingRight = setYogaValue(
  * @return {Object} node instance
  */
 
-var setPaddingBottom = setYogaValue(
-  'padding',
-  Yoga__default['default'].EDGE_BOTTOM,
-);
+var setPaddingBottom = setYogaValue('padding', Yoga__default["default"].EDGE_BOTTOM);
 /**
  * Set padding left attribute to node's Yoga instance
  *
@@ -3202,10 +2754,7 @@ var setPaddingBottom = setYogaValue(
  * @return {Object} node instance
  */
 
-var setPaddingLeft = setYogaValue(
-  'padding',
-  Yoga__default['default'].EDGE_LEFT,
-);
+var setPaddingLeft = setYogaValue('padding', Yoga__default["default"].EDGE_LEFT);
 
 /**
  * Set border top attribute to node's Yoga instance
@@ -3215,7 +2764,7 @@ var setPaddingLeft = setYogaValue(
  * @return {Object} node instance
  */
 
-var setBorderTop = setYogaValue('border', Yoga__default['default'].EDGE_TOP);
+var setBorderTop = setYogaValue('border', Yoga__default["default"].EDGE_TOP);
 /**
  * Set border right attribute to node's Yoga instance
  *
@@ -3224,10 +2773,7 @@ var setBorderTop = setYogaValue('border', Yoga__default['default'].EDGE_TOP);
  * @return {Object} node instance
  */
 
-var setBorderRight = setYogaValue(
-  'border',
-  Yoga__default['default'].EDGE_RIGHT,
-);
+var setBorderRight = setYogaValue('border', Yoga__default["default"].EDGE_RIGHT);
 /**
  * Set border bottom attribute to node's Yoga instance
  *
@@ -3236,10 +2782,7 @@ var setBorderRight = setYogaValue(
  * @return {Object} node instance
  */
 
-var setBorderBottom = setYogaValue(
-  'border',
-  Yoga__default['default'].EDGE_BOTTOM,
-);
+var setBorderBottom = setYogaValue('border', Yoga__default["default"].EDGE_BOTTOM);
 /**
  * Set border left attribute to node's Yoga instance
  *
@@ -3248,7 +2791,7 @@ var setBorderBottom = setYogaValue(
  * @return {Object} node instance
  */
 
-var setBorderLeft = setYogaValue('border', Yoga__default['default'].EDGE_LEFT);
+var setBorderLeft = setYogaValue('border', Yoga__default["default"].EDGE_LEFT);
 
 /**
  * Set position top attribute to node's Yoga instance
@@ -3258,10 +2801,7 @@ var setBorderLeft = setYogaValue('border', Yoga__default['default'].EDGE_LEFT);
  * @return {Object} node instance
  */
 
-var setPositionTop = setYogaValue(
-  'position',
-  Yoga__default['default'].EDGE_TOP,
-);
+var setPositionTop = setYogaValue('position', Yoga__default["default"].EDGE_TOP);
 /**
  * Set position right attribute to node's Yoga instance
  *
@@ -3270,10 +2810,7 @@ var setPositionTop = setYogaValue(
  * @return {Object} node instance
  */
 
-var setPositionRight = setYogaValue(
-  'position',
-  Yoga__default['default'].EDGE_RIGHT,
-);
+var setPositionRight = setYogaValue('position', Yoga__default["default"].EDGE_RIGHT);
 /**
  * Set position bottom attribute to node's Yoga instance
  *
@@ -3282,10 +2819,7 @@ var setPositionRight = setYogaValue(
  * @return {Object} node instance
  */
 
-var setPositionBottom = setYogaValue(
-  'position',
-  Yoga__default['default'].EDGE_BOTTOM,
-);
+var setPositionBottom = setYogaValue('position', Yoga__default["default"].EDGE_BOTTOM);
 /**
  * Set position left attribute to node's Yoga instance
  *
@@ -3294,10 +2828,7 @@ var setPositionBottom = setYogaValue(
  * @return {Object} node instance
  */
 
-var setPositionLeft = setYogaValue(
-  'position',
-  Yoga__default['default'].EDGE_LEFT,
-);
+var setPositionLeft = setYogaValue('position', Yoga__default["default"].EDGE_LEFT);
 
 /**
  * Set width to node's Yoga instance
@@ -3370,23 +2901,21 @@ var getAspectRatio = function getAspectRatio(viewbox) {
  * @returns {Object} canvas width and height
  */
 
+
 var measureCanvas$1 = function measureCanvas(page, node) {
-  return function(width, widthMode, height, heightMode) {
+  return function (width, widthMode, height, heightMode) {
     var aspectRatio = getAspectRatio(node.props.viewBox) || 1;
 
-    if (
-      widthMode === Yoga__default['default'].MEASURE_MODE_EXACTLY ||
-      widthMode === Yoga__default['default'].MEASURE_MODE_AT_MOST
-    ) {
+    if (widthMode === Yoga__default["default"].MEASURE_MODE_EXACTLY || widthMode === Yoga__default["default"].MEASURE_MODE_AT_MOST) {
       return {
         width: width,
-        height: width / aspectRatio,
+        height: width / aspectRatio
       };
     }
 
-    if (heightMode === Yoga__default['default'].MEASURE_MODE_EXACTLY) {
+    if (heightMode === Yoga__default["default"].MEASURE_MODE_EXACTLY) {
       return {
-        width: height * aspectRatio,
+        width: height * aspectRatio
       };
     }
 
@@ -3402,14 +2931,9 @@ var measureCanvas$1 = function measureCanvas(page, node) {
  */
 var linesWidth = function linesWidth(node) {
   if (!node.lines) return 0;
-  return Math.max.apply(
-    Math,
-    [0].concat(
-      node.lines.map(function(line) {
-        return line.xAdvance;
-      }),
-    ),
-  );
+  return Math.max.apply(Math, [0].concat(node.lines.map(function (line) {
+    return line.xAdvance;
+  })));
 };
 
 /**
@@ -3420,7 +2944,7 @@ var linesWidth = function linesWidth(node) {
  */
 var linesHeight = function linesHeight(node) {
   if (!node.lines) return -1;
-  return node.lines.reduce(function(acc, line) {
+  return node.lines.reduce(function (acc, line) {
     return acc + line.box.height;
   }, 0);
 };
@@ -3428,7 +2952,7 @@ var linesHeight = function linesHeight(node) {
 /* eslint-disable no-param-reassign */
 var ALIGNMENT_FACTORS = {
   center: 0.5,
-  right: 1,
+  right: 1
 };
 /**
  * Yoga text measure function
@@ -3443,23 +2967,18 @@ var ALIGNMENT_FACTORS = {
  */
 
 var measureText = function measureText(page, node, fontStore) {
-  return function(width, widthMode, height) {
-    if (widthMode === Yoga__default['default'].MEASURE_MODE_EXACTLY) {
+  return function (width, widthMode, height) {
+    if (widthMode === Yoga__default["default"].MEASURE_MODE_EXACTLY) {
       if (!node.lines) node.lines = layoutText(node, width, height, fontStore);
       return {
-        height: linesHeight(node),
+        height: linesHeight(node)
       };
     }
 
-    if (widthMode === Yoga__default['default'].MEASURE_MODE_AT_MOST) {
+    if (widthMode === Yoga__default["default"].MEASURE_MODE_AT_MOST) {
       var _node$style;
 
-      var alignFactor =
-        ALIGNMENT_FACTORS[
-          (_node$style = node.style) === null || _node$style === void 0
-            ? void 0
-            : _node$style.textAlign
-        ] || 0;
+      var alignFactor = ALIGNMENT_FACTORS[(_node$style = node.style) === null || _node$style === void 0 ? void 0 : _node$style.textAlign] || 0;
 
       if (!node.lines) {
         node.lines = layoutText(node, width, height, fontStore);
@@ -3468,7 +2987,7 @@ var measureText = function measureText(page, node, fontStore) {
 
       return {
         height: linesHeight(node),
-        width: Math.min(width, linesWidth(node)),
+        width: Math.min(width, linesWidth(node))
       };
     }
 
@@ -3485,11 +3004,7 @@ var measureText = function measureText(page, node, fontStore) {
 var getRatio = function getRatio(node) {
   var _node$image;
 
-  return (_node$image = node.image) !== null &&
-    _node$image !== void 0 &&
-    _node$image.data
-    ? node.image.width / node.image.height
-    : 1;
+  return (_node$image = node.image) !== null && _node$image !== void 0 && _node$image.data ? node.image.width / node.image.height : 1;
 };
 
 /**
@@ -3502,11 +3017,7 @@ var getRatio = function getRatio(node) {
 var isHeightAuto = function isHeightAuto(page) {
   var _page$box;
 
-  return fns.isNil(
-    (_page$box = page.box) === null || _page$box === void 0
-      ? void 0
-      : _page$box.height,
-  );
+  return fns.isNil((_page$box = page.box) === null || _page$box === void 0 ? void 0 : _page$box.height);
 };
 
 var SAFETY_HEIGHT$1 = 10;
@@ -3523,76 +3034,55 @@ var SAFETY_HEIGHT$1 = 10;
  */
 
 var measureImage = function measureImage(page, node) {
-  return function(width, widthMode, height, heightMode) {
+  return function (width, widthMode, height, heightMode) {
     var imageRatio = getRatio(node);
     var imageMargin = getMargin(node);
     var pagePadding = getPadding(page);
-    var pageArea = isHeightAuto(page)
-      ? Infinity
-      : page.box.height -
-        pagePadding.paddingTop -
-        pagePadding.paddingBottom -
-        imageMargin.marginTop -
-        imageMargin.marginBottom -
-        SAFETY_HEIGHT$1; // Skip measure if image data not present yet
+    var pageArea = isHeightAuto(page) ? Infinity : page.box.height - pagePadding.paddingTop - pagePadding.paddingBottom - imageMargin.marginTop - imageMargin.marginBottom - SAFETY_HEIGHT$1; // Skip measure if image data not present yet
 
-    if (!node.image)
-      return {
-        width: 0,
-        height: 0,
-      };
+    if (!node.image) return {
+      width: 0,
+      height: 0
+    };
 
-    if (
-      widthMode === Yoga__default['default'].MEASURE_MODE_EXACTLY &&
-      heightMode === Yoga__default['default'].MEASURE_MODE_UNDEFINED
-    ) {
+    if (widthMode === Yoga__default["default"].MEASURE_MODE_EXACTLY && heightMode === Yoga__default["default"].MEASURE_MODE_UNDEFINED) {
       var scaledHeight = width / imageRatio;
       return {
-        height: Math.min(pageArea, scaledHeight),
+        height: Math.min(pageArea, scaledHeight)
       };
     }
 
-    if (
-      heightMode === Yoga__default['default'].MEASURE_MODE_EXACTLY &&
-      (widthMode === Yoga__default['default'].MEASURE_MODE_AT_MOST ||
-        widthMode === Yoga__default['default'].MEASURE_MODE_UNDEFINED)
-    ) {
+    if (heightMode === Yoga__default["default"].MEASURE_MODE_EXACTLY && (widthMode === Yoga__default["default"].MEASURE_MODE_AT_MOST || widthMode === Yoga__default["default"].MEASURE_MODE_UNDEFINED)) {
       return {
-        width: Math.min(height * imageRatio, width),
+        width: Math.min(height * imageRatio, width)
       };
     }
 
-    if (
-      widthMode === Yoga__default['default'].MEASURE_MODE_EXACTLY &&
-      heightMode === Yoga__default['default'].MEASURE_MODE_AT_MOST
-    ) {
+    if (widthMode === Yoga__default["default"].MEASURE_MODE_EXACTLY && heightMode === Yoga__default["default"].MEASURE_MODE_AT_MOST) {
       var _scaledHeight = width / imageRatio;
 
       return {
-        height: Math.min(height, pageArea, _scaledHeight),
+        height: Math.min(height, pageArea, _scaledHeight)
       };
     }
 
-    if (
-      widthMode === Yoga__default['default'].MEASURE_MODE_AT_MOST &&
-      heightMode === Yoga__default['default'].MEASURE_MODE_AT_MOST
-    ) {
+    if (widthMode === Yoga__default["default"].MEASURE_MODE_AT_MOST && heightMode === Yoga__default["default"].MEASURE_MODE_AT_MOST) {
       if (imageRatio > 1) {
         return {
           width: width,
-          height: Math.min(width / imageRatio, height),
+          height: Math.min(width / imageRatio, height)
         };
       }
 
       return {
         height: height,
-        width: Math.min(height * imageRatio, width),
+        width: Math.min(height * imageRatio, width)
       };
     }
 
     return {
       height: height,
-      width: width,
+      width: width
     };
   };
 };
@@ -3607,6 +3097,7 @@ var getMax = function getMax(values) {
  * Helper object to predict canvas size
  * TODO: Implement remaining functions (as close as possible);
  */
+
 
 var measureCtx = function measureCtx() {
   var ctx = {};
@@ -3647,6 +3138,7 @@ var measureCtx = function measureCtx() {
     return ctx;
   }; // Change dimensions
 
+
   ctx.rect = rect;
   ctx.moveTo = moveTo;
   ctx.lineTo = moveTo;
@@ -3683,20 +3175,16 @@ var measureCtx = function measureCtx() {
   ctx.linearGradient = nil;
   ctx.radialGradient = nil;
 
-  ctx.getWidth = function() {
-    return getMax(
-      points.map(function(p) {
-        return p[0];
-      }),
-    );
+  ctx.getWidth = function () {
+    return getMax(points.map(function (p) {
+      return p[0];
+    }));
   };
 
-  ctx.getHeight = function() {
-    return getMax(
-      points.map(function(p) {
-        return p[1];
-      }),
-    );
+  ctx.getHeight = function () {
+    return getMax(points.map(function (p) {
+      return p[1];
+    }));
   };
 
   return ctx;
@@ -3713,34 +3201,28 @@ var measureCtx = function measureCtx() {
  * @returns {Object} canvas width and height
  */
 
+
 var measureCanvas = function measureCanvas(page, node) {
-  return function() {
+  return function () {
     var imageMargin = getMargin(node);
     var pagePadding = getPadding(page);
-    var pageArea = isHeightAuto(page)
-      ? Infinity
-      : page.box.height -
-        pagePadding.paddingTop -
-        pagePadding.paddingBottom -
-        imageMargin.marginTop -
-        imageMargin.marginBottom -
-        SAFETY_HEIGHT;
+    var pageArea = isHeightAuto(page) ? Infinity : page.box.height - pagePadding.paddingTop - pagePadding.paddingBottom - imageMargin.marginTop - imageMargin.marginBottom - SAFETY_HEIGHT;
     var ctx = measureCtx();
     node.props.paint(ctx);
     var width = ctx.getWidth();
     var height = Math.min(pageArea, ctx.getHeight());
     return {
       height: height,
-      width: width,
+      width: width
     };
   };
 };
 
-var YOGA_CONFIG = Yoga__default['default'].Config.create();
+var YOGA_CONFIG = Yoga__default["default"].Config.create();
 YOGA_CONFIG.setPointScaleFactor(0);
 
 var isType$1 = function isType(type) {
-  return function(node) {
+  return function (node) {
     return node.type === type;
   };
 };
@@ -3764,44 +3246,9 @@ var setNodeHeight = function setNodeHeight(node) {
  * @returns {Object} node
  */
 
+
 var setYogaValues = function setYogaValues(node) {
-  fns.compose(
-    setNodeHeight(node),
-    setWidth(node.style.width),
-    setMinWidth(node.style.minWidth),
-    setMaxWidth(node.style.maxWidth),
-    setMinHeight(node.style.minHeight),
-    setMaxHeight(node.style.maxHeight),
-    setMarginTop(node.style.marginTop),
-    setMarginRight(node.style.marginRight),
-    setMarginBottom(node.style.marginBottom),
-    setMarginLeft(node.style.marginLeft),
-    setPaddingTop(node.style.paddingTop),
-    setPaddingRight(node.style.paddingRight),
-    setPaddingBottom(node.style.paddingBottom),
-    setPaddingLeft(node.style.paddingLeft),
-    setPositionType(node.style.position),
-    setPositionTop(node.style.top),
-    setPositionRight(node.style.right),
-    setPositionBottom(node.style.bottom),
-    setPositionLeft(node.style.left),
-    setBorderTop(node.style.borderTopWidth),
-    setBorderRight(node.style.borderRightWidth),
-    setBorderBottom(node.style.borderBottomWidth),
-    setBorderLeft(node.style.borderLeftWidth),
-    setDisplay(node.style.display),
-    setFlexDirection(node.style.flexDirection),
-    setAlignSelf(node.style.alignSelf),
-    setAlignContent(node.style.alignContent),
-    setAlignItems(node.style.alignItems),
-    setJustifyContent(node.style.justifyContent),
-    setFlexWrap(node.style.flexWrap),
-    setOverflow(node.style.overflow),
-    setAspectRatio(node.style.aspectRatio),
-    setFlexBasis(node.style.flexBasis),
-    setFlexGrow(node.style.flexGrow),
-    setFlexShrink(node.style.flexShrink),
-  )(node);
+  fns.compose(setNodeHeight(node), setWidth(node.style.width), setMinWidth(node.style.minWidth), setMaxWidth(node.style.maxWidth), setMinHeight(node.style.minHeight), setMaxHeight(node.style.maxHeight), setMarginTop(node.style.marginTop), setMarginRight(node.style.marginRight), setMarginBottom(node.style.marginBottom), setMarginLeft(node.style.marginLeft), setPaddingTop(node.style.paddingTop), setPaddingRight(node.style.paddingRight), setPaddingBottom(node.style.paddingBottom), setPaddingLeft(node.style.paddingLeft), setPositionType(node.style.position), setPositionTop(node.style.top), setPositionRight(node.style.right), setPositionBottom(node.style.bottom), setPositionLeft(node.style.left), setBorderTop(node.style.borderTopWidth), setBorderRight(node.style.borderRightWidth), setBorderBottom(node.style.borderBottomWidth), setBorderLeft(node.style.borderLeftWidth), setDisplay(node.style.display), setFlexDirection(node.style.flexDirection), setAlignSelf(node.style.alignSelf), setAlignContent(node.style.alignContent), setAlignItems(node.style.alignItems), setJustifyContent(node.style.justifyContent), setFlexWrap(node.style.flexWrap), setOverflow(node.style.overflow), setAspectRatio(node.style.aspectRatio), setFlexBasis(node.style.flexBasis), setFlexGrow(node.style.flexGrow), setFlexShrink(node.style.flexShrink))(node);
 };
 /**
  * Inserts child into parent' yoga node
@@ -3811,8 +3258,9 @@ var setYogaValues = function setYogaValues(node) {
  * @param {Object} node
  */
 
+
 var insertYogaNodes = function insertYogaNodes(parent) {
-  return function(child) {
+  return function (child) {
     parent.insertChild(child.yogaNode, parent.getChildCount());
     return child;
   };
@@ -3851,19 +3299,17 @@ var isLayoutElement = function isLayoutElement(node) {
  * @returns {Object} node with appended yoga node
  */
 
+
 var createYogaNodes = function createYogaNodes(page, fontStore) {
-  return function(node) {
-    var yogaNode = Yoga__default['default'].Node.createWithConfig(YOGA_CONFIG);
+  return function (node) {
+    var yogaNode = Yoga__default["default"].Node.createWithConfig(YOGA_CONFIG);
     var result = Object.assign({}, node, {
-      yogaNode: yogaNode,
+      yogaNode: yogaNode
     });
     setYogaValues(result);
 
     if (isLayoutElement(node) && node.children) {
-      var resolveChild = fns.compose(
-        insertYogaNodes(yogaNode),
-        createYogaNodes(page, fontStore),
-      );
+      var resolveChild = fns.compose(insertYogaNodes(yogaNode), createYogaNodes(page, fontStore));
       result.children = node.children.map(resolveChild);
     }
 
@@ -3878,6 +3324,7 @@ var createYogaNodes = function createYogaNodes(page, fontStore) {
  * @returns {Object} node
  */
 
+
 var calculateLayout = function calculateLayout(page) {
   page.yogaNode.calculateLayout();
   return page;
@@ -3889,22 +3336,17 @@ var calculateLayout = function calculateLayout(page) {
  * @returns {Object} node with box data
  */
 
+
 var persistDimensions = function persistDimensions(node) {
   if (isTextInstance$1(node)) return node;
-  var box = Object.assign(
-    getPadding(node),
-    getMargin(node),
-    getBorderWidth(node),
-    getPosition(node),
-    getDimension(node),
-  );
+  var box = Object.assign(getPadding(node), getMargin(node), getBorderWidth(node), getPosition(node), getDimension(node));
   var newNode = Object.assign({}, node, {
-    box: box,
+    box: box
   });
   if (!node.children) return newNode;
   var children = node.children.map(persistDimensions);
   return Object.assign({}, newNode, {
-    children: children,
+    children: children
   });
 };
 /**
@@ -3914,13 +3356,14 @@ var persistDimensions = function persistDimensions(node) {
  * @returns {Object} node without yoga node
  */
 
+
 var destroyYogaNodes = function destroyYogaNodes(node) {
   var newNode = Object.assign({}, node);
   delete newNode.yogaNode;
   if (!node.children) return newNode;
   var children = node.children.map(destroyYogaNodes);
   return Object.assign({}, newNode, {
-    children: children,
+    children: children
   });
 };
 /**
@@ -3929,6 +3372,7 @@ var destroyYogaNodes = function destroyYogaNodes(node) {
  * @param {Object} node
  * @returns {Object} node without yoga node
  */
+
 
 var freeYogaNodes = function freeYogaNodes(node) {
   if (node.yogaNode) node.yogaNode.freeRecursive();
@@ -3943,15 +3387,10 @@ var freeYogaNodes = function freeYogaNodes(node) {
  * @returns {Object} page object with correct 'box' layout attributes
  */
 
+
 var resolvePageDimensions = function resolvePageDimensions(page, fontStore) {
   if (fns.isNil(page)) return null;
-  return fns.compose(
-    destroyYogaNodes,
-    freeYogaNodes,
-    persistDimensions,
-    calculateLayout,
-    createYogaNodes(page, fontStore),
-  )(page);
+  return fns.compose(destroyYogaNodes, freeYogaNodes, persistDimensions, calculateLayout, createYogaNodes(page, fontStore))(page);
 };
 /**
  * Calculates root object layout using Yoga.
@@ -3969,7 +3408,7 @@ var resolveDimensions = function resolveDimensions(node, fontStore) {
 
   var children = node.children.map(resolveChild);
   return Object.assign({}, node, {
-    children: children,
+    children: children
   });
 };
 
@@ -3977,22 +3416,19 @@ var isText$1 = function isText(node) {
   return node.type === P__namespace.Text;
 }; // Prevent splitting elements by low decimal numbers
 
+
 var SAFTY_THRESHOLD = 0.001;
 
 var assingChildren = function assingChildren(children, node) {
   return Object.assign({}, node, {
-    children: children,
+    children: children
   });
 };
 
 var getTop = function getTop(node) {
   var _node$box;
 
-  return (
-    ((_node$box = node.box) === null || _node$box === void 0
-      ? void 0
-      : _node$box.top) || 0
-  );
+  return ((_node$box = node.box) === null || _node$box === void 0 ? void 0 : _node$box.top) || 0;
 };
 
 var allFixed = function allFixed(nodes) {
@@ -4002,25 +3438,13 @@ var allFixed = function allFixed(nodes) {
 var isDynamic = function isDynamic(node) {
   var _node$props;
 
-  return !fns.isNil(
-    (_node$props = node.props) === null || _node$props === void 0
-      ? void 0
-      : _node$props.render,
-  );
+  return !fns.isNil((_node$props = node.props) === null || _node$props === void 0 ? void 0 : _node$props.render);
 };
 
-var relayoutPage = fns.compose(
-  resolveTextLayout,
-  resolveInheritance,
-  resolvePageDimensions,
-);
+var relayoutPage = fns.compose(resolveTextLayout, resolveInheritance, resolvePageDimensions);
 
 var warnUnavailableSpace = function warnUnavailableSpace(node) {
-  console.warn(
-    'Node of type ' +
-      node.type +
-      " can't wrap between pages and it's bigger than available page height",
-  );
+  console.warn("Node of type " + node.type + " can't wrap between pages and it's bigger than available page height");
 };
 
 var splitNodes = function splitNodes(height, contentArea, nodes) {
@@ -4047,10 +3471,10 @@ var splitNodes = function splitNodes(height, contentArea, nodes) {
 
     if (isOutside) {
       var box = Object.assign({}, child.box, {
-        top: child.box.top - height,
+        top: child.box.top - height
       });
       var next = Object.assign({}, child, {
-        box: box,
+        box: box
       });
       nextChildren.push(next);
       continue;
@@ -4065,17 +3489,17 @@ var splitNodes = function splitNodes(height, contentArea, nodes) {
 
     if (shouldBreak$1) {
       var _box = Object.assign({}, child.box, {
-        top: child.box.top - height,
+        top: child.box.top - height
       });
 
       var props = Object.assign({}, child.props, {
         wrap: true,
-        break: false,
+        break: false
       });
 
       var _next = Object.assign({}, child, {
         box: _box,
-        props: props,
+        props: props
       });
 
       currentChildren.push.apply(currentChildren, futureFixedNodes);
@@ -4085,8 +3509,8 @@ var splitNodes = function splitNodes(height, contentArea, nodes) {
 
     if (shouldSplit) {
       var _split = split(child, height, contentArea),
-        currentChild = _split[0],
-        nextChild = _split[1];
+          currentChild = _split[0],
+          nextChild = _split[1];
 
       if (currentChild) currentChildren.push(currentChild);
       if (nextChild) nextChildren.push(nextChild);
@@ -4107,23 +3531,18 @@ var splitChildren = function splitChildren(height, contentArea, node) {
 
 var splitView = function splitView(node, height, contentArea) {
   var _splitNode = splitNode(node, height),
-    currentNode = _splitNode[0],
-    nextNode = _splitNode[1];
+      currentNode = _splitNode[0],
+      nextNode = _splitNode[1];
 
   var _splitChildren = splitChildren(height, contentArea, node),
-    currentChilds = _splitChildren[0],
-    nextChildren = _splitChildren[1];
+      currentChilds = _splitChildren[0],
+      nextChildren = _splitChildren[1];
 
-  return [
-    assingChildren(currentChilds, currentNode),
-    assingChildren(nextChildren, nextNode),
-  ];
+  return [assingChildren(currentChilds, currentNode), assingChildren(nextChildren, nextNode)];
 };
 
 var split = function split(node, height, contentArea) {
-  return isText$1(node)
-    ? splitText(node, height)
-    : splitView(node, height, contentArea);
+  return isText$1(node) ? splitText(node, height) : splitView(node, height, contentArea);
 };
 
 var shouldResolveDynamicNodes = function shouldResolveDynamicNodes(node) {
@@ -4141,30 +3560,27 @@ var resolveDynamicNodes = function resolveDynamicNodes(props, node) {
 
     if (isNodeDynamic) {
       var res = node.props.render(props);
-      return createInstances(res)
-        .filter(Boolean)
-        .map(function(n) {
-          return resolveDynamicNodes(props, n);
-        });
+      return createInstances(res).filter(Boolean).map(function (n) {
+        return resolveDynamicNodes(props, n);
+      });
     }
 
-    return children.map(function(c) {
+    return children.map(function (c) {
       return resolveDynamicNodes(props, c);
     });
   }; // We reset dynamic text box so it can be computed again later on
 
+
   var resetHeight = isNodeDynamic && isText$1(node);
-  var box = resetHeight
-    ? _extends__default['default']({}, node.box, {
-        height: 0,
-      })
-    : node.box;
+  var box = resetHeight ? _extends__default["default"]({}, node.box, {
+    height: 0
+  }) : node.box;
   var children = resolveChildren(node.children);
   var lines = isNodeDynamic ? null : node.lines;
   return Object.assign({}, node, {
     box: box,
     lines: lines,
-    children: children,
+    children: children
   });
 };
 
@@ -4180,68 +3596,54 @@ var resolveDynamicPage = function resolveDynamicPage(props, page, fontStore) {
 var splitPage = function splitPage(page, pageNumber, fontStore) {
   var wrapArea = getWrapArea(page);
   var contentArea = getContentArea(page);
-  var dynamicPage = resolveDynamicPage(
-    {
-      pageNumber: pageNumber,
-    },
-    page,
-    fontStore,
-  );
+  var dynamicPage = resolveDynamicPage({
+    pageNumber: pageNumber
+  }, page, fontStore);
   var height = page.style.height;
 
   var _splitNodes = splitNodes(wrapArea, contentArea, dynamicPage.children),
-    currentChilds = _splitNodes[0],
-    nextChilds = _splitNodes[1];
+      currentChilds = _splitNodes[0],
+      nextChilds = _splitNodes[1];
 
   var relayout = function relayout(node) {
     return relayoutPage(node, fontStore);
   };
 
-  var currentBox = _extends__default['default']({}, page.box, {
-    height: height,
+  var currentBox = _extends__default["default"]({}, page.box, {
+    height: height
   });
 
-  var currentPage = relayout(
-    Object.assign({}, page, {
-      box: currentBox,
-      children: currentChilds,
-    }),
-  );
-  if (nextChilds.length === 0 || allFixed(nextChilds))
-    return [currentPage, null];
+  var currentPage = relayout(Object.assign({}, page, {
+    box: currentBox,
+    children: currentChilds
+  }));
+  if (nextChilds.length === 0 || allFixed(nextChilds)) return [currentPage, null];
   var nextBox = fns.omit('height', page.box);
   var nextProps = fns.omit('bookmark', page.props);
-  var nextPage = relayout(
-    Object.assign({}, page, {
-      props: nextProps,
-      box: nextBox,
-      children: nextChilds,
-    }),
-  );
+  var nextPage = relayout(Object.assign({}, page, {
+    props: nextProps,
+    box: nextBox,
+    children: nextChilds
+  }));
   return [currentPage, nextPage];
 };
 
-var resolvePageIndices = function resolvePageIndices(
-  fontStore,
-  page,
-  pageNumber,
-  pages,
-) {
+var resolvePageIndices = function resolvePageIndices(fontStore, page, pageNumber, pages) {
   var totalPages = pages.length;
   var props = {
     totalPages: totalPages,
     pageNumber: pageNumber + 1,
     subPageNumber: page.subPageNumber + 1,
-    subPageTotalPages: page.subPageTotalPages,
+    subPageTotalPages: page.subPageTotalPages
   };
   return resolveDynamicPage(props, page, fontStore);
 };
 
 var assocSubPageData = function assocSubPageData(subpages) {
-  return subpages.map(function(page, i) {
-    return _extends__default['default']({}, page, {
+  return subpages.map(function (page, i) {
+    return _extends__default["default"]({}, page, {
       subPageNumber: i,
-      subPageTotalPages: subpages.length,
+      subPageTotalPages: subpages.length
     });
   });
 };
@@ -4254,12 +3656,7 @@ var paginate = function paginate(page, pageNumber, fontStore) {
   var _page$props;
 
   if (!page) return [];
-  if (
-    ((_page$props = page.props) === null || _page$props === void 0
-      ? void 0
-      : _page$props.wrap) === false
-  )
-    return [page];
+  if (((_page$props = page.props) === null || _page$props === void 0 ? void 0 : _page$props.wrap) === false) return [page];
   var splittedPage = splitPage(page, pageNumber, fontStore);
   var pages = [splittedPage[0]];
   var nextPage = splittedPage[1];
@@ -4281,6 +3678,7 @@ var paginate = function paginate(page, pageNumber, fontStore) {
  * @returns {Object} layout node
  */
 
+
 var resolvePagination = function resolvePagination(doc, fontStore) {
   var pages = [];
   var pageNumber = 1;
@@ -4293,18 +3691,12 @@ var resolvePagination = function resolvePagination(doc, fontStore) {
     pages = pages.concat(subpages);
   }
 
-  pages = pages.map(function() {
-    for (
-      var _len = arguments.length, args = new Array(_len), _key = 0;
-      _key < _len;
-      _key++
-    ) {
+  pages = pages.map(function () {
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
     }
 
-    return dissocSubPageData(
-      resolvePageIndices.apply(void 0, [fontStore].concat(args)),
-    );
+    return dissocSubPageData(resolvePageIndices.apply(void 0, [fontStore].concat(args)));
   });
   return assingChildren(pages, doc);
 };
@@ -4317,10 +3709,8 @@ var resolvePagination = function resolvePagination(doc, fontStore) {
  * @returns {Object} translated padding value
  */
 
-var resolvePageHorizontalPadding = function resolvePageHorizontalPadding(
-  container,
-) {
-  return function(value) {
+var resolvePageHorizontalPadding = function resolvePageHorizontalPadding(container) {
+  return function (value) {
     var match = fns.matchPercent(value);
     return match ? match.percent * container.width : value;
   };
@@ -4333,10 +3723,9 @@ var resolvePageHorizontalPadding = function resolvePageHorizontalPadding(
  * @returns {Object} translated padding value
  */
 
-var resolvePageVerticalPadding = function resolvePageVerticalPadding(
-  container,
-) {
-  return function(value) {
+
+var resolvePageVerticalPadding = function resolvePageVerticalPadding(container) {
+  return function (value) {
     var match = fns.matchPercent(value);
     return match ? match.percent * container.height : value;
   };
@@ -4348,19 +3737,17 @@ var resolvePageVerticalPadding = function resolvePageVerticalPadding(
  * @returns {Object} page with fixed paddings
  */
 
+
 var resolvePagePaddings = function resolvePagePaddings(page) {
   var container = page.style;
-  var style = fns.evolve(
-    {
-      paddingTop: resolvePageVerticalPadding(container),
-      paddingLeft: resolvePageHorizontalPadding(container),
-      paddingRight: resolvePageHorizontalPadding(container),
-      paddingBottom: resolvePageVerticalPadding(container),
-    },
-    page.style,
-  );
+  var style = fns.evolve({
+    paddingTop: resolvePageVerticalPadding(container),
+    paddingLeft: resolvePageHorizontalPadding(container),
+    paddingRight: resolvePageHorizontalPadding(container),
+    paddingBottom: resolvePageVerticalPadding(container)
+  }, page.style);
   return Object.assign({}, page, {
-    style: style,
+    style: style
   });
 };
 /**
@@ -4372,11 +3759,12 @@ var resolvePagePaddings = function resolvePagePaddings(page) {
  * @returns {Object} document root with translated page paddings
  */
 
+
 var resolvePagesPaddings = function resolvePagesPaddings(root) {
   if (!root.children) return root;
   var children = root.children.map(resolvePagePaddings);
   return Object.assign({}, root, {
-    children: children,
+    children: children
   });
 };
 
@@ -4388,12 +3776,10 @@ var resolvePagesPaddings = function resolvePagesPaddings(root) {
  */
 
 var resolveRadius = function resolveRadius(container) {
-  return function(value) {
+  return function (value) {
     if (!value) return undefined;
     var match = fns.matchPercent(value);
-    return match
-      ? match.percent * Math.min(container.width, container.height)
-      : value;
+    return match ? match.percent * Math.min(container.width, container.height) : value;
   };
 };
 /**
@@ -4403,23 +3789,21 @@ var resolveRadius = function resolveRadius(container) {
  * @returns {Object} node
  */
 
+
 var resolvePercentRadius = function resolvePercentRadius(node) {
-  var style = fns.evolve(
-    {
-      borderTopLeftRadius: resolveRadius(node.box),
-      borderTopRightRadius: resolveRadius(node.box),
-      borderBottomRightRadius: resolveRadius(node.box),
-      borderBottomLeftRadius: resolveRadius(node.box),
-    },
-    node.style || {},
-  );
+  var style = fns.evolve({
+    borderTopLeftRadius: resolveRadius(node.box),
+    borderTopRightRadius: resolveRadius(node.box),
+    borderBottomRightRadius: resolveRadius(node.box),
+    borderBottomLeftRadius: resolveRadius(node.box)
+  }, node.style || {});
   var newNode = Object.assign({}, node, {
-    style: style,
+    style: style
   });
   if (!node.children) return newNode;
   var children = node.children.map(resolvePercentRadius);
   return Object.assign({}, newNode, {
-    children: children,
+    children: children
   });
 };
 
@@ -4441,18 +3825,13 @@ var transformHeight = function transformHeight(pageArea, height) {
  * @return {number} page area
  */
 
+
 var getPageArea = function getPageArea(page) {
   var _page$style, _page$style2;
 
   var pageHeight = page.style.height;
-  var pagePaddingTop =
-    ((_page$style = page.style) === null || _page$style === void 0
-      ? void 0
-      : _page$style.paddingTop) || 0;
-  var pagePaddingBottom =
-    ((_page$style2 = page.style) === null || _page$style2 === void 0
-      ? void 0
-      : _page$style2.paddingBottom) || 0;
+  var pagePaddingTop = ((_page$style = page.style) === null || _page$style === void 0 ? void 0 : _page$style.paddingTop) || 0;
+  var pagePaddingBottom = ((_page$style2 = page.style) === null || _page$style2 === void 0 ? void 0 : _page$style2.paddingBottom) || 0;
   return pageHeight - pagePaddingTop - pagePaddingBottom;
 };
 /**
@@ -4463,32 +3842,19 @@ var getPageArea = function getPageArea(page) {
  * @return {Object} transformed node
  */
 
+
 var resolveNodePercentHeight = function resolveNodePercentHeight(page, node) {
   var _page$style3, _node$style;
 
-  if (
-    fns.isNil(
-      (_page$style3 = page.style) === null || _page$style3 === void 0
-        ? void 0
-        : _page$style3.height,
-    )
-  )
-    return node;
-  if (
-    fns.isNil(
-      (_node$style = node.style) === null || _node$style === void 0
-        ? void 0
-        : _node$style.height,
-    )
-  )
-    return node;
+  if (fns.isNil((_page$style3 = page.style) === null || _page$style3 === void 0 ? void 0 : _page$style3.height)) return node;
+  if (fns.isNil((_node$style = node.style) === null || _node$style === void 0 ? void 0 : _node$style.height)) return node;
   var pageArea = getPageArea(page);
   var height = transformHeight(pageArea, node.style.height);
   var style = Object.assign({}, node.style, {
-    height: height,
+    height: height
   });
   return Object.assign({}, node, {
-    style: style,
+    style: style
   });
 };
 /**
@@ -4497,6 +3863,7 @@ var resolveNodePercentHeight = function resolveNodePercentHeight(page, node) {
  * @param {Object} page
  * @return {Object} transformed page
  */
+
 
 var resolvePagePercentHeight = function resolvePagePercentHeight(page) {
   if (!page.children) return page;
@@ -4507,7 +3874,7 @@ var resolvePagePercentHeight = function resolvePagePercentHeight(page) {
 
   var children = page.children.map(resolveChild);
   return Object.assign({}, page, {
-    children: children,
+    children: children
   });
 };
 /**
@@ -4518,16 +3885,17 @@ var resolvePagePercentHeight = function resolvePagePercentHeight(page) {
  * @return {Object} transformed document root
  */
 
+
 var resolvePercentHeight = function resolvePercentHeight(root) {
   if (!root.children) return root;
   var children = root.children.map(resolvePagePercentHeight);
   return Object.assign({}, root, {
-    children: children,
+    children: children
   });
 };
 
 var isType = function isType(type) {
-  return function(node) {
+  return function (node) {
     return node.type === type;
   };
 };
@@ -4545,11 +3913,7 @@ var isTextInstance = isType(P__namespace.TextInstance);
 var hasRenderProp = function hasRenderProp(node) {
   var _node$props;
 
-  return !!(
-    (_node$props = node.props) !== null &&
-    _node$props !== void 0 &&
-    _node$props.render
-  );
+  return !!((_node$props = node.props) !== null && _node$props !== void 0 && _node$props.render);
 };
 /**
  * Checks if node is text type (Text or TextInstance)
@@ -4557,6 +3921,7 @@ var hasRenderProp = function hasRenderProp(node) {
  * @param {Object} node
  * @returns {Boolean} are all children text instances?
  */
+
 
 var isTextType = function isTextType(node) {
   return isText(node) || isTextInstance(node);
@@ -4567,6 +3932,7 @@ var isTextType = function isTextType(node) {
  * @param {Object} node
  * @returns {Boolean} are all children text instances?
  */
+
 
 var isTextLink = function isTextLink(node) {
   var children = node.children || []; // Text string inside a Link
@@ -4583,16 +3949,17 @@ var isTextLink = function isTextLink(node) {
  * @returns {Boolean} node with intermediate Text child
  */
 
+
 var wrapText = function wrapText(node) {
   var textElement = {
     type: P__namespace.Text,
     props: {},
     style: {},
     box: {},
-    children: node.children,
+    children: node.children
   };
   return Object.assign({}, node, {
-    children: [textElement],
+    children: [textElement]
   });
 };
 
@@ -4600,10 +3967,9 @@ var transformLink = function transformLink(node) {
   if (!isLink(node)) return node; // If has render prop substitute the instance by a Text, that will
   // ultimately render the inline Link via the textkit PDF renderer.
 
-  if (hasRenderProp(node))
-    return Object.assign({}, node, {
-      type: P__namespace.Text,
-    }); // If is a text link (either contains Text or TextInstalce), wrap it
+  if (hasRenderProp(node)) return Object.assign({}, node, {
+    type: P__namespace.Text
+  }); // If is a text link (either contains Text or TextInstalce), wrap it
   // inside a Text element so styles are applied correctly
 
   if (isTextLink(node)) return wrapText(node);
@@ -4616,31 +3982,16 @@ var transformLink = function transformLink(node) {
  * @returns {Object} node with link substitution
  */
 
+
 var resolveLinkSubstitution = function resolveLinkSubstitution(node) {
   if (!node.children) return node;
   var resolveChild = fns.compose(transformLink, resolveLinkSubstitution);
   var children = node.children.map(resolveChild);
   return Object.assign({}, node, {
-    children: children,
+    children: children
   });
 };
 
-var layout = fns.asyncCompose(
-  resolveZIndex,
-  resolveOrigin,
-  resolvePagination,
-  resolveTextLayout,
-  resolvePercentRadius,
-  resolveDimensions,
-  resolveSvg,
-  resolveAssets,
-  resolveInheritance,
-  resolvePercentHeight,
-  resolvePagesPaddings,
-  resolveStyles,
-  resolveLinkSubstitution,
-  resolveBookmarks,
-  resolvePageSizes,
-);
+var layout = fns.asyncCompose(resolveZIndex, resolveOrigin, resolvePagination, resolveTextLayout, resolvePercentRadius, resolveDimensions, resolveSvg, resolveAssets, resolveInheritance, resolvePercentHeight, resolvePagesPaddings, resolveStyles, resolveLinkSubstitution, resolveBookmarks, resolvePageSizes);
 
-exports['default'] = layout;
+exports["default"] = layout;

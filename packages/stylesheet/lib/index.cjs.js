@@ -10,28 +10,26 @@ var colorString = require('color-string');
 var _extends = require('@babel/runtime/helpers/extends');
 var matchMedia = require('media-engine');
 
-function _interopDefaultLegacy(e) {
-  return e && typeof e === 'object' && 'default' in e ? e : { default: e };
-}
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
-var parse__default = /*#__PURE__*/ _interopDefaultLegacy(parse$1);
-var parseUnit__default = /*#__PURE__*/ _interopDefaultLegacy(parseUnit);
-var hlsToHex__default = /*#__PURE__*/ _interopDefaultLegacy(hlsToHex);
-var colorString__default = /*#__PURE__*/ _interopDefaultLegacy(colorString);
-var _extends__default = /*#__PURE__*/ _interopDefaultLegacy(_extends);
-var matchMedia__default = /*#__PURE__*/ _interopDefaultLegacy(matchMedia);
+var parse__default = /*#__PURE__*/_interopDefaultLegacy(parse$1);
+var parseUnit__default = /*#__PURE__*/_interopDefaultLegacy(parseUnit);
+var hlsToHex__default = /*#__PURE__*/_interopDefaultLegacy(hlsToHex);
+var colorString__default = /*#__PURE__*/_interopDefaultLegacy(colorString);
+var _extends__default = /*#__PURE__*/_interopDefaultLegacy(_extends);
+var matchMedia__default = /*#__PURE__*/_interopDefaultLegacy(matchMedia);
 
 var flexDefaults = [1, 1, 0];
 
 var expandFlex = function expandFlex(key, value) {
-  var matches = ('' + value).split(' ');
+  var matches = ("" + value).split(' ');
   var flexGrow = matches[0] || flexDefaults[0];
   var flexShrink = matches[1] || flexDefaults[1];
   var flexBasis = matches[2] || flexDefaults[2];
   return {
     flexGrow: flexGrow,
     flexShrink: flexShrink,
-    flexBasis: flexBasis,
+    flexBasis: flexBasis
   };
 };
 
@@ -39,42 +37,28 @@ var expandFlex = function expandFlex(key, value) {
 var BOX_MODEL_UNITS = 'px,in,mm,cm,pt,%,vw,vh';
 
 var logError = function logError(style, value) {
-  console.error(
-    '\n    @react-pdf/stylesheet parsing error:\n\n    ' +
-      style +
-      ': ' +
-      value +
-      ',\n    ' +
-      ' '.repeat(style.length + 2) +
-      '^\n    Unsupported ' +
-      style +
-      ' value format\n  ',
-  );
+  console.error("\n    @react-pdf/stylesheet parsing error:\n\n    " + style + ": " + value + ",\n    " + ' '.repeat(style.length + 2) + "^\n    Unsupported " + style + " value format\n  ");
 };
 
 var expandBoxModel = function expandBoxModel(_temp) {
   var _ref = _temp === void 0 ? {} : _temp,
-    expandsTo = _ref.expandsTo,
-    _ref$maxValues = _ref.maxValues,
-    maxValues = _ref$maxValues === void 0 ? 1 : _ref$maxValues,
-    _ref$autoSupported = _ref.autoSupported,
-    autoSupported = _ref$autoSupported === void 0 ? false : _ref$autoSupported;
+      expandsTo = _ref.expandsTo,
+      _ref$maxValues = _ref.maxValues,
+      maxValues = _ref$maxValues === void 0 ? 1 : _ref$maxValues,
+      _ref$autoSupported = _ref.autoSupported,
+      autoSupported = _ref$autoSupported === void 0 ? false : _ref$autoSupported;
 
-  return function(model, value) {
+  return function (model, value) {
     var _ref2;
 
-    var nodes = parse__default['default']('' + value);
+    var nodes = parse__default["default"]("" + value);
     var parts = [];
 
     for (var i = 0; i < nodes.length; i++) {
       var node = nodes[i]; // value contains `calc`, `url` or other css function
       // `,`, `/` or strings that unsupported by margin and padding
 
-      if (
-        node.type === 'function' ||
-        node.type === 'string' ||
-        node.type === 'div'
-      ) {
+      if (node.type === 'function' || node.type === 'string' || node.type === 'div') {
         logError(model, value);
         return {};
       }
@@ -83,7 +67,7 @@ var expandBoxModel = function expandBoxModel(_temp) {
         if (node.value === 'auto' && autoSupported) {
           parts.push(node.value);
         } else {
-          var result = parseUnit__default['default'](node.value); // when unit isn't specified this condition is true
+          var result = parseUnit__default["default"](node.value); // when unit isn't specified this condition is true
 
           if (result && BOX_MODEL_UNITS.includes(result.unit)) {
             parts.push(node.value);
@@ -94,6 +78,7 @@ var expandBoxModel = function expandBoxModel(_temp) {
         }
       }
     } // checks that we have enough parsed values
+
 
     if (parts.length > maxValues) {
       logError(model, value);
@@ -110,56 +95,56 @@ var expandBoxModel = function expandBoxModel(_temp) {
         first: first,
         second: second,
         third: third,
-        fourth: fourth,
+        fourth: fourth
       });
     }
 
-    return (_ref2 = {}), (_ref2[model] = first), _ref2;
+    return _ref2 = {}, _ref2[model] = first, _ref2;
   };
 };
 
 var processMargin = expandBoxModel({
   expandsTo: function expandsTo(_ref) {
     var first = _ref.first,
-      second = _ref.second,
-      third = _ref.third,
-      fourth = _ref.fourth;
+        second = _ref.second,
+        third = _ref.third,
+        fourth = _ref.fourth;
     return {
       marginTop: first,
       marginRight: second,
       marginBottom: third,
-      marginLeft: fourth,
+      marginLeft: fourth
     };
   },
   maxValues: 4,
-  autoSupported: true,
+  autoSupported: true
 });
 var processMarginVertical = expandBoxModel({
   expandsTo: function expandsTo(_ref2) {
     var first = _ref2.first,
-      second = _ref2.second;
+        second = _ref2.second;
     return {
       marginTop: first,
-      marginBottom: second,
+      marginBottom: second
     };
   },
   maxValues: 2,
-  autoSupported: true,
+  autoSupported: true
 });
 var processMarginHorizontal = expandBoxModel({
   expandsTo: function expandsTo(_ref3) {
     var first = _ref3.first,
-      second = _ref3.second;
+        second = _ref3.second;
     return {
       marginRight: first,
-      marginLeft: second,
+      marginLeft: second
     };
   },
   maxValues: 2,
-  autoSupported: true,
+  autoSupported: true
 });
 var processMarginSingle = expandBoxModel({
-  autoSupported: true,
+  autoSupported: true
 });
 
 var BORDER_SHORTHAND_REGEX = /(-?\d+(\.\d+)?(px|in|mm|cm|pt|vw|vh|px)?)\s(\S+)\s(.+)/;
@@ -169,7 +154,7 @@ var matchBorderShorthand = function matchBorderShorthand(value) {
 };
 
 var expandBorders = function expandBorders(key, value) {
-  var match = matchBorderShorthand('' + value);
+  var match = matchBorderShorthand("" + value);
 
   if (match) {
     var color = match[5] || value;
@@ -179,13 +164,7 @@ var expandBorders = function expandBorders(key, value) {
     if (key.match(/(Top|Right|Bottom|Left)$/)) {
       var _ref;
 
-      return (
-        (_ref = {}),
-        (_ref[key + 'Color'] = color),
-        (_ref[key + 'Style'] = style),
-        (_ref[key + 'Width'] = width),
-        _ref
-      );
+      return _ref = {}, _ref[key + "Color"] = color, _ref[key + "Style"] = style, _ref[key + "Width"] = width, _ref;
     }
 
     if (key.match(/Color$/)) {
@@ -193,7 +172,7 @@ var expandBorders = function expandBorders(key, value) {
         borderTopColor: color,
         borderRightColor: color,
         borderBottomColor: color,
-        borderLeftColor: color,
+        borderLeftColor: color
       };
     }
 
@@ -202,7 +181,7 @@ var expandBorders = function expandBorders(key, value) {
         borderTopStyle: style,
         borderRightStyle: style,
         borderBottomStyle: style,
-        borderLeftStyle: style,
+        borderLeftStyle: style
       };
     }
 
@@ -211,7 +190,7 @@ var expandBorders = function expandBorders(key, value) {
         borderTopWidth: width,
         borderRightWidth: width,
         borderBottomWidth: width,
-        borderLeftWidth: width,
+        borderLeftWidth: width
       };
     }
 
@@ -220,7 +199,7 @@ var expandBorders = function expandBorders(key, value) {
         borderTopLeftRadius: value,
         borderTopRightRadius: value,
         borderBottomRightRadius: value,
-        borderBottomLeftRadius: value,
+        borderBottomLeftRadius: value
       };
     }
 
@@ -236,7 +215,7 @@ var expandBorders = function expandBorders(key, value) {
       borderBottomWidth: width,
       borderLeftColor: color,
       borderLeftStyle: style,
-      borderLeftWidth: width,
+      borderLeftWidth: width
     };
   }
 
@@ -246,55 +225,53 @@ var expandBorders = function expandBorders(key, value) {
 var processPadding = expandBoxModel({
   expandsTo: function expandsTo(_ref) {
     var first = _ref.first,
-      second = _ref.second,
-      third = _ref.third,
-      fourth = _ref.fourth;
+        second = _ref.second,
+        third = _ref.third,
+        fourth = _ref.fourth;
     return {
       paddingTop: first,
       paddingRight: second,
       paddingBottom: third,
-      paddingLeft: fourth,
+      paddingLeft: fourth
     };
   },
-  maxValues: 4,
+  maxValues: 4
 });
 var processPaddingVertical = expandBoxModel({
   expandsTo: function expandsTo(_ref2) {
     var first = _ref2.first,
-      second = _ref2.second;
+        second = _ref2.second;
     return {
       paddingTop: first,
-      paddingBottom: second,
+      paddingBottom: second
     };
   },
-  maxValues: 2,
+  maxValues: 2
 });
 var processPaddingHorizontal = expandBoxModel({
   expandsTo: function expandsTo(_ref3) {
     var first = _ref3.first,
-      second = _ref3.second;
+        second = _ref3.second;
     return {
       paddingRight: first,
-      paddingLeft: second,
+      paddingLeft: second
     };
   },
-  maxValues: 2,
+  maxValues: 2
 });
 var processPaddingSingle = expandBoxModel();
 
 var expandObjectPosition = function expandObjectPosition(key, value) {
-  var match = ('' + value).split(' ');
+  var match = ("" + value).split(' ');
   return {
-    objectPositionX:
-      (match === null || match === void 0 ? void 0 : match[0]) || value,
-    objectPositionY:
-      (match === null || match === void 0 ? void 0 : match[1]) || value,
+    objectPositionX: (match === null || match === void 0 ? void 0 : match[0]) || value,
+    objectPositionY: (match === null || match === void 0 ? void 0 : match[1]) || value
   };
 };
 
 var Y_AXIS_SHORTHANDS = {
   top: true,
-  bottom: true,
+  bottom: true
 };
 
 var sortTransformOriginPair = function sortTransformOriginPair(a, b) {
@@ -309,12 +286,13 @@ var getTransformOriginPair = function getTransformOriginPair(values) {
   return pair.sort(sortTransformOriginPair);
 }; // Transforms shorthand transformOrigin values
 
+
 var expandTransformOrigin = function expandTransformOrigin(key, value) {
-  var match = ('' + value).split(' ');
+  var match = ("" + value).split(' ');
   var pair = getTransformOriginPair(match);
   return {
     transformOriginX: pair[0],
-    transformOriginY: pair[1],
+    transformOriginY: pair[1]
   };
 };
 
@@ -344,7 +322,7 @@ var shorthands = {
   borderStyle: expandBorders,
   borderWidth: expandBorders,
   objectPosition: expandObjectPosition,
-  transformOrigin: expandTransformOrigin,
+  transformOrigin: expandTransformOrigin
 };
 /**
  * Transforms style key-value
@@ -357,9 +335,7 @@ var shorthands = {
 var expandStyle = function expandStyle(key, value) {
   var _ref;
 
-  return shorthands[key]
-    ? shorthands[key](key, value)
-    : ((_ref = {}), (_ref[key] = value), _ref);
+  return shorthands[key] ? shorthands[key](key, value) : (_ref = {}, _ref[key] = value, _ref);
 };
 /**
  * Expand the shorthand properties.
@@ -367,6 +343,7 @@ var expandStyle = function expandStyle(key, value) {
  * @param { Object } style object
  * @returns { Object } expanded style object
  */
+
 
 var expand = function expand(style) {
   if (!style) return style;
@@ -406,10 +383,11 @@ var compact = function compact(array) {
  * @returns {Object} merged style object
  */
 
+
 var mergeStyles = function mergeStyles(styles) {
-  return styles.reduce(function(acc, style) {
+  return styles.reduce(function (acc, style) {
     var s = Array.isArray(style) ? flatten(style) : style;
-    Object.keys(s).forEach(function(key) {
+    Object.keys(s).forEach(function (key) {
       if (s[key] !== null && s[key] !== undefined) {
         acc[key] = s[key];
       }
@@ -424,6 +402,7 @@ var mergeStyles = function mergeStyles(styles) {
  * @returns {Object} flatted style object
  */
 
+
 var flatten = fns.compose(mergeStyles, compact, fns.castArray);
 
 /**
@@ -434,15 +413,13 @@ var flatten = fns.compose(mergeStyles, compact, fns.castArray);
  */
 var parseValue = function parseValue(value) {
   var match = /^(-?\d*\.?\d+)(in|mm|cm|pt|vh|vw|px)?$/g.exec(value);
-  return match
-    ? {
-        value: parseFloat(match[1], 10),
-        unit: match[2] || 'pt',
-      }
-    : {
-        value: value,
-        unit: undefined,
-      };
+  return match ? {
+    value: parseFloat(match[1], 10),
+    unit: match[2] || 'pt'
+  } : {
+    value: value,
+    unit: undefined
+  };
 };
 /**
  * Transform given scalar value
@@ -452,11 +429,12 @@ var parseValue = function parseValue(value) {
  * @returns {Object} transformed value
  */
 
+
 var transformUnit = function transformUnit(container, value) {
   var scalar = parseValue(value);
   var dpi = container.dpi || 72;
-  var mmFactor = (1 / 25.4) * dpi;
-  var cmFactor = (1 / 2.54) * dpi;
+  var mmFactor = 1 / 25.4 * dpi;
+  var cmFactor = 1 / 2.54 * dpi;
 
   switch (scalar.unit) {
     case 'in':
@@ -493,9 +471,10 @@ var isHsl = function isHsl(value) {
  * @returns {Object} transformed value
  */
 
+
 var parseRgb = function parseRgb(value) {
-  var rgb = colorString__default['default'].get.rgb(value);
-  return colorString__default['default'].to.hex(rgb);
+  var rgb = colorString__default["default"].get.rgb(value);
+  return colorString__default["default"].to.hex(rgb);
 };
 /**
  * Transform Hsl color to hexa
@@ -504,9 +483,10 @@ var parseRgb = function parseRgb(value) {
  * @returns {Object} transformed value
  */
 
+
 var parseHsl = function parseHsl(value) {
-  var hsl = colorString__default['default'].get.hsl(value).map(Math.round);
-  var hex = hlsToHex__default['default'].apply(void 0, hsl);
+  var hsl = colorString__default["default"].get.hsl(value).map(Math.round);
+  var hex = hlsToHex__default["default"].apply(void 0, hsl);
   return hex.toUpperCase();
 };
 /**
@@ -515,6 +495,7 @@ var parseHsl = function parseHsl(value) {
  * @param {String} styles value
  * @returns {Object} transformed value
  */
+
 
 var transformColor = function transformColor(value) {
   if (isRgb(value)) return parseRgb(value);
@@ -536,16 +517,16 @@ var parse = function parse(transformString) {
 
     if (transform) {
       var _transform$split = transform.split('('),
-        name = _transform$split[0],
-        rawValue = _transform$split[1];
+          name = _transform$split[0],
+          rawValue = _transform$split[1];
 
       var splitChar = rawValue.indexOf(',') >= 0 ? ',' : ' ';
-      var value = rawValue.split(splitChar).map(function(val) {
+      var value = rawValue.split(splitChar).map(function (val) {
         return val.trim();
       });
       parsed.push({
         operation: name,
-        value: value,
+        value: value
       });
     }
   }
@@ -557,110 +538,121 @@ var parseAngle = function parseAngle(value) {
   var unitsRegexp = /(-?\d*\.?\d*)(\w*)?/i;
 
   var _unitsRegexp$exec = unitsRegexp.exec(value),
-    angle = _unitsRegexp$exec[1],
-    unit = _unitsRegexp$exec[2];
+      angle = _unitsRegexp$exec[1],
+      unit = _unitsRegexp$exec[2];
 
   var number = Number.parseFloat(angle);
-  return unit === 'rad' ? (number * 180) / Math.PI : number;
+  return unit === 'rad' ? number * 180 / Math.PI : number;
 };
 
 var normalizeTransformOperation = function normalizeTransformOperation(_ref) {
   var operation = _ref.operation,
-    value = _ref.value;
+      value = _ref.value;
 
   switch (operation) {
-    case 'scale': {
-      var _value$map = value.map(function(num) {
+    case 'scale':
+      {
+        var _value$map = value.map(function (num) {
           return Number.parseFloat(num);
         }),
-        scaleX = _value$map[0],
-        _value$map$ = _value$map[1],
-        scaleY = _value$map$ === void 0 ? scaleX : _value$map$;
+            scaleX = _value$map[0],
+            _value$map$ = _value$map[1],
+            scaleY = _value$map$ === void 0 ? scaleX : _value$map$;
 
-      return {
-        operation: 'scale',
-        value: [scaleX, scaleY],
-      };
-    }
+        return {
+          operation: 'scale',
+          value: [scaleX, scaleY]
+        };
+      }
 
-    case 'scaleX': {
-      return {
-        operation: 'scale',
-        value: [Number.parseFloat(value), 1],
-      };
-    }
+    case 'scaleX':
+      {
+        return {
+          operation: 'scale',
+          value: [Number.parseFloat(value), 1]
+        };
+      }
 
-    case 'scaleY': {
-      return {
-        operation: 'scale',
-        value: [1, Number.parseFloat(value)],
-      };
-    }
+    case 'scaleY':
+      {
+        return {
+          operation: 'scale',
+          value: [1, Number.parseFloat(value)]
+        };
+      }
 
-    case 'rotate': {
-      return {
-        operation: 'rotate',
-        value: [parseAngle(value)],
-      };
-    }
+    case 'rotate':
+      {
+        return {
+          operation: 'rotate',
+          value: [parseAngle(value)]
+        };
+      }
 
-    case 'translate': {
-      return {
-        operation: 'translate',
-        value: value.map(function(num) {
-          return Number.parseFloat(num);
-        }),
-      };
-    }
+    case 'translate':
+      {
+        return {
+          operation: 'translate',
+          value: value.map(function (num) {
+            return Number.parseFloat(num);
+          })
+        };
+      }
 
-    case 'translateX': {
-      return {
-        operation: 'translate',
-        value: [Number.parseFloat(value), 0],
-      };
-    }
+    case 'translateX':
+      {
+        return {
+          operation: 'translate',
+          value: [Number.parseFloat(value), 0]
+        };
+      }
 
-    case 'translateY': {
-      return {
-        operation: 'translate',
-        value: [0, Number.parseFloat(value)],
-      };
-    }
+    case 'translateY':
+      {
+        return {
+          operation: 'translate',
+          value: [0, Number.parseFloat(value)]
+        };
+      }
 
-    case 'skew': {
-      return {
-        operation: 'skew',
-        value: value.map(parseAngle),
-      };
-    }
+    case 'skew':
+      {
+        return {
+          operation: 'skew',
+          value: value.map(parseAngle)
+        };
+      }
 
-    case 'skewX': {
-      return {
-        operation: 'skew',
-        value: [parseAngle(value), 0],
-      };
-    }
+    case 'skewX':
+      {
+        return {
+          operation: 'skew',
+          value: [parseAngle(value), 0]
+        };
+      }
 
-    case 'skewY': {
-      return {
-        operation: 'skew',
-        value: [0, parseAngle(value)],
-      };
-    }
+    case 'skewY':
+      {
+        return {
+          operation: 'skew',
+          value: [0, parseAngle(value)]
+        };
+      }
 
-    default: {
-      return {
-        operation: operation,
-        value: value.map(function(num) {
-          return Number.parseFloat(num);
-        }),
-      };
-    }
+    default:
+      {
+        return {
+          operation: operation,
+          value: value.map(function (num) {
+            return Number.parseFloat(num);
+          })
+        };
+      }
   }
 };
 
 var normalize = function normalize(operations) {
-  return operations.map(function(operation) {
+  return operations.map(function (operation) {
     return normalizeTransformOperation(operation);
   });
 };
@@ -684,7 +676,7 @@ var FONT_WEIGHTS = {
   ultrabold: 800,
   extrabold: 800,
   heavy: 900,
-  black: 900,
+  black: 900
 };
 
 var processFontWeight = function processFontWeight(value) {
@@ -737,7 +729,7 @@ var handlers = {
   objectPositionX: transformObjectPosition,
   objectPositionY: transformObjectPosition,
   transformOriginX: transformTransformOrigin,
-  transformOriginY: transformTransformOrigin,
+  transformOriginY: transformTransformOrigin
 };
 
 var transformStyle = function transformStyle(key, value, container) {
@@ -751,8 +743,9 @@ var transformStyle = function transformStyle(key, value, container) {
  * @returns {Object} transformed styles
  */
 
+
 var transform = function transform(container) {
-  return function(style) {
+  return function (style) {
     if (!style) return style;
     var propsArray = Object.keys(style);
     var resolvedStyle = {};
@@ -776,27 +769,16 @@ var transform = function transform(container) {
  */
 
 var resolveMediaQueries = function resolveMediaQueries(container, styles) {
-  return Object.keys(styles).reduce(function(acc, key) {
+  return Object.keys(styles).reduce(function (acc, key) {
     var _extends2;
 
     if (/@media/.test(key)) {
       var _matchMedia;
 
-      return _extends__default['default'](
-        {},
-        acc,
-        matchMedia__default['default'](
-          ((_matchMedia = {}), (_matchMedia[key] = styles[key]), _matchMedia),
-          container,
-        ),
-      );
+      return _extends__default["default"]({}, acc, matchMedia__default["default"]((_matchMedia = {}, _matchMedia[key] = styles[key], _matchMedia), container));
     }
 
-    return _extends__default['default'](
-      {},
-      acc,
-      ((_extends2 = {}), (_extends2[key] = styles[key]), _extends2),
-    );
+    return _extends__default["default"]({}, acc, (_extends2 = {}, _extends2[key] = styles[key], _extends2));
   }, {});
 };
 
@@ -813,15 +795,10 @@ var resolveStyles = function resolveStyles(container, style) {
     return resolveMediaQueries(container, value);
   };
 
-  return fns.compose(
-    transform(container),
-    expand,
-    computeMediaQueries,
-    flatten,
-  )(style);
+  return fns.compose(transform(container), expand, computeMediaQueries, flatten)(style);
 }; // Utils exported for SVG processing
 
-exports['default'] = resolveStyles;
+exports["default"] = resolveStyles;
 exports.flatten = flatten;
 exports.processTransform = processTransform;
 exports.transformColor = transformColor;

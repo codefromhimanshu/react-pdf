@@ -1,9 +1,9 @@
-'use strict';
+"use strict";
 
 exports.__esModule = true;
 exports.default = void 0;
 
-var _element = require('./element');
+var _element = require("./element");
 
 /* eslint-disable no-param-reassign */
 var _default = {
@@ -28,20 +28,18 @@ var _default = {
     this.currentElement.setAttribute('transform', transform);
   },
   translate: function translate(x, y) {
-    this.addTransform('translate(' + x + ',' + y + ')');
+    this.addTransform("translate(" + x + "," + y + ")");
   },
   rotate: function rotate(angle, origin) {
     if (origin === void 0) {
       origin = [0, 0];
     }
 
-    this.addTransform(
-      'rotate(' + angle + ',' + origin[0] + ',' + origin[1] + ')',
-    );
+    this.addTransform("rotate(" + angle + "," + origin[0] + "," + origin[1] + ")");
   },
   scale: function scale(x, y) {
     if (y === undefined) y = x;
-    this.addTransform('scale(' + x + ',' + y + ')');
-  },
+    this.addTransform("scale(" + x + "," + y + ")");
+  }
 };
 exports.default = _default;
